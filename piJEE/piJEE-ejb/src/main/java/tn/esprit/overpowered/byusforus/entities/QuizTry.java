@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,7 +30,7 @@ public class QuizTry implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQuizTry;
     @ManyToOne
     private Quiz quiz;
@@ -38,7 +39,8 @@ public class QuizTry implements Serializable {
     private Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishDate;
-    // TO DO: ADD AN ANSWERS FIELD
+    @OneToMany
+    List<Answer> answers;
     public QuizTry() {
     }
     
