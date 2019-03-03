@@ -8,14 +8,14 @@ package tn.esprit.overpowered.byusforus.services;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.QuizTry;
+import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
 
 /**
  *
  * @author Yassine
  */
 @Stateless
-public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFacadeLocal {
+public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFacadeLocal,QuizTryFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;

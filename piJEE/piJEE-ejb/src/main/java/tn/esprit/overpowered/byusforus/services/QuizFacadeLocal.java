@@ -7,7 +7,7 @@ package tn.esprit.overpowered.byusforus.services;
 
 import java.util.List;
 import javax.ejb.Local;
-import tn.esprit.overpowered.byusforus.entities.Quiz;
+import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
 
 /**
  *

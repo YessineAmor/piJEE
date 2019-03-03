@@ -7,7 +7,7 @@ package tn.esprit.overpowered.byusforus.services;
 
 import java.util.List;
 import javax.ejb.Remote;
-import tn.esprit.overpowered.byusforus.entities.Choice;
+import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 
 /**
  *
