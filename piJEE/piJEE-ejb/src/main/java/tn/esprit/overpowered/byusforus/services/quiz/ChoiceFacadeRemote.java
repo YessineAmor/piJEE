@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services;
+package tn.esprit.overpowered.byusforus.services.quiz;
 
 import java.util.List;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 
 /**
  *
  * @author Yassine
  */
-@Local
-public interface ChoiceFacadeLocal {
+@Remote
+public interface ChoiceFacadeRemote {
 
     void create(Choice choice);
 
