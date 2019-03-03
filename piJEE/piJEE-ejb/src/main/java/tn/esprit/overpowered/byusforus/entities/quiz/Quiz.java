@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities;
+package tn.esprit.overpowered.byusforus.entities.quiz;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,8 +29,16 @@ public class Quiz implements Serializable {
     private float percentageToPass;
     @OneToMany
     List<Question> questions;
-    
-    
+    // TO DO:
+    // Add Job Offer Field (LAUREL)
+    // A job offer can have many quizzes. 
+
+    public Quiz(String name, String details, float percentageToPass) {
+        this.name = name;
+        this.details = details;
+        this.percentageToPass = percentageToPass;
+    }
+
     public Long getId() {
         return id;
     }
@@ -62,8 +70,6 @@ public class Quiz implements Serializable {
     public void setPercentageToPass(float percentageToPass) {
         this.percentageToPass = percentageToPass;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -87,7 +93,7 @@ public class Quiz implements Serializable {
 
     @Override
     public String toString() {
-        return "tn.esprit.overpowered.byusforus.entities.Quiz[ id=" + id + " ]";
+        return "Quiz{" + "id=" + id + ", name=" + name + ", details=" + details + ", percentageToPass=" + percentageToPass + ", questions=" + questions + '}';
     }
-    
+
 }
