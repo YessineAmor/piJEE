@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services;
+package tn.esprit.overpowered.byusforus.services.quiz;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.quiz.Question;
+import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
 
 /**
  *
  * @author Yassine
  */
 @Stateless
-public class QuestionFacade extends AbstractFacade<Question> implements QuestionFacadeLocal,QuestionFacadeRemote {
+public class AnswerFacade extends AbstractFacade<Answer> implements AnswerFacadeLocal, AnswerFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class QuestionFacade extends AbstractFacade<Question> implements Question
         return em;
     }
 
-    public QuestionFacade() {
-        super(Question.class);
+    public AnswerFacade() {
+        super(Answer.class);
     }
     
 }
