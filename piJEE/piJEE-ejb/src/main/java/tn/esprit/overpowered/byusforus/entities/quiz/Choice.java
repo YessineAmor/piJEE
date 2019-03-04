@@ -27,6 +27,13 @@ public class Choice implements Serializable {
     private String choiceText;
     private Boolean isCorrectChoice;
     private float choicePoints;
+
+    public Choice() {
+        this.isCorrectChoice = false;
+        this.choicePoints = 0;
+    }
+    
+    
     
     public Long getIdChoice() {
         return idChoice;
