@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities;
+package tn.esprit.overpowered.byusforus.entities.quiz;
 
 import java.io.Serializable;
 import java.util.List;

@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services;
+package tn.esprit.overpowered.byusforus.services.quiz;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.Choice;
+import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
 
 /**
  *
  * @author Yassine
  */
 @Stateless
-public class ChoiceFacade extends AbstractFacade<Choice> implements ChoiceFacadeLocal,ChoiceFacadeRemote {
+public class QuizFacade extends AbstractFacade<Quiz> implements QuizFacadeLocal,QuizFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -25,17 +25,8 @@ public class ChoiceFacade extends AbstractFacade<Choice> implements ChoiceFacade
         return em;
     }
 
-    public ChoiceFacade() {
-        super(Choice.class);
+    public QuizFacade() {
+        super(Quiz.class);
     }
-
-    @Override
-    public void create(Choice entity) {
-        super.create(entity); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
-    
     
 }

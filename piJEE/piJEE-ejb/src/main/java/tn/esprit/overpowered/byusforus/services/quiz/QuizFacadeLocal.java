@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services;
+package tn.esprit.overpowered.byusforus.services.quiz;
 
 import java.util.List;
-import javax.ejb.Remote;
-import tn.esprit.overpowered.byusforus.entities.Quiz;
+import javax.ejb.Local;
+import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
 
 /**
  *
  * @author Yassine
  */
-@Remote
-public interface QuizFacadeRemote {
+@Local
+public interface QuizFacadeLocal {
 
     void create(Quiz quiz);
 
