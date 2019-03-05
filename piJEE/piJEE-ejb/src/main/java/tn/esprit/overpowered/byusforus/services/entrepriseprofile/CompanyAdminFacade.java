@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.CompanyAdmin;
-import tn.esprit.overpowered.byusforus.services.quiz.AbstractFacade;
+import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
  *
