@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.quiz;
 
 import java.util.List;
+import javafx.scene.image.ImageView;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
 
@@ -29,5 +30,5 @@ public interface QuizTryFacadeRemote {
     List<QuizTry> findRange(int[] range);
 
     int count();
-    
+
 }

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,10 +42,12 @@ public class QuizTry implements Serializable {
     private Date finishDate;
     @OneToMany
     List<Answer> answers;
+    private String recording;
+
     public QuizTry() {
+        startDate = new Date();
+        recording = "QUIZ_TRY_" + new Random().nextInt() + ".ts";
     }
-    
-    
 
     public Long getIdQuizTry() {
         return idQuizTry;
@@ -52,6 +55,54 @@ public class QuizTry implements Serializable {
 
     public void setIdQuizTry(Long idQuizTry) {
         this.idQuizTry = idQuizTry;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public float getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(float percentage) {
+        this.percentage = percentage;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public String getRecording() {
+        return recording;
+    }
+
+    public void setRecording(String recording) {
+        this.recording = recording;
     }
 
     @Override
@@ -78,5 +129,5 @@ public class QuizTry implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.QuizTry[ id=" + idQuizTry + " ]";
     }
-    
+
 }
