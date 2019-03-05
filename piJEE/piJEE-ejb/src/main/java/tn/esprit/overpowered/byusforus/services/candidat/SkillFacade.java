@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
+import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
