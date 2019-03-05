@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
  *
