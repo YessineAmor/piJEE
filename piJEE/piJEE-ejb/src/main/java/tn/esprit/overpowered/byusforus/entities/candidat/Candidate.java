@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.entities.candidat;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,13 +22,14 @@ import javax.persistence.Table;
  * @author EliteBook
  */
 @Entity
-public class Candidate implements Serializable {
+@DiscriminatorValue(value = "CANDIDATE")
+public class Candidate extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
+
     private String introduction;
-    @Id
-    private int id;
+    
+    
 
     public String getIntroduction() {
         return introduction;
@@ -37,14 +39,6 @@ public class Candidate implements Serializable {
         this.introduction = introduction;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public User getUser() {
         return user;
     }
@@ -52,35 +46,35 @@ public class Candidate implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private User user;
-    
+
     @OneToMany(mappedBy = "candidateExp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
-    
+
     @OneToMany(mappedBy = "candidateSub", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Subscription> subscriptions;
-    
+
     @OneToMany(mappedBy = "candidateActivity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Activity> activities;
-    
+
     @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Certificate> certificates;
-    
+
     @OneToMany(mappedBy = "candidateCV", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CurriculumVitae> curriculumVitaes;
-    
+
     @OneToMany(mappedBy = "candidateCursus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cursus> cursus;
-    
+
     @OneToMany(mappedBy = "candidateSkill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Skill> skills;
-    
+
     @OneToMany(mappedBy = "candidateContact", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Contact> contacts;
-    
+
     @OneToMany(mappedBy = "candidateVisit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Visit> visits;
 
@@ -156,16 +150,4 @@ public class Candidate implements Serializable {
         this.visits = visits;
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
