@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
  *
