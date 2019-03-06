@@ -39,14 +39,31 @@ public class CompanyProfile implements Serializable {
     private String website;
     private String companySize;
     private int dateOfCreation;
-    
+
     @OneToOne
     @JoinColumn(name = "FK_CA_ID")
     private CompanyAdmin companyAdmin;
 
     @OneToMany
-    @JoinTable(name = "C_CP_JB",joinColumns={@JoinColumn(name = "CP_ID")},inverseJoinColumns={@JoinColumn(name = "JO_ID")})
+    @JoinTable(name = "C_CP_JO", joinColumns = {
+        @JoinColumn(name = "CP_ID")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "JO_ID")})
     private List<JobOffer> listOfOffers;
+
+    @OneToMany
+    @JoinTable(name = "C_CP_EV", joinColumns = {
+        @JoinColumn(name = "CP_ID")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "EV_ID")})
+    private List<Event> listOfEvents;
+
+    @OneToMany
+    @JoinTable(name = "C_CP_WO", joinColumns = {
+        @JoinColumn(name = "CP_ID")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "WO_ID")})
+    private List<Workshop> listOfWorkshops;
 
     public Long getId() {
         return id;

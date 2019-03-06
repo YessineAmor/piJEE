@@ -8,11 +8,15 @@ package tn.esprit.overpowered.byusforus.entities.entrepriseprofile;
 import java.io.Serializable;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import tn.esprit.overpowered.byusforus.entities.candidat.User;
 
 /**
  *
@@ -20,14 +24,14 @@ import javax.persistence.InheritanceType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="Emp_Type")
+@DiscriminatorColumn(name = "Emp_Type")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String username;
     private String firstname;
     private String lastname;
@@ -36,7 +40,18 @@ public class Employee implements Serializable {
     private String companyId;
     private String companyName;
 
-    
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,7 +59,7 @@ public class Employee implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -100,14 +115,10 @@ public class Employee implements Serializable {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-    
-    
 
     public Employee() {
     }
 
-     
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -129,5 +140,5 @@ public class Employee implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.Employee[ id=" + id + " ]";
     }
-    
+
 }
