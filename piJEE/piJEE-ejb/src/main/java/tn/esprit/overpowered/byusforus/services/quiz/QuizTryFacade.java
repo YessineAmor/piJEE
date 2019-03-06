@@ -29,5 +29,4 @@ public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFac
     public QuizTryFacade() {
         super(QuizTry.class);
     }
-
 }
