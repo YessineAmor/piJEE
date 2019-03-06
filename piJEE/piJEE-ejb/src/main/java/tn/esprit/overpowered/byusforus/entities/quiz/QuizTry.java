@@ -129,5 +129,4 @@ public class QuizTry implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.QuizTry[ id=" + idQuizTry + " ]";
     }
-
 }
