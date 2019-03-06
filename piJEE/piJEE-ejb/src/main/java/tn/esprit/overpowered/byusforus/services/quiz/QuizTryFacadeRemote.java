@@ -30,5 +30,4 @@ public interface QuizTryFacadeRemote {
     List<QuizTry> findRange(int[] range);
 
     int count();
-
 }
