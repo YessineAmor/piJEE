@@ -98,5 +98,4 @@ public class Question implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.Question[ id=" + idQuestion + " ]";
     }
-
 }

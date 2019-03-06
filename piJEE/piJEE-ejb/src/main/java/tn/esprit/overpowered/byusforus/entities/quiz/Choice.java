@@ -94,5 +94,4 @@ public class Choice implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.Choice[ id=" + idChoice + " ]";
     }
-
 }
