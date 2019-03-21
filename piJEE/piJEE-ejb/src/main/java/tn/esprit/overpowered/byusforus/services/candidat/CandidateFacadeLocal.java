@@ -30,4 +30,6 @@ public interface CandidateFacadeLocal {
 
     int count();
     
+    List<Candidate> afficherCandidats();
+    
 }

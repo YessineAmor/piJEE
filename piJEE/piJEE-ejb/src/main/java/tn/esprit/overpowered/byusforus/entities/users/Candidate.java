@@ -49,9 +49,6 @@ public class Candidate extends User implements Serializable {
         this.introduction = introduction;
     }
 
-
-   
-
     @OneToMany(mappedBy = "candidateExp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
 

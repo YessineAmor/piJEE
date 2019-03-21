@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
+import java.util.List;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,5 +31,12 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public CandidateFacade() {
         super(Candidate.class);
     }
+
+    @Override
+    public List<Candidate> afficherCandidats() {
+        List<Candidate> Lcandidats = em.createQuery("select p from Candidat p", Candidate.class).getResultList();
+		return Lcandidats;
+    }
+    
     
 }
