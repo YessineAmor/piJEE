@@ -7,7 +7,7 @@ package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
 
 import java.util.List;
 import javax.ejb.Remote;
-import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.ProjectManager;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 
 /**
  *

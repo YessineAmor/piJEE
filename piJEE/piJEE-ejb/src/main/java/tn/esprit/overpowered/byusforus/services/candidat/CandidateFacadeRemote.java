@@ -7,7 +7,7 @@ package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
 import javax.ejb.Remote;
-import tn.esprit.overpowered.byusforus.entities.candidat.Candidate;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 
 /**
  *

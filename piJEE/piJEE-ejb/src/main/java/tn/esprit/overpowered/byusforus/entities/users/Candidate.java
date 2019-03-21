@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities.candidat;
+package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +16,16 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import tn.esprit.overpowered.byusforus.entities.candidat.Activity;
+import tn.esprit.overpowered.byusforus.entities.candidat.Certificate;
+import tn.esprit.overpowered.byusforus.entities.candidat.Contact;
+import tn.esprit.overpowered.byusforus.entities.candidat.CurriculumVitae;
+import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
+import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
+import tn.esprit.overpowered.byusforus.entities.candidat.Skill;
+import tn.esprit.overpowered.byusforus.entities.candidat.Subscription;
+import tn.esprit.overpowered.byusforus.entities.users.User;
+import tn.esprit.overpowered.byusforus.entities.candidat.Visit;
 
 /**
  *
@@ -39,17 +49,8 @@ public class Candidate extends User implements Serializable {
         this.introduction = introduction;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    private User user;
+   
 
     @OneToMany(mappedBy = "candidateExp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
