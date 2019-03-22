@@ -39,21 +39,18 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
         if (user == null) {
             return null;
         }
-        /*MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        /*
         byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
         byte[] pwdSalt = new byte[passwordBytes.length + user.getSalt().length];
         System.arraycopy(passwordBytes, 0, pwdSalt, 0, passwordBytes.length);
         System.arraycopy(user.getSalt(), 0, pwdSalt, passwordBytes.length, user.getSalt().length);
         byte[] encodedhash = digest.digest(
                passwordBytes);*/
-        for (byte b : password.getBytes())
-            System.out.print(" " + b);
-        System.out.println("\n");
-        System.out.println(user.getPassword().length);
-        for (byte c : user.getPassword())
-            System.out.print(c);
-        System.out.println("end");
-        if (Arrays.equals(user.getPassword(), password.getBytes(StandardCharsets.UTF_8))) {
+        byte[] hashBytes = new byte[pwd.length + user.getSalt().length];
+        System.arraycopy(pwd, 0, hashBytes, 0, pwd.length);
+        System.arraycopy(user.getSalt(), 0, hashBytes, pwd.length, user.getSalt().length);
+        if (Arrays.equals(user.getPassword(), digest.digest(hashBytes))) {
             return genToken();
         } else {
             return null;

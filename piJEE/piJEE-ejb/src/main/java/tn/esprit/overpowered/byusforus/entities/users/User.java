@@ -6,6 +6,10 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -72,8 +76,14 @@ public class User implements Serializable{
         return password;
     }
 
-    public void setPassword(byte[] password) {
-        this.password = password;
+    public void setPassword(byte[] password) throws NoSuchAlgorithmException {
+        this.salt = new byte[32];
+        new Random().nextBytes(salt);
+        byte[] hashBytes = new byte[password.length + this.salt.length];
+        System.arraycopy(password, 0, hashBytes, 0, password.length);
+        System.arraycopy(this.salt, 0, hashBytes, password.length, this.salt.length);
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        this.password = digest.digest(hashBytes);
     }
     
     @Column(columnDefinition="BINARY(32) NOT NULL")
