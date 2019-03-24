@@ -8,7 +8,7 @@ package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
