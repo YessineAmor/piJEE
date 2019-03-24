@@ -29,6 +29,15 @@ public class Answer implements Serializable {
     private Choice choice;
     // Waiting for the user class to be created
     // private User user;
+
+    public Answer() {
+    }
+
+    public Answer(Question question, Choice choice) {
+        this.question = question;
+        this.choice = choice;
+    }
+    
     
 
     public Long getId() {
