@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services.candidat;
+package tn.esprit.overpowered.byusforus.services.users;
 
 import java.util.List;
-import javax.ejb.Local;
-import tn.esprit.overpowered.byusforus.entities.candidat.User;
+import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.users.User;
 
 /**
  *
  * @author EliteBook
  */
-@Local
-public interface UserFacadeLocal {
+@Remote
+public interface UserFacadeRemote {
 
     void create(User user);
 

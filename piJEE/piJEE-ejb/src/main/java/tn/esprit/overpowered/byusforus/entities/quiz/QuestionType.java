@@ -10,5 +10,5 @@ package tn.esprit.overpowered.byusforus.entities.quiz;
  * @author Yassine
  */
 public enum QuestionType {
-    MULTI_ANSWER, FILL_IN_BLANKS, DRAG_AND_DROP
+    SINGLE_ANSWER, MULTI_ANSWER, FILL_IN_BLANKS, DRAG_AND_DROP
 }

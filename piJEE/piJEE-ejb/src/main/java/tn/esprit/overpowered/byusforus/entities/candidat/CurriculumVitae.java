@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.entities.candidat;
 
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

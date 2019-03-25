@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities.util;
+package tn.esprit.overpowered.byusforus.services.users;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
  *
- * @author EliteBook
+ * @author pc
  */
 public abstract class AbstractFacade<T> {
 
