@@ -7,7 +7,7 @@ package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
 
 import java.util.List;
 import javax.ejb.Local;
-import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 
 /**
  *
