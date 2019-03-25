@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,10 +36,10 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
         TypedQuery<User> query
                 = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
         query = query.setParameter("username", username);
-        User user = query.getSingleResult();
-        if (user == null) {
+        List<User> userList = query.getResultList();
+        if (userList.isEmpty())
             return null;
-        }
+        User user = userList.get(0);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         /*
         byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
