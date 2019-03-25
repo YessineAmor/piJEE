@@ -1,11 +1,11 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities.entrepriseprofile;
+package tn.esprit.overpowered.byusforus.entities.users;
 
-import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.CompanyAdmin;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -13,11 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 
 /**
  *
@@ -39,31 +39,14 @@ public class CompanyProfile implements Serializable {
     private String website;
     private String companySize;
     private int dateOfCreation;
-
+    
     @OneToOne
     @JoinColumn(name = "FK_CA_ID")
     private CompanyAdmin companyAdmin;
 
     @OneToMany
-    @JoinTable(name = "C_CP_JO", joinColumns = {
-        @JoinColumn(name = "CP_ID")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "JO_ID")})
+    @JoinTable(name = "C_CP_JB",joinColumns={@JoinColumn(name = "CP_ID")},inverseJoinColumns={@JoinColumn(name = "JO_ID")})
     private List<JobOffer> listOfOffers;
-
-    @OneToMany
-    @JoinTable(name = "C_CP_EV", joinColumns = {
-        @JoinColumn(name = "CP_ID")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "EV_ID")})
-    private List<Event> listOfEvents;
-
-    @OneToMany
-    @JoinTable(name = "C_CP_WO", joinColumns = {
-        @JoinColumn(name = "CP_ID")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "WO_ID")})
-    private List<Workshop> listOfWorkshops;
 
     public Long getId() {
         return id;

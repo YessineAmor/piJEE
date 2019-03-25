@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services.candidat;
+package tn.esprit.overpowered.byusforus.services.users;
 
-import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.candidat.User;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
+import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
  *
- * @author EliteBook
+ * @author pc
  */
 @Stateless
-public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal, UserFacadeRemote {
+public class ProjectManagerFacade extends AbstractFacade<ProjectManager> implements ProjectManagerFacadeLocal, ProjectManagerFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -26,8 +26,8 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal,
         return em;
     }
 
-    public UserFacade() {
-        super(User.class);
+    public ProjectManagerFacade() {
+        super(ProjectManager.class);
     }
     
 }
