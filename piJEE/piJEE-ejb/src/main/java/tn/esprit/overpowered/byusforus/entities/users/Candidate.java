@@ -11,17 +11,17 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import tn.esprit.overpowered.byusforus.entities.candidat.Certificate;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
-import tn.esprit.overpowered.byusforus.entities.util.Skill;
+
 
 /**
  *
@@ -46,12 +46,14 @@ public class Candidate extends User implements Serializable {
     }
 
     private int recommendations;
-
+    
+    @OneToMany(mappedBy="candidate")
     private List<Experience> experiences;
     /*
     @OneToMany(mappedBy = "candidateSub", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CompanyProfile> subscriptions;
     */
+    @ElementCollection(targetClass=String.class)
     private List<String> activities;
 
     @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -62,9 +64,7 @@ public class Candidate extends User implements Serializable {
     @OneToMany(mappedBy = "candidateCursus")
     private List<Cursus> cursus;
 
-    @Enumerated(EnumType.STRING)
-    private List<Skill> skills;
-    
+    @ManyToMany
     private Set<Candidate> contacts;
 
     private int visits;
@@ -125,13 +125,6 @@ public class Candidate extends User implements Serializable {
         this.cursus = cursus;
     }
     
-    public List<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
-    }
 
     public Set<Candidate> getContacts() {
         return contacts;

@@ -30,6 +30,9 @@ public class Experience implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
+    @ManyToOne
+    private Candidate candidate;
+    
     private String position;
     
     private String orginization;
@@ -55,6 +58,46 @@ public class Experience implements Serializable {
 
     public void setCandidateExp(Candidate candidateExp) {
         this.candidateExp = candidateExp;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getOrginization() {
+        return orginization;
+    }
+
+    public void setOrginization(String orginization) {
+        this.orginization = orginization;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     
