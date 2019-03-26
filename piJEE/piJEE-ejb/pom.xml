@@ -26,22 +26,7 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-<<<<<<< HEAD
-=======
-        <!--Commented this depency which caused the security vulnerability on the last commit -->
-        <!--dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>3.7.1</version>
-            <type>maven-plugin</type>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs</artifactId>
-            <version>3.1.12</version>
-        </dependency>
->>>>>>> master
+
     </dependencies>
 
     <build>
@@ -95,17 +80,7 @@
                     </execution>
                 </executions>
             </plugin>
-<<<<<<< HEAD
-=======
-            <!--Commented this depency which caused the security vulnerability on the last commit -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-            </plugin>
-            -->
->>>>>>> master
+
         </plugins>
     </build>
 
