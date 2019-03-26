@@ -26,6 +26,16 @@ public class Certificate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
+    private String name;
+    
+    private String organization;
+    
+    private String issueDate;
+    
+    private String expirationDate;
+    
+    private boolean isExpirable;
 
     @ManyToOne
     private Candidate candidateCertif;
@@ -44,6 +54,46 @@ public class Certificate implements Serializable {
 
     public void setCandidateCertif(Candidate candidateCertif) {
         this.candidateCertif = candidateCertif;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public boolean isIsExpirable() {
+        return isExpirable;
+    }
+
+    public void setIsExpirable(boolean isExpirable) {
+        this.isExpirable = isExpirable;
     }
     
     
