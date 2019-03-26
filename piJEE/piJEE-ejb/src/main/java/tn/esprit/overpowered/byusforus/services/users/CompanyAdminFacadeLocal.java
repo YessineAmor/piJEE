@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
+package tn.esprit.overpowered.byusforus.services.users;
 
 import java.util.List;
-import javax.ejb.Remote;
+import javax.ejb.Local;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 
 /**
  *
  * @author pc
  */
-@Remote
-public interface CompanyAdminFacadeRemote {
+@Local
+public interface CompanyAdminFacadeLocal {
 
     void create(CompanyAdmin companyAdmin);
 

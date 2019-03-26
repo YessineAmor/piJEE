@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
+package tn.esprit.overpowered.byusforus.services.users;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
@@ -16,7 +16,7 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
  * @author pc
  */
 @Stateless
-public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> implements CompanyProfileFacadeLocal, CompanyProfileFacadeRemote {
+public class HRManagerFacade extends AbstractFacade<HRManager> implements HRManagerFacadeLocal, HRManagerFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -26,8 +26,8 @@ public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> impleme
         return em;
     }
 
-    public CompanyProfileFacade() {
-        super(CompanyProfile.class);
+    public HRManagerFacade() {
+        super(HRManager.class);
     }
     
 }
