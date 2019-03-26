@@ -7,25 +7,21 @@ package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import tn.esprit.overpowered.byusforus.entities.candidat.Activity;
 import tn.esprit.overpowered.byusforus.entities.candidat.Certificate;
-import tn.esprit.overpowered.byusforus.entities.candidat.Contact;
-import tn.esprit.overpowered.byusforus.entities.candidat.CurriculumVitae;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
-import tn.esprit.overpowered.byusforus.entities.candidat.Skill;
-import tn.esprit.overpowered.byusforus.entities.candidat.Subscription;
-import tn.esprit.overpowered.byusforus.entities.users.User;
-import tn.esprit.overpowered.byusforus.entities.candidat.Visit;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
  *
@@ -33,13 +29,13 @@ import tn.esprit.overpowered.byusforus.entities.candidat.Visit;
  */
 @Entity
 @DiscriminatorValue(value = "CANDIDATE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "CANDIDATE_TYPE")
 public class Candidate extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String introduction;
-    
-    
 
     public String getIntroduction() {
         return introduction;
@@ -49,32 +45,37 @@ public class Candidate extends User implements Serializable {
         this.introduction = introduction;
     }
 
-    @OneToMany(mappedBy = "candidateExp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private int recommendations;
+
     private List<Experience> experiences;
-
+    /*
     @OneToMany(mappedBy = "candidateSub", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Subscription> subscriptions;
-
-    @OneToMany(mappedBy = "candidateActivity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Activity> activities;
+    private List<CompanyProfile> subscriptions;
+    */
+    private List<String> activities;
 
     @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Certificate> certificates;
 
-    @OneToMany(mappedBy = "candidateCV", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CurriculumVitae> curriculumVitaes;
+    private String curriculumVitaes;
 
-    @OneToMany(mappedBy = "candidateCursus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateCursus")
     private List<Cursus> cursus;
 
-    @OneToMany(mappedBy = "candidateSkill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
     private List<Skill> skills;
+    
+    private Set<Candidate> contacts;
 
-    @OneToMany(mappedBy = "candidateContact", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Contact> contacts;
+    private int visits;
 
-    @OneToMany(mappedBy = "candidateVisit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Visit> visits;
+    public int getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(int recommendations) {
+        this.recommendations = recommendations;
+    }
 
     public List<Experience> getExperiences() {
         return experiences;
@@ -83,20 +84,20 @@ public class Candidate extends User implements Serializable {
     public void setExperiences(List<Experience> experiences) {
         this.experiences = experiences;
     }
-
-    public List<Subscription> getSubscriptions() {
+    /*
+    public List<CompanyProfile> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(List<Subscription> subscriptions) {
+    public void setSubscriptions(List<CompanyProfile> subscriptions) {
         this.subscriptions = subscriptions;
     }
-
-    public List<Activity> getActivities() {
+    */
+    public List<String> getActivities() {
         return activities;
     }
 
-    public void setActivities(List<Activity> activities) {
+    public void setActivities(List<String> activities) {
         this.activities = activities;
     }
 
@@ -108,11 +109,11 @@ public class Candidate extends User implements Serializable {
         this.certificates = certificates;
     }
 
-    public List<CurriculumVitae> getCurriculumVitaes() {
+    public String getCurriculumVitaes() {
         return curriculumVitaes;
     }
 
-    public void setCurriculumVitaes(List<CurriculumVitae> curriculumVitaes) {
+    public void setCurriculumVitaes(String curriculumVitaes) {
         this.curriculumVitaes = curriculumVitaes;
     }
 
@@ -123,7 +124,7 @@ public class Candidate extends User implements Serializable {
     public void setCursus(List<Cursus> cursus) {
         this.cursus = cursus;
     }
-
+    
     public List<Skill> getSkills() {
         return skills;
     }
@@ -132,19 +133,19 @@ public class Candidate extends User implements Serializable {
         this.skills = skills;
     }
 
-    public List<Contact> getContacts() {
+    public Set<Candidate> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Set<Candidate> contacts) {
         this.contacts = contacts;
     }
 
-    public List<Visit> getVisits() {
+    public int getVisits() {
         return visits;
     }
 
-    public void setVisits(List<Visit> visits) {
+    public void setVisits(int visits) {
         this.visits = visits;
     }
 
