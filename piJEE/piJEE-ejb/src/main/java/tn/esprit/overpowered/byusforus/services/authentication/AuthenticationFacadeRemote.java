@@ -7,7 +7,6 @@ package tn.esprit.overpowered.byusforus.services.authentication;
 
 import java.security.NoSuchAlgorithmException;
 import javax.ejb.Remote;
-import javax.persistence.EntityManager;
 import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 
 /**
