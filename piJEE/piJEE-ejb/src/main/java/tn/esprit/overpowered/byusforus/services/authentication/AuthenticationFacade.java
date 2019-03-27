@@ -10,11 +10,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import tn.esprit.overpowered.byusforus.entities.authentication.Auth2FA;
+import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 import tn.esprit.overpowered.byusforus.entities.users.User;
+import tn.esprit.overpowered.byusforus.services.users.UserFacade;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
  *
@@ -31,23 +40,46 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
     }
 
     @Override
+    public Session finalizeLogin(String uid, String auth2FAToken) {
+        Auth2FA auth2FA = new Auth2FAFacade().geAuth2FAByUid(em, uid, auth2FAToken);
+        if (auth2FA == null)
+            return null;
+        
+        Session s = new Session();
+        s.setUid(auth2FA.getUid());
+        s.setUser(auth2FA.getUser());
+        em.remove(auth2FA);
+        em.persist(s);
+        return s;
+    }
+    @Override
     public String login(String username, String password) throws NoSuchAlgorithmException {
         byte[] pwd = password.getBytes(StandardCharsets.UTF_8);
-        TypedQuery<User> query
-                = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
-        query = query.setParameter("username", username);
-        List<User> userList = query.getResultList();
-        if (userList.isEmpty())
+        User user = new UserFacade().getUserByUsername(em, username);
+        if (user == null)
             return null;
-        User user = userList.get(0);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-      
-        
         byte[] hashBytes = new byte[pwd.length + user.getSalt().length];
         System.arraycopy(pwd, 0, hashBytes, 0, pwd.length);
         System.arraycopy(user.getSalt(), 0, hashBytes, pwd.length, user.getSalt().length);
         if (Arrays.equals(user.getPassword(), digest.digest(hashBytes))) {
-            return genToken();
+            // Create new 2FA token + random token for identification
+            String uid = UUID.randomUUID().toString();
+            int token = gen2FAToken();
+            Auth2FA towFactorAuth = new Auth2FA(token, uid, user);
+            // Persist 2FA token
+            em.persist(towFactorAuth);
+            try {
+                // Send email
+                // Username and password are redacted
+                if (MailSender.sendMail("smtp.gmail.com", "587",
+                        "REDACTED", "REDACTED",
+                        "pidevpidev", user.getEmail(), "Your code is " + towFactorAuth.getToken()))
+                    return towFactorAuth.getUid();
+            } catch (MessagingException ex) {
+                Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return uid;
         } else {
             return null;
         }
@@ -67,6 +99,11 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
 
     private String genToken() {
         return "succes";
+    }
+
+    private int gen2FAToken() {
+        int randomNum = ThreadLocalRandom.current().nextInt(1666, 9999 + 1);
+        return randomNum;
     }
 
 }
