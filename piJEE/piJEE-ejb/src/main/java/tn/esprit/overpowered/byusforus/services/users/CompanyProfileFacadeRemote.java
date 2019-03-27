@@ -29,5 +29,5 @@ public interface CompanyProfileFacadeRemote {
     List<CompanyProfile> findRange(int[] range);
 
     int count();
-    
+        
 }
