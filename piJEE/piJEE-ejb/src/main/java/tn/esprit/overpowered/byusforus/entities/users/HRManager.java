@@ -6,8 +6,11 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 
 /**
  *
@@ -18,5 +21,6 @@ import javax.persistence.Entity;
 public class HRManager extends Employee implements Serializable {
 
   
-    
+    @ManyToMany
+    private List<JobOffer> jobOffers;
 }

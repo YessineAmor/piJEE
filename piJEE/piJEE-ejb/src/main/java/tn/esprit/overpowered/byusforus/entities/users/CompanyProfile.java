@@ -8,13 +8,16 @@ package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
@@ -46,6 +49,10 @@ public class CompanyProfile implements Serializable {
 
     @OneToMany(mappedBy = "company")
     private List<JobOffer> listOfOffers;
+    
+    @ManyToMany(mappedBy = "subscribedCompanies", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private List<Candidate> subscribers; 
 
     public Long getId() {
         return id;
@@ -111,6 +118,31 @@ public class CompanyProfile implements Serializable {
         this.dateOfCreation = dateOfCreation;
     }
 
+    public CompanyAdmin getCompanyAdmin() {
+        return companyAdmin;
+    }
+
+    public void setCompanyAdmin(CompanyAdmin companyAdmin) {
+        this.companyAdmin = companyAdmin;
+    }
+
+    public List<JobOffer> getListOfOffers() {
+        return listOfOffers;
+    }
+
+    public void setListOfOffers(List<JobOffer> listOfOffers) {
+        this.listOfOffers = listOfOffers;
+    }
+
+    public List<Candidate> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<Candidate> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

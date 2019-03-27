@@ -6,21 +6,29 @@
 package tn.esprit.overpowered.byusforus.entities.entrepriseprofile;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
@@ -40,6 +48,9 @@ public class JobOffer implements Serializable {
     @Column(nullable = false)
     private String title;
 
+    @Temporal(TemporalType.DATE)
+    private final Date dateOfCreation;
+
     @Column(nullable = false)
     private String description;
 
@@ -47,7 +58,7 @@ public class JobOffer implements Serializable {
     private ExpertiseLevel expertiseLevel;
 
     @ElementCollection(targetClass = Skill.class)
-    @JoinTable(name = "tbSkills")
+    @JoinTable(name = "T_JOB_OFFER_Skills")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Skill> skills;
@@ -62,10 +73,17 @@ public class JobOffer implements Serializable {
                 @JoinColumn(name = "JOB_OFFER_ID")})
     private CompanyProfile company;
 
-    /*
-    @OneToMany(mappedBy = "employee")
-    private List<OfferTimesheet> offerTimesheet;
-    */
+    @OneToMany(mappedBy = "jobOffers", cascade = {CascadeType.PERSIST,
+        CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    private List<HRManager> recruiters;
+
+    @ManyToMany(mappedBy = "registeredOffers", cascade = {CascadeType.PERSIST,
+        CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    private List<Candidate> registeredCandidates;
+
+    public JobOffer() {
+        this.dateOfCreation = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -74,6 +92,79 @@ public class JobOffer implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ExpertiseLevel getExpertiseLevel() {
+        return expertiseLevel;
+    }
+
+    public void setExpertiseLevel(ExpertiseLevel expertiseLevel) {
+        this.expertiseLevel = expertiseLevel;
+    }
+
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public Integer getPeopleNeeded() {
+        return peopleNeeded;
+    }
+
+    public void setPeopleNeeded(Integer peopleNeeded) {
+        this.peopleNeeded = peopleNeeded;
+    }
+
+    public CompanyProfile getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyProfile company) {
+        this.company = company;
+    }
+
+    public List<HRManager> getRecruiters() {
+        return recruiters;
+    }
+
+    public void setRecruiters(List<HRManager> recruiters) {
+        this.recruiters = recruiters;
+    }
+
+    public List<Candidate> getRegisteredCandidates() {
+        return registeredCandidates;
+    }
+
+    public void setRegisteredCandidates(List<Candidate> registeredCandidates) {
+        this.registeredCandidates = registeredCandidates;
+    }
+    
+    
 
     @Override
     public int hashCode() {
