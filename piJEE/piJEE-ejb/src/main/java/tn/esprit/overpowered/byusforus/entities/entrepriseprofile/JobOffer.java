@@ -73,12 +73,12 @@ public class JobOffer implements Serializable {
                 @JoinColumn(name = "JOB_OFFER_ID")})
     private CompanyProfile company;
 
-    @OneToMany(mappedBy = "jobOffers", cascade = {CascadeType.PERSIST,
-        CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobOffers",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<HRManager> recruiters;
 
-    @ManyToMany(mappedBy = "registeredOffers", cascade = {CascadeType.PERSIST,
-        CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "registeredOffers",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Candidate> registeredCandidates;
 
     public JobOffer() {
@@ -104,9 +104,6 @@ public class JobOffer implements Serializable {
     public Date getDateOfCreation() {
         return dateOfCreation;
     }
-
-    
-
 
     public String getDescription() {
         return description;
@@ -163,8 +160,6 @@ public class JobOffer implements Serializable {
     public void setRegisteredCandidates(List<Candidate> registeredCandidates) {
         this.registeredCandidates = registeredCandidates;
     }
-    
-    
 
     @Override
     public int hashCode() {

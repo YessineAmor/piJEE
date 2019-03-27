@@ -35,6 +35,7 @@ public class CompanyProfile implements Serializable {
     @JoinColumn(name = "COMPANY_ID")
     private Long id;
 
+    private String name;
     private String picName;
     private int numViews;
     private String summary;
@@ -42,17 +43,17 @@ public class CompanyProfile implements Serializable {
     private String website;
     private String companySize;
     private int dateOfCreation;
-    
-    @OneToOne
-    @JoinColumn(name = "FK_CA_ID")
+
+    @OneToOne(mappedBy = "companyProfile", fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private CompanyAdmin companyAdmin;
 
     @OneToMany(mappedBy = "company")
     private List<JobOffer> listOfOffers;
-    
-    @ManyToMany(mappedBy = "subscribedCompanies", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private List<Candidate> subscribers; 
+
+    @ManyToMany(mappedBy = "subscribedCompanies",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Candidate> subscribers;
 
     public Long getId() {
         return id;
@@ -60,6 +61,14 @@ public class CompanyProfile implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPicName() {
@@ -142,7 +151,6 @@ public class CompanyProfile implements Serializable {
         this.subscribers = subscribers;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
