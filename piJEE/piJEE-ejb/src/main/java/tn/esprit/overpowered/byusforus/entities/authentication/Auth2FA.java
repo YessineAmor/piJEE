@@ -33,6 +33,21 @@ public class Auth2FA implements Serializable {
     
     private int token;
 
+    public int getToken() {
+        return token;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Auth2FA() {
+    }
+
     public Auth2FA(int token, String uid, User user) {
         this.token = token;
         this.uid = uid;
