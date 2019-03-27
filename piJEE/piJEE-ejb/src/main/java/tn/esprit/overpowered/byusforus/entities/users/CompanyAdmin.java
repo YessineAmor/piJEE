@@ -6,11 +6,13 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
  *
@@ -31,7 +33,15 @@ public class CompanyAdmin extends Employee implements Serializable {
     public void setCompanyProfile(CompanyProfile companyProfile) {
         this.companyProfile = companyProfile;
     }
-    
-    
+
+    @Override
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    @Override
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
 
 }

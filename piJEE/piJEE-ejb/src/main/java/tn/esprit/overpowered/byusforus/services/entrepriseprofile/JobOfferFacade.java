@@ -91,24 +91,11 @@ public class JobOfferFacade extends AbstractFacade<JobOffer> implements JobOffer
     public List<JobOffer> viewOffersByUserSkill(List<JobOffer> offers, Long idUser) {
         
         List<JobOffer> userSkillOffers = new ArrayList<>();
-        User user = em.find(User.class, idUser);
+        Candidate user = em.find(Candidate.class, idUser);
 
         Set<Skill> userSkills = new HashSet<>();
         
-        
-
-        if (user instanceof Candidate) {
-            userSkills = ((Candidate) user).getSkills();
-        } else if (user instanceof Employee) {
-            userSkills = ((Employee) user).getSkills();
-        } else if (user instanceof HRManager) {
-            userSkills = ((HRManager) user).getSkills();
-        } else if (user instanceof ProjectManager) {
-            userSkills = ((ProjectManager) user).getSkills();
-        } else if (user instanceof CompanyAdmin) {
-            userSkills = ((CompanyAdmin) user).getSkills();
-        }
-        else return offers;
+        userSkills = user.getSkills();
 
         for (Skill skill : userSkills) {
             for (JobOffer j : offers) {

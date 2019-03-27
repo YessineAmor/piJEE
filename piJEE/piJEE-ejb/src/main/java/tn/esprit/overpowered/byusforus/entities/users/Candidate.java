@@ -78,7 +78,7 @@ public class Candidate extends User implements Serializable {
     @JoinTable(name = "T_CANDIDATE_Skills")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Skill> skills;
+    protected Set<Skill> skills;
 
     private int visits;
 
