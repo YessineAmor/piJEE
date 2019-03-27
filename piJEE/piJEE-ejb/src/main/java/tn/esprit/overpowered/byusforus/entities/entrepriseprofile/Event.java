@@ -22,9 +22,12 @@ public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EV_ID")
+    @Column(name = "EVENT_ID")
     private Long id;
 
+    private String name;
+    
+   
     public Long getId() {
         return id;
     }

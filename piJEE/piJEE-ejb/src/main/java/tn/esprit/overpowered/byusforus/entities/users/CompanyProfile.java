@@ -29,7 +29,7 @@ public class CompanyProfile implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "CP_ID")
+    @JoinColumn(name = "COMPANY_ID")
     private Long id;
 
     private String picName;
@@ -44,8 +44,7 @@ public class CompanyProfile implements Serializable {
     @JoinColumn(name = "FK_CA_ID")
     private CompanyAdmin companyAdmin;
 
-    @OneToMany
-    @JoinTable(name = "C_CP_JB",joinColumns={@JoinColumn(name = "CP_ID")},inverseJoinColumns={@JoinColumn(name = "JO_ID")})
+    @OneToMany(mappedBy = "company")
     private List<JobOffer> listOfOffers;
 
     public Long getId() {
