@@ -7,6 +7,8 @@ package tn.esprit.overpowered.byusforus.services.authentication;
 
 import java.security.NoSuchAlgorithmException;
 import javax.ejb.Remote;
+import javax.persistence.EntityManager;
+import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 
 /**
  *
@@ -15,6 +17,7 @@ import javax.ejb.Remote;
 @Remote
 public interface AuthenticationFacadeRemote {
 
+    Session finalizeLogin(String uid, String auth2FAToken);
     String login(String username, String password) throws NoSuchAlgorithmException;
 
     int logout();
