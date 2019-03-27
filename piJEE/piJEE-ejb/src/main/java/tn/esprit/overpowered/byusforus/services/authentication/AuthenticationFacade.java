@@ -59,15 +59,6 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
         if (user == null)
             return null;
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        /*
-        byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
-        byte[] pwdSalt = new byte[passwordBytes.length + user.getSalt().length];
-        System.arraycopy(passwordBytes, 0, pwdSalt, 0, passwordBytes.length);
-        System.arraycopy(user.getSalt(), 0, pwdSalt, passwordBytes.length, user.getSalt().length);
-        byte[] encodedhash = digest.digest(
-               passwordBytes);*/
-
-        //email is : pidevnoreply@gmail.com
         byte[] hashBytes = new byte[pwd.length + user.getSalt().length];
         System.arraycopy(pwd, 0, hashBytes, 0, pwd.length);
         System.arraycopy(user.getSalt(), 0, hashBytes, pwd.length, user.getSalt().length);
