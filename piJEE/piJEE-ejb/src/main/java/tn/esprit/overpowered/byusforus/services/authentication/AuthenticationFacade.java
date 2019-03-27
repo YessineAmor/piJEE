@@ -12,12 +12,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import tn.esprit.overpowered.byusforus.entities.authentication.Auth2FA;
+import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 import tn.esprit.overpowered.byusforus.entities.users.User;
+import tn.esprit.overpowered.byusforus.services.users.UserFacade;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
  *
@@ -34,16 +40,24 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
     }
 
     @Override
+    public Session finalizeLogin(String uid, String auth2FAToken) {
+        Auth2FA auth2FA = new Auth2FAFacade().geAuth2FAByUid(em, uid, auth2FAToken);
+        if (auth2FA == null)
+            return null;
+        
+        Session s = new Session();
+        s.setUid(auth2FA.getUid());
+        s.setUser(auth2FA.getUser());
+        em.remove(auth2FA);
+        em.persist(s);
+        return s;
+    }
+    @Override
     public String login(String username, String password) throws NoSuchAlgorithmException {
         byte[] pwd = password.getBytes(StandardCharsets.UTF_8);
-        TypedQuery<User> query
-                = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
-        query = query.setParameter("username", username);
-        List<User> userList = query.getResultList();
-        if (userList.isEmpty()) {
+        User user = new UserFacade().getUserByUsername(em, username);
+        if (user == null)
             return null;
-        }
-        User user = userList.get(0);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         /*
         byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
@@ -64,7 +78,15 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
             Auth2FA towFactorAuth = new Auth2FA(token, uid, user);
             // Persist 2FA token
             em.persist(towFactorAuth);
-            // Send email
+            try {
+                // Send email
+                if (MailSender.sendMail("smtp.gmail.com", "587",
+                        "REDACTED", "REDACTED",
+                        "pidevpidev", user.getEmail(), "Your code is " + towFactorAuth.getToken()))
+                    return towFactorAuth.getUid();
+            } catch (MessagingException ex) {
+                Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return uid;
         } else {
             return null;
