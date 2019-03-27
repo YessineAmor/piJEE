@@ -6,8 +6,10 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
  *
@@ -17,5 +19,13 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "PROJECT_MANAGER")
 public class ProjectManager extends Employee implements Serializable {
 
-    
+    @Override
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    @Override
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
 }
