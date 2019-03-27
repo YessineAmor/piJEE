@@ -30,4 +30,5 @@ public interface ExperienceFacadeLocal {
 
     int count();
     
+    public Long createExp(Experience experience);
 }

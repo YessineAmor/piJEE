@@ -5,17 +5,18 @@
  */
 package tn.esprit.overpowered.byusforus.entities.users;
 
-import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
@@ -32,7 +33,7 @@ public class CompanyProfile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "CP_ID")
     private Long id;
-
+    private String name;
     private String picName;
     private int numViews;
     private String summary;
@@ -40,6 +41,8 @@ public class CompanyProfile implements Serializable {
     private String website;
     private String companySize;
     private int dateOfCreation;
+    @ManyToMany
+    private List<Candidate> followers;
     
     @OneToOne
     @JoinColumn(name = "FK_CA_ID")
@@ -112,6 +115,39 @@ public class CompanyProfile implements Serializable {
     public void setDateOfCreation(int dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
+
+    public List<Candidate> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Candidate> followers) {
+        this.followers = followers;
+    }
+
+    public CompanyAdmin getCompanyAdmin() {
+        return companyAdmin;
+    }
+
+    public void setCompanyAdmin(CompanyAdmin companyAdmin) {
+        this.companyAdmin = companyAdmin;
+    }
+
+    public List<JobOffer> getListOfOffers() {
+        return listOfOffers;
+    }
+
+    public void setListOfOffers(List<JobOffer> listOfOffers) {
+        this.listOfOffers = listOfOffers;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 
     @Override
     public int hashCode() {

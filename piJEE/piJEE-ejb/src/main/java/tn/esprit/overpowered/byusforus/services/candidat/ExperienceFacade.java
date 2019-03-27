@@ -29,5 +29,12 @@ public class ExperienceFacade extends AbstractFacade<Experience> implements Expe
     public ExperienceFacade() {
         super(Experience.class);
     }
+
+    @Override
+    public Long createExp(Experience experience) {
+        em.persist(experience);
+        return experience.getId();
+    }
+    
     
 }

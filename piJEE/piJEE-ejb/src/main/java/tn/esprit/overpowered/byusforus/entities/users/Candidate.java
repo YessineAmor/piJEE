@@ -47,12 +47,12 @@ public class Candidate extends User implements Serializable {
 
     private int recommendations;
     
-    @OneToMany(mappedBy="candidate")
+    @OneToMany(mappedBy="candidate",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
-    /*
-    @OneToMany(mappedBy = "candidateSub", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    
+    @ManyToMany(mappedBy = "followers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CompanyProfile> subscriptions;
-    */
+    
     @ElementCollection(targetClass=String.class)
     private List<String> activities;
 
@@ -61,10 +61,10 @@ public class Candidate extends User implements Serializable {
 
     private String curriculumVitaes;
 
-    @OneToMany(mappedBy = "candidateCursus")
+    @OneToMany(mappedBy = "candidateCursus",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cursus> cursus;
 
-    @ManyToMany
+    @ManyToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Candidate> contacts;
 
     private int visits;
@@ -140,6 +140,14 @@ public class Candidate extends User implements Serializable {
 
     public void setVisits(int visits) {
         this.visits = visits;
+    }
+
+    public List<CompanyProfile> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<CompanyProfile> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 
 }

@@ -30,4 +30,5 @@ public interface ExperienceFacadeRemote {
 
     int count();
     
+    public Long createExp(Experience experience);
 }
