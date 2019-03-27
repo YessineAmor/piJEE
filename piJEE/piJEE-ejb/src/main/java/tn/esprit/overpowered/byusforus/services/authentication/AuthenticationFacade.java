@@ -80,6 +80,7 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
             em.persist(towFactorAuth);
             try {
                 // Send email
+                // Username and password are redacted
                 if (MailSender.sendMail("smtp.gmail.com", "587",
                         "REDACTED", "REDACTED",
                         "pidevpidev", user.getEmail(), "Your code is " + towFactorAuth.getToken()))
