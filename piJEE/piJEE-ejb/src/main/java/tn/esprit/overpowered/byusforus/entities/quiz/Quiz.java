@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.entities.quiz;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Quiz implements Serializable {
     private String name;
     private String details;
     private float percentageToPass;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<Question> questions;
     // TO DO:
     // Add Job Offer Field (LAUREL)
@@ -69,6 +70,14 @@ public class Quiz implements Serializable {
 
     public void setPercentageToPass(float percentageToPass) {
         this.percentageToPass = percentageToPass;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Override

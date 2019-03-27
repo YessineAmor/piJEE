@@ -16,7 +16,7 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
  * @author Yassine
  */
 @Stateless
-public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFacadeLocal,QuizTryFacadeRemote {
+public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFacadeLocal, QuizTryFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -29,5 +29,4 @@ public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFac
     public QuizTryFacade() {
         super(QuizTry.class);
     }
-    
 }
