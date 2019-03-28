@@ -5,10 +5,12 @@
  */
 package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
@@ -29,5 +31,74 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     public CompanyAdminFacade() {
         super(CompanyAdmin.class);
     }
-    
+
+    @Override
+    public Long addCompanyAdmin(CompanyAdmin companyAdmin) {
+        this.create(companyAdmin);
+        return companyAdmin.getId();
+    }
+
+    @Override
+    public void updateCompanyAdmin(CompanyAdmin companyAdmin) {
+        this.edit(companyAdmin);
+    }
+
+    @Override
+    public void deleteCompanyAdmin(Long idAdmin) {
+        this.remove(this.find(idAdmin));
+    }
+
+    @Override
+    public void bindCompanyAdminToCompanyProfile(Long idAmin, Long idComp) {
+        CompanyAdmin compAdmin = this.find(idAmin);
+        CompanyProfile compProfile = em.find(CompanyProfile.class, idComp);
+
+        if ((compProfile != null) && (compAdmin != null)) {
+            compAdmin.setCompanyProfile(compProfile);
+        }
+
+    }
+
+    @Override
+    public void createCompanyProfile(CompanyProfile compProfile) {
+        em.persist(compProfile);
+    }
+
+    @Override
+    public void updateCompanyProfile(CompanyProfile compProfile) {
+        em.merge(compProfile);
+
+    }
+
+    @Override
+    public CompanyProfile viewCompanyProfile(Long idComp) {
+        if ((em.find(CompanyProfile.class, idComp)) != null) {
+            return em.find(CompanyProfile.class, idComp);
+        } else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<CompanyProfile> searchCompanyProfileByName(String name) {
+        List<CompanyProfile> companies = em.createQuery(
+                "select p from CompanyProfile p where p.name"
+                + " LIKE CONCAT('%',:nom,'%')",
+                CompanyProfile.class).setParameter("nom", name).getResultList();
+        return companies;
+    }
+
+    @Override
+    public CompanyProfile searchCompanyProfileById(Long id) {
+        return em.find(CompanyProfile.class, id);
+    }
+
+    @Override
+    public void deleteCompanyProfile(Long idComp) {
+        CompanyProfile company = em.find(CompanyProfile.class, idComp);
+        
+        em.remove(company);
+    }
+
 }
