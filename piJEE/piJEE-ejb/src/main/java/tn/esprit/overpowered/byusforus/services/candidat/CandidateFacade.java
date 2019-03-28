@@ -97,8 +97,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public Long subscribe(Long companyId, Long candidateId) {
         CompanyProfile comp = em.find(CompanyProfile.class, companyId);
         Candidate cdt = em.find(Candidate.class, candidateId);
-        comp.getFollowers().add(cdt);
-        cdt.getSubscriptions().add(comp);
+        comp.getSubscribers().add(cdt);
+        cdt.getSubscribedCompanies().add(comp);
         return comp.getId();
     }
 

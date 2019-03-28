@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities.quiz;
+package tn.esprit.overpowered.byusforus.services.authentication;
+
+import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
- * @author Yassine
+ * @author aminos
  */
-public enum QuestionType {
-    SINGLE_ANSWER, MULTI_ANSWER, FILL_IN_BLANKS, DRAG_AND_DROP
+@Remote
+public interface Auth2FAFacadeRemote {
+    
 }

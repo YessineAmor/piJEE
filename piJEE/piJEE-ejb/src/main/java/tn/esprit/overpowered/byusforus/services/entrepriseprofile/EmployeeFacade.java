@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
+import tn.esprit.overpowered.byusforus.entities.users.User;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 
@@ -30,5 +31,5 @@ public class EmployeeFacade extends AbstractFacade<Employee> implements Employee
     public EmployeeFacade() {
         super(Employee.class);
     }
-    
+      
 }

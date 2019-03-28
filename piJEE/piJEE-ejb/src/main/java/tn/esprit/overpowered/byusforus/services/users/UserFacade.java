@@ -5,10 +5,12 @@
  */
 package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.List;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import tn.esprit.overpowered.byusforus.entities.users.User;
 
 /**
@@ -29,5 +31,16 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal,
     public UserFacade() {
         super(User.class);
     }
-    
+
+    public User getUserByUsername(EntityManager em, String username) {
+        TypedQuery<User> query
+                = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+        query = query.setParameter("username", username);
+        List<User> userList = query.getResultList();
+        if (userList.isEmpty()) {
+            return null;
+        } else
+            return userList.get(0);
+    }
+
 }

@@ -7,9 +7,11 @@ package tn.esprit.overpowered.byusforus.entities.quiz;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,10 +29,10 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQuestion;
     private String questionText;
-    private float questionPoints;
+    private int questionPoints;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Choice> choices;
 
     public Long getIdQuestion() {
@@ -53,7 +55,7 @@ public class Question implements Serializable {
         return questionPoints;
     }
 
-    public void setQuestionPoints(float questionPoints) {
+    public void setQuestionPoints(int questionPoints) {
         this.questionPoints = questionPoints;
     }
 
@@ -72,8 +74,6 @@ public class Question implements Serializable {
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -99,5 +99,4 @@ public class Question implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.Question[ id=" + idQuestion + " ]";
     }
-    
 }

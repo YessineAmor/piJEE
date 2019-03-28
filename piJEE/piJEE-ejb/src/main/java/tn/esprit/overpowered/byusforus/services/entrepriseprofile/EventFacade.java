@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services.quiz;
+package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
-import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 
 /**
  *
- * @author Yassine
+ * @author pc
  */
 @Stateless
-public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFacadeLocal, QuizTryFacadeRemote {
+public class EventFacade extends AbstractFacade<Event> implements EventFacadeLocal, EventFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -26,7 +25,8 @@ public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFac
         return em;
     }
 
-    public QuizTryFacade() {
-        super(QuizTry.class);
+    public EventFacade() {
+        super(Event.class);
     }
+
 }

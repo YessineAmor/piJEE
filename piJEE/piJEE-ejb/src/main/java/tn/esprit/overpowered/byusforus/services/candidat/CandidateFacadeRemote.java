@@ -52,6 +52,8 @@ public interface CandidateFacadeRemote {
     public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId);
     
     public Long createCandidate(Candidate candidate);
+    
+    public Long recommend(Long candidateId);
             
     
     

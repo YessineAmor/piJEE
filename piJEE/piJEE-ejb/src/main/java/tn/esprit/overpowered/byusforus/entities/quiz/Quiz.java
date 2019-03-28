@@ -7,11 +7,15 @@ package tn.esprit.overpowered.byusforus.entities.quiz;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 
 /**
  *
@@ -27,11 +31,14 @@ public class Quiz implements Serializable {
     private String name;
     private String details;
     private float percentageToPass;
-    @OneToMany
+    private int duration;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<Question> questions;
-    // TO DO:
-    // Add Job Offer Field (LAUREL)
-    // A job offer can have many quizzes. 
+    @ManyToOne
+    private JobOffer jobOffer;
+
+    public Quiz() {
+    }
 
     public Quiz(String name, String details, float percentageToPass) {
         this.name = name;
@@ -69,6 +76,30 @@ public class Quiz implements Serializable {
 
     public void setPercentageToPass(float percentageToPass) {
         this.percentageToPass = percentageToPass;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public JobOffer getJobOffer() {
+        return jobOffer;
+    }
+
+    public void setJobOffer(JobOffer jobOffer) {
+        this.jobOffer = jobOffer;
     }
 
     @Override

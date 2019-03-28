@@ -1,22 +1,24 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.services.quiz;
+package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
-import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 
 /**
  *
- * @author Yassine
+ * @author pc
  */
 @Stateless
-public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFacadeLocal, QuizTryFacadeRemote {
+public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> implements CompanyProfileFacadeLocal {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -26,7 +28,8 @@ public class QuizTryFacade extends AbstractFacade<QuizTry> implements QuizTryFac
         return em;
     }
 
-    public QuizTryFacade() {
-        super(QuizTry.class);
+    public CompanyProfileFacade() {
+        super(CompanyProfile.class);
     }
+    
 }

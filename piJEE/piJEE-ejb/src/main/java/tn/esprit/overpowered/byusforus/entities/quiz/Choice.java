@@ -6,12 +6,10 @@
 package tn.esprit.overpowered.byusforus.entities.quiz;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 /**
  *
@@ -27,6 +25,13 @@ public class Choice implements Serializable {
     private String choiceText;
     private Boolean isCorrectChoice;
     private float choicePoints;
+
+    public Choice() {
+        this.isCorrectChoice = false;
+        this.choicePoints = 0;
+    }
+    
+    
     
     public Long getIdChoice() {
         return idChoice;
@@ -87,5 +92,4 @@ public class Choice implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.Choice[ id=" + idChoice + " ]";
     }
-
 }

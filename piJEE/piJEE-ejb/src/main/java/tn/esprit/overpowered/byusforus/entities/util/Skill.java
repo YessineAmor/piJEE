@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities.quiz;
+package tn.esprit.overpowered.byusforus.entities.util;
 
 /**
  *
- * @author Yassine
+ * @author pc
  */
-public enum QuestionType {
-    SINGLE_ANSWER, MULTI_ANSWER, FILL_IN_BLANKS, DRAG_AND_DROP
+public enum Skill {
+PYTHON,
+JAVA,
+SOC
+    
 }
