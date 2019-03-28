@@ -9,19 +9,24 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import tn.esprit.overpowered.byusforus.entities.candidat.Certificate;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
-
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
  *
@@ -30,7 +35,6 @@ import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 @Entity
 @DiscriminatorValue(value = "CANDIDATE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "CANDIDATE_TYPE")
 public class Candidate extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,14 +50,14 @@ public class Candidate extends User implements Serializable {
     }
 
     private int recommendations;
-    
-    @OneToMany(mappedBy="candidate")
+
+    @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
-    /*
-    @OneToMany(mappedBy = "candidateSub", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CompanyProfile> subscriptions;
-    */
-    @ElementCollection(targetClass=String.class)
+    
+    @ManyToMany( fetch = FetchType.LAZY)
+    private List<CompanyProfile> subscribedCompanies;
+     
+    @ElementCollection(targetClass = String.class)
     private List<String> activities;
 
     @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -66,6 +70,15 @@ public class Candidate extends User implements Serializable {
 
     @ManyToMany
     private Set<Candidate> contacts;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<JobOffer> registeredOffers;
+
+    @ElementCollection(targetClass = Skill.class)
+    @JoinTable(name = "T_CANDIDATE_Skills")
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    protected Set<Skill> skills;
 
     private int visits;
 
@@ -84,15 +97,16 @@ public class Candidate extends User implements Serializable {
     public void setExperiences(List<Experience> experiences) {
         this.experiences = experiences;
     }
-    /*
-    public List<CompanyProfile> getSubscriptions() {
-        return subscriptions;
+
+    public List<CompanyProfile> getSubscribedCompanies() {
+        return subscribedCompanies;
     }
 
-    public void setSubscriptions(List<CompanyProfile> subscriptions) {
-        this.subscriptions = subscriptions;
+    public void setSubscribedCompanies(List<CompanyProfile> subscribedCompanies) {
+        this.subscribedCompanies = subscribedCompanies;
     }
-    */
+
+
     public List<String> getActivities() {
         return activities;
     }
@@ -124,7 +138,6 @@ public class Candidate extends User implements Serializable {
     public void setCursus(List<Cursus> cursus) {
         this.cursus = cursus;
     }
-    
 
     public Set<Candidate> getContacts() {
         return contacts;
@@ -132,6 +145,22 @@ public class Candidate extends User implements Serializable {
 
     public void setContacts(Set<Candidate> contacts) {
         this.contacts = contacts;
+    }
+
+    public List<JobOffer> getRegisteredOffers() {
+        return registeredOffers;
+    }
+
+    public void setRegisteredOffers(List<JobOffer> registeredOffers) {
+        this.registeredOffers = registeredOffers;
+    }
+
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
     }
 
     public int getVisits() {

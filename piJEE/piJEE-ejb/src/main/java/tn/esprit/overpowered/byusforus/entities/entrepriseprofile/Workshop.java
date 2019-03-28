@@ -3,42 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.entities.quiz;
+package tn.esprit.overpowered.byusforus.entities.entrepriseprofile;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
- * @author Yassine
+ * @author pc
  */
 @Entity
-public class Answer implements Serializable {
+public class Workshop implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "WO_ID")
     private Long id;
-    @ManyToOne
-    private Question question;
-    @ManyToOne
-    private Choice choice;
-    // Waiting for the user class to be created
-    // private User user;
-
-    public Answer() {
-    }
-
-    public Answer(Question question, Choice choice) {
-        this.question = question;
-        this.choice = choice;
-    }
-    
-    
 
     public Long getId() {
         return id;
@@ -58,10 +43,10 @@ public class Answer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Answer)) {
+        if (!(object instanceof Workshop)) {
             return false;
         }
-        Answer other = (Answer) object;
+        Workshop other = (Workshop) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -70,7 +55,7 @@ public class Answer implements Serializable {
 
     @Override
     public String toString() {
-        return "tn.esprit.overpowered.byusforus.entities.Answer[ id=" + id + " ]";
+        return "tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Workshop[ id=" + id + " ]";
     }
-    
+
 }

@@ -6,12 +6,13 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
  *
@@ -21,6 +22,26 @@ import javax.persistence.Id;
 @DiscriminatorValue(value = "COMPANY_ADMIN")
 public class CompanyAdmin extends Employee implements Serializable {
 
-    
-    
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_COMP_ADMIN_ID")
+    private CompanyProfile companyProfile;
+
+    public CompanyProfile getCompanyProfile() {
+        return companyProfile;
+    }
+
+    public void setCompanyProfile(CompanyProfile companyProfile) {
+        this.companyProfile = companyProfile;
+    }
+
+    @Override
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    @Override
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
+
 }
