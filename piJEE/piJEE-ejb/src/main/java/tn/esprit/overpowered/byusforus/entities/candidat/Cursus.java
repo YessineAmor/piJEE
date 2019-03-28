@@ -35,6 +35,8 @@ public class Cursus implements Serializable {
     private Date endDate;
     private String degree;
     private String university;
+    @ManyToOne
+    private Candidate candidateCursus;
 
     public Cursus() {
     }
@@ -72,10 +74,6 @@ public class Cursus implements Serializable {
     public void setUniversity(String university) {
         this.university = university;
     }
-
-    
-    @ManyToOne
-    private Candidate candidateCursus;
     
     public Long getId() {
         return id;

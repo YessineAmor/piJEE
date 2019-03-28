@@ -54,7 +54,7 @@ public class Candidate extends User implements Serializable {
 
     private int recommendations;
 
-    @OneToMany(mappedBy = "candidate")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -69,12 +69,12 @@ public class Candidate extends User implements Serializable {
 
     private List<String> activities;
 
-    @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Certificate> certificates;
 
     private String curriculumVitaes;
 
-    @OneToMany(mappedBy = "candidateCursus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cursus> cursus;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
