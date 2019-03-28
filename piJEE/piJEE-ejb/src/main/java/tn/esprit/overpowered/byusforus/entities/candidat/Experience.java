@@ -9,6 +9,8 @@ import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +51,7 @@ public class Experience implements Serializable {
 
     @ManyToOne
     private Candidate candidateExp;
-    
+    @Enumerated(EnumType.STRING)
     private Skill skills;
     
     public Long getId() {
@@ -108,13 +110,6 @@ public class Experience implements Serializable {
         this.endDate = endDate;
     }
 
-    public Skill getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Skill skills) {
-        this.skills = skills;
-    }
 
     
 }
