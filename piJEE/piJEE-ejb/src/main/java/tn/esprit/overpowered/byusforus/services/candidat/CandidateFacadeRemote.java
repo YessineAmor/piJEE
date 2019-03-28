@@ -7,7 +7,10 @@ package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
 import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 
 /**
  *
@@ -30,4 +33,30 @@ public interface CandidateFacadeRemote {
 
     int count();
     
+    public Candidate searchByName(String name);
+    
+    public Candidate searchByLastname(String lastname);
+    
+    public List<Candidate> searchByPosition(String position);
+    
+    public Long addContact(Long candidateId);
+    
+    public CompanyProfile searchCompany(String companyName);
+    
+    public Long subscribe(Long companyId, Long candidateId);
+    
+    public void affecterExperienceCandidate(Long expId,  Long candidateId);
+    
+    public List<JobOffer> customJobOfferList(Long candidateId);
+    
+    public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId);
+    
+    public Long createCandidate(Candidate candidate);
+    
+    public Long recommend(Long candidateId);
+            
+    
+    
+    
+   
 }

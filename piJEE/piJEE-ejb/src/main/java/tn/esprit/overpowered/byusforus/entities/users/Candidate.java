@@ -19,6 +19,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -32,6 +33,8 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
  *
  * @author EliteBook
  */
+
+
 @Entity
 @DiscriminatorValue(value = "CANDIDATE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -53,11 +56,17 @@ public class Candidate extends User implements Serializable {
 
     @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
-    
-    @ManyToMany( fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "subscriptions", joinColumns
+            = {
+                @JoinColumn(name = "candidate_id")}, inverseJoinColumns
+            = {
+                @JoinColumn(name = "company_id")})
     private List<CompanyProfile> subscribedCompanies;
-     
+
     @ElementCollection(targetClass = String.class)
+
     private List<String> activities;
 
     @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -65,10 +74,10 @@ public class Candidate extends User implements Serializable {
 
     private String curriculumVitaes;
 
-    @OneToMany(mappedBy = "candidateCursus")
+    @OneToMany(mappedBy = "candidateCursus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cursus> cursus;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Candidate> contacts;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -105,7 +114,6 @@ public class Candidate extends User implements Serializable {
     public void setSubscribedCompanies(List<CompanyProfile> subscribedCompanies) {
         this.subscribedCompanies = subscribedCompanies;
     }
-
 
     public List<String> getActivities() {
         return activities;
@@ -172,3 +180,5 @@ public class Candidate extends User implements Serializable {
     }
 
 }
+
+
