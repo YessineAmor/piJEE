@@ -10,6 +10,7 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
@@ -136,6 +137,60 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         Candidate cdt = em.find(Candidate.class, candidateId);
         cdt.setRecommendations(cdt.getRecommendations() + 1);
         return cdt.getId();
+    }
+
+    @Override
+    public Long createCursus(Cursus cursus) {
+        em.persist(cursus);
+        return cursus.getId();
+    }
+
+    @Override
+    public void deleteCursus(Long cursusId) {
+        Cursus act = em.find(Cursus.class, cursusId);
+        em.remove(getEntityManager().merge(act));
+    }
+
+    @Override
+    public Long updateCursus(Cursus cursus) {
+         getEntityManager().merge(cursus);
+         return cursus.getId();
+    }
+
+    @Override
+    public Cursus findCursus(Long cursusId) {
+        return em.find(Cursus.class, cursusId);
+    }
+
+    @Override
+    public void affecterCursusCandidate(Long candidateId, Long cursusId) {
+        Candidate cdt = em.find(Candidate.class, candidateId);
+        Cursus cur = em.find(Cursus.class, cursusId);
+        cdt.getCursus().add(cur);
+        cur.setCandidateCursus(cdt);
+    }
+
+    @Override
+    public Long createExperience(Experience experience) {
+        em.persist(experience);
+       return experience.getId();
+    }
+
+    @Override
+    public void deleteExperience(Long experienceId) {
+        Experience act = em.find(Experience.class, experienceId);
+        em.remove(getEntityManager().merge(act));
+    }
+
+    @Override
+    public Long updateExperience(Experience experience) {
+        getEntityManager().merge(experience);
+         return experience.getId();
+    }
+
+    @Override
+    public Experience findExperience(Long experienceId) {
+        return em.find(Experience.class, experienceId);
     }
 
 }
