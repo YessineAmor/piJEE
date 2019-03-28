@@ -29,5 +29,7 @@ public interface CompanyProfileFacadeRemote {
     List<CompanyProfile> findRange(int[] range);
 
     int count();
+    //for testing purposes
+    public Long createCompany(CompanyProfile company);
     
 }

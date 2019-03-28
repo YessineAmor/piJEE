@@ -16,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import tn.esprit.overpowered.byusforus.entities.candidat.Certificate;
@@ -50,7 +52,8 @@ public class Candidate extends User implements Serializable {
     @OneToMany(mappedBy="candidate",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
     
-    @ManyToMany(mappedBy = "followers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "subscriptions",joinColumns={@JoinColumn(name = "candidate_id")},inverseJoinColumns={@JoinColumn(name = "company_id")})
     private List<CompanyProfile> subscriptions;
     
     @ElementCollection(targetClass=String.class)

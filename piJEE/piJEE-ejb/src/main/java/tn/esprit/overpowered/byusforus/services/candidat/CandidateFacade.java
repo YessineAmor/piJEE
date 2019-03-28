@@ -37,14 +37,16 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public List<Candidate> afficherCandidats() {
-        List<Candidate> Lcandidats = em.createQuery("select p from Candidat p", Candidate.class).getResultList();
+        List<Candidate> Lcandidats = em.createQuery("select p from Candidate p",
+                Candidate.class).getResultList();
         return Lcandidats;
     }
 
     @Override
     public Candidate searchByName(String name) {
         Candidate cdt = (Candidate) em.createQuery(
-                "SELECT c FROM Candidate c WHERE c.name LIKE :name")
+                "SELECT c FROM Candidate c WHERE "
+                        + "c.name LIKE CONCAT('%',:name,'%')")
                 .setParameter("name", name)
                 .setMaxResults(1)
                 .getResultList();
@@ -54,7 +56,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public Candidate searchByLastname(String lastname) {
         Candidate cdt = (Candidate) em.createQuery(
-                "SELECT c FROM Candidate c WHERE c.lastname LIKE :lastname")
+                "SELECT c FROM Candidate c WHERE c.lastname LIKE "
+                        + "CONCAT('%',:lastname,'%')")
                 .setParameter("name", lastname)
                 .setMaxResults(1)
                 .getResultList();
@@ -64,16 +67,15 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public List<Candidate> searchByPosition(String position) {
         List<Candidate> cdts = this.findAll();
-        for(Candidate cdt: cdts)
-        {
-            for(Experience exp:cdt.getExperiences())
-            {
-                if(exp.getPosition().equals(position))
+        for (Candidate cdt : cdts) {
+            for (Experience exp : cdt.getExperiences()) {
+                if (exp.getPosition().equals(position)) {
                     cdts.add(cdt);
+                }
             }
         }
         return cdts;
-        
+
     }
 
     @Override
@@ -102,16 +104,38 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
-      Experience exp = em.find(Experience.class, expId);
-      Candidate emp = em.find(Candidate.class, candidateId);
-      emp.getExperiences().add(exp);
-      exp.setCandidate(emp);
-        
+        Experience exp = em.find(Experience.class, expId);
+        Candidate emp = em.find(Candidate.class, candidateId);
+        emp.getExperiences().add(exp);
+        exp.setCandidate(emp);
+
     }
 
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId) {
+        return em.createNativeQuery("select * from companyprofile, subscriptions"
+                + "  where companyprofile.id = subscriptions.company_id and "
+                + " subscriptions.candidate_id = :candidateId group "
+                + "by company_id ", CompanyProfile.class).getResultList();
+    }
+
+    @Override
+    public Long createCandidate(Candidate candidate) {
+        em.persist(candidate);
+        return candidate.getId();
+
+    }
+
+    @Override
+    public Long recommend(Long candidateId) {
+        Candidate cdt = em.find(Candidate.class, candidateId);
+        cdt.setRecommendations(cdt.getRecommendations() + 1);
+        return cdt.getId();
     }
 
 }

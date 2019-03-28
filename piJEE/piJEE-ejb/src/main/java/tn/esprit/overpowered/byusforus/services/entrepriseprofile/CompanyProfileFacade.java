@@ -16,7 +16,8 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
  * @author pc
  */
 @Stateless
-public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> implements CompanyProfileFacadeLocal, CompanyProfileFacadeRemote {
+public class CompanyProfileFacade extends AbstractFacade<CompanyProfile>
+        implements CompanyProfileFacadeLocal, CompanyProfileFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -29,5 +30,11 @@ public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> impleme
     public CompanyProfileFacade() {
         super(CompanyProfile.class);
     }
-    
+
+    @Override
+    public Long createCompany(CompanyProfile company) {
+         em.persist(company);
+         return company.getId();
+    }
+
 }

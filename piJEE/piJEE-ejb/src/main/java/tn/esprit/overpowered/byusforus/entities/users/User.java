@@ -63,6 +63,13 @@ public class User implements Serializable{
     public void setUsername(String username) {
         this.username = username;
     }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public byte[] getSalt() {
         return salt;
@@ -91,8 +98,6 @@ public class User implements Serializable{
     
     @Column(columnDefinition="BINARY(32) NOT NULL")
     private byte[] password;
-    public Long getId() {
-        return this.id;
-    }
+    
 
 }

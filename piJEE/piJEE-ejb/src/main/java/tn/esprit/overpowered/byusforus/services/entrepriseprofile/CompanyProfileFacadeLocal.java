@@ -30,4 +30,7 @@ public interface CompanyProfileFacadeLocal {
 
     int count();
     
+     //for testing purposes
+    public Long createCompany(CompanyProfile company);
+    
 }

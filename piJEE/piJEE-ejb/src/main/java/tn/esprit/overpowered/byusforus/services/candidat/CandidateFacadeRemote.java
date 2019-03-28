@@ -48,6 +48,10 @@ public interface CandidateFacadeRemote {
     public void affecterExperienceCandidate(Long expId,  Long candidateId);
     
     public List<JobOffer> customJobOfferList(Long candidateId);
+    
+    public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId);
+    
+    public Long createCandidate(Candidate candidate);
             
     
     
