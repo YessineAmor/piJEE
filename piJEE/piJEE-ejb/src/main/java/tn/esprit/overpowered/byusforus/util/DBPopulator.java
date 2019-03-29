@@ -70,7 +70,7 @@ public class DBPopulator {
             // Quiz Info
             String quizName = "Technical Skills Evaluation";
             String quizDetails = "This quiz aims to test the candidate's technical skills in the following fields: JAVA PROGRAMMING LANGUAGE";
-            Float percentageToPass = 80f;
+            float percentageToPass = 80f;
             Quiz quiz = new Quiz();
             quiz.setDetails(quizDetails);
             quiz.setName(quizName);
