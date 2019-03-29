@@ -9,6 +9,8 @@ import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +18,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+enum Skill {
+    PYTHON,
+    C,
+    JAVA,
+    SIEM,
+    SECURITY
+}
 /**
  *
  * @author EliteBook
@@ -28,7 +36,7 @@ public class Experience implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     
     @ManyToOne
     private Candidate candidate;
@@ -38,17 +46,19 @@ public class Experience implements Serializable {
     private String orginization;
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     @ManyToOne
     private Candidate candidateExp;
+    @Enumerated(EnumType.STRING)
+    private Skill skills;
     
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -100,6 +110,6 @@ public class Experience implements Serializable {
         this.endDate = endDate;
     }
 
-    
+
     
 }

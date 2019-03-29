@@ -54,6 +54,9 @@ public class JobOffer implements Serializable {
     @Column(nullable = false)
     private String description;
 
+    private String city;
+    
+
     @Enumerated(EnumType.STRING)
     private ExpertiseLevel expertiseLevel;
 
@@ -113,6 +116,14 @@ public class JobOffer implements Serializable {
         this.description = description;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+    
     public ExpertiseLevel getExpertiseLevel() {
         return expertiseLevel;
     }
@@ -159,6 +170,7 @@ public class JobOffer implements Serializable {
 
     public void setRegisteredCandidates(List<Candidate> registeredCandidates) {
         this.registeredCandidates = registeredCandidates;
+
     }
 
     @Override
