@@ -14,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
@@ -29,7 +30,7 @@ import tn.esprit.overpowered.byusforus.util.MailSender;
  *
  * @author EliteBook
  */
-@Stateless
+@Stateful
 public class AuthenticationFacade implements AuthenticationFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
