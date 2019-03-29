@@ -21,6 +21,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue(value = "EMPLOYEE")
+//This is pure bullshit
 public class Employee extends Candidate implements Serializable {
 
     /*
