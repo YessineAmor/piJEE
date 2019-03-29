@@ -58,4 +58,40 @@ public class MailSender {
         Transport.send(message);
         return true;
     }
+    
+    public static boolean sendMail(String server, String port , String from,
+            String subject,final String username,
+            final String password, String to, String body) throws MessagingException {
+        Properties prop = new Properties();
+        prop.put("mail.smtp.auth", true);
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.host", server);
+        prop.put("mail.smtp.port", port);
+        prop.put("mail.smtp.ssl.trust", server);
+        Session session = Session.getInstance(prop, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        session.setDebug(true);
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
+        message.setRecipients(
+                Message.RecipientType.TO, InternetAddress.parse(to));
+        message.setSubject(subject);
+
+        String msg = body;
+
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setContent(msg, "text/html");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(mimeBodyPart);
+
+        message.setContent(multipart);
+
+        Transport.send(message);
+        return true;
+    }
 }
