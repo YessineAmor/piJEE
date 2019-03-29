@@ -7,6 +7,8 @@ package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
 
 import java.util.List;
 import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
 
 /**
@@ -29,5 +31,25 @@ public interface EmployeeFacadeRemote {
     List<Employee> findRange(int[] range);
 
     int count();
+    
+    //EMPLOYEE
+    public Long createEmployee(Employee employee);
+    
+    public void updateEmployee(Employee employee);
+    
+    public void deleteEmployee(Long employeeId);
+    
+    public Employee searchEmployeeById(Long employeeId);
+    
+    public List<Employee> searchEmployeeByLastName(String name);
+    
+    public List<Employee> searchEmployeeByPosition(String position);
+    
+    public Long subscribe(Long companyId, Long employeeId);
+    
+    public List<JobOffer> customJobOfferList(Long employeeId);
+    
+    public List<CompanyProfile> subscriptionList(Long employeeId);
+    
     
 }

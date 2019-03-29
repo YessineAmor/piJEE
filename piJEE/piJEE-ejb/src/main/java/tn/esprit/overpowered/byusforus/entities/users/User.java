@@ -47,6 +47,10 @@ public class User implements Serializable{
     
     @Column(unique=true)
     private String username;
+    
+    private String firstName;
+    
+    private String lastName;
 
     public String getEmail() {
         return email;
@@ -63,6 +67,24 @@ public class User implements Serializable{
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    
     public Long getId() {
         return id;
     }
