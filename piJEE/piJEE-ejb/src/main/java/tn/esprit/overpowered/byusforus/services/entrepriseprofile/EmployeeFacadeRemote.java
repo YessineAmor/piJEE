@@ -51,5 +51,7 @@ public interface EmployeeFacadeRemote {
     
     public List<CompanyProfile> subscriptionList(Long employeeId);
     
+    public Long createJobOffer(JobOffer jobOffer, Long idPManager, String gmailPassword);
+    
     
 }
