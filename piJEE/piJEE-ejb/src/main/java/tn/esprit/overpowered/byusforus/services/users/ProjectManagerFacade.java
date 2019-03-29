@@ -5,11 +5,17 @@
  */
 package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
  *
@@ -29,5 +35,12 @@ public class ProjectManagerFacade extends AbstractFacade<ProjectManager> impleme
     public ProjectManagerFacade() {
         super(ProjectManager.class);
     }
+
+    @Override
+    public Long createJobOffer(JobOffer jobOffer, Long idPManager, String gmailPassword) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
     
 }

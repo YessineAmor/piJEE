@@ -6,7 +6,10 @@
 package tn.esprit.overpowered.byusforus.services.entrepriseprofile;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
@@ -14,8 +17,10 @@ import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.users.User;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 
 /**
@@ -118,4 +123,31 @@ public class EmployeeFacade extends AbstractFacade<Employee> implements Employee
         return this.find(employeeId).getSubscribedCompanies();
     }
       
+    
+    //JOB OFFER
+        @Override
+    public Long createJobOffer(JobOffer jobOffer, Long idPManager, String gmailPassword) {
+        Employee pManager = em.find(Employee.class, idPManager);
+        CompanyProfile company = jobOffer.getCompany();
+        HRManager hRManager = company.getCompanyHRManager();
+        String to = hRManager.getEmail();
+        em.persist(jobOffer);
+        
+        
+        try {
+            if(MailSender.sendMail("smtp.gmail.com", "587", pManager.getEmail(),
+                    "JOB POST APPROVAL REQUEST OF" + pManager.getLastName(),
+                    pManager.getUsername(), gmailPassword, to, "Dear Mr/Mrs"
+                    + " "+ hRManager.getLastName() + " " + hRManager.getFirstName()+ 
+                            " I Need approval over"
+                            + " The JOB OFFER titled" + jobOffer.getTitle())){
+                
+                return jobOffer.getId();
+            }   } catch (MessagingException ex) {
+            Logger.getLogger(EmployeeFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+           return -1L;
+}
+    
 }

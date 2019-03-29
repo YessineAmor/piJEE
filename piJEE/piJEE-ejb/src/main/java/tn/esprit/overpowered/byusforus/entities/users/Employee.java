@@ -6,14 +6,23 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
@@ -25,11 +34,20 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @DiscriminatorValue(value = "EMPLOYEE")
 public class Employee extends Candidate implements Serializable {
 
-
     @ManyToOne
     @JoinTable(name = "COMPANY_EMPLOYEES")
     CompanyProfile company;
+
+    @ManyToOne(cascade = {PERSIST, MERGE, DETACH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    private Employee manager;
+
+    @OneToMany(mappedBy = "manager")
+    private Set<Employee> subordinates = new HashSet<Employee>();
     
+    @OneToMany(mappedBy = "manager", cascade = {PERSIST, MERGE})
+    private Set<JobOffer> managerOffers;
+
     @Override
     public Set<Skill> getSkills() {
         return skills;
@@ -38,8 +56,7 @@ public class Employee extends Candidate implements Serializable {
     @Override
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
-        
-        
+
     }
 
     public CompanyProfile getCompany() {
@@ -49,4 +66,30 @@ public class Employee extends Candidate implements Serializable {
     public void setCompany(CompanyProfile company) {
         this.company = company;
     }
+
+    public Employee getManager() {
+        return manager;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
+    }
+
+    public Set<Employee> getSubordinates() {
+        return subordinates;
+    }
+
+    public void setSubordinates(Set<Employee> subordinates) {
+        this.subordinates = subordinates;
+    }
+
+    public Set<JobOffer> getManagerOffers() {
+        return managerOffers;
+    }
+
+    public void setManagerOffers(Set<JobOffer> managerOffers) {
+        this.managerOffers = managerOffers;
+    }
+    
+    
 }
