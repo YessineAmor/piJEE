@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,9 +37,9 @@ public class QuizTry implements Serializable {
     private Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishDate;
-    @OneToMany
-    List<Answer> answers;
     private String recording;
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Answer> answers;
 
     public QuizTry() {
         startDate = new Date();
