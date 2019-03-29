@@ -27,12 +27,12 @@ public class Quiz implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String details;
     private float percentageToPass;
     private int duration;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Question> questions;
     @ManyToOne
     private JobOffer jobOffer;
@@ -46,11 +46,11 @@ public class Quiz implements Serializable {
         this.percentageToPass = percentageToPass;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
