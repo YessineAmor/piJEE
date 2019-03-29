@@ -118,6 +118,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             emp.getExperiences().add(exp);
             exp.setCandidate(emp);
         }
+        else
+            System.out.println("Either candidate or Experience doent exist !");
     }
 
     @Override
