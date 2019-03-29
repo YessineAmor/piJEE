@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -33,7 +35,19 @@ public class Question implements Serializable {
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "QuestionChoices", joinColumns = @JoinColumn(name = "idChoice"),
+            inverseJoinColumns = @JoinColumn(name = "idQuestion"))
     private List<Choice> choices;
+
+    public Question() {
+    }
+
+    public Question(String questionText, int questionPoints, QuestionType questionType, List<Choice> choices) {
+        this.questionText = questionText;
+        this.questionPoints = questionPoints;
+        this.questionType = questionType;
+        this.choices = choices;
+    }
 
     public Long getIdQuestion() {
         return idQuestion;
@@ -74,7 +88,7 @@ public class Question implements Serializable {
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

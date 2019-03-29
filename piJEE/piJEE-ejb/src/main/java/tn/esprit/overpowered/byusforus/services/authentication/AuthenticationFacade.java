@@ -74,7 +74,7 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
                 // Username and password are redacted
                 if (MailSender.sendMail("smtp.gmail.com", "587",
                         "REDACTED", "REDACTED",
-                        "pidevpidev", user.getEmail(), "Your code is " + towFactorAuth.getToken()))
+                        "pidevpidev", user.getEmail(), "Authentication code" , "Your code is " + towFactorAuth.getToken()))
                     return towFactorAuth.getUid();
             } catch (MessagingException ex) {
                 Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);

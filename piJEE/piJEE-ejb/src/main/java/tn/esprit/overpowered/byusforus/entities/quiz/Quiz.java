@@ -27,7 +27,7 @@ public class Quiz implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String details;
     private float percentageToPass;
@@ -36,8 +36,11 @@ public class Quiz implements Serializable {
     List<Question> questions;
     @ManyToOne
     private JobOffer jobOffer;
+//    @OneToMany
+//    List<QuizTry> quizTries;
 
     public Quiz() {
+        
     }
 
     public Quiz(String name, String details, float percentageToPass) {
@@ -46,11 +49,11 @@ public class Quiz implements Serializable {
         this.percentageToPass = percentageToPass;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -101,6 +104,14 @@ public class Quiz implements Serializable {
     public void setJobOffer(JobOffer jobOffer) {
         this.jobOffer = jobOffer;
     }
+
+//    public List<QuizTry> getQuizTries() {
+//        return quizTries;
+//    }
+//
+//    public void setQuizTries(List<QuizTry> quizTries) {
+//        this.quizTries = quizTries;
+//    }
 
     @Override
     public int hashCode() {
