@@ -32,12 +32,15 @@ public class Quiz implements Serializable {
     private String details;
     private float percentageToPass;
     private int duration;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<Question> questions;
     @ManyToOne
     private JobOffer jobOffer;
+//    @OneToMany
+//    List<QuizTry> quizTries;
 
     public Quiz() {
+        
     }
 
     public Quiz(String name, String details, float percentageToPass) {
@@ -101,6 +104,14 @@ public class Quiz implements Serializable {
     public void setJobOffer(JobOffer jobOffer) {
         this.jobOffer = jobOffer;
     }
+
+//    public List<QuizTry> getQuizTries() {
+//        return quizTries;
+//    }
+//
+//    public void setQuizTries(List<QuizTry> quizTries) {
+//        this.quizTries = quizTries;
+//    }
 
     @Override
     public int hashCode() {
