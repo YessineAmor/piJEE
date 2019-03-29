@@ -6,17 +6,27 @@
 package tn.esprit.overpowered.byusforus.entities.entrepriseprofile;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author pc
  */
 @Entity
+@Inheritance( strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn( name = "EVENT_TYPE")
+@DiscriminatorValue( value = "EVENT")
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +36,20 @@ public class Event implements Serializable {
     private Long id;
 
     private String name;
+    
+    private String description;
+    
+    private String location;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDate;
+    
+    
+    
+    
     
    
     public Long getId() {
