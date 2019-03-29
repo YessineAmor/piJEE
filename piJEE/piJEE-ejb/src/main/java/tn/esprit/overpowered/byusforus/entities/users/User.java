@@ -8,8 +8,10 @@ package tn.esprit.overpowered.byusforus.entities.users;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -19,8 +21,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import tn.esprit.overpowered.byusforus.entities.messaging.Message;
+import tn.esprit.overpowered.byusforus.entities.posting.Comment;
+import tn.esprit.overpowered.byusforus.entities.posting.Post;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -28,6 +34,16 @@ import javax.validation.constraints.Pattern;
 @DiscriminatorValue(value = "USER")
 public class User implements Serializable{
 
+    @OneToMany
+    Set<Post> posts;
+    
+    @OneToMany
+    Set<Comment> comments;
+    
+    @OneToMany
+    Set<Message> messages;
+    
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
