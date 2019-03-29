@@ -11,13 +11,16 @@ import java.util.List;
 import java.util.Random;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 
 /**
  *
@@ -40,6 +43,8 @@ public class QuizTry implements Serializable {
     private String recording;
     @OneToMany(cascade = CascadeType.ALL)
     List<Answer> answers;
+    @OneToOne
+    private Candidate candidate;
 
     public QuizTry() {
         startDate = new Date();
@@ -100,6 +105,14 @@ public class QuizTry implements Serializable {
 
     public void setRecording(String recording) {
         this.recording = recording;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 
     @Override
