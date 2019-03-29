@@ -45,23 +45,21 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     }
 
     @Override
-    public Candidate searchByName(String name) {
-        Candidate cdt = (Candidate) em.createQuery(
+    public List<Candidate> searchByName(String name) {
+        List<Candidate> cdt = em.createQuery(
                 "SELECT c FROM Candidate c WHERE "
-                + "c.name LIKE CONCAT('%',:name,'%')")
+                + "c.firstName  LIKE CONCAT('%',:name,'%')",Candidate.class)
                 .setParameter("name", name)
-                .setMaxResults(1)
                 .getResultList();
         return cdt;
     }
 
     @Override
-    public Candidate searchByLastname(String lastname) {
-        Candidate cdt = (Candidate) em.createQuery(
-                "SELECT c FROM Candidate c WHERE c.lastname LIKE "
-                + "CONCAT('%',:lastname,'%')")
+    public List<Candidate> searchByLastname(String lastname) {
+        List<Candidate> cdt = em.createQuery(
+                "SELECT c FROM Candidate c WHERE c.lastName LIKE "
+                + "CONCAT('%',:lastname,'%')",Candidate.class)
                 .setParameter("name", lastname)
-                .setMaxResults(1)
                 .getResultList();
         return cdt;
     }
@@ -97,10 +95,10 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public Long subscribe(Long companyId, Long candidateId) {
-        List<CompanyProfile> companies = this.subscriptionList(candidateId, companyId);
+        List<CompanyProfile> companies = this.subscriptionList(candidateId);
         CompanyProfile comp = em.find(CompanyProfile.class, companyId);
         Candidate cdt = em.find(Candidate.class, candidateId);
-        if (companies.isEmpty()) {
+        if (!companies.contains(comp)) {
             comp.getSubscribers().add(cdt);
             cdt.getSubscribedCompanies().add(comp);
             return comp.getId();
@@ -114,7 +112,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
         Experience exp = em.find(Experience.class, expId);
         Candidate emp = em.find(Candidate.class, candidateId);
-        if (exp != null || emp != null) {
+        if (exp != null && emp != null) {
             emp.getExperiences().add(exp);
             exp.setCandidate(emp);
         }
@@ -124,18 +122,14 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Candidate cdt = this.find(candidateId);
+        return cdt.getRegisteredOffers();
     }
 
     @Override
-    public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId) {
-        Query q = em.createNativeQuery("select * from companyprofile, subscriptions"
-                + "  where :companyId = subscriptions.company_id and "
-                + " subscriptions.candidate_id = :candidateId ",
-                 CompanyProfile.class);
-        q.setParameter("companyId", companyId);
-        q.setParameter("candidateId", candidateId);
-        return q.getResultList();
+    public List<CompanyProfile> subscriptionList(Long candidateId) {
+        Candidate cdt = this.find(candidateId);
+        return cdt.getSubscribedCompanies();
     }
 
     @Override

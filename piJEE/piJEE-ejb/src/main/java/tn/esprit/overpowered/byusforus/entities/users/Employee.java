@@ -12,6 +12,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
@@ -21,13 +23,13 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue(value = "EMPLOYEE")
-//This is pure bullshit
 public class Employee extends Candidate implements Serializable {
 
-    /*
-    @OneToMany(mappedBy = "employee")
-    private List<OfferTimesheet> offerTimesheet;
-     */
+
+    @ManyToOne
+    @JoinTable(name = "COMPANY_EMPLOYEES")
+    CompanyProfile company;
+    
     @Override
     public Set<Skill> getSkills() {
         return skills;
@@ -36,5 +38,15 @@ public class Employee extends Candidate implements Serializable {
     @Override
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
+        
+        
+    }
+
+    public CompanyProfile getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyProfile company) {
+        this.company = company;
     }
 }

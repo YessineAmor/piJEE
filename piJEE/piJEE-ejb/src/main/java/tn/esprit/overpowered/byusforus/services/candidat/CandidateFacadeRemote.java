@@ -35,9 +35,9 @@ public interface CandidateFacadeRemote {
 
     int count();
     
-    public Candidate searchByName(String name);
+    public List<Candidate> searchByName(String name);
     
-    public Candidate searchByLastname(String lastname);
+    public List<Candidate> searchByLastname(String lastname);
     
     public List<Candidate> searchByPosition(String position);
     
@@ -49,7 +49,7 @@ public interface CandidateFacadeRemote {
     
     public List<JobOffer> customJobOfferList(Long candidateId);
     
-    public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId);
+    public List<CompanyProfile> subscriptionList(Long candidateId);
     
     public Long createCandidate(Candidate candidate);
     
