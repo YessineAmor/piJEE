@@ -60,7 +60,7 @@ public class CompanyProfile implements Serializable {
     @OneToMany(mappedBy = "company", cascade ={ ALL }, fetch = FetchType.LAZY)
     private List<Employee> employees;
     
-    @OneToMany(cascade ={ ALL }, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "company", cascade ={ ALL }, fetch = FetchType.LAZY)
     private List<Event> events;
     
     @OneToMany(cascade ={ ALL }, fetch = FetchType.LAZY)

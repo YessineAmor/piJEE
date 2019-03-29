@@ -16,8 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 
 /**
  *
@@ -35,17 +38,24 @@ public class Event implements Serializable {
     @Column(name = "EVENT_ID")
     private Long id;
 
+    @Column( nullable = false)
     private String name;
     
     private String description;
-    
+    @Column( nullable = false)
     private String location;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @Column( nullable = false)
     private Date startDate;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @Column( nullable = false)
     private Date endDate;
+    
+    @ManyToOne
+    @JoinTable(name = "COMPANY_EVENTS")
+    private CompanyProfile company;
     
     
     
@@ -60,6 +70,55 @@ public class Event implements Serializable {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public CompanyProfile getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyProfile company) {
+        this.company = company;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
