@@ -21,4 +21,5 @@ public interface MessagingRemote {
     
     public void sendMessage(Message m);
     public ArrayList<Message> getMessages(User u, LocalDateTime t);
+    public ArrayList<Message> getMyMessages(User u);
 }
