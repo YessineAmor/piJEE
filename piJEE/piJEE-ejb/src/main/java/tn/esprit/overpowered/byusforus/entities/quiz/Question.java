@@ -35,6 +35,16 @@ public class Question implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Choice> choices;
 
+    public Question() {
+    }
+
+    public Question(String questionText, int questionPoints, QuestionType questionType, List<Choice> choices) {
+        this.questionText = questionText;
+        this.questionPoints = questionPoints;
+        this.questionType = questionType;
+        this.choices = choices;
+    }
+    
     public Long getIdQuestion() {
         return idQuestion;
     }
