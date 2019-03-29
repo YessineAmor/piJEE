@@ -10,6 +10,7 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
@@ -47,7 +48,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public Candidate searchByName(String name) {
         Candidate cdt = (Candidate) em.createQuery(
                 "SELECT c FROM Candidate c WHERE "
-                        + "c.name LIKE CONCAT('%',:name,'%')")
+                + "c.name LIKE CONCAT('%',:name,'%')")
                 .setParameter("name", name)
                 .setMaxResults(1)
                 .getResultList();
@@ -58,7 +59,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public Candidate searchByLastname(String lastname) {
         Candidate cdt = (Candidate) em.createQuery(
                 "SELECT c FROM Candidate c WHERE c.lastname LIKE "
-                        + "CONCAT('%',:lastname,'%')")
+                + "CONCAT('%',:lastname,'%')")
                 .setParameter("name", lastname)
                 .setMaxResults(1)
                 .getResultList();
@@ -96,20 +97,27 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public Long subscribe(Long companyId, Long candidateId) {
+        List<CompanyProfile> companies = this.subscriptionList(candidateId, companyId);
         CompanyProfile comp = em.find(CompanyProfile.class, companyId);
         Candidate cdt = em.find(Candidate.class, candidateId);
-        comp.getSubscribers().add(cdt);
-        cdt.getSubscribedCompanies().add(comp);
-        return comp.getId();
+        if (companies.isEmpty()) {
+            comp.getSubscribers().add(cdt);
+            cdt.getSubscribedCompanies().add(comp);
+            return comp.getId();
+        } else {
+            return -1L;
+        }
+
     }
 
     @Override
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
         Experience exp = em.find(Experience.class, expId);
         Candidate emp = em.find(Candidate.class, candidateId);
-        emp.getExperiences().add(exp);
-        exp.setCandidate(emp);
-
+        if (exp != null || emp != null) {
+            emp.getExperiences().add(exp);
+            exp.setCandidate(emp);
+        }
     }
 
     @Override
@@ -119,10 +127,13 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId) {
-        return em.createNativeQuery("select * from companyprofile, subscriptions"
-                + "  where companyprofile.id = subscriptions.company_id and "
-                + " subscriptions.candidate_id = :candidateId group "
-                + "by company_id ", CompanyProfile.class).getResultList();
+        Query q = em.createNativeQuery("select * from companyprofile, subscriptions"
+                + "  where :companyId = subscriptions.company_id and "
+                + " subscriptions.candidate_id = :candidateId ",
+                 CompanyProfile.class);
+        q.setParameter("companyId", companyId);
+        q.setParameter("candidateId", candidateId);
+        return q.getResultList();
     }
 
     @Override
@@ -153,8 +164,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public Long updateCursus(Cursus cursus) {
-         getEntityManager().merge(cursus);
-         return cursus.getId();
+        getEntityManager().merge(cursus);
+        return cursus.getId();
     }
 
     @Override
@@ -173,7 +184,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public Long createExperience(Experience experience) {
         em.persist(experience);
-       return experience.getId();
+        return experience.getId();
     }
 
     @Override
@@ -185,7 +196,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public Long updateExperience(Experience experience) {
         getEntityManager().merge(experience);
-         return experience.getId();
+        return experience.getId();
     }
 
     @Override
