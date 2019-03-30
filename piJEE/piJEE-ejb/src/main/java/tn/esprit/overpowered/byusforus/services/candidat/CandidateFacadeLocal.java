@@ -55,6 +55,5 @@ public interface CandidateFacadeLocal {
     
     public Long createCandidate(Candidate candidate);
     
-    public Long recommend(Long candidateId);
     
 }

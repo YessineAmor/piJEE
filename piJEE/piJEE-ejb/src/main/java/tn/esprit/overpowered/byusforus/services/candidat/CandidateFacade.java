@@ -139,12 +139,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     }
 
-    @Override
-    public Long recommend(Long candidateId) {
-        Candidate cdt = em.find(Candidate.class, candidateId);
-        cdt.setRecommendations(cdt.getRecommendations() + 1);
-        return cdt.getId();
-    }
 
     @Override
     public Long createCursus(Cursus cursus) {
@@ -198,6 +192,18 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public Experience findExperience(Long experienceId) {
         return em.find(Experience.class, experienceId);
+    }
+
+    @Override
+    public String recommend(Long candidateId, Long subscriberdId) {
+       Candidate cdt = em.find(Candidate.class, candidateId);
+        if(cdt.getRecommendedIdList().contains(subscriberdId))
+        {
+            cdt.setRecommendations(cdt.getRecommendations() + 1);
+            return "Recommedation Successful" ;
+        }
+        
+        return "You have already recommended this candidate";
     }
 
 }
