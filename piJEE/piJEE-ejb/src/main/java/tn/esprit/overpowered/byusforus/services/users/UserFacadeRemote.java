@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.services.users;
 
 import java.util.List;
 import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.User;
 
 /**
@@ -29,5 +30,15 @@ public interface UserFacadeRemote {
     List<User> findRange(int[] range);
 
     int count();
+    
+    public Long createUser(User user);
+    
+    public User findUserByEmail(String email);
+    
+    public User findUserByUsername(String username);
+    
+    public String checkExistence(String email, String username);
+    
+
     
 }
