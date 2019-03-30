@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMultipart;
 public class MailSender {
 
     public static boolean sendMail(String server, String port , String from, final String username,
-            final String password, String to, String body) throws MessagingException {
+            final String password, String to, String subject, String body) throws MessagingException {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
