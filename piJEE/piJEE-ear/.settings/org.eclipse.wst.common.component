@@ -5,6 +5,12 @@
         <dependent-module archiveName="piJEE-ejb-1.0.jar" deploy-path="/" handle="module:/resource/piJEE-ejb/piJEE-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="mail-1.5.0-b01.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/mail/mail/1.5.0-b01/mail-1.5.0-b01.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="activation-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1/activation-1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="piJEE-web-1.0.war" deploy-path="/" handle="module:/resource/piJEE-web/piJEE-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
