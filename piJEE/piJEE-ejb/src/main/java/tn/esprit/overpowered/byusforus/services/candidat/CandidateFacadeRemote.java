@@ -53,7 +53,7 @@ public interface CandidateFacadeRemote {
     
     public Long createCandidate(Candidate candidate);
     
-    public Long recommend(Long candidateId);
+    public String recommend(Long candidateId, Long subscriberdId);
     
     //Cursus
     
