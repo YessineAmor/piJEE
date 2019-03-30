@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 
 /**
  *
@@ -23,22 +25,26 @@ public class Answer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//    @ManyToOne
+//    private Question question;
     @ManyToOne
-    private Question question;
+    @JoinColumn(name = "answer_fk")
+    private Choice answer;
     @ManyToOne
-    private Choice choice;
-    // Waiting for the user class to be created
-    // private User user;
+    @JoinColumn(name = "candidate_fk")
+    private Candidate candidate;
 
     public Answer() {
     }
 
     public Answer(Question question, Choice choice) {
-        this.question = question;
-        this.choice = choice;
+//        this.question = question;
+        this.answer = choice;
     }
-    
-    
+
+    public Answer(Choice answer) {
+        this.answer = answer;
+    }
 
     public Long getId() {
         return id;
@@ -46,6 +52,22 @@ public class Answer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Choice getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Choice answer) {
+        this.answer = answer;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 
     @Override
@@ -72,5 +94,5 @@ public class Answer implements Serializable {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.Answer[ id=" + id + " ]";
     }
-    
+
 }

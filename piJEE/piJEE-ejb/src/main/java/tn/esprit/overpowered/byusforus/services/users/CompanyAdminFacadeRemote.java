@@ -5,8 +5,10 @@
  */
 package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 
@@ -41,4 +43,23 @@ public interface CompanyAdminFacadeRemote {
     public List<CompanyProfile> searchCompanyProfileByName(String name);
     public CompanyProfile searchCompanyProfileById(Long id);
     public void deleteCompanyProfile(Long idComp);
+    
+    //Event 
+    public Long createEvent(Event event);
+    
+    public void updateEvent(Event event);
+    
+    public void deleteEvent(Long eventId);
+    
+    public Event searchEventById(Long eventId);
+    
+    public List<Event> searchEventByDate(Date startDate, Date endDate);
+    
+    public List<Event> searchEventByDate(Date startDate);
+    
+    public List<Event> searchEventByName(String name);
+    
+    public List<Event> searchEventByLocation(String location);
+    
+    
 }

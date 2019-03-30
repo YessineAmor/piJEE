@@ -43,6 +43,8 @@ public class Candidate extends User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String introduction;
+    
+    private List<Long> recommendedIdList;
 
     public String getIntroduction() {
         return introduction;
@@ -54,7 +56,7 @@ public class Candidate extends User implements Serializable {
 
     private int recommendations;
 
-    @OneToMany(mappedBy = "candidate")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Experience> experiences;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -69,12 +71,12 @@ public class Candidate extends User implements Serializable {
 
     private List<String> activities;
 
-    @OneToMany(mappedBy = "candidateCertif", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Certificate> certificates;
 
     private String curriculumVitaes;
 
-    @OneToMany(mappedBy = "candidateCursus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cursus> cursus;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -177,6 +179,14 @@ public class Candidate extends User implements Serializable {
 
     public void setVisits(int visits) {
         this.visits = visits;
+    }
+
+    public List<Long> getRecommendedIdList() {
+        return recommendedIdList;
+    }
+
+    public void setRecommendedIdList(List<Long> recommendedIdList) {
+        this.recommendedIdList = recommendedIdList;
     }
 
 }

@@ -27,14 +27,16 @@ public class Cursus implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Temporal(TemporalType.DATE)
     private Date startDate;
     @Temporal(TemporalType.DATE)
     private Date endDate;
     private String degree;
     private String university;
+    @ManyToOne
+    private Candidate candidateCursus;
 
     public Cursus() {
     }
@@ -72,16 +74,12 @@ public class Cursus implements Serializable {
     public void setUniversity(String university) {
         this.university = university;
     }
-
     
-    @ManyToOne
-    private Candidate candidateCursus;
-    
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

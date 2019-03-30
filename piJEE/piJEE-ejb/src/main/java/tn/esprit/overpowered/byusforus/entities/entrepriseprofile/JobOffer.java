@@ -28,8 +28,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.Employee;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
+import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
@@ -56,6 +58,11 @@ public class JobOffer implements Serializable {
 
     private String city;
     
+    private OfferStatus offerStatus;
+    
+    @Temporal(TemporalType.DATE)
+    private Date dateOfArchive;
+   
 
     @Enumerated(EnumType.STRING)
     private ExpertiseLevel expertiseLevel;
@@ -76,16 +83,21 @@ public class JobOffer implements Serializable {
                 @JoinColumn(name = "JOB_OFFER_ID")})
     private CompanyProfile company;
 
-    @OneToMany(mappedBy = "jobOffers",
+    @ManyToOne(
             cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<HRManager> recruiters;
+    private HRManager hRManager;
 
     @ManyToMany(mappedBy = "registeredOffers",
             cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Candidate> registeredCandidates;
+    
+    @ManyToOne
+    @JoinTable(name = "MANAGER_OFFERS")
+    private Employee manager;
 
     public JobOffer() {
         this.dateOfCreation = new Date();
+        this.offerStatus = OfferStatus.PENDING;
     }
 
     public Long getId() {
@@ -123,7 +135,23 @@ public class JobOffer implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
-    
+
+    public OfferStatus getOfferStatus() {
+        return offerStatus;
+    }
+
+    public void setOfferStatus(OfferStatus offerStatus) {
+        this.offerStatus = offerStatus;
+    }
+  
+    public Date getDateOfArchive() {
+        return dateOfArchive;
+    }
+
+    public void setDateOfArchive(Date dateOfArchive) {
+        this.dateOfArchive = dateOfArchive;
+    }
+
     public ExpertiseLevel getExpertiseLevel() {
         return expertiseLevel;
     }
@@ -156,13 +184,23 @@ public class JobOffer implements Serializable {
         this.company = company;
     }
 
-    public List<HRManager> getRecruiters() {
-        return recruiters;
+    public HRManager gethRManager() {
+        return hRManager;
     }
 
-    public void setRecruiters(List<HRManager> recruiters) {
-        this.recruiters = recruiters;
+    public void sethRManager(HRManager hRManager) {
+        this.hRManager = hRManager;
     }
+
+    public Employee getManager() {
+        return manager;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
+    }
+
+
 
     public List<Candidate> getRegisteredCandidates() {
         return registeredCandidates;

@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.entities.users;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Workshop;
 
 /**
  *
@@ -47,12 +50,25 @@ public class CompanyProfile implements Serializable {
             cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private CompanyAdmin companyAdmin;
 
+    @OneToOne(mappedBy = "companyProfile", fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    private HRManager companyHRManager;
+
     @OneToMany(mappedBy = "company")
     private List<JobOffer> listOfOffers;
 
     @ManyToMany(mappedBy = "subscribedCompanies",
             cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Candidate> subscribers;
+
+    @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
+    private List<Employee> employees;
+
+    @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
+    private List<Event> events;
+
+    @OneToMany(cascade = {ALL}, fetch = FetchType.LAZY)
+    private List<Workshop> workshops;
 
     public Long getId() {
         return id;
@@ -134,6 +150,16 @@ public class CompanyProfile implements Serializable {
         this.companyAdmin = companyAdmin;
     }
 
+    public HRManager getCompanyHRManager() {
+        return companyHRManager;
+    }
+
+    public void setCompanyHRManager(HRManager companyHRManager) {
+        this.companyHRManager = companyHRManager;
+    }
+    
+    
+
     public List<JobOffer> getListOfOffers() {
         return listOfOffers;
     }
@@ -148,6 +174,30 @@ public class CompanyProfile implements Serializable {
 
     public void setSubscribers(List<Candidate> subscribers) {
         this.subscribers = subscribers;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Workshop> getWorkshops() {
+        return workshops;
+    }
+
+    public void setWorkshops(List<Workshop> workshops) {
+        this.workshops = workshops;
     }
 
     @Override

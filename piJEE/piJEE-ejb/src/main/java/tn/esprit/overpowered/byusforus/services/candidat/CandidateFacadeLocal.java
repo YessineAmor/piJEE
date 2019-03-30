@@ -35,9 +35,9 @@ public interface CandidateFacadeLocal {
     
     List<Candidate> afficherCandidats();
     
-    public Candidate searchByName(String name);
+    public List<Candidate> searchByName(String name);
     
-    public Candidate searchByLastname(String lastname);
+    public List<Candidate> searchByLastname(String lastname);
     
     public List<Candidate> searchByPosition(String position);
     
@@ -51,10 +51,9 @@ public interface CandidateFacadeLocal {
     
     public List<JobOffer> customJobOfferList(Long candidateId);
     
-    public List<CompanyProfile> subscriptionList(Long candidateId, Long companyId);
+    public List<CompanyProfile> subscriptionList(Long candidateId);
     
     public Long createCandidate(Candidate candidate);
     
-    public Long recommend(Long candidateId);
     
 }
