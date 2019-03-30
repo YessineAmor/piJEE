@@ -51,7 +51,9 @@ public interface CandidateFacadeRemote {
     
     public List<CompanyProfile> subscriptionList(Long candidateId);
     
-    public Long createCandidate(Candidate candidate);
+    public String accountCreationConfirmation(String email);
+    
+    public String createCandidate(Candidate candidate);
     
     public String recommend(Long candidateId, Long subscriberdId);
     

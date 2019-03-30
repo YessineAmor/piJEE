@@ -44,6 +44,7 @@ public class Candidate extends User implements Serializable {
 
     private String introduction;
     
+    @ElementCollection
     private List<Long> recommendedIdList;
 
     public String getIntroduction() {
