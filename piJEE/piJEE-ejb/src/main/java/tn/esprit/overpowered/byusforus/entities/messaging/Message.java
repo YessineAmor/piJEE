@@ -46,6 +46,12 @@ public class Message implements Serializable {
     User from;
     @OneToOne
     User to;
+    
+    boolean seenByReceiver;
+    boolean seenBySender;
+    
+    boolean deletedByReceiver;
+    boolean deletedBySender;
 
  
     private LocalDateTime sentTime;
