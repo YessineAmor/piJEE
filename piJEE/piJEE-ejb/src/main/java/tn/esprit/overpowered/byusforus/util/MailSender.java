@@ -43,7 +43,7 @@ public class MailSender {
         message.setFrom(new InternetAddress(from));
         message.setRecipients(
                 Message.RecipientType.TO, InternetAddress.parse(to));
-        message.setSubject("Mail Subject");
+        message.setSubject(subject);
 
         String msg = body;
 
@@ -58,4 +58,6 @@ public class MailSender {
         Transport.send(message);
         return true;
     }
+    
+    
 }

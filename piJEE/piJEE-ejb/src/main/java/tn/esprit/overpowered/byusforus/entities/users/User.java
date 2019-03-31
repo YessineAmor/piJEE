@@ -23,6 +23,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 import tn.esprit.overpowered.byusforus.entities.messaging.Message;
 import tn.esprit.overpowered.byusforus.entities.posting.Comment;
@@ -63,7 +64,16 @@ public class User implements Serializable{
     
     @Column(unique=true)
     private String username;
+    
+    private String firstName;
+    
+    private String lastName;
 
+    //Getting the discriminator value from the database;
+    @Transient
+public String getDiscriminatorValue() {
+    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+}
     public String getEmail() {
         return email;
     }
@@ -79,6 +89,24 @@ public class User implements Serializable{
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    
     public Long getId() {
         return id;
     }

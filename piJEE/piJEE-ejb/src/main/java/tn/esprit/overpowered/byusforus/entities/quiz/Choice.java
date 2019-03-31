@@ -30,9 +30,13 @@ public class Choice implements Serializable {
         this.isCorrectChoice = false;
         this.choicePoints = 0;
     }
-    
-    
-    
+
+    public Choice(String choiceText, Boolean isCorrectChoice, float choicePoints) {
+        this.choiceText = choiceText;
+        this.isCorrectChoice = isCorrectChoice;
+        this.choicePoints = choicePoints;
+    }
+
     public Long getIdChoice() {
         return idChoice;
     }
@@ -40,8 +44,7 @@ public class Choice implements Serializable {
     public void setIdChoice(Long idChoice) {
         this.idChoice = idChoice;
     }
-    
-    
+
     public String getChoiceText() {
         return choiceText;
     }
@@ -66,8 +69,6 @@ public class Choice implements Serializable {
         this.choicePoints = choicePoints;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;

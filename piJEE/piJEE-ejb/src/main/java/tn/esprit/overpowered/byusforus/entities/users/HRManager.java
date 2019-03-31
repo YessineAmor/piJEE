@@ -8,9 +8,15 @@ package tn.esprit.overpowered.byusforus.entities.users;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
@@ -21,9 +27,29 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @DiscriminatorValue(value = "HUMAN_RESOURCES_MANAGER")
 public class HRManager extends Employee implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_COMP_HR_ID")
+    private CompanyProfile companyProfile;
 
-    @ManyToMany
-    private List<JobOffer> jobOffers;
+    @OneToMany(mappedBy = "hRManager", cascade = {PERSIST, MERGE})
+    private Set<JobOffer> jobOffers;
+
+    public CompanyProfile getCompanyProfile() {
+        return companyProfile;
+    }
+
+    public void setCompanyProfile(CompanyProfile companyProfile) {
+        this.companyProfile = companyProfile;
+    }
+
+    public Set<JobOffer> getJobOffers() {
+        return jobOffers;
+    }
+
+    public void setJobOffers(Set<JobOffer> jobOffers) {
+        this.jobOffers = jobOffers;
+    }
 
     
     @Override
@@ -35,4 +61,13 @@ public class HRManager extends Employee implements Serializable {
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
+
+    public CompanyProfile getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyProfile company) {
+        this.company = company;
+    }
+    
 }
