@@ -3,8 +3,5 @@ vulnerabilities snyk: *ear* :[![Known Vulnerabilities](https://snyk.io/test/gith
 
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/amine177/piJEE.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/amine177/piJEE/alerts/) [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/amine177/piJEE.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/amine177/piJEE/context:java)
 
-coverage: [![Coverage Status](https://coveralls.io/repos/github/amine177/piJEE/badge.svg?branch=master)](https://coveralls.io/github/amine177/piJEE?branch=master)
-
-
 The JEE part of an app in a project for 4NIDS
 Find in the Excel file a benchmark of statical java code review tools and proposed one for our project
