@@ -21,6 +21,11 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
 @Entity
 public class Message implements Serializable {
 
+    public Message() {
+        this.sentTime = LocalDateTime.now();
+        this.seenBySenderAt = this.sentTime;
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,8 +52,87 @@ public class Message implements Serializable {
     @OneToOne
     User to;
     
-    boolean seenByReceiver;
-    boolean seenBySender;
+    String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+    
+    boolean seenByReceiver = false;
+    LocalDateTime seenByReceiverAt;
+    boolean seenBySender = true;
+    LocalDateTime seenBySenderAt;
+    
+    boolean hiddenByReceiver = false;
+    boolean hiddenBySender = false;
+
+    public boolean isHiddenByReceiver() {
+        return hiddenByReceiver;
+    }
+
+    public void setHiddenByReceiver(boolean hiddenByReceiver) {
+        this.hiddenByReceiver = hiddenByReceiver;
+    }
+
+    public boolean isHiddenBySender() {
+        return hiddenBySender;
+    }
+
+    public void setHiddenBySender(boolean hiddenBySender) {
+        this.hiddenBySender = hiddenBySender;
+    }
+
+    public boolean isSeenByReceiver() {
+        return seenByReceiver;
+    }
+
+    public void setSeenByReceiver(boolean seenByReceiver) {
+        this.seenByReceiver = seenByReceiver;
+    }
+
+    public LocalDateTime getSeenByReceiverAt() {
+        return seenByReceiverAt;
+    }
+
+    public void setSeenByReceiverAt(LocalDateTime seenByReceiverAt) {
+        this.seenByReceiverAt = seenByReceiverAt;
+    }
+
+    public boolean isSeenBySender() {
+        return seenBySender;
+    }
+
+    public void setSeenBySender(boolean seenBySender) {
+        this.seenBySender = seenBySender;
+    }
+
+    public LocalDateTime getSeenBySenderAt() {
+        return seenBySenderAt;
+    }
+
+    public void setSeenBySenderAt(LocalDateTime seenBySenderAt) {
+        this.seenBySenderAt = seenBySenderAt;
+    }
+
+    public boolean isDeletedByReceiver() {
+        return deletedByReceiver;
+    }
+
+    public void setDeletedByReceiver(boolean deletedByReceiver) {
+        this.deletedByReceiver = deletedByReceiver;
+    }
+
+    public boolean isDeletedBySender() {
+        return deletedBySender;
+    }
+
+    public void setDeletedBySender(boolean deletedBySender) {
+        this.deletedBySender = deletedBySender;
+    }
     
     boolean deletedByReceiver;
     boolean deletedBySender;
