@@ -100,6 +100,18 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal,
             
     }
 
+    @Override
+    public String getUserDiscriminatorValue(Long id) {
+        User user= null;
+        try {
+            user = this.find(id);
+        } catch (Exception e) {
+        }
+        if (user != null)
+        return user.getDiscriminatorValue();
+        else return "User Not found";
+    }
+
  
         
     
