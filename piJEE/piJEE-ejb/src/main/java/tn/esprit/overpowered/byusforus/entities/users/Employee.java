@@ -8,11 +8,9 @@ package tn.esprit.overpowered.byusforus.entities.users;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -58,7 +56,7 @@ public class Employee extends Candidate implements Serializable {
         this.skills = skills;
 
     }
-
+    
     public CompanyProfile getCompany() {
         return company;
     }

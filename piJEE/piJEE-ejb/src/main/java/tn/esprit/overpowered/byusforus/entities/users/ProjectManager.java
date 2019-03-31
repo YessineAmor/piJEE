@@ -18,7 +18,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @DiscriminatorValue(value = "PROJECT_MANAGER")
 public class ProjectManager extends Employee implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     @Override
     public Set<Skill> getSkills() {
         return skills;
