@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Comment implements Serializable  {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -558553967080513790L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
