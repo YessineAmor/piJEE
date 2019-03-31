@@ -34,17 +34,44 @@ public class Messaging implements MessagingRemote {
     public void sendMessage(Message m) {
         em.persist(m);
     }
-    
+
     @Override
-    public ArrayList<Message> getMessages(User u, LocalDateTime t) {
+    public ArrayList<Message> getMessages(Long userId, LocalDateTime t) {
+        User u = em.find(User.class, userId);
         MessageRepository msgR = new MessageRepository();
-        return msgR.getNewestMessages(em, u, t);
+        User au = em.find(User.class, u.getId());
+        
+        return msgR.getNewestMessages(em, au, t);
     }
-    
+
     @Override
-    public ArrayList<Message> getMyMessages(User u) { 
+    public ArrayList<Message> getMyMessages(Long userId) {
+        User u = em.find(User.class, userId);
         MessageRepository msgR = new MessageRepository();
         return msgR.getAllMessages(em, u);
 
     }
+
+    @Override
+    public void hideMessage(Long userid, Long messageId) {
+        User u = em.find(User.class, userid);
+        Message m = em.find(Message.class, messageId);
+        if (m.getFrom().equals(u)) {
+            m.setHiddenBySender(true);
+        } else if (m.getTo().equals(u)) {
+            m.setHiddenByReceiver(true);
+        }
+    }
+
+    @Override
+    public void seeMessage(Long userid, Long messageid) {
+        
+        User u = em.find(User.class, messageid);
+        Message message = em.find(Message.class, messageid);
+        em.getTransaction().begin();
+        message.setSeenByReceiver(true);
+        em.getTransaction().commit();
+
+    }
+
 }

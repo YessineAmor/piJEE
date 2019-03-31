@@ -20,6 +20,8 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
 public interface MessagingRemote {
     
     public void sendMessage(Message m);
-    public ArrayList<Message> getMessages(User u, LocalDateTime t);
-    public ArrayList<Message> getMyMessages(User u);
+    public ArrayList<Message> getMessages(Long userId, LocalDateTime t);
+    public ArrayList<Message> getMyMessages(Long userId);
+    public void hideMessage(Long userId, Long messageId);
+    public void seeMessage(Long userId, Long messageId);
 }
