@@ -70,6 +70,17 @@ public class CompanyProfile implements Serializable {
     @OneToMany(cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Workshop> workshops;
 
+    public CompanyProfile() {
+    }
+
+    public CompanyProfile(String name) {
+        this.name = name;
+    }
+    
+    
+    
+    
+
     public Long getId() {
         return id;
     }

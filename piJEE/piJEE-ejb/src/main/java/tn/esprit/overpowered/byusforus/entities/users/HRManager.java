@@ -27,7 +27,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @DiscriminatorValue(value = "HUMAN_RESOURCES_MANAGER")
 public class HRManager extends Employee implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_COMP_HR_ID")
     private CompanyProfile companyProfile;
@@ -61,4 +61,13 @@ public class HRManager extends Employee implements Serializable {
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
+
+    public CompanyProfile getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyProfile company) {
+        this.company = company;
+    }
+    
 }

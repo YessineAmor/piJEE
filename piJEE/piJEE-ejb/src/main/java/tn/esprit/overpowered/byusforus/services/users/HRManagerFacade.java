@@ -10,8 +10,10 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
@@ -74,6 +76,29 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
             
         }
          return false;
+    }
+
+    @Override
+    public Long createHRManager(HRManager hrManger) {
+        em.persist(hrManger);
+        return hrManger.getId();
+    }
+
+    @Override
+    public boolean affecterHRtoCompany(Long hrManagerId, String compName) {
+        HRManager hrm = em.find(HRManager.class, hrManagerId);
+        CompanyProfile comp = null;
+        try {
+              comp = em.createQuery("select c from CompanyProfile c "
+                + "where c.name "
+                + "= :compname",CompanyProfile.class).setParameter("compname", compName).getSingleResult();
+        hrm.setCompanyProfile(comp);
+        comp.setCompanyHRManager(hrm);
+        } catch (NoResultException e ) {
+        }
+            return comp != null ;
+        
+             
     }
     
 }
