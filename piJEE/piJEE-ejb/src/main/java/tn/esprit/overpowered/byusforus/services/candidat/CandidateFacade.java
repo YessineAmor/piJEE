@@ -6,16 +6,23 @@
 package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.lang.RandomStringUtils;
+//import org.apache.commons.lang3.RandomStringUtils;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
  *
@@ -36,6 +43,13 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public CandidateFacade() {
         super(Candidate.class);
     }
+    
+        @Override
+    public String createCandidate(Candidate candidate) {
+        em.persist(candidate);
+        return candidate.getUsername();
+    }
+
 
     @Override
     public List<Candidate> afficherCandidats() {
@@ -131,11 +145,31 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         Candidate cdt = this.find(candidateId);
         return cdt.getSubscribedCompanies();
     }
-
+    //ACCOUNT CONFIRMATION CREATION
     @Override
-    public Long createCandidate(Candidate candidate) {
-        em.persist(candidate);
-        return candidate.getId();
+    public String accountCreationConfirmation(String email) {
+    /*       int length = 5;
+    boolean useLetters = true;
+    boolean useNumbers = false;
+    String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);*/
+    int code = 10000 + new Random().nextInt(90000);
+        try {
+            MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
+                    "toussaint.kebou@gmail.com", "Laurel@2016",email
+                    , "Account creation Confirmation Mail",
+                    "If you are receiving this Email then you are one step away from"
+                            + " joining the BYUSFORUS group thanks you for your trust"
+                            + " Confirm registration with following code "
+                            + "<b>" +code + "</b>"
+                            + "  Enjoy your stay on our platform");
+            
+            return Integer.toString(code);
+        } catch (MessagingException ex) {
+            Logger.getLogger(CandidateFacade.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("mailing failure");
+        }
+        
+        return "mailing system down";
 
     }
 
@@ -205,5 +239,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         
         return "You have already recommended this candidate";
     }
+
 
 }

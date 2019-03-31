@@ -52,19 +52,20 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     }
 
     @Override
+    public Long createCompanyProfile(CompanyProfile compProfile) {
+        em.persist(compProfile);
+        return compProfile.getId();
+    }
+
+    @Override
     public void bindCompanyAdminToCompanyProfile(Long idAmin, Long idComp) {
         CompanyAdmin compAdmin = this.find(idAmin);
         CompanyProfile compProfile = em.find(CompanyProfile.class, idComp);
 
         if ((compProfile != null) && (compAdmin != null)) {
             compAdmin.setCompanyProfile(compProfile);
+            compProfile.setCompanyAdmin(compAdmin);
         }
-
-    }
-
-    @Override
-    public void createCompanyProfile(CompanyProfile compProfile) {
-        em.persist(compProfile);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     @Override
     public void deleteCompanyProfile(Long idComp) {
         CompanyProfile company = em.find(CompanyProfile.class, idComp);
-        
+
         em.remove(company);
     }
 
@@ -108,10 +109,11 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     public Long createEvent(Event event) {
         CompanyProfile company = em.find(CompanyProfile.class,
                 event.getCompany().getId());
-        if(company.getEvents().contains(event))
+        if (company.getEvents().contains(event)) {
             return -1L;
-         em.persist(event);
-         return event.getId();
+        }
+        em.persist(event);
+        return event.getId();
     }
 
     @Override
@@ -133,7 +135,7 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     @Override
     public List<Event> searchEventByDate(Date startDate, Date endDate) {
         List<Event> events = em.createQuery("select e from Event e where"
-                + " e.startDate= :startDate and e.endDate= :endDate",Event.class)
+                + " e.startDate= :startDate and e.endDate= :endDate", Event.class)
                 .setParameter("startDate", startDate, TemporalType.DATE)
                 .setParameter("endDate", endDate, TemporalType.DATE)
                 .getResultList();
@@ -150,16 +152,16 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
 
     @Override
     public List<Event> searchEventByName(String name) {
-         return em.createQuery("select e from Event e where"
-                 + " e.startDate LIKE CONCAT('%',:name,'%')",Event.class)
-                 .getResultList();
+        return em.createQuery("select e from Event e where"
+                + " e.startDate LIKE CONCAT('%',:name,'%')", Event.class)
+                .getResultList();
     }
 
     @Override
     public List<Event> searchEventByLocation(String location) {
         return em.createQuery("select e from Event e where"
-                 + " e.location LIKE CONCAT('%',:location,'%')",Event.class)
-                 .getResultList();
+                + " e.location LIKE CONCAT('%',:location,'%')", Event.class)
+                .getResultList();
     }
 
 }

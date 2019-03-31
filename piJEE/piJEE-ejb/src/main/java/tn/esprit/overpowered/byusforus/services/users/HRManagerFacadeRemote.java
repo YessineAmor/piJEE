@@ -34,4 +34,8 @@ public interface HRManagerFacadeRemote {
     public boolean approveJobOffer(Long idJobOffer, String gmailPassword);
     
     public boolean declineJobOffer(Long idJobOffer, String gmailPassword, String motif);
+    
+    public Long createHRManager(HRManager hrManger);
+    
+    public boolean affecterHRtoCompany(Long hrManagerId, String compName);
 }
