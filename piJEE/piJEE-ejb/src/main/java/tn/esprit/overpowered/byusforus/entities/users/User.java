@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -52,6 +53,11 @@ public class User implements Serializable{
     
     private String lastName;
 
+    //Getting the discriminator value from the database;
+    @Transient
+public String getDiscriminatorValue() {
+    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+}
     public String getEmail() {
         return email;
     }
