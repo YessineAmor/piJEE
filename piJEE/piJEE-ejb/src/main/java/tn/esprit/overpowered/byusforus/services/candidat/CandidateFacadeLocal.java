@@ -53,8 +53,7 @@ public interface CandidateFacadeLocal {
     
     public List<CompanyProfile> subscriptionList(Long candidateId);
     
-    public Long createCandidate(Candidate candidate);
+    public String createCandidate(Candidate candidate);
     
-    public Long recommend(Long candidateId);
     
 }

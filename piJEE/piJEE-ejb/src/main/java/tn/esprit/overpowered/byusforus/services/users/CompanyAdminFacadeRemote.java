@@ -37,7 +37,7 @@ public interface CompanyAdminFacadeRemote {
     public void updateCompanyAdmin(CompanyAdmin companyAdmin);
     public void deleteCompanyAdmin(Long idAdmin);
     void bindCompanyAdminToCompanyProfile(Long idAmin, Long idComp);
-    public void createCompanyProfile(CompanyProfile compProfile);
+    public Long createCompanyProfile(CompanyProfile compProfile);
     public void updateCompanyProfile(CompanyProfile compProfile);
     public CompanyProfile viewCompanyProfile(Long idComp);
     public List<CompanyProfile> searchCompanyProfileByName(String name);

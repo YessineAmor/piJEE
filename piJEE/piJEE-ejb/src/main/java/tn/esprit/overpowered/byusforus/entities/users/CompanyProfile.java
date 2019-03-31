@@ -50,21 +50,36 @@ public class CompanyProfile implements Serializable {
             cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private CompanyAdmin companyAdmin;
 
+    @OneToOne(mappedBy = "companyProfile", fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    private HRManager companyHRManager;
+
     @OneToMany(mappedBy = "company")
     private List<JobOffer> listOfOffers;
 
     @ManyToMany(mappedBy = "subscribedCompanies",
             cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Candidate> subscribers;
-    
-    @OneToMany(mappedBy = "company", cascade ={ ALL }, fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Employee> employees;
-    
-    @OneToMany(mappedBy = "company", cascade ={ ALL }, fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Event> events;
-    
-    @OneToMany(cascade ={ ALL }, fetch = FetchType.LAZY)
+
+    @OneToMany(cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Workshop> workshops;
+
+    public CompanyProfile() {
+    }
+
+    public CompanyProfile(String name) {
+        this.name = name;
+    }
+    
+    
+    
+    
 
     public Long getId() {
         return id;
@@ -146,6 +161,16 @@ public class CompanyProfile implements Serializable {
         this.companyAdmin = companyAdmin;
     }
 
+    public HRManager getCompanyHRManager() {
+        return companyHRManager;
+    }
+
+    public void setCompanyHRManager(HRManager companyHRManager) {
+        this.companyHRManager = companyHRManager;
+    }
+    
+    
+
     public List<JobOffer> getListOfOffers() {
         return listOfOffers;
     }
@@ -186,7 +211,6 @@ public class CompanyProfile implements Serializable {
         this.workshops = workshops;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;

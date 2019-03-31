@@ -43,6 +43,9 @@ public class Candidate extends User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String introduction;
+    
+    @ElementCollection
+    private List<Long> recommendedIdList;
 
     public String getIntroduction() {
         return introduction;
@@ -177,6 +180,14 @@ public class Candidate extends User implements Serializable {
 
     public void setVisits(int visits) {
         this.visits = visits;
+    }
+
+    public List<Long> getRecommendedIdList() {
+        return recommendedIdList;
+    }
+
+    public void setRecommendedIdList(List<Long> recommendedIdList) {
+        this.recommendedIdList = recommendedIdList;
     }
 
 }

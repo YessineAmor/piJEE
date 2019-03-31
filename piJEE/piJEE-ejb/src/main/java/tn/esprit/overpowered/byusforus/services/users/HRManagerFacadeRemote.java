@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.services.users;
    
 import java.util.List;
 import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 
 /**
@@ -30,4 +31,11 @@ public interface HRManagerFacadeRemote {
 
     int count();
     
+    public boolean approveJobOffer(Long idJobOffer, String gmailPassword);
+    
+    public boolean declineJobOffer(Long idJobOffer, String gmailPassword, String motif);
+    
+    public Long createHRManager(HRManager hrManger);
+    
+    public boolean affecterHRtoCompany(Long hrManagerId, String compName);
 }
