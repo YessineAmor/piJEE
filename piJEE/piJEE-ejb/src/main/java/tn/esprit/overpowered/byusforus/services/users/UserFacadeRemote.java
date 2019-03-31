@@ -39,6 +39,8 @@ public interface UserFacadeRemote {
     
     public String checkExistence(String email, String username);
     
+    public String getUserDiscriminatorValue(Long id);
+    
 
     
 }
