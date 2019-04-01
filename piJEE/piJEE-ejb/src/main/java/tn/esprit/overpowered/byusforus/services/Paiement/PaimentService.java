@@ -68,7 +68,7 @@ public class PaimentService implements PaimentRemote, PaimentLocal {
 		// p.user='"+u.getID()+"' and
 		// p.Title='membershipfee'",Paiment.class).getSingleResult();
 		return query.get(0);
-	}
+	} 
 
 	@Override
 	public Long DisplayPaimentStatCotisationOk() {

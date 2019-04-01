@@ -10,5 +10,5 @@ package tn.esprit.overpowered.byusforus.entities.reclamation;
  * @author amine
  */
 public enum TypeReclamation {
-    Financier, Oeuvre, Systeme, Suggestion, Autre
+    Financier, Service, Systeme, Suggestion, Autre
 }
