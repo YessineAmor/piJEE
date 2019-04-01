@@ -30,7 +30,11 @@ public interface ProjectManagerFacadeRemote {
     List<ProjectManager> findRange(int[] range);
 
     int count();
-    
+
     public Long createJobOffer(JobOffer jobOffer, Long idPManager, String gmailPassword);
-    
+
+    public Long createPManager(ProjectManager pManager);
+
+    public boolean affecterPMtoCompany(Long pManagerId, String compName);
+
 }

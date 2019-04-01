@@ -38,44 +38,54 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         super(HRManager.class);
     }
 
+
+    @Override
+    public void createOffer(Long idManager, JobOffer offer) {
+        HRManager hrm = em.find(HRManager.class, idManager);
+        offer.setCompany(hrm.getCompanyProfile());
+        offer.sethRManager(hrm);
+        em.persist(offer);
+
+    }
+
     @Override
     public boolean approveJobOffer(Long idJobOffer, String gmailPassword) {
-         JobOffer jobOffer = em.find(JobOffer.class, idJobOffer);
-         jobOffer.setOfferStatus(OfferStatus.AVAILABLE);
+        JobOffer jobOffer = em.find(JobOffer.class, idJobOffer);
+        jobOffer.setOfferStatus(OfferStatus.AVAILABLE);
         try {
-            if(MailSender.sendMail("smtp.gmail.com", "587", jobOffer.gethRManager().getEmail(),
+            if (MailSender.sendMail("smtp.gmail.com", "587", jobOffer.gethRManager().getEmail(),
                     "RESPONSE TO JOB OFFER REQUEST", jobOffer.gethRManager().getUsername(),
                     gmailPassword, jobOffer.getManager().getEmail(),
                     "Your request has been granted and Enterprise Subscribers have"
-                            + " been notified")){
+                    + " been notified")) {
                 return true;
             }
-                
-                } catch (MessagingException ex) {
+
+        } catch (MessagingException ex) {
             Logger.getLogger(HRManagerFacade.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         }
-         return false;
+        return false;
     }
 
     @Override
     public boolean declineJobOffer(Long idJobOffer, String gmailPassword, String motif) {
-                 JobOffer jobOffer = em.find(JobOffer.class, idJobOffer);
-         jobOffer.setOfferStatus(OfferStatus.REJECTED);
+        JobOffer jobOffer = em.find(JobOffer.class, idJobOffer);
+        jobOffer.setOfferStatus(OfferStatus.REJECTED);
         try {
-            if(MailSender.sendMail("smtp.gmail.com", "587", jobOffer.gethRManager().getEmail(),
+            if (MailSender.sendMail("smtp.gmail.com", "587", jobOffer.gethRManager().getEmail(),
                     "RESPONSE TO JOB OFFER REQUEST", jobOffer.gethRManager().getUsername(),
                     gmailPassword, jobOffer.getManager().getEmail(),
                     "Your request has been rejected:"
-                            + " been notified")){
+                    + " been notified")) {
                 return true;
             }
-                
-                } catch (MessagingException ex) {
+
+        } catch (MessagingException ex) {
             Logger.getLogger(HRManagerFacade.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         }
-         return false;
+        return false;
     }
 
     @Override
@@ -89,16 +99,15 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         HRManager hrm = em.find(HRManager.class, hrManagerId);
         CompanyProfile comp = null;
         try {
-              comp = em.createQuery("select c from CompanyProfile c "
-                + "where c.name "
-                + "= :compname",CompanyProfile.class).setParameter("compname", compName).getSingleResult();
-        hrm.setCompanyProfile(comp);
-        comp.setCompanyHRManager(hrm);
-        } catch (NoResultException e ) {
+            comp = em.createQuery("select c from CompanyProfile c "
+                    + "where c.name "
+                    + "= :compname", CompanyProfile.class).setParameter("compname", compName).getSingleResult();
+            hrm.setCompanyProfile(comp);
+            comp.setCompanyHRManager(hrm);
+        } catch (NoResultException e) {
         }
-            return comp != null ;
-        
-             
+        return comp != null;
+
     }
-    
+
 }

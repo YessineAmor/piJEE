@@ -35,7 +35,7 @@ public class ReclamationService  implements ReclamationLocal,ReclamationRemote
 	
 	@Override
 	public List<Reclamation> All() {
-		return em.createQuery("select r from Reclamation r order By dateReclamation DESC ",Reclamation.class).getResultList();
+		return em.createQuery("select r from Reclamation r order By r.dateReclamation DESC ",Reclamation.class).getResultList();
 	}
 
 	@Override
