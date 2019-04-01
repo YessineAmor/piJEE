@@ -6,15 +6,22 @@
 package tn.esprit.overpowered.byusforus.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 import tn.esprit.overpowered.byusforus.entities.quiz.Question;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuestionType;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
+import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizFacadeLocal;
 
 /**
@@ -27,6 +34,8 @@ public class DBPopulator {
 
     @EJB
     private QuizFacadeLocal quizFacade;
+    @EJB
+    private JobOfferFacadeLocal jobOfferFacade;
 
     public DBPopulator() {
     }
@@ -82,6 +91,20 @@ public class DBPopulator {
 
         }
 
+//        if (jobOfferFacade.find(1) == null) {
+//            CompanyProfile company = new CompanyProfile();
+//            company.setName("Facebook");
+//            JobOffer jobOffer = new JobOffer(new Long(1));
+//            jobOffer.setTitle("Développeur JAVA");
+//            Set<Skill> skillSet = new HashSet<>();
+//            jobOffer.setSkills(skillSet);
+//            jobOffer.setPeopleNeeded(3);
+//            jobOffer.setExpertiseLevel(ExpertiseLevel.JUNIOR);
+//            jobOffer.setDescription("The candidate will help us work on JavaEE projects.");
+//            jobOffer.setCity("Tunis");
+//            jobOffer.setCompany(company);
+//            jobOfferFacade.create(jobOffer);
+//        }
     }
 
 }
