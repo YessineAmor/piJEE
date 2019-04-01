@@ -238,7 +238,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
       return "OK";
        
     }
-
+/*
     @Override
     public ObservableList<Candidate> getObservableCandidate() {
        ObservableList<Candidate> ListCandidate = FXCollections.observableArrayList();
@@ -249,7 +249,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return ListCandidate;
 
     }
-
+*/
     @Override
     public List<Candidate> findAllCandidate() {
        List<Candidate> cdtList = em.createQuery("select c from Candidate c",Candidate.class).getResultList();

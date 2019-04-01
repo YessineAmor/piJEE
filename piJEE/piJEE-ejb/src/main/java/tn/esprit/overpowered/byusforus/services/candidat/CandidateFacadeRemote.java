@@ -94,7 +94,8 @@ public interface CandidateFacadeRemote {
     
     //Candidate List display
     
-    public ObservableList<Candidate> getObservableCandidate();
+    //public ObservableList<Candidate> getObservableCandidate();
+    
     
     public List<Candidate> findAllCandidate();
    
