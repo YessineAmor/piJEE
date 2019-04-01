@@ -31,5 +31,5 @@ public interface CandidateApplicationFacadeRemote {
     int count();
 
     CandidateApplication getApplicationByCandidateId(Long candidateId, Long jobOfferId);
-
+    
 }
