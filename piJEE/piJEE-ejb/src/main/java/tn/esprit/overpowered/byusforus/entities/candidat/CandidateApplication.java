@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.entities.candidat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class CandidateApplication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Candidate candidate;
     private String motivationLetter;
     private String resume;
@@ -119,6 +120,14 @@ public class CandidateApplication implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 
     @Override
