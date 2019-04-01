@@ -5,24 +5,24 @@
  */
 package tn.esprit.overpowered.byusforus.util;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 import tn.esprit.overpowered.byusforus.entities.quiz.Question;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuestionType;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
-import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
-import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
-import tn.esprit.overpowered.byusforus.entities.util.Skill;
+import tn.esprit.overpowered.byusforus.entities.users.User;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.users.UserFacade;
+import tn.esprit.overpowered.byusforus.services.users.UserFacadeLocal;
 
 /**
  *
@@ -36,12 +36,17 @@ public class DBPopulator {
     private QuizFacadeLocal quizFacade;
     @EJB
     private JobOfferFacadeLocal jobOfferFacade;
+    @EJB
+    private UserFacadeLocal userFacade;
+
+    @PersistenceContext(unitName = "piJEE-ejb")
+    private EntityManager em;
 
     public DBPopulator() {
     }
 
     @PostConstruct
-    public void createData() {
+    public void createData() throws NoSuchAlgorithmException {
 //        System.out.println("Filling database..");
         if (quizFacade.find(1) == null) {
 
@@ -106,5 +111,4 @@ public class DBPopulator {
 //            jobOfferFacade.create(jobOffer);
 //        }
     }
-
 }
