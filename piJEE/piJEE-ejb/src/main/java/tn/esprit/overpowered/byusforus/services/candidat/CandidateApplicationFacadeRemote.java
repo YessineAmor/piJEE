@@ -32,4 +32,9 @@ public interface CandidateApplicationFacadeRemote {
 
     CandidateApplication getApplicationByCandidateId(Long candidateId, Long jobOfferId);
     
+
+
+    void updateCandidateApplication(CandidateApplication cApp);
+
+
 }
