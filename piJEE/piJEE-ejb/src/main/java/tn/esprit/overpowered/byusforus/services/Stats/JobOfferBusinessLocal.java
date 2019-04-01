@@ -2,12 +2,13 @@ package tn.esprit.overpowered.byusforus.services.Stats;
 
 import java.util.Date;
 import java.util.List;
-import javax.ejb.Remote;
+
+import javax.ejb.Local;
 
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 
-@Remote
-public interface JobOfferBusinessRemote {
+@Local
+public interface JobOfferBusinessLocal {
 	public Integer countJO();
 	public Integer countJOInPeriod(Date dateOfCreation, Date dateOfArchive) ;
 	public Integer countEventInPeriod(Date startDate, Date endDate);
