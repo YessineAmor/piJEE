@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.candidat.CurriculumVitae;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
@@ -55,7 +56,7 @@ public interface CandidateFacadeRemote {
     
     public String createCandidate(Candidate candidate);
     
-    public String recommend(Long candidateId, Long subscriberdId);
+    public String recommend(Long candidateId);
     
     //Cursus
     
@@ -90,6 +91,12 @@ public interface CandidateFacadeRemote {
     public Experience findExperience(Long experienceId);
     
     public void affecterExperienceCandidate(Long expId,  Long candidateId);
+    
+    //Candidate List display
+    
+    public ObservableList<Candidate> getObservableCandidate();
+    
+    public List<Candidate> findAllCandidate();
    
     
             
