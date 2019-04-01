@@ -35,11 +35,11 @@ public class ReponseReclamationService implements ReponseReclamationRemote,Repon
 	}
 	@Override
 	public List<ReponseReclamation> FindReponseByidReclamation(int id) {
-		return em.createQuery("select r from ReponseReclamation r where idReclamation= :id order By dateReponse ASC",ReponseReclamation.class).setParameter("id",id).getResultList();
+		return em.createQuery("select r from ReponseReclamation r where r.idReclamation= :id order By r.dateReponse ASC",ReponseReclamation.class).setParameter("id",id).getResultList();
 	}
 	@Override
 	public int CalculTotalReponse(int idReclamation) {
-		Long lol= em.createQuery("select count(r) from ReponseReclamation r where idReclamation= :id",Long.class).setParameter("id",idReclamation).getSingleResult();
+		Long lol= em.createQuery("select count(r) from ReponseReclamation r where r.idReclamation= :id",Long.class).setParameter("id",idReclamation).getSingleResult();
 		return lol.intValue();
 	}
 	
