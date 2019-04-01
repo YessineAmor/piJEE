@@ -26,7 +26,8 @@ public class MessageRepository {
         TypedQuery<Message> query = em.createQuery("SELECT m FROM Message m WHERE m.sentTime > :time and m.from = :u", Message.class);
         query.setParameter("time", t);
         query.setParameter("from", u);
-        ArrayList<Message> result = (ArrayList<Message>) query.getResultList();
+        ArrayList<Message> result = new ArrayList();
+        result.addAll(query.getResultList());
         for (Message m : result) {
             if (m.getFrom().equals(u) && m.isHiddenBySender()) {
                 result.remove(m);
@@ -39,9 +40,10 @@ public class MessageRepository {
     }
 
     public ArrayList<Message> getAllMessages(EntityManager em, User u) {
-        ArrayList<Message> result = (ArrayList< Message>) em.createQuery(
+        ArrayList<Message> result = new ArrayList();
+        result.addAll(em.createQuery(
                 "SELECT m FROM Message m WHERE m.from = :u OR m.to = :u ", Message.class)
-                .setParameter("u", u).getResultList();
+                .setParameter("u", u).getResultList());
 
         for (Message m : result) {
             if (m.getFrom().equals(u) && m.isHiddenBySender()) {
