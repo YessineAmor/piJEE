@@ -5,10 +5,13 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
@@ -43,13 +46,12 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public CandidateFacade() {
         super(Candidate.class);
     }
-    
-        @Override
+
+    @Override
     public String createCandidate(Candidate candidate) {
         em.persist(candidate);
         return candidate.getUsername();
     }
-
 
     @Override
     public List<Candidate> afficherCandidats() {
@@ -62,7 +64,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public List<Candidate> searchByName(String name) {
         List<Candidate> cdt = em.createQuery(
                 "SELECT c FROM Candidate c WHERE "
-                + "c.firstName  LIKE CONCAT('%',:name,'%')",Candidate.class)
+                + "c.firstName  LIKE CONCAT('%',:name,'%')", Candidate.class)
                 .setParameter("name", name)
                 .getResultList();
         return cdt;
@@ -72,7 +74,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public List<Candidate> searchByLastname(String lastname) {
         List<Candidate> cdt = em.createQuery(
                 "SELECT c FROM Candidate c WHERE c.lastName LIKE "
-                + "CONCAT('%',:lastname,'%')",Candidate.class)
+                + "CONCAT('%',:lastname,'%')", Candidate.class)
                 .setParameter("name", lastname)
                 .getResultList();
         return cdt;
@@ -129,14 +131,14 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         if (exp != null && emp != null) {
             emp.getExperiences().add(exp);
             exp.setCandidate(emp);
-        }
-        else
+        } else {
             System.out.println("Either candidate or Experience doent exist !");
+        }
     }
 
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
-       Candidate cdt = this.find(candidateId);
+        Candidate cdt = this.find(candidateId);
         return cdt.getRegisteredOffers();
     }
 
@@ -145,34 +147,35 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         Candidate cdt = this.find(candidateId);
         return cdt.getSubscribedCompanies();
     }
+
     //ACCOUNT CONFIRMATION CREATION
     @Override
     public String accountCreationConfirmation(String email) {
-    /*       int length = 5;
+        /*       int length = 5;
     boolean useLetters = true;
     boolean useNumbers = false;
     String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);*/
-    int code = 10000 + new Random().nextInt(90000);
+        int code = 10000 + new Random().nextInt(90000);
+        System.out.println("this is the code " + code);
         try {
             MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
-                    "toussaint.kebou@gmail.com", "Laurel@2016",email
-                    , "Account creation Confirmation Mail",
+                    "toussaint.kebou@gmail.com", "Laurel@2016", email,
+                    "Account creation Confirmation Mail",
                     "If you are receiving this Email then you are one step away from"
-                            + " joining the BYUSFORUS group thanks you for your trust"
-                            + " Confirm registration with following code "
-                            + "<b>" +code + "</b>"
-                            + "  Enjoy your stay on our platform");
-            
+                    + " joining the BYUSFORUS group thanks you for your trust"
+                    + " Confirm registration with following code "
+                    + "<b>" + code + "</b>"
+                    + "  Enjoy your stay on our platform");
+
             return Integer.toString(code);
         } catch (MessagingException ex) {
             Logger.getLogger(CandidateFacade.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("mailing failure");
         }
-        
+
         return "mailing system down";
 
     }
-
 
     @Override
     public Long createCursus(Cursus cursus) {
@@ -229,16 +232,39 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     }
 
     @Override
-    public String recommend(Long candidateId, Long subscriberdId) {
-       Candidate cdt = em.find(Candidate.class, candidateId);
-        if(cdt.getRecommendedIdList().contains(subscriberdId))
-        {
-            cdt.setRecommendations(cdt.getRecommendations() + 1);
-            return "Recommedation Successful" ;
-        }
-        
-        return "You have already recommended this candidate";
+    public String recommend(Long candidateId) {
+        Candidate cdt = em.find(Candidate.class, candidateId);
+        cdt.setRecommendations(cdt.getRecommendations() + 1);
+        return "OK";
+
     }
+
+    /*
+    @Override
+    public ObservableList<Candidate> getObservableCandidate() {
+       ObservableList<Candidate> ListCandidate = FXCollections.observableArrayList();
+        List<Candidate> candidates = this.findAllCandidate();
+        for (Candidate c : candidates) {
+            ListCandidate.add(c);
+        }
+        return ListCandidate;
+
+    }
+     */
+    @Override
+    public List<Candidate> findAllCandidate() {
+        List<Candidate> cdtList = em.createQuery("select c from Candidate c", Candidate.class).getResultList();
+        return cdtList;
+    }
+
+
+    @Override
+    public int incrementVisits(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        cdt.setVisits(cdt.getVisits()+1);
+        return cdt.getVisits();
+    }
+
 
 
 }

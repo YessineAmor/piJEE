@@ -12,6 +12,8 @@ package tn.esprit.overpowered.byusforus.entities.util;
 public enum Skill {
 PYTHON,
 JAVA,
-SOC
-    
+SOC,
+C,
+MICROSOFT,
+NETWORKING,
 }
