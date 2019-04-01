@@ -1,0 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tn.esprit.overpowered.byusforus.services.messaging;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.ejb.Local;
+import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.messaging.Message;
+import tn.esprit.overpowered.byusforus.entities.users.User;
+
+/**
+ *
+ * @author aminos
+ */
+@Remote
+public interface MessagingRemote {
+    
+    public void sendMessage(Message m);
+    public ArrayList<Message> getMessages(Long userId, LocalDateTime t);
+    public ArrayList<Message> getMyMessages(Long userId);
+    public void hideMessage(Long userId, Long messageId);
+    public void seeMessage(Long userId, Long messageId);
+}
