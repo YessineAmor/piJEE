@@ -115,6 +115,10 @@ public class QuizTry implements Serializable {
         this.candidate = candidate;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
