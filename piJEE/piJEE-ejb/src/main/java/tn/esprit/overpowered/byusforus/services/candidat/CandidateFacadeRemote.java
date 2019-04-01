@@ -98,10 +98,11 @@ public interface CandidateFacadeRemote {
     
     
     public List<Candidate> findAllCandidate();
-   
     
-            
+    public int incrementVisits(Long cdtId);
+ 
+    
+
     
     
-   
 }

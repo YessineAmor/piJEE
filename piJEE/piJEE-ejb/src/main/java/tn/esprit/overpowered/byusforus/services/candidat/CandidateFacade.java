@@ -257,4 +257,14 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return cdtList;
     }
 
+
+    @Override
+    public int incrementVisits(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        cdt.setVisits(cdt.getVisits()+1);
+        return cdt.getVisits();
+    }
+
+
+
 }
