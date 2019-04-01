@@ -2,18 +2,17 @@ package tn.esprit.overpowered.byusforus.entities.Paiement;
 
 import java.util.Date;
 import java.io.Serializable;
-import javax.faces.view.Location;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 
 /**
- * Entity implementation class for Entity: OeuvreDeclaration
+ * Entity implementation class for Entity: Premium
  *
  */
 @Entity
 
-public class OeuvreDeclaration implements Serializable {
+public class Premium implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,9 +43,7 @@ public class OeuvreDeclaration implements Serializable {
 	private int EtatFirstAlerte;
 	private String path;
 	
-	@OneToOne(mappedBy="OeuvreD"/*,cascade={CascadeType.PERSIST,CascadeType.REMOVE}*/)
-	private Location location;
-	@OneToOne(mappedBy="oeuvreDeclaration")
+	
 	private Paiment paiment;
 
 	
@@ -133,16 +130,11 @@ public class OeuvreDeclaration implements Serializable {
 	public void setEtatFirstAlerte(int etatFirstAlerte) {
 		EtatFirstAlerte = etatFirstAlerte;
 	}
-	public Location getLocation() {
-		return location;
-	}
-	public void setLocation(Location location) {
-		location = location;
-	}
+	
 
 	private static final long serialVersionUID = 1L;
 
-	public OeuvreDeclaration() {
+	public Premium() {
 		super();
 	}
 	@Override

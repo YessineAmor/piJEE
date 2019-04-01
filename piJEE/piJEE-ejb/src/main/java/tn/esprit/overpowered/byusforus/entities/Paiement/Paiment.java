@@ -27,7 +27,7 @@ public class Paiment implements Serializable{
 	@OneToOne
 	private BankCard bankcard;
 	@OneToOne
-	private OeuvreDeclaration oeuvreDeclaration;
+	private Premium oeuvreDeclaration;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="userId")
@@ -112,10 +112,10 @@ public class Paiment implements Serializable{
 		return "Paiment [cheque=" + cheque + ", virement=" + virement + ", bankcard=" + bankcard + ", ID=" + ID
 				+ ", Title=" + Title + ", Price=" + Price + ", Date=" + Date + ", Status=" + Status + "]";
 	}
-	public OeuvreDeclaration getOeuvreDeclaration() {
+	public Premium getOeuvreDeclaration() {
 		return oeuvreDeclaration;
 	}
-	public void setOeuvreDeclaration(OeuvreDeclaration oeuvreDeclaration) {
+	public void setOeuvreDeclaration(Premium oeuvreDeclaration) {
 		this.oeuvreDeclaration = oeuvreDeclaration;
 	}
 	public User getUser() {
