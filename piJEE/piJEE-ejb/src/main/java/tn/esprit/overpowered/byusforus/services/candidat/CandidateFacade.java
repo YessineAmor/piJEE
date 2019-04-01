@@ -5,10 +5,13 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
@@ -157,7 +160,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         try {
             MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
                     "toussaint.kebou@gmail.com", "Laurel@2016", email,
-                     "Account creation Confirmation Mail",
+                    "Account creation Confirmation Mail",
                     "If you are receiving this Email then you are one step away from"
                     + " joining the BYUSFORUS group thanks you for your trust"
                     + " Confirm registration with following code "
@@ -229,14 +232,29 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     }
 
     @Override
-    public String recommend(Long candidateId, Long subscriberdId) {
+    public String recommend(Long candidateId) {
         Candidate cdt = em.find(Candidate.class, candidateId);
-        if (cdt.getRecommendedIdList().contains(subscriberdId)) {
-            cdt.setRecommendations(cdt.getRecommendations() + 1);
-            return "Recommedation Successful";
-        }
+        cdt.setRecommendations(cdt.getRecommendations() + 1);
+        return "OK";
 
-        return "You have already recommended this candidate";
+    }
+
+    /*
+    @Override
+    public ObservableList<Candidate> getObservableCandidate() {
+       ObservableList<Candidate> ListCandidate = FXCollections.observableArrayList();
+        List<Candidate> candidates = this.findAllCandidate();
+        for (Candidate c : candidates) {
+            ListCandidate.add(c);
+        }
+        return ListCandidate;
+
+    }
+     */
+    @Override
+    public List<Candidate> findAllCandidate() {
+        List<Candidate> cdtList = em.createQuery("select c from Candidate c", Candidate.class).getResultList();
+        return cdtList;
     }
 
 }

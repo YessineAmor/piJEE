@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.authentication;
 
 import java.util.List;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +17,7 @@ import tn.esprit.overpowered.byusforus.entities.authentication.Auth2FA;
  *
  * @author aminos
  */
-@Stateless
+@Stateful
 public class Auth2FAFacade implements Auth2FAFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")

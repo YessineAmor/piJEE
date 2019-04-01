@@ -10,5 +10,5 @@ package tn.esprit.overpowered.byusforus.entities.reclamation;
  * @author amine
  */
 public enum EtatReclamation {
-    EnAttente, EnCours, Traité
+    EnAttente, EnCours, Traite
 }
