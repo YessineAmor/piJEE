@@ -42,7 +42,7 @@ public interface CandidateFacadeRemote {
     
     public List<Candidate> searchByPosition(String position);
     
-    public Long addContact(Long candidateId);
+    public String addContact(Long currendCdtId, Long contactId);
     
     public CompanyProfile searchCompany(String companyName);
     
@@ -100,6 +100,10 @@ public interface CandidateFacadeRemote {
     public List<Candidate> findAllCandidate();
     
     public int incrementVisits(Long cdtId);
+    
+    public List<Candidate> searchByEmail(String email);
+    
+  //  public boolean checkContacts(Long cdtId, Candidate cdt );
  
     
 

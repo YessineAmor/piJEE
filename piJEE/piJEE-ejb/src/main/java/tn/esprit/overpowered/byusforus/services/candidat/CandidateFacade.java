@@ -73,9 +73,9 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public List<Candidate> searchByLastname(String lastname) {
         List<Candidate> cdt = em.createQuery(
-                "SELECT c FROM Candidate c WHERE c.lastName LIKE "
-                + "CONCAT('%',:lastname,'%')", Candidate.class)
-                .setParameter("name", lastname)
+               "SELECT c FROM Candidate c WHERE "
+                + "c.lastName  LIKE CONCAT('%',:lastName,'%')", Candidate.class)
+                .setParameter("lastName", lastname)
                 .getResultList();
         return cdt;
     }
@@ -94,10 +94,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     }
 
-    @Override
-    public Long addContact(Long candidateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public CompanyProfile searchCompany(String companyName) {
@@ -239,21 +235,10 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     }
 
-    /*
-    @Override
-    public ObservableList<Candidate> getObservableCandidate() {
-       ObservableList<Candidate> ListCandidate = FXCollections.observableArrayList();
-        List<Candidate> candidates = this.findAllCandidate();
-        for (Candidate c : candidates) {
-            ListCandidate.add(c);
-        }
-        return ListCandidate;
-
-    }
-     */
     @Override
     public List<Candidate> findAllCandidate() {
-        List<Candidate> cdtList = em.createQuery("select c from Candidate c", Candidate.class).getResultList();
+        List<Candidate> cdtList = em.createQuery("select c from "
+                + "Candidate c", Candidate.class).getResultList();
         return cdtList;
     }
 
@@ -264,6 +249,42 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         cdt.setVisits(cdt.getVisits()+1);
         return cdt.getVisits();
     }
+
+    @Override
+    public List<Candidate> searchByEmail(String email) {
+        List<Candidate> cdt = em.createQuery(
+                "SELECT c FROM Candidate c WHERE c.email LIKE "
+                + "CONCAT('%',:email,'%')", Candidate.class)
+                .setParameter("email", email)
+                .getResultList();
+        return cdt;
+    }
+
+    @Override
+    public Long addContact(Long candidateId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String addContact(Long currentCdtId, Long contactId) {
+         Candidate currentCdt = em.find(Candidate.class, currentCdtId);
+        Candidate contact = em.find(Candidate.class, contactId);
+        if(!currentCdt.getContacts().contains(contact))
+        {
+        currentCdt.getContacts().add(contact);
+        contact.getContacts().add(currentCdt);
+        return "Contact Added";
+        } else
+            return "Already Friends";
+    }
+/*
+    @Override
+    public boolean checkContacts(Long cdtId, Candidate cdt) {
+        Candidate cdtt = em.find(Candidate.class, cdtId);
+        return cdtt.getContacts().contains(cdt);
+    }
+*/
+    
 
 
 
