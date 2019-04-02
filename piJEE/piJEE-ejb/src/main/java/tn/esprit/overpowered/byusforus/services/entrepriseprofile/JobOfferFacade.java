@@ -118,8 +118,9 @@ public class JobOfferFacade extends AbstractFacade<JobOffer> implements JobOffer
         List<JobOffer> offers = null;
         OfferStatus status = OfferStatus.ARCHIVED;
         try {
-            offers = em.createQuery("select o from JobOffer o",
+            offers = em.createQuery("select o from JobOffer o where o.offerStatus!= :status",
                     JobOffer.class)
+                    .setParameter("status", status)
                     .getResultList();
         } catch (NoResultException nre) {
         }
