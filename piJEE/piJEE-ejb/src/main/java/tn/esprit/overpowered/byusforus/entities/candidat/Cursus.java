@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 @Table
 public class Cursus implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 11L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
