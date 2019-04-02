@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,7 +80,10 @@ public class Candidate extends User implements Serializable {
     private List<Cursus> cursus;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Candidate> contacts;
+    @JoinTable(name="contacts",
+                joinColumns={           @JoinColumn(name="current_id")},
+                inverseJoinColumns={    @JoinColumn(name="contact_id")})
+    private List<Candidate> contacts = new ArrayList<Candidate>();;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<JobOffer> registeredOffers;
@@ -152,11 +156,11 @@ public class Candidate extends User implements Serializable {
         this.cursus = cursus;
     }
 
-    public Set<Candidate> getContacts() {
+    public List<Candidate> getContacts() {
         return contacts;
     }
 
-    public void setContacts(Set<Candidate> contacts) {
+    public void setContacts(List<Candidate> contacts) {
         this.contacts = contacts;
     }
 
