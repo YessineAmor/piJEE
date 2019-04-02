@@ -31,5 +31,7 @@ public interface QuizFacadeRemote {
     int count();
 
     Quiz getQuizByJobOfferId(Long jobOffer);
+    
+    Quiz getQuizByName(String name);
 
 }

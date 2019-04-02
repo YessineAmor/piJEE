@@ -32,4 +32,5 @@ public interface QuizFacadeLocal {
 
     Quiz getQuizByJobOfferId(Long jobOffer);
 
+    Quiz getQuizByName(String name);
 }

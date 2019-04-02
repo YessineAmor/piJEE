@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.services.quiz;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
@@ -32,10 +33,29 @@ public class QuizFacade extends AbstractFacade<Quiz> implements QuizFacadeLocal,
 
     @Override
     public Quiz getQuizByJobOfferId(Long jobOffer) {
-        Quiz quiz = em.createQuery(
-                "SELECT q FROM Quiz q WHERE "
-                + "q.jobOffer.id  = :cid ", Quiz.class)
-                .setParameter("cid", jobOffer).getSingleResult();
+        Quiz quiz = null;
+        try {
+            quiz = em.createQuery(
+                    "SELECT q FROM Quiz q WHERE "
+                    + "q.jobOffer.id  = :cid ", Quiz.class)
+                    .setParameter("cid", jobOffer).getSingleResult();
+            return quiz;
+        } catch (NoResultException e) {
+        }
+        return quiz;
+    }
+
+    @Override
+    public Quiz getQuizByName(String name) {
+        Quiz quiz = null;
+        try {
+            quiz = em.createQuery(
+                    "SELECT q FROM Quiz q WHERE "
+                    + "q.name = :name ", Quiz.class)
+                    .setParameter("name", name).getSingleResult();
+            return quiz;
+        } catch (NoResultException e) {
+        }
         return quiz;
     }
 
