@@ -61,5 +61,7 @@ public interface CompanyAdminFacadeRemote {
     
     public List<Event> searchEventByLocation(String location);
     
+    public List<CompanyProfile> findAllCompanies();
+    
     
 }
