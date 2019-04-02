@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.entities.messaging;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
 public class Message implements Serializable {
 
     public Message() {
-        this.sentTime = LocalDateTime.now();
+        this.sentTime = new Date();
         this.seenBySenderAt = this.sentTime;
     }
 
@@ -63,9 +64,9 @@ public class Message implements Serializable {
     }
     
     boolean seenByReceiver = false;
-    LocalDateTime seenByReceiverAt;
+    Date seenByReceiverAt;
     boolean seenBySender = true;
-    LocalDateTime seenBySenderAt;
+    Date seenBySenderAt;
     
     boolean hiddenByReceiver = false;
     boolean hiddenBySender = false;
@@ -94,11 +95,11 @@ public class Message implements Serializable {
         this.seenByReceiver = seenByReceiver;
     }
 
-    public LocalDateTime getSeenByReceiverAt() {
+    public Date getSeenByReceiverAt() {
         return seenByReceiverAt;
     }
 
-    public void setSeenByReceiverAt(LocalDateTime seenByReceiverAt) {
+    public void setSeenByReceiverAt(Date seenByReceiverAt) {
         this.seenByReceiverAt = seenByReceiverAt;
     }
 
@@ -110,11 +111,11 @@ public class Message implements Serializable {
         this.seenBySender = seenBySender;
     }
 
-    public LocalDateTime getSeenBySenderAt() {
+    public Date getSeenBySenderAt() {
         return seenBySenderAt;
     }
 
-    public void setSeenBySenderAt(LocalDateTime seenBySenderAt) {
+    public void setSeenBySenderAt(Date seenBySenderAt) {
         this.seenBySenderAt = seenBySenderAt;
     }
 
@@ -138,13 +139,13 @@ public class Message implements Serializable {
     boolean deletedBySender;
 
  
-    private LocalDateTime sentTime;
+    private Date sentTime;
 
-    public LocalDateTime getSentTime() {
+    public Date getSentTime() {
         return sentTime;
     }
 
-    public void setSentTime(LocalDateTime sentTime) {
+    public void setSentTime(Date sentTime) {
         this.sentTime = sentTime;
     }
     public Long getId() {

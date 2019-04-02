@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.entities.posting;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Post implements Serializable {
     @OneToOne
     User by;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     Set<Comment> comments;
 
     public Set<Comment> getComments() {
