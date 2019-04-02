@@ -22,6 +22,8 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
 public class Paiment implements Serializable{
     private static final long serialVersionUID = 1L;
 
+    	private static final long serialVersionUID = 3L;
+
 	@OneToOne
 	private Cheque cheque;
 	@OneToOne

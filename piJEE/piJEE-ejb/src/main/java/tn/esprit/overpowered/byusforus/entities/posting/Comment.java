@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import tn.esprit.overpowered.byusforus.entities.users.User;
 
 /**
  *
@@ -20,13 +21,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Comment implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 17L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     Post on;
+
+    @ManyToOne
+    User by;
 
     public Post getOn() {
         return on;

@@ -31,7 +31,7 @@ import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Workshop;
 @Entity
 public class CompanyProfile implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 30L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "COMPANY_ID")
@@ -64,6 +64,9 @@ public class CompanyProfile implements Serializable {
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Employee> employees;
 
+    @OneToMany(mappedBy = "companyProfile", cascade = {ALL}, fetch = FetchType.LAZY)
+    private List<ProjectManager> projectManagers;
+
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Event> events;
 
@@ -76,10 +79,6 @@ public class CompanyProfile implements Serializable {
     public CompanyProfile(String name) {
         this.name = name;
     }
-    
-    
-    
-    
 
     public Long getId() {
         return id;
@@ -168,8 +167,6 @@ public class CompanyProfile implements Serializable {
     public void setCompanyHRManager(HRManager companyHRManager) {
         this.companyHRManager = companyHRManager;
     }
-    
-    
 
     public List<JobOffer> getListOfOffers() {
         return listOfOffers;
@@ -194,6 +191,16 @@ public class CompanyProfile implements Serializable {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+    public List<ProjectManager> getProjectManagers() {
+        return projectManagers;
+    }
+
+    public void setProjectManagers(List<ProjectManager> projectManagers) {
+        this.projectManagers = projectManagers;
+    }
+    
+    
 
     public List<Event> getEvents() {
         return events;

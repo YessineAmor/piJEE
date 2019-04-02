@@ -30,7 +30,7 @@ import tn.esprit.overpowered.byusforus.util.JobApplicationState;
 @Entity
 public class CandidateApplication implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

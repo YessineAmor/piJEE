@@ -24,7 +24,7 @@ import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 @Entity
 public class Quiz implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 24L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

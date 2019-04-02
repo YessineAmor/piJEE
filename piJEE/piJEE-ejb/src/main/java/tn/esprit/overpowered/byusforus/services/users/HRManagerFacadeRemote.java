@@ -31,10 +31,14 @@ public interface HRManagerFacadeRemote {
 
     int count();
     
+    //OFFER
     public boolean approveJobOffer(Long idJobOffer, String gmailPassword);
     
     public boolean declineJobOffer(Long idJobOffer, String gmailPassword, String motif);
     
+    public void createOffer(Long idManager,JobOffer offer);
+    
+    //HR
     public Long createHRManager(HRManager hrManger);
     
     public boolean affecterHRtoCompany(Long hrManagerId, String compName);
