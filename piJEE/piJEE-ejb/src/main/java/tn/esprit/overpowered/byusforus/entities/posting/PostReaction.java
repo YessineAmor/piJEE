@@ -20,7 +20,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
 @Entity
 public class PostReaction implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 20L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

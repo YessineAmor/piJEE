@@ -41,7 +41,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 public class JobOffer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 14L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "JOB_OFFER_ID")

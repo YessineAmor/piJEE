@@ -13,7 +13,8 @@ import javax.validation.constraints.Null;
 @Entity
 public class Virement implements Serializable{
 
-	
+		private static final long serialVersionUID = 5L;
+
 	@OneToOne(mappedBy="virement")
 	private Paiment paiment;	
 	@Id

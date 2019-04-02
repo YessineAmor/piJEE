@@ -32,7 +32,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @DiscriminatorValue(value = "EMPLOYEE")
 public class Employee extends Candidate implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 31L;
 
     @ManyToOne
     @JoinTable(name = "COMPANY_EMPLOYEES")
