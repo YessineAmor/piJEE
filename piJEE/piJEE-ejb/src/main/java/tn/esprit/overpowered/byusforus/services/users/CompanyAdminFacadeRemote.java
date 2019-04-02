@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 
@@ -60,6 +61,10 @@ public interface CompanyAdminFacadeRemote {
     public List<Event> searchEventByName(String name);
     
     public List<Event> searchEventByLocation(String location);
+    
+    public List<CompanyProfile> findAllCompanies();
+    
+    public List<JobOffer> jobOffersByCompany(Long compId);
     
     
 }
