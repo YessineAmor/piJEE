@@ -164,4 +164,12 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
                 .getResultList();
     }
 
+    @Override
+    public List<CompanyProfile> findAllCompanies() {
+        List<CompanyProfile> compList = em.createQuery("select c"
+                + " from CompanyProfile c",
+                CompanyProfile.class).getResultList();
+        return compList;
+    }
+
 }
