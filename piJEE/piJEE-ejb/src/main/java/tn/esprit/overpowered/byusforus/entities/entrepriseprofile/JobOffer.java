@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.entities.entrepriseprofile;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -23,7 +24,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
@@ -57,12 +57,11 @@ public class JobOffer implements Serializable {
     private String description;
 
     private String city;
-    
+
     private OfferStatus offerStatus;
-    
+
     @Temporal(TemporalType.DATE)
     private Date dateOfArchive;
-   
 
     @Enumerated(EnumType.STRING)
     private ExpertiseLevel expertiseLevel;
@@ -76,7 +75,7 @@ public class JobOffer implements Serializable {
     @Column(nullable = false)
     private Integer peopleNeeded;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "T_COMP_JOB", joinColumns = {
         @JoinColumn(name = "COMPANY_ID")},
             inverseJoinColumns = {
@@ -90,7 +89,7 @@ public class JobOffer implements Serializable {
     @ManyToMany(mappedBy = "registeredOffers",
             cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Candidate> registeredCandidates;
-    
+
     @ManyToOne
     @JoinTable(name = "MANAGER_OFFERS")
     private Employee manager;
@@ -98,6 +97,7 @@ public class JobOffer implements Serializable {
     public JobOffer() {
         this.dateOfCreation = new Date();
         this.offerStatus = OfferStatus.PENDING;
+        this.skills = new HashSet<>();
     }
 
     public Long getId() {
@@ -143,7 +143,7 @@ public class JobOffer implements Serializable {
     public void setOfferStatus(OfferStatus offerStatus) {
         this.offerStatus = offerStatus;
     }
-  
+
     public Date getDateOfArchive() {
         return dateOfArchive;
     }
@@ -199,8 +199,6 @@ public class JobOffer implements Serializable {
     public void setManager(Employee manager) {
         this.manager = manager;
     }
-
-
 
     public List<Candidate> getRegisteredCandidates() {
         return registeredCandidates;
