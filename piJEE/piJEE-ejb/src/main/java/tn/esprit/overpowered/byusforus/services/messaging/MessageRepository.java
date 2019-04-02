@@ -5,9 +5,9 @@
  */
 package tn.esprit.overpowered.byusforus.services.messaging;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.jms.MessageListener;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
  */
 public class MessageRepository {
 
-    public ArrayList<Message> getNewestMessages(EntityManager em, User u, LocalDateTime t) {
+    public ArrayList<Message> getNewestMessages(EntityManager em, User u, Date t) {
         TypedQuery<Message> query = em.createQuery("SELECT m FROM Message m WHERE m.sentTime > :time and m.from = :u", Message.class);
         query.setParameter("time", t);
         query.setParameter("from", u);
