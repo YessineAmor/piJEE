@@ -31,7 +31,7 @@ public interface ProjectManagerFacadeRemote {
 
     int count();
 
-    public Long createJobOffer(JobOffer jobOffer, Long idPManager, String gmailPassword);
+    public boolean createJobOfferRequest(JobOffer jobOffer, Long idPManager);
 
     public Long createPManager(ProjectManager pManager);
 
