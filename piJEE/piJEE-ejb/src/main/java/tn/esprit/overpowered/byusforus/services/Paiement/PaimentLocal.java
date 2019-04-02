@@ -5,10 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 import tn.esprit.overpowered.byusforus.entities.Paiement.Cheque;
-import tn.esprit.overpowered.byusforus.entities.Paiement.Cheque;
 import tn.esprit.overpowered.byusforus.entities.Paiement.Paiment;
-import tn.esprit.overpowered.byusforus.entities.Paiement.Paiment;
-import tn.esprit.overpowered.byusforus.entities.Paiement.Virement;
 import tn.esprit.overpowered.byusforus.entities.Paiement.Virement;
 import tn.esprit.overpowered.byusforus.entities.users.User;
 

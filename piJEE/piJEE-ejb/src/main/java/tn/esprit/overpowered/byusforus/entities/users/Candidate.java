@@ -6,11 +6,12 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -33,8 +34,6 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
  *
  * @author EliteBook
  */
-
-
 @Entity
 @DiscriminatorValue(value = "CANDIDATE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -43,7 +42,7 @@ public class Candidate extends User implements Serializable {
     private static final long serialVersionUID = 28L;
 
     private String introduction;
-    
+
     @ElementCollection
     private List<Long> recommendedIdList;
 
@@ -81,7 +80,10 @@ public class Candidate extends User implements Serializable {
     private List<Cursus> cursus;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Candidate> contacts;
+    @JoinTable(name="contacts",
+                joinColumns={           @JoinColumn(name="current_id")},
+                inverseJoinColumns={    @JoinColumn(name="contact_id")})
+    private List<Candidate> contacts = new ArrayList<Candidate>();;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<JobOffer> registeredOffers;
@@ -93,6 +95,10 @@ public class Candidate extends User implements Serializable {
     protected Set<Skill> skills;
 
     private int visits;
+
+    public Candidate() {
+        this.skills = new HashSet<>();
+    }
 
     public int getRecommendations() {
         return recommendations;
@@ -150,11 +156,11 @@ public class Candidate extends User implements Serializable {
         this.cursus = cursus;
     }
 
-    public Set<Candidate> getContacts() {
+    public List<Candidate> getContacts() {
         return contacts;
     }
 
-    public void setContacts(Set<Candidate> contacts) {
+    public void setContacts(List<Candidate> contacts) {
         this.contacts = contacts;
     }
 
@@ -191,5 +197,3 @@ public class Candidate extends User implements Serializable {
     }
 
 }
-
-
