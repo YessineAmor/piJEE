@@ -98,6 +98,7 @@ public class Candidate extends User implements Serializable {
 
     public Candidate() {
         this.skills = new HashSet<>();
+        this.recommendedIdList = new ArrayList<>();
     }
 
     public int getRecommendations() {

@@ -36,4 +36,9 @@ public interface CandidateApplicationFacadeLocal {
     void updateCandidateApplication(int id, String additionalInfo, JobApplicationState appState);
 
     List<CandidateApplication> getCandidateApplicationByJobOFfer(Long jobOfferId);
+
+    List<CandidateApplication> getCandidateApplicationByCdtId(Long cdtid);
+
+    void sendMail(String to, String subject, String body);
+
 }
