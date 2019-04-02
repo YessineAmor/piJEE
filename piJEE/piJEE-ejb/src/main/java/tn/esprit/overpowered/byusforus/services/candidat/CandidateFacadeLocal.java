@@ -41,7 +41,6 @@ public interface CandidateFacadeLocal {
     
     public List<Candidate> searchByPosition(String position);
     
-    public Long addContact(Long candidateId);
     
     public CompanyProfile searchCompany(String companyName);
     

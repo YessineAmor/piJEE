@@ -6,8 +6,10 @@
 package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -261,11 +263,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     }
 
     @Override
-    public Long addContact(Long candidateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public String addContact(Long currentCdtId, Long contactId) {
          Candidate currentCdt = em.find(Candidate.class, currentCdtId);
         Candidate contact = em.find(Candidate.class, contactId);
@@ -284,6 +281,34 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return cdtt.getContacts().contains(cdt);
     }
 */
+
+    @Override
+    public List<Candidate> friendsList(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        List<Candidate> listCdt = cdt.getContacts();
+        List<Candidate> contactsList = new ArrayList<>() ;
+        for(Candidate cdtt: listCdt)
+        {
+            contactsList.add(em.find(Candidate.class, cdtt.getId()));
+        }
+        return contactsList;
+        
+        
+        
+        
+        
+        /*List<Long> idList = em.createQuery("SELECT c.contacts_id from"
+                + " contacts c where c.Candidate_id = :cdtId",Long.class)
+                .setParameter("cdtId", cdtId)
+                .getResultList();
+        List<Candidate> contacts = new ArrayList<>() ;
+        for(Long id: idList)
+        {
+            contacts.add(em.find(Candidate.class, id));
+        }
+        return contacts;
+*/
+    }
     
 
 
