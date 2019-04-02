@@ -37,4 +37,8 @@ public interface CandidateApplicationFacadeRemote {
 
     List<CandidateApplication> getCandidateApplicationByJobOFfer(Long jobOfferId);
 
+    List<CandidateApplication> getCandidateApplicationByCdtId(Long cdtid);
+
+    void sendMail(String to, String subject, String body);
+
 }

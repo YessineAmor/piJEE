@@ -29,5 +29,7 @@ public interface QuizFacadeLocal {
     List<Quiz> findRange(int[] range);
 
     int count();
-    
+
+    Quiz getQuizByJobOfferId(Long jobOffer);
+
 }

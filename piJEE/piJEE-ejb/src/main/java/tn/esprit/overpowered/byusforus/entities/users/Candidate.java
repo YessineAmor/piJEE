@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,6 +95,7 @@ public class Candidate extends User implements Serializable {
 
     public Candidate() {
         this.skills = new HashSet<>();
+        this.recommendedIdList = new ArrayList<>();
     }
 
     public int getRecommendations() {

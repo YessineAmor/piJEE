@@ -16,7 +16,7 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
  * @author Yassine
  */
 @Stateless
-public class QuizFacade extends AbstractFacade<Quiz> implements QuizFacadeLocal,QuizFacadeRemote {
+public class QuizFacade extends AbstractFacade<Quiz> implements QuizFacadeLocal, QuizFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -29,5 +29,14 @@ public class QuizFacade extends AbstractFacade<Quiz> implements QuizFacadeLocal,
     public QuizFacade() {
         super(Quiz.class);
     }
-    
+
+    @Override
+    public Quiz getQuizByJobOfferId(Long jobOffer) {
+        Quiz quiz = em.createQuery(
+                "SELECT q FROM Quiz q WHERE "
+                + "q.jobOffer.id  = :cid ", Quiz.class)
+                .setParameter("cid", jobOffer).getSingleResult();
+        return quiz;
+    }
+
 }

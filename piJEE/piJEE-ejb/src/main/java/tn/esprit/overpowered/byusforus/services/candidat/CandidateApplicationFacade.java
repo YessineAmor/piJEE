@@ -6,12 +6,16 @@
 package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import tn.esprit.overpowered.byusforus.util.JobApplicationState;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
  *
@@ -61,6 +65,27 @@ public class CandidateApplicationFacade extends AbstractFacade<CandidateApplicat
                 .setParameter("jib", jobOfferId)
                 .getResultList();
         return cdtApp;
+    }
+
+    @Override
+    public List<CandidateApplication> getCandidateApplicationByCdtId(Long cdtid) {
+        List<CandidateApplication> cdtApp = em.createQuery(
+                "SELECT ca FROM CandidateApplication ca WHERE "
+                + " ca.candidate.id = :cib", CandidateApplication.class)
+                .setParameter("cib", cdtid)
+                .getResultList();
+        return cdtApp;
+    }
+
+    @Override
+    public void sendMail(String to, String subject, String body) {
+        try {
+            MailSender.sendMail("smtp.gmail.com", "587",
+                    "pidevnoreply@gmail.com", "pidevnoreply@gmail.com",
+                    "pidevpidev", to, subject, body);
+        } catch (MessagingException ex) {
+            Logger.getLogger(CandidateApplicationFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
