@@ -45,7 +45,7 @@ public class User implements Serializable{
     Set<Message> messages;
     
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 34L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -17,7 +17,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue( value = "WORKSHOP")
 public class Workshop extends Event implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 15L;
 
 
  

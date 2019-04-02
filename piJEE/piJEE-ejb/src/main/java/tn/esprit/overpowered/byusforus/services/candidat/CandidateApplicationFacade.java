@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
@@ -36,9 +37,19 @@ public class CandidateApplicationFacade extends AbstractFacade<CandidateApplicat
                 "SELECT ca FROM CandidateApplication ca WHERE "
                 + "ca.candidate.id  = :cid and ca.jobOffer.id = :jib", CandidateApplication.class)
                 .setParameter("cid", 1L)
-                .setParameter("jib", 2L)
+                .setParameter("jib", 1L)
                 .getSingleResult();
         return cdtApp;
+    }
+
+    @Override
+    public void updateCandidateApplication(CandidateApplication cApp) {
+        int cdtApp = em.createQuery(
+                "update CandidateApplication ca set additionalInfo = :adinfo and jobApplicationState = :jas WHERE ca.id = :caid")
+                .setParameter("adinfo", cApp.getAdditionalInfo())
+                .setParameter("jas", cApp.getJobApplicationState().toString())
+                .setParameter("caid", cApp.getId())
+                .executeUpdate();
     }
 
 }

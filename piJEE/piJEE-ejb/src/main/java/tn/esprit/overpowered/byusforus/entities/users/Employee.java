@@ -32,6 +32,8 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @DiscriminatorValue(value = "EMPLOYEE")
 public class Employee extends Candidate implements Serializable {
 
+    private static final long serialVersionUID = 31L;
+
     @ManyToOne
     @JoinTable(name = "COMPANY_EMPLOYEES")
     CompanyProfile company;
@@ -42,7 +44,7 @@ public class Employee extends Candidate implements Serializable {
 
     @OneToMany(mappedBy = "manager")
     private Set<Employee> subordinates = new HashSet<Employee>();
-    
+
     @OneToMany(mappedBy = "manager", cascade = {PERSIST, MERGE})
     private Set<JobOffer> managerOffers;
 
@@ -56,7 +58,7 @@ public class Employee extends Candidate implements Serializable {
         this.skills = skills;
 
     }
-    
+
     public CompanyProfile getCompany() {
         return company;
     }
@@ -88,6 +90,5 @@ public class Employee extends Candidate implements Serializable {
     public void setManagerOffers(Set<JobOffer> managerOffers) {
         this.managerOffers = managerOffers;
     }
-    
-    
+
 }

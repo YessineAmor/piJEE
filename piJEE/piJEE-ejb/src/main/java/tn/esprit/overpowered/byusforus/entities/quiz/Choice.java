@@ -18,7 +18,7 @@ import javax.persistence.Id;
 @Entity
 public class Choice implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 22L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idChoice;

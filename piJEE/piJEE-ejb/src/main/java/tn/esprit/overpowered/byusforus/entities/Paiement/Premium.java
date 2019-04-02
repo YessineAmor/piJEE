@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 
 public class Premium implements Serializable {
 
+    	private static final long serialVersionUID = 4L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -132,7 +134,6 @@ public class Premium implements Serializable {
 	}
 	
 
-	private static final long serialVersionUID = 1L;
 
 	public Premium() {
 		super();

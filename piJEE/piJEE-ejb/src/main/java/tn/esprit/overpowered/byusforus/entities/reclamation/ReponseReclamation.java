@@ -25,7 +25,7 @@ public class ReponseReclamation implements Serializable {
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateReponse;
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 27L;
     @ManyToOne //Master
     @JoinColumn(name = "idReclamation")
     private Reclamation reclamation = new Reclamation();

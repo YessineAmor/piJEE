@@ -32,7 +32,7 @@ import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 @DiscriminatorValue( value = "EVENT")
 public class Event implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 13L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EVENT_ID")

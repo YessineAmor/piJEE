@@ -31,7 +31,7 @@ import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Workshop;
 @Entity
 public class CompanyProfile implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 30L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "COMPANY_ID")

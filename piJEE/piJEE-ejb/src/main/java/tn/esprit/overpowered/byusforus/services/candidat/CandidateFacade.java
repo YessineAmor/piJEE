@@ -46,13 +46,12 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public CandidateFacade() {
         super(Candidate.class);
     }
-    
-        @Override
+
+    @Override
     public String createCandidate(Candidate candidate) {
         em.persist(candidate);
         return candidate.getUsername();
     }
-
 
     @Override
     public List<Candidate> afficherCandidats() {
@@ -65,7 +64,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public List<Candidate> searchByName(String name) {
         List<Candidate> cdt = em.createQuery(
                 "SELECT c FROM Candidate c WHERE "
-                + "c.firstName  LIKE CONCAT('%',:name,'%')",Candidate.class)
+                + "c.firstName  LIKE CONCAT('%',:name,'%')", Candidate.class)
                 .setParameter("name", name)
                 .getResultList();
         return cdt;
@@ -74,9 +73,9 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public List<Candidate> searchByLastname(String lastname) {
         List<Candidate> cdt = em.createQuery(
-                "SELECT c FROM Candidate c WHERE c.lastName LIKE "
-                + "CONCAT('%',:lastname,'%')",Candidate.class)
-                .setParameter("name", lastname)
+               "SELECT c FROM Candidate c WHERE "
+                + "c.lastName  LIKE CONCAT('%',:lastName,'%')", Candidate.class)
+                .setParameter("lastName", lastname)
                 .getResultList();
         return cdt;
     }
@@ -95,10 +94,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     }
 
-    @Override
-    public Long addContact(Long candidateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public CompanyProfile searchCompany(String companyName) {
@@ -132,14 +127,14 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         if (exp != null && emp != null) {
             emp.getExperiences().add(exp);
             exp.setCandidate(emp);
-        }
-        else
+        } else {
             System.out.println("Either candidate or Experience doent exist !");
+        }
     }
 
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
-       Candidate cdt = this.find(candidateId);
+        Candidate cdt = this.find(candidateId);
         return cdt.getRegisteredOffers();
     }
 
@@ -148,34 +143,35 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         Candidate cdt = this.find(candidateId);
         return cdt.getSubscribedCompanies();
     }
+
     //ACCOUNT CONFIRMATION CREATION
     @Override
     public String accountCreationConfirmation(String email) {
-    /*       int length = 5;
+        /*       int length = 5;
     boolean useLetters = true;
     boolean useNumbers = false;
     String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);*/
-    int code = 10000 + new Random().nextInt(90000);
+        int code = 10000 + new Random().nextInt(90000);
+        System.out.println("this is the code " + code);
         try {
             MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
-                    "toussaint.kebou@gmail.com", "Laurel@2016",email
-                    , "Account creation Confirmation Mail",
+                    "toussaint.kebou@gmail.com", "Laurel@2016", email,
+                    "Account creation Confirmation Mail",
                     "If you are receiving this Email then you are one step away from"
-                            + " joining the BYUSFORUS group thanks you for your trust"
-                            + " Confirm registration with following code "
-                            + "<b>" +code + "</b>"
-                            + "  Enjoy your stay on our platform");
-            
+                    + " joining the BYUSFORUS group thanks you for your trust"
+                    + " Confirm registration with following code "
+                    + "<b>" + code + "</b>"
+                    + "  Enjoy your stay on our platform");
+
             return Integer.toString(code);
         } catch (MessagingException ex) {
             Logger.getLogger(CandidateFacade.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("mailing failure");
         }
-        
+
         return "mailing system down";
 
     }
-
 
     @Override
     public Long createCursus(Cursus cursus) {
@@ -233,28 +229,62 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public String recommend(Long candidateId) {
-       Candidate cdt = em.find(Candidate.class, candidateId);
-      cdt.setRecommendations(cdt.getRecommendations()+1);
-      return "OK";
-       
+        Candidate cdt = em.find(Candidate.class, candidateId);
+        cdt.setRecommendations(cdt.getRecommendations() + 1);
+        return "OK";
+
+    }
+
+    @Override
+    public List<Candidate> findAllCandidate() {
+        List<Candidate> cdtList = em.createQuery("select c from "
+                + "Candidate c", Candidate.class).getResultList();
+        return cdtList;
+    }
+
+
+    @Override
+    public int incrementVisits(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        cdt.setVisits(cdt.getVisits()+1);
+        return cdt.getVisits();
+    }
+
+    @Override
+    public List<Candidate> searchByEmail(String email) {
+        List<Candidate> cdt = em.createQuery(
+                "SELECT c FROM Candidate c WHERE c.email LIKE "
+                + "CONCAT('%',:email,'%')", Candidate.class)
+                .setParameter("email", email)
+                .getResultList();
+        return cdt;
+    }
+
+    @Override
+    public Long addContact(Long candidateId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String addContact(Long currentCdtId, Long contactId) {
+         Candidate currentCdt = em.find(Candidate.class, currentCdtId);
+        Candidate contact = em.find(Candidate.class, contactId);
+        if(!currentCdt.getContacts().contains(contact))
+        {
+        currentCdt.getContacts().add(contact);
+        contact.getContacts().add(currentCdt);
+        return "Contact Added";
+        } else
+            return "Already Friends";
     }
 /*
     @Override
-    public ObservableList<Candidate> getObservableCandidate() {
-       ObservableList<Candidate> ListCandidate = FXCollections.observableArrayList();
-        List<Candidate> candidates = this.findAllCandidate();
-        for (Candidate c : candidates) {
-            ListCandidate.add(c);
-        }
-        return ListCandidate;
-
+    public boolean checkContacts(Long cdtId, Candidate cdt) {
+        Candidate cdtt = em.find(Candidate.class, cdtId);
+        return cdtt.getContacts().contains(cdt);
     }
 */
-    @Override
-    public List<Candidate> findAllCandidate() {
-       List<Candidate> cdtList = em.createQuery("select c from Candidate c",Candidate.class).getResultList();
-       return cdtList;
-    }
+    
 
 
 
