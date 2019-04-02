@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -12,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
@@ -170,6 +173,18 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
                 + " from CompanyProfile c",
                 CompanyProfile.class).getResultList();
         return compList;
+    }
+
+    @Override
+    public List<JobOffer> jobOffersByCompany(Long compId) {
+        CompanyProfile comp = em.find(CompanyProfile.class, compId);
+        List<JobOffer> listJobs = comp.getListOfOffers();
+        List<JobOffer> jobOffers = new ArrayList<>() ;
+        for(JobOffer job: listJobs)
+        {
+            jobOffers.add(em.find(JobOffer.class, job.getId()));
+        }
+        return jobOffers;
     }
 
 }
