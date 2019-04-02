@@ -26,7 +26,7 @@ public class Message implements Serializable {
         this.seenBySenderAt = this.sentTime;
     }
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 16L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

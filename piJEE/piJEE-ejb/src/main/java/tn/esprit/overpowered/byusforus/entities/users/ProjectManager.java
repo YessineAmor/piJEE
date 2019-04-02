@@ -19,7 +19,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @DiscriminatorValue(value = "PROJECT_MANAGER")
 public class ProjectManager extends Employee implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 33L;
     
     @ManyToOne
     private CompanyProfile companyProfile;

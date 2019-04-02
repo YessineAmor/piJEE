@@ -10,7 +10,8 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Cheque implements Serializable {
-    
+    	private static final long serialVersionUID = 2L;
+
 	@OneToOne(mappedBy="cheque")
     private Paiment paiment;
     @Id

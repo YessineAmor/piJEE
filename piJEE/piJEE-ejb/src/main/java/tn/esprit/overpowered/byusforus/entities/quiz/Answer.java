@@ -21,7 +21,7 @@ import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 @Entity
 public class Answer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 21L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

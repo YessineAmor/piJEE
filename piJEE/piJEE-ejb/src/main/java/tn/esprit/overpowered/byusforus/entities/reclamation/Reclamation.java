@@ -37,7 +37,7 @@ public class Reclamation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user = new User();
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 26L;
 
     public Reclamation() {
         super();

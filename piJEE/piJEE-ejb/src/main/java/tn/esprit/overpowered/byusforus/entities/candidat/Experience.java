@@ -33,7 +33,7 @@ enum Skill {
 @Table
 public class Experience implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 12L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

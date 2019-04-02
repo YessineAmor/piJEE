@@ -21,7 +21,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @DiscriminatorValue(value = "COMPANY_ADMIN")
 public class CompanyAdmin extends Employee implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 29L;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_COMP_ADMIN_ID")
     private CompanyProfile companyProfile;

@@ -26,7 +26,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Question implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 23L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQuestion;
