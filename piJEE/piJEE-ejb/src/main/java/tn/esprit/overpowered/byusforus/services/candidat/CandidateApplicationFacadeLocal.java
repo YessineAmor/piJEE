@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.services.candidat;
 import java.util.List;
 import javax.ejb.Local;
 import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
+import tn.esprit.overpowered.byusforus.util.JobApplicationState;
 
 /**
  *
@@ -32,6 +33,7 @@ public interface CandidateApplicationFacadeLocal {
 
     CandidateApplication getApplicationByCandidateId(Long candidateId, Long jobOfferId);
 
-    void updateCandidateApplication(CandidateApplication cApp);
+    void updateCandidateApplication(int id, String additionalInfo, JobApplicationState appState);
 
+    List<CandidateApplication> getCandidateApplicationByJobOFfer(Long jobOfferId);
 }

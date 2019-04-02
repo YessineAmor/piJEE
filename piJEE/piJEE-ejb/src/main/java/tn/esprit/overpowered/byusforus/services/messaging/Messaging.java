@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.services.messaging;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,17 +27,21 @@ public class Messaging implements MessagingRemote {
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
 
-    protected EntityManager getEntityManager() {
+    @Override
+    public EntityManager getEntityManager() {
         return em;
     }
 
     @Override
     public void sendMessage(Message m) {
+        //em.merge(m.getFrom());
+        //em.merge(m.getTo());
+        //em.merge(m);
         em.persist(m);
     }
 
     @Override
-    public ArrayList<Message> getMessages(Long userId, LocalDateTime t) {
+    public ArrayList<Message> getMessages(Long userId, Date t) {
         User u = em.find(User.class, userId);
         MessageRepository msgR = new MessageRepository();
         User au = em.find(User.class, u.getId());
