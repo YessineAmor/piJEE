@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
+import java.util.Set;
 import javafx.collections.ObservableList;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.candidat.CurriculumVitae;
@@ -42,7 +43,7 @@ public interface CandidateFacadeRemote {
     
     public List<Candidate> searchByPosition(String position);
     
-    public Long addContact(Long candidateId);
+    public String addContact(Long currendCdtId, Long contactId);
     
     public CompanyProfile searchCompany(String companyName);
     
@@ -100,6 +101,11 @@ public interface CandidateFacadeRemote {
     public List<Candidate> findAllCandidate();
     
     public int incrementVisits(Long cdtId);
+    
+    public List<Candidate> searchByEmail(String email);
+    
+    public List<Candidate> friendsList(Long cdtId);
+  //  public boolean checkContacts(Long cdtId, Candidate cdt );
  
     
 

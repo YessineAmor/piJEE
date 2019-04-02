@@ -46,6 +46,7 @@ public class QuizTry implements Serializable {
     @OneToOne
     private Candidate candidate;
 
+    
     public QuizTry() {
         startDate = new Date();
         recording = "QUIZ_TRY_" + new Random().nextInt() + ".ts";
@@ -141,6 +142,7 @@ public class QuizTry implements Serializable {
 
     @Override
     public String toString() {
-        return "tn.esprit.overpowered.byusforus.entities.QuizTry[ id=" + idQuizTry + " ]";
+        return "QuizTry{" + "idQuizTry=" + idQuizTry + ", quiz=" + quiz + ", percentage=" + percentage + ", startDate=" + startDate + ", finishDate=" + finishDate + ", recording=" + recording + ", answers=" + answers + ", candidate=" + candidate + '}';
     }
+
 }

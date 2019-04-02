@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.services.candidat;
 import java.util.List;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
+import tn.esprit.overpowered.byusforus.util.JobApplicationState;
 
 /**
  *
@@ -31,10 +32,9 @@ public interface CandidateApplicationFacadeRemote {
     int count();
 
     CandidateApplication getApplicationByCandidateId(Long candidateId, Long jobOfferId);
-    
 
+    void updateCandidateApplication(int id, String additionalInfo, JobApplicationState appState);
 
-    void updateCandidateApplication(CandidateApplication cApp);
-
+    List<CandidateApplication> getCandidateApplicationByJobOFfer(Long jobOfferId);
 
 }

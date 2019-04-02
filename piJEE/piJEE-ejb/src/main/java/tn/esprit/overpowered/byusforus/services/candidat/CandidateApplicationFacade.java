@@ -5,12 +5,13 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
-import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
+import tn.esprit.overpowered.byusforus.util.JobApplicationState;
 
 /**
  *
@@ -43,13 +44,23 @@ public class CandidateApplicationFacade extends AbstractFacade<CandidateApplicat
     }
 
     @Override
-    public void updateCandidateApplication(CandidateApplication cApp) {
+    public void updateCandidateApplication(int id, String additionalInfo, JobApplicationState appState) {
         int cdtApp = em.createQuery(
-                "update CandidateApplication ca set additionalInfo = :adinfo and jobApplicationState = :jas WHERE ca.id = :caid")
-                .setParameter("adinfo", cApp.getAdditionalInfo())
-                .setParameter("jas", cApp.getJobApplicationState().toString())
-                .setParameter("caid", cApp.getId())
+                "update CandidateApplication ca set ca.additionalInfo = :adinfo , ca.jobApplicationState = :jas WHERE ca.id = :caid")
+                .setParameter("adinfo", additionalInfo)
+                .setParameter("jas", appState)
+                .setParameter("caid", id)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<CandidateApplication> getCandidateApplicationByJobOFfer(Long jobOfferId) {
+        List<CandidateApplication> cdtApp = em.createQuery(
+                "SELECT ca FROM CandidateApplication ca WHERE "
+                + " ca.jobOffer.id = :jib", CandidateApplication.class)
+                .setParameter("jib", jobOfferId)
+                .getResultList();
+        return cdtApp;
     }
 
 }

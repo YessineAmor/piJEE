@@ -19,7 +19,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
  * @author aminos
  */
 @Entity
-public class Comment implements Serializable  {
+public class Comment implements Serializable {
 
     private static final long serialVersionUID = 17L;
     @Id
@@ -28,7 +28,7 @@ public class Comment implements Serializable  {
 
     @ManyToOne(fetch = FetchType.LAZY)
     Post on;
-    
+
     @ManyToOne
     User by;
 
@@ -39,7 +39,7 @@ public class Comment implements Serializable  {
     public void setOn(Post on) {
         this.on = on;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -72,5 +72,5 @@ public class Comment implements Serializable  {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.messaging_notifications.Comment[ id=" + id + " ]";
     }
-    
+
 }
