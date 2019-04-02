@@ -14,11 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.ws.rs.ext.ParamConverter.Lazy;
 import java.util.Date;
+import javax.persistence.Temporal;
 import tn.esprit.overpowered.byusforus.entities.users.User;
 
 
 @Entity
 public class Paiment implements Serializable{
+    private static final long serialVersionUID = 1L;
 
 	@OneToOne
 	private Cheque cheque;
@@ -39,6 +41,7 @@ public class Paiment implements Serializable{
 	private EtatTitle Title;
 	
 	private int Price;
+    @Temporal(javax.persistence.TemporalType.DATE)
 	private Date Date;
 	private int Status;
 	

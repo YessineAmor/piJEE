@@ -6,11 +6,11 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -33,8 +33,6 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
  *
  * @author EliteBook
  */
-
-
 @Entity
 @DiscriminatorValue(value = "CANDIDATE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -43,7 +41,7 @@ public class Candidate extends User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String introduction;
-    
+
     @ElementCollection
     private List<Long> recommendedIdList;
 
@@ -93,6 +91,10 @@ public class Candidate extends User implements Serializable {
     protected Set<Skill> skills;
 
     private int visits;
+
+    public Candidate() {
+        this.skills = new HashSet<>();
+    }
 
     public int getRecommendations() {
         return recommendations;
@@ -191,5 +193,3 @@ public class Candidate extends User implements Serializable {
     }
 
 }
-
-

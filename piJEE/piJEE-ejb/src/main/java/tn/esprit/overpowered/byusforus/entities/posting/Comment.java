@@ -18,9 +18,9 @@ import javax.persistence.ManyToOne;
  * @author aminos
  */
 @Entity
-public class Comment implements Serializable  {
+public class Comment implements Serializable {
 
-    private static final long serialVersionUID = -558553967080513790L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -35,7 +35,7 @@ public class Comment implements Serializable  {
     public void setOn(Post on) {
         this.on = on;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -68,5 +68,5 @@ public class Comment implements Serializable  {
     public String toString() {
         return "tn.esprit.overpowered.byusforus.entities.messaging_notifications.Comment[ id=" + id + " ]";
     }
-    
+
 }
