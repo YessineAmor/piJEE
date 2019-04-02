@@ -38,8 +38,28 @@ public class ProjectManagerFacade extends AbstractFacade<ProjectManager> impleme
     }
 
     @Override
-    public Long createJobOffer(JobOffer jobOffer, Long idPManager, String gmailPassword) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean createJobOfferRequest(JobOffer jobOffer, Long idPManager) {
+        ProjectManager pManager = this.find(idPManager);
+        jobOffer.setCompany(pManager.getCompanyProfile());
+        jobOffer.sethRManager(pManager.getCompanyProfile().getCompanyHRManager());
+        em.persist(jobOffer);
+                try {
+            if (MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com"
+                    , "toussaint.kebou@gmail.com","Laurel@2016", jobOffer.gethRManager().getEmail(),
+                    "JOB OFFER CREATION REQUEST",
+                    "This is a job Offer creation request from "
+                            + pManager.getUsername() + " of email " + pManager.getEmail()
+                    + ":</br> "+ "Tile: "+jobOffer.getTitle()+ "</br> "+
+                            "Location: "+jobOffer.getCity() + "</br> "+
+                            "CompanyName: " + jobOffer.getCompany().getName()+ " .")) {
+                return true;
+            }
+
+        } catch (MessagingException ex) {
+            Logger.getLogger(HRManagerFacade.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
     }
 
     @Override
