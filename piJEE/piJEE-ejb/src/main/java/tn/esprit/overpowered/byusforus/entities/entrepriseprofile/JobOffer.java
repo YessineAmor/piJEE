@@ -58,6 +58,7 @@ public class JobOffer implements Serializable {
 
     private String city;
     
+    @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
     
     @Temporal(TemporalType.DATE)
