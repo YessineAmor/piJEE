@@ -106,6 +106,9 @@ public interface CandidateFacadeRemote {
     
     public List<Candidate> friendsList(Long cdtId);
   //  public boolean checkContacts(Long cdtId, Candidate cdt );
+    public Experience getCandidateExperience(Long cdtId);
+    
+    public Cursus getCandidateCursus(Long cdtId);
  
     
 

@@ -44,10 +44,7 @@ public class Employee extends Candidate implements Serializable {
 
     @OneToMany(mappedBy = "manager")
     private Set<Employee> subordinates = new HashSet<Employee>();
-
-    @OneToMany(mappedBy = "manager", cascade = {PERSIST, MERGE})
-    private Set<JobOffer> managerOffers;
-
+    
     @Override
     public Set<Skill> getSkills() {
         return skills;
@@ -83,12 +80,5 @@ public class Employee extends Candidate implements Serializable {
         this.subordinates = subordinates;
     }
 
-    public Set<JobOffer> getManagerOffers() {
-        return managerOffers;
-    }
-
-    public void setManagerOffers(Set<JobOffer> managerOffers) {
-        this.managerOffers = managerOffers;
-    }
 
 }

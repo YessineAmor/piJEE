@@ -38,7 +38,6 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         super(HRManager.class);
     }
 
-
     @Override
     public void createOffer(Long idManager, JobOffer offer) {
         HRManager hrm = em.find(HRManager.class, idManager);
@@ -49,16 +48,22 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
     }
 
     @Override
-    public boolean approveJobOffer(Long idJobOffer, String gmailPassword) {
-        JobOffer jobOffer = em.find(JobOffer.class, idJobOffer);
+    public boolean approveJobOffer(String titleJobOffer) {
+        JobOffer jobOffer = em.createQuery("select j from JobOffer j where "
+                + "j.title= :titre", JobOffer.class)
+                .setParameter("titre", titleJobOffer)
+                .getSingleResult();
         jobOffer.setOfferStatus(OfferStatus.AVAILABLE);
+
         try {
-            if (MailSender.sendMail("smtp.gmail.com", "587", jobOffer.gethRManager().getEmail(),
-                    "RESPONSE TO JOB OFFER REQUEST", jobOffer.gethRManager().getUsername(),
-                    gmailPassword, jobOffer.getManager().getEmail(),
+            if (MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
+                    "toussaint.kebou@gmail.com",
+                    "Laurel@2016", jobOffer.getpManager().getEmail(),
+                    "RESPONSE TO JOB OFFER REQUEST",
                     "Your request has been granted and Enterprise Subscribers have"
                     + " been notified")) {
                 return true;
+            } else {
             }
 
         } catch (MessagingException ex) {
@@ -69,13 +74,17 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
     }
 
     @Override
-    public boolean declineJobOffer(Long idJobOffer, String gmailPassword, String motif) {
-        JobOffer jobOffer = em.find(JobOffer.class, idJobOffer);
+    public boolean declineJobOffer(String titleJobOffer, String motif) {
+        JobOffer jobOffer = em.createQuery("select j from JobOffer j where "
+                + "j.title= :titre", JobOffer.class)
+                .setParameter("titre", titleJobOffer)
+                .getSingleResult();
         jobOffer.setOfferStatus(OfferStatus.REJECTED);
         try {
-            if (MailSender.sendMail("smtp.gmail.com", "587", jobOffer.gethRManager().getEmail(),
-                    "RESPONSE TO JOB OFFER REQUEST", jobOffer.gethRManager().getUsername(),
-                    gmailPassword, jobOffer.getManager().getEmail(),
+            if (MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
+                    "toussaint.kebou@gmail.com",
+                    "Laurel@2016", jobOffer.getpManager().getEmail(),
+                    "RESPONSE TO JOB OFFER REQUEST",
                     "Your request has been rejected:"
                     + " been notified")) {
                 return true;

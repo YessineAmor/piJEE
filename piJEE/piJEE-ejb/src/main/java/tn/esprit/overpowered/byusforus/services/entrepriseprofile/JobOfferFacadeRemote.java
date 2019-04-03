@@ -36,11 +36,13 @@ public interface JobOfferFacadeRemote {
     public void updateOffer(JobOffer jobOffer);
     public void deleteOffer(Long idOffer);
     public List<JobOffer> searchByTitle(String title);
+    public List<JobOffer> searchByLocation(String location);
     public List<JobOffer> searchByDate(Date date);
     public List<JobOffer> searchByExpertise(ExpertiseLevel expLevel);
     public List<JobOffer> viewOffersBydate(List <JobOffer> offers);
     public List<JobOffer> viewOffersByUserSkill(List <JobOffer> offers, Long idUser);
     public List<JobOffer> viewAllOffers();
+    public JobOffer searchJobOfferByTitle(String title);
     
     
     

@@ -32,9 +32,9 @@ public interface HRManagerFacadeRemote {
     int count();
     
     //OFFER
-    public boolean approveJobOffer(Long idJobOffer, String gmailPassword);
+    public boolean approveJobOffer(String titleJobOffer);
     
-    public boolean declineJobOffer(Long idJobOffer, String gmailPassword, String motif);
+    public boolean declineJobOffer(String titleJobOffer, String motif);
     
     public void createOffer(Long idManager,JobOffer offer);
     

@@ -30,6 +30,7 @@ import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
@@ -93,8 +94,8 @@ public class JobOffer implements Serializable {
     private List<Candidate> registeredCandidates;
 
     @ManyToOne
-    @JoinTable(name = "MANAGER_OFFERS")
-    private Employee manager;
+    @JoinTable(name = "PROJECT_MANAGER_OFFERS")
+    private ProjectManager pManager;
 
     public JobOffer() {
         this.dateOfCreation = new Date();
@@ -194,13 +195,15 @@ public class JobOffer implements Serializable {
         this.hRManager = hRManager;
     }
 
-    public Employee getManager() {
-        return manager;
+    public ProjectManager getpManager() {
+        return pManager;
     }
 
-    public void setManager(Employee manager) {
-        this.manager = manager;
+    public void setpManager(ProjectManager pManager) {
+        this.pManager = pManager;
     }
+
+
 
     public List<Candidate> getRegisteredCandidates() {
         return registeredCandidates;
