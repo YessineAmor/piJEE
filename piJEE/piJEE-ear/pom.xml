@@ -38,6 +38,7 @@
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                 </configuration>
             </plugin>
+            
         </plugins>
     </build>
     <dependencies>
