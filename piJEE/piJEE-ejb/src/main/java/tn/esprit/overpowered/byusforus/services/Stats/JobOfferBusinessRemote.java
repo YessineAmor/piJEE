@@ -14,4 +14,5 @@ public interface JobOfferBusinessRemote {
 	public Integer countQuizByPercentage(float percentage);
 	public Double AVGQuizTryDays(Date startDate, Date finishDate);
 	public List<JobOffer> getJobOfferByPeople(Integer peopleNeeded, Date dateOfCreation, Date dateOfArchive);
+        public List<JobOffer> maplatlong() throws Exception;
 }

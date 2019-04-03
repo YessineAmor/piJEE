@@ -6,8 +6,11 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,6 +23,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Workshop;
@@ -42,9 +48,26 @@ public class CompanyProfile implements Serializable {
     private int numViews;
     private String summary;
     private String sectorOfActivity;
-    private String website;
+    
+    public CompanyProfile(Long id, String name, int numViews, String sectorOfActivity, String website,
+			String companySize, String dateOfCreation) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.numViews = numViews;
+		this.sectorOfActivity = sectorOfActivity;
+		this.website = website;
+		this.companySize = companySize;
+		this.dateOfCreation = dateOfCreation;
+		
+	}
+
+
+	private String website;
     private String companySize;
-    private int dateOfCreation;
+    
+    
+    private String dateOfCreation;
 
     @OneToOne(mappedBy = "companyProfile", fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.DETACH})
@@ -144,11 +167,11 @@ public class CompanyProfile implements Serializable {
         this.companySize = companySize;
     }
 
-    public int getDateOfCreation() {
+    public String getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(int dateOfCreation) {
+    public void setDateOfCreation(String dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 

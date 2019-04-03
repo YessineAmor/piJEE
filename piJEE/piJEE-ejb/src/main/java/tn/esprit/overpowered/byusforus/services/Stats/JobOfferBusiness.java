@@ -1,23 +1,40 @@
 package tn.esprit.overpowered.byusforus.services.Stats;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 
+import org.w3c.dom.Document;
 
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 
 @Stateless
 public class JobOfferBusiness implements JobOfferBusinessRemote, JobOfferBusinessLocal {
@@ -108,6 +125,8 @@ public class JobOfferBusiness implements JobOfferBusinessRemote, JobOfferBusines
 		return joboffer;
 	}
 	
+	
+	
 	/*@Override
 	public Integer countQuizByJO(Long id) {
 		// TODO Auto-generated method stub
@@ -137,5 +156,104 @@ public class JobOfferBusiness implements JobOfferBusinessRemote, JobOfferBusines
 	        return Stream.iterate(start, date -> date.plusDays(1))
 	                .limit(days+1);
 	    }
+
+   @Override
+	public List<JobOffer> maplatlong() throws Exception {
+		// TODO Auto-generated method stub
+		
+		List<JobOffer> listjoboffers = new ArrayList<>();
+		TypedQuery<JobOffer> q = em.createQuery("SELECT j from JobOffer j",JobOffer.class);
+		listjoboffers = q.getResultList();
+		List<JobOffer> resultjoboffers = new ArrayList<>();
+		
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();   
+	    Date dateNow =format.parse(format.format(calendar.getTime()));
+		
+		for (JobOffer j : listjoboffers) {
+			
+		    //System.out.println(format.format(calendar.getTime()));
+		    
+		    //System.out.println(dateNow);
+			Date dateOfCreation = j.getDateOfCreation();
+		    Date dateOfArchive = j.getDateOfArchive();
+		    
+		    
+		    //System.out.println(format.format(datebegin));
+		    
+		    long diffInMillies = Math.abs(dateNow.getTime() - dateOfCreation.getTime());
+		    long totalDayPass = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		    
+		    long diffInMillies1 = Math.abs(dateOfArchive.getTime() - dateOfCreation.getTime());
+		    long peridoOfJobOffer = TimeUnit.DAYS.convert(diffInMillies1, TimeUnit.MILLISECONDS);
+		    
+		    System.out.println("Total Day Pass " + totalDayPass);
+		    System.out.println("Period Of Project " + peridoOfJobOffer);
+		    
+		    double cout = ((double)totalDayPass/(double)peridoOfJobOffer)*100;
+		    
+		    DecimalFormat df = new DecimalFormat("##");
+		    String dx=df.format(cout);
+		    cout =Double.valueOf(dx);
+		    System.out.println("Le Taux est " + cout);
+		    
+		
+			
+			
+			String longitude = "";
+			String latitude = "";
+			String adress = j.getCity();
+			
+			int responseCode = 0;
+		    String api = "https://maps.googleapis.com/maps/api/geocode/xml?key=AIzaSyCOISCpK2Xf8oSV3WAEIiJbYrs2rN5wgDE&address=" + URLEncoder.encode(adress, "UTF-8") + "&sensor=true";
+		    URL url = new URL(api);
+		    HttpURLConnection httpConnection = (HttpURLConnection)url.openConnection();
+		    httpConnection.connect();
+		    responseCode = httpConnection.getResponseCode();
+		    if(responseCode == 200)
+		    {
+		      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();;
+		      Document document = builder.parse(httpConnection.getInputStream());
+		      XPathFactory xPathfactory = XPathFactory.newInstance();
+		      XPath xpath = xPathfactory.newXPath();
+		      javax.xml.xpath.XPathExpression expr = xpath.compile("/GeocodeResponse/status");
+		      String status = (String)expr.evaluate(document,XPathConstants.STRING);
+		      if(status.equals("OK"))
+		      {
+		         expr =  xpath.compile("//geometry/location/lat");
+		         latitude = (String)expr.evaluate(document, XPathConstants.STRING);
+		         expr = xpath.compile("//geometry/location/lng");
+		         longitude = (String)expr.evaluate(document, XPathConstants.STRING);
+		         System.out.println(latitude);
+		         System.out.println(longitude);
+		         
+		      }
+		      else
+		      {
+		         throw new Exception("Error from the API - response status: "+status);
+		      }
+		    }
+		  
+		    Long Id = j.getId();
+		    String city = j.getCity();
+		    String description = j.getDescription();
+		    Date dateOfCreation1 = j.getDateOfCreation();
+		    Date dateOfArchive1 = j.getDateOfArchive();
+		    String title = j.getTitle();
+		    ExpertiseLevel expertiselevel = j.getExpertiseLevel();
+		    CompanyProfile companyprofile = j.getCompany();
+		    Integer peopleNeeded = j.getPeopleNeeded();
+		    JobOffer jb=new JobOffer(Id, title, dateOfCreation1, description,city,dateOfArchive1,  expertiselevel,  peopleNeeded,  companyprofile,longitude,latitude);
+		    
+		    resultjoboffers.add(jb);
+		    
+		    
+		    }
+		
+		
+		
+		return resultjoboffers;
+	}
+	
 
 }

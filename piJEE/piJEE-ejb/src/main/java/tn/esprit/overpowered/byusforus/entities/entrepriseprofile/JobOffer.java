@@ -58,6 +58,12 @@ public class JobOffer implements Serializable {
 
     private String city;
 
+    @Column(name="Latitude")
+	private String address_Latitude;
+    
+    @Column(name="Longitude")
+	private String address_Longitude;
+    
     
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
@@ -142,7 +148,23 @@ public class JobOffer implements Serializable {
         return offerStatus;
     }
 
-    public void setOfferStatus(OfferStatus offerStatus) {
+    public JobOffer(Long id, String title, Date dateOfCreation, String description, String city, Date dateOfArchive,
+			ExpertiseLevel expertiseLevel, Integer peopleNeeded, CompanyProfile company,String address_Latitude, String address_Longitude ) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.dateOfCreation = dateOfCreation;
+		this.description = description;
+		this.city = city;
+		this.dateOfArchive = dateOfArchive;
+		this.expertiseLevel = expertiseLevel;
+		this.peopleNeeded = peopleNeeded;
+		this.company = company;
+		this.address_Latitude = address_Latitude;
+		this.address_Longitude = address_Longitude;
+	}
+
+	public void setOfferStatus(OfferStatus offerStatus) {
         this.offerStatus = offerStatus;
     }
 
