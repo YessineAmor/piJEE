@@ -33,9 +33,11 @@ public class Messaging implements MessagingRemote {
     }
 
     @Override
-    public void sendMessage(Message m) {
-        //em.merge(m.getFrom());
-        //em.merge(m.getTo());
+    public void sendMessage(Message m, Long senderId, Long receiverId) {
+        User from = em.find(User.class, senderId);
+        m.setFrom(from);
+        User to = em.find(User.class, receiverId);
+        m.setTo(to);
         //em.merge(m);
         em.persist(m);
     }
