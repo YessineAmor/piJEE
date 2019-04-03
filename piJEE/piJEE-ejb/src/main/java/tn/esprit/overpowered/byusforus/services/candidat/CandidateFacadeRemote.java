@@ -47,7 +47,7 @@ public interface CandidateFacadeRemote {
     
     public CompanyProfile searchCompany(String companyName);
     
-    public Long subscribe(Long companyId, Long candidateId);
+    public String subscribe(Long companyId, Long candidateId);
     
     public List<JobOffer> customJobOfferList(Long candidateId);
     
