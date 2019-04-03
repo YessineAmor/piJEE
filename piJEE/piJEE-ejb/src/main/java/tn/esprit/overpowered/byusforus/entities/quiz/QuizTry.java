@@ -46,7 +46,12 @@ public class QuizTry implements Serializable {
     @OneToOne
     private Candidate candidate;
 
-    
+    public QuizTry(Candidate candidate) {
+        this.candidate = candidate;
+        startDate = new Date();
+        recording = "QUIZ_TRY_" + candidate.getId() + ".ts";
+    }
+
     public QuizTry() {
         startDate = new Date();
         recording = "QUIZ_TRY_" + new Random().nextInt() + ".ts";
