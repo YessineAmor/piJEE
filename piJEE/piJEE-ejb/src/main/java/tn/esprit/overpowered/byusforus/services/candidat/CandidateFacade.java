@@ -75,7 +75,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     @Override
     public List<Candidate> searchByLastname(String lastname) {
         List<Candidate> cdt = em.createQuery(
-               "SELECT c FROM Candidate c WHERE "
+                "SELECT c FROM Candidate c WHERE "
                 + "c.lastName  LIKE CONCAT('%',:lastName,'%')", Candidate.class)
                 .setParameter("lastName", lastname)
                 .getResultList();
@@ -95,7 +95,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return cdts;
 
     }
-
 
     @Override
     public CompanyProfile searchCompany(String companyName) {
@@ -244,11 +243,10 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return cdtList;
     }
 
-
     @Override
     public int incrementVisits(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
-        cdt.setVisits(cdt.getVisits()+1);
+        cdt.setVisits(cdt.getVisits() + 1);
         return cdt.getVisits();
     }
 
@@ -264,39 +262,35 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public String addContact(Long currentCdtId, Long contactId) {
-         Candidate currentCdt = em.find(Candidate.class, currentCdtId);
+        Candidate currentCdt = em.find(Candidate.class, currentCdtId);
         Candidate contact = em.find(Candidate.class, contactId);
-        if(!currentCdt.getContacts().contains(contact))
-        {
-        currentCdt.getContacts().add(contact);
-        contact.getContacts().add(currentCdt);
-        return "Contact Added";
-        } else
+        if (!currentCdt.getContacts().contains(contact)) {
+            currentCdt.getContacts().add(contact);
+            contact.getContacts().add(currentCdt);
+            return "Contact Added";
+        } else {
             return "Already Friends";
+        }
     }
-/*
+
+    /*
     @Override
     public boolean checkContacts(Long cdtId, Candidate cdt) {
         Candidate cdtt = em.find(Candidate.class, cdtId);
         return cdtt.getContacts().contains(cdt);
     }
-*/
+     */
 
     @Override
     public List<Candidate> friendsList(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
         List<Candidate> listCdt = cdt.getContacts();
-        List<Candidate> contactsList = new ArrayList<>() ;
-        for(Candidate cdtt: listCdt)
-        {
+        List<Candidate> contactsList = new ArrayList<>();
+        for (Candidate cdtt : listCdt) {
             contactsList.add(em.find(Candidate.class, cdtt.getId()));
         }
         return contactsList;
-        
-        
-        
-        
-        
+
         /*List<Long> idList = em.createQuery("SELECT c.contacts_id from"
                 + " contacts c where c.Candidate_id = :cdtId",Long.class)
                 .setParameter("cdtId", cdtId)
@@ -307,10 +301,39 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             contacts.add(em.find(Candidate.class, id));
         }
         return contacts;
-*/
+         */
     }
-    
 
+    @Override
+    public Experience getCandidateExperience(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        List<Experience> expTemp = cdt.getExperiences();
+        if(expTemp.isEmpty())
+        {
+            return null;
+        }
+        else 
+        {
+        Long expId = expTemp.get(0).getId();
+        return em.find(Experience.class, expId);
+        }
 
+    }
+
+    @Override
+    public Cursus getCandidateCursus(Long cdtId) {
+         Candidate cdt = em.find(Candidate.class, cdtId);
+        List<Cursus> expTemp = cdt.getCursus();
+        if(expTemp.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+        Long expId = expTemp.get(0).getId();
+        return em.find(Cursus.class, expId);
+        }
+        
+    }
 
 }
