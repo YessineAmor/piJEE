@@ -106,20 +106,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return comp;
     }
 
-    @Override
-    public Long subscribe(Long companyId, Long candidateId) {
-        List<CompanyProfile> companies = this.subscriptionList(candidateId);
-        CompanyProfile comp = em.find(CompanyProfile.class, companyId);
-        Candidate cdt = em.find(Candidate.class, candidateId);
-        if (!companies.contains(comp)) {
-            comp.getSubscribers().add(cdt);
-            cdt.getSubscribedCompanies().add(comp);
-            return comp.getId();
-        } else {
-            return -1L;
-        }
-
-    }
 
     @Override
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
@@ -334,6 +320,19 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return em.find(Cursus.class, expId);
         }
         
+    }
+
+    @Override
+    public String subscribe(Long companyId, Long candidateId) {
+         Candidate currentCdt = em.find(Candidate.class, candidateId);
+        CompanyProfile comp = em.find(CompanyProfile.class, companyId);
+        if (!currentCdt.getContacts().contains(comp)) {
+            currentCdt.getSubscribedCompanies().add(comp);
+            comp.getSubscribers().add(currentCdt);
+            return "Contact Added";
+        } else {
+            return "Already Friends";
+        }
     }
 
 }
