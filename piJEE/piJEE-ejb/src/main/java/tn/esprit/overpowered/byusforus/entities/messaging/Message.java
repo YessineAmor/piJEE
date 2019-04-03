@@ -37,6 +37,8 @@ public class Message implements Serializable {
     }
 
     public void setFrom(User from) {
+        
+       
         this.from = from;
     }
 
