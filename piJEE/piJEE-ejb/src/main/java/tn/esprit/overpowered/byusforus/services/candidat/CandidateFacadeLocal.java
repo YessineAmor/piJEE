@@ -44,8 +44,6 @@ public interface CandidateFacadeLocal {
     
     public CompanyProfile searchCompany(String companyName);
     
-    public Long subscribe(Long companyId, Long candidateId);
-    
     public void affecterExperienceCandidate(Long expId,  Long candidateId);
     
     public List<JobOffer> customJobOfferList(Long candidateId);
