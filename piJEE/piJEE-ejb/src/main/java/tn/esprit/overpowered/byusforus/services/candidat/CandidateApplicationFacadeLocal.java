@@ -40,5 +40,7 @@ public interface CandidateApplicationFacadeLocal {
     List<CandidateApplication> getCandidateApplicationByCdtId(Long cdtid);
 
     void sendMail(String to, String subject, String body);
+    
+    CandidateApplication getCAppByMotivLetter(String motivLetter);
 
 }

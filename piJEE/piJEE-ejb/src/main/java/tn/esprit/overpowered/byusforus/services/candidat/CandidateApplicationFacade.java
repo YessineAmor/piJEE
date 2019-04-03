@@ -88,4 +88,14 @@ public class CandidateApplicationFacade extends AbstractFacade<CandidateApplicat
         }
     }
 
+    @Override
+    public CandidateApplication getCAppByMotivLetter(String motivLetter) {
+        CandidateApplication cdtApp = em.createQuery(
+                "SELECT ca FROM CandidateApplication ca WHERE "
+                + "ca.motivationLetter = :motiv", CandidateApplication.class)
+                .setParameter("motiv", motivLetter)
+                .getSingleResult();
+        return cdtApp;
+    }
+
 }

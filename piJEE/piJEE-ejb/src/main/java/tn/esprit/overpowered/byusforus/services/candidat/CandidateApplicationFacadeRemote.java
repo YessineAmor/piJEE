@@ -41,4 +41,6 @@ public interface CandidateApplicationFacadeRemote {
 
     void sendMail(String to, String subject, String body);
 
+    CandidateApplication getCAppByMotivLetter(String motivLetter);
+
 }
