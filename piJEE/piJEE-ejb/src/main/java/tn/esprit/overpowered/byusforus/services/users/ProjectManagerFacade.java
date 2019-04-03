@@ -41,6 +41,7 @@ public class ProjectManagerFacade extends AbstractFacade<ProjectManager> impleme
     public boolean createJobOfferRequest(JobOffer jobOffer, Long idPManager) {
         ProjectManager pManager = this.find(idPManager);
         jobOffer.setCompany(pManager.getCompanyProfile());
+        jobOffer.setpManager(pManager);
         jobOffer.sethRManager(pManager.getCompanyProfile().getCompanyHRManager());
         em.persist(jobOffer);
                 try {
