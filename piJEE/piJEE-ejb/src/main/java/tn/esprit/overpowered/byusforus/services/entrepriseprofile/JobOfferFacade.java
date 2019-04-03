@@ -18,11 +18,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
-import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
-import tn.esprit.overpowered.byusforus.entities.users.Employee;
-import tn.esprit.overpowered.byusforus.entities.users.HRManager;
-import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
-import tn.esprit.overpowered.byusforus.entities.users.User;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
@@ -74,6 +69,15 @@ public class JobOfferFacade extends AbstractFacade<JobOffer> implements JobOffer
     }
 
     @Override
+    public List<JobOffer> searchByLocation(String location) {
+List<JobOffer> offers = em.createQuery(
+                "select j from JobOffer j where j.city"
+                + " LIKE CONCAT('%',:location,'%')",
+                JobOffer.class).setParameter("location", location).getResultList();
+        return this.viewOffersBydate(offers);
+    }
+
+    @Override
     public List<JobOffer> searchByDate(Date date) {
         return em.createQuery("select j from JobOffer j where j.dateOfCreation "
                 + "= :givenDate", JobOffer.class).setParameter(""
@@ -91,12 +95,12 @@ public class JobOfferFacade extends AbstractFacade<JobOffer> implements JobOffer
 
     @Override
     public List<JobOffer> viewOffersByUserSkill(List<JobOffer> offers, Long idUser) {
-        
+
         List<JobOffer> userSkillOffers = new ArrayList<>();
         Candidate user = em.find(Candidate.class, idUser);
 
         Set<Skill> userSkills = new HashSet<>();
-        
+
         userSkills = user.getSkills();
 
         for (Skill skill : userSkills) {
@@ -155,5 +159,13 @@ public class JobOfferFacade extends AbstractFacade<JobOffer> implements JobOffer
 
         return orderedListByDate;
     }
+
+    @Override
+    public JobOffer searchJobOfferByTitle(String title) {
+        return em.createQuery("SELECT j from JobOffer j where j.title= :titre",
+                JobOffer.class).setParameter("titre", title)
+                .getSingleResult();
+    }
+
 
 }
