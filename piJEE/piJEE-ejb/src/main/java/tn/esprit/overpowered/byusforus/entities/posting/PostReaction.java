@@ -43,6 +43,16 @@ public class PostReaction implements Serializable {
     public void setBy(User by) {
         this.by = by;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
     
     @ManyToOne
     User by;
