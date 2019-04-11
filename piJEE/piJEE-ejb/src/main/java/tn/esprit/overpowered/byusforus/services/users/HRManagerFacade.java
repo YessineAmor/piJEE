@@ -58,7 +58,7 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         try {
             if (MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
                     "toussaint.kebou@gmail.com",
-                    "Laurel@2016", jobOffer.getpManager().getEmail(),
+                    "Laurel@@2019", jobOffer.getpManager().getEmail(),
                     "RESPONSE TO JOB OFFER REQUEST",
                     "Your request has been granted and Enterprise Subscribers have"
                     + " been notified")) {
@@ -83,7 +83,7 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         try {
             if (MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
                     "toussaint.kebou@gmail.com",
-                    "Laurel@2016", jobOffer.getpManager().getEmail(),
+                    "Laurel@@2019", jobOffer.getpManager().getEmail(),
                     "RESPONSE TO JOB OFFER REQUEST",
                     "Your request has been rejected:"
                     + " been notified")) {
