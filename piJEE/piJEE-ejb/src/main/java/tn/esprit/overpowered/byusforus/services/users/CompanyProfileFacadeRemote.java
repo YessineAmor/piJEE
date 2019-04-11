@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.services.users;
 
 import java.util.List;
 import javax.ejb.Remote;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 
 /**
@@ -27,6 +28,8 @@ public interface CompanyProfileFacadeRemote {
     List<CompanyProfile> findAll();
 
     List<CompanyProfile> findRange(int[] range);
+    
+    List<Candidate> getSubscribersList(Long idAdmin);
 
     int count();
         

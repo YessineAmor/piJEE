@@ -156,7 +156,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         System.out.println("this is the code " + code);
         try {
             MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
-                    "toussaint.kebou@gmail.com", "Laurel@2016", email,
+                    "toussaint.kebou@gmail.com", "Laurel@@2019", email,
                     "Account creation Confirmation Mail",
                     "If you are receiving this Email then you are one step away from"
                     + " joining the BYUSFORUS group thanks you for your trust"

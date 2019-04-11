@@ -73,19 +73,21 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
             try {
                 // Send email
                 // Username and password are redacted
-                System.out.println(towFactorAuth.getToken());
+                System.out.println("****"+towFactorAuth.getToken());
                 if (MailSender.sendMail("smtp.gmail.com", "587",
                         "pidevnoreply@gmail.com", "pidevnoreply@gmail.com",
                         "pidevpidev", user.getEmail(), "Authentication code", "Your code is " + towFactorAuth.getToken()))
-                    return towFactorAuth.getUid();
+                                return towFactorAuth.getUid();
+
             } catch (MessagingException ex) {
                 Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
                 
             }
-            return uid;
+            
         } else {
             return null;
         }
+        return null;
     }
 
     // Add business logic below. (Right-click in editor and choose
