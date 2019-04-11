@@ -121,8 +121,19 @@ public class CandidateFacade extends AbstractFacade<Candidate>
 
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
-        Candidate cdt = this.find(candidateId);
-        return cdt.getRegisteredOffers();
+        List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j",JobOffer.class).getResultList();
+        Candidate cdt = em.find(Candidate.class, candidateId);
+        List<Experience> exp = cdt.getExperiences();
+        Experience testExp = exp.get(0);
+        List<JobOffer> customJobs = new ArrayList<>();
+        for (JobOffer j: jobList)
+        {
+            if(j.getTitle().toLowerCase().contains(testExp.getPosition().toLowerCase()))
+            {
+                customJobs.add(j);
+            }
+        }
+        return customJobs ;
     }
 
     @Override
