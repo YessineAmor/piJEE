@@ -59,7 +59,7 @@ public class CompanyProfile implements Serializable {
 
     @ManyToMany(mappedBy = "subscribedCompanies",
             cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Candidate> subscribers;
+    private List<Professional> subscribers;
 
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Employee> employees;
@@ -176,13 +176,15 @@ public class CompanyProfile implements Serializable {
         this.listOfOffers = listOfOffers;
     }
 
-    public List<Candidate> getSubscribers() {
+    public List<Professional> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<Candidate> subscribers) {
+    public void setSubscribers(List<Professional> subscribers) {
         this.subscribers = subscribers;
     }
+
+
 
     public List<Employee> getEmployees() {
         return employees;

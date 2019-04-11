@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import tn.esprit.overpowered.byusforus.entities.users.Professional;
 enum Skill {
     PYTHON,
     C,
@@ -39,7 +40,7 @@ public class Experience implements Serializable {
     private Long id;
     
     @ManyToOne
-    private Candidate candidate;
+    private Professional professional;
     
     private String position;
     
@@ -70,13 +71,15 @@ public class Experience implements Serializable {
         this.candidateExp = candidateExp;
     }
 
-    public Candidate getCandidate() {
-        return candidate;
+    public Professional getProfessional() {
+        return professional;
     }
 
-    public void setCandidate(Candidate candidate) {
-        this.candidate = candidate;
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
+
+
 
     public String getPosition() {
         return position;
