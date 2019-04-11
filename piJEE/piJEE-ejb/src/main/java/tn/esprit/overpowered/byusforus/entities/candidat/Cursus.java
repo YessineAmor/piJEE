@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import tn.esprit.overpowered.byusforus.entities.users.Professional;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Cursus implements Serializable {
     private String degree;
     private String university;
     @ManyToOne
-    private Candidate candidateCursus;
+    private Professional professionalCursus;
 
     public Cursus() {
     }
@@ -83,13 +84,15 @@ public class Cursus implements Serializable {
         this.id = id;
     }
 
-    public Candidate getCandidateCursus() {
-        return candidateCursus;
+    public Professional getProfessionalCursus() {
+        return professionalCursus;
     }
 
-    public void setCandidateCursus(Candidate candidateCursus) {
-        this.candidateCursus = candidateCursus;
+    public void setProfessionalCursus(Professional professionalCursus) {
+        this.professionalCursus = professionalCursus;
     }
+
+
     
     
 

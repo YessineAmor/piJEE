@@ -113,7 +113,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         Candidate emp = em.find(Candidate.class, candidateId);
         if (exp != null && emp != null) {
             emp.getExperiences().add(exp);
-            exp.setCandidate(emp);
+            exp.setProfessional(emp);
         } else {
             System.out.println("Either candidate or Experience doent exist !");
         }
@@ -199,7 +199,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         Candidate cdt = em.find(Candidate.class, candidateId);
         Cursus cur = em.find(Cursus.class, cursusId);
         cdt.getCursus().add(cur);
-        cur.setCandidateCursus(cdt);
+        cur.setProfessionalCursus(cdt);
     }
 
     @Override
