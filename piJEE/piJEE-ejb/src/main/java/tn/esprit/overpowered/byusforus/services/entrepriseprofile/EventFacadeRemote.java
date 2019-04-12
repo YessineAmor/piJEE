@@ -29,5 +29,13 @@ public interface EventFacadeRemote {
     List<Event> findRange(int[] range);
 
     int count();
+    public Long createEvent(Event event);
+    public void editEvent(Event event);
+    public void deleteEvent(Event event);
+    public List<Event> searchEventByName(String eventName);
+    public List<Event> viewAllEvent();
+    public Event findEvent(Long idEvent);
+    
+    
     
 }

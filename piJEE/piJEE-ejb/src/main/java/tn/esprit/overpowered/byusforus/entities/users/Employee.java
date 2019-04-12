@@ -30,7 +30,7 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue(value = "EMPLOYEE")
-public class Employee extends Candidate implements Serializable {
+public class Employee extends Professional implements Serializable {
 
     private static final long serialVersionUID = 31L;
 
