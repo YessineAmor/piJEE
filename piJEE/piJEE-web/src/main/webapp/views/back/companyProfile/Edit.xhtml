@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompanyProfileEditDlg" widgetVar="CompanyProfileEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCompanyProfileTitle}">
+            <h:form id="CompanyProfileEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{companyProfileController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{companyProfileController.selected.id}" title="#{bundle.EditCompanyProfileTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{companyProfileController.selected.name}" title="#{bundle.EditCompanyProfileTitle_name}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_picName}" for="picName" />
+                        <p:inputText id="picName" value="#{companyProfileController.selected.picName}" title="#{bundle.EditCompanyProfileTitle_picName}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_numViews}" for="numViews" />
+                        <p:inputText id="numViews" value="#{companyProfileController.selected.numViews}" title="#{bundle.EditCompanyProfileTitle_numViews}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_summary}" for="summary" />
+                        <p:inputText id="summary" value="#{companyProfileController.selected.summary}" title="#{bundle.EditCompanyProfileTitle_summary}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_sectorOfActivity}" for="sectorOfActivity" />
+                        <p:inputText id="sectorOfActivity" value="#{companyProfileController.selected.sectorOfActivity}" title="#{bundle.EditCompanyProfileTitle_sectorOfActivity}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_website}" for="website" />
+                        <p:inputText id="website" value="#{companyProfileController.selected.website}" title="#{bundle.EditCompanyProfileTitle_website}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_companySize}" for="companySize" />
+                        <p:inputText id="companySize" value="#{companyProfileController.selected.companySize}" title="#{bundle.EditCompanyProfileTitle_companySize}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_dateOfCreation}" for="dateOfCreation" />
+                        <p:inputText id="dateOfCreation" value="#{companyProfileController.selected.dateOfCreation}" title="#{bundle.EditCompanyProfileTitle_dateOfCreation}" />
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_companyAdmin}" for="companyAdmin" />
+                        <p:selectOneMenu id="companyAdmin" value="#{companyProfileController.selected.companyAdmin}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{companyAdminController.itemsAvailableSelectOne}"
+                                           var="companyAdminItem"
+                                           itemValue="#{companyAdminItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCompanyProfileLabel_companyHRManager}" for="companyHRManager" />
+                        <p:selectOneMenu id="companyHRManager" value="#{companyProfileController.selected.companyHRManager}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{hRManagerController.itemsAvailableSelectOne}"
+                                           var="companyHRManagerItem"
+                                           itemValue="#{companyHRManagerItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{companyProfileController.update}" value="#{bundle.Save}" update="display,:CompanyProfileListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CompanyProfileEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CompanyProfileEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,6 +1,6 @@
 package tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans;
 
-import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil.PersistAction;
 
@@ -17,25 +17,25 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.quiz.QuizFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.users.ProjectManagerFacadeLocal;
 
 @ManagedBean
 @SessionScoped
-public class QuizController implements Serializable {
+public class ProjectManagerController implements Serializable {
 
     @EJB
-    private QuizFacadeLocal ejbFacade;
-    private List<Quiz> items = null;
-    private Quiz selected;
+    private ProjectManagerFacadeLocal ejbFacade;
+    private List<ProjectManager> items = null;
+    private ProjectManager selected;
 
-    public QuizController() {
+    public ProjectManagerController() {
     }
 
-    public Quiz getSelected() {
+    public ProjectManager getSelected() {
         return selected;
     }
 
-    public void setSelected(Quiz selected) {
+    public void setSelected(ProjectManager selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class QuizController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private QuizFacadeLocal getFacade() {
+    private ProjectManagerFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Quiz prepareCreate() {
-        selected = new Quiz();
+    public ProjectManager prepareCreate() {
+        selected = new ProjectManager();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuizCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ProjectManagerCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuizUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ProjectManagerUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuizDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ProjectManagerDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Quiz> getItems() {
+    public List<ProjectManager> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,38 +109,38 @@ public class QuizController implements Serializable {
         }
     }
 
-    public Quiz getQuiz(java.lang.Integer id) {
+    public ProjectManager getProjectManager(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Quiz> getItemsAvailableSelectMany() {
+    public List<ProjectManager> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Quiz> getItemsAvailableSelectOne() {
+    public List<ProjectManager> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Quiz.class)
-    public static class QuizControllerConverter implements Converter {
+    @FacesConverter(forClass = ProjectManager.class)
+    public static class ProjectManagerControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            QuizController controller = (QuizController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "quizController");
-            return controller.getQuiz(getKey(value));
+            ProjectManagerController controller = (ProjectManagerController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "projectManagerController");
+            return controller.getProjectManager(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -151,11 +151,11 @@ public class QuizController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Quiz) {
-                Quiz o = (Quiz) object;
+            if (object instanceof ProjectManager) {
+                ProjectManager o = (ProjectManager) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Quiz.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), ProjectManager.class.getName()});
                 return null;
             }
         }

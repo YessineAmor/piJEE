@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompanyAdminViewDlg" widgetVar="CompanyAdminViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCompanyAdminTitle}">
+            <h:form id="CompanyAdminViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{companyAdminController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_companyProfile}"/>
+                        <h:outputText value="#{companyAdminController.selected.companyProfile}" title="#{bundle.ViewCompanyAdminTitle_companyProfile}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_skills}"/>
+                        <h:outputText value="#{companyAdminController.selected.skills}" title="#{bundle.ViewCompanyAdminTitle_skills}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_skills}"/>
+                        <h:outputText value="#{companyAdminController.selected.skills}" title="#{bundle.ViewCompanyAdminTitle_skills}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_company}"/>
+                        <h:outputText value="#{companyAdminController.selected.company}" title="#{bundle.ViewCompanyAdminTitle_company}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_manager}"/>
+                        <h:outputText value="#{companyAdminController.selected.manager}" title="#{bundle.ViewCompanyAdminTitle_manager}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_introduction}"/>
+                        <h:outputText value="#{companyAdminController.selected.introduction}" title="#{bundle.ViewCompanyAdminTitle_introduction}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_recommendations}"/>
+                        <h:outputText value="#{companyAdminController.selected.recommendations}" title="#{bundle.ViewCompanyAdminTitle_recommendations}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_activities}"/>
+                        <h:outputText value="#{companyAdminController.selected.activities}" title="#{bundle.ViewCompanyAdminTitle_activities}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_curriculumVitaes}"/>
+                        <h:outputText value="#{companyAdminController.selected.curriculumVitaes}" title="#{bundle.ViewCompanyAdminTitle_curriculumVitaes}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_skills}"/>
+                        <h:outputText value="#{companyAdminController.selected.skills}" title="#{bundle.ViewCompanyAdminTitle_skills}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_visits}"/>
+                        <h:outputText value="#{companyAdminController.selected.visits}" title="#{bundle.ViewCompanyAdminTitle_visits}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_recommendedIdList}"/>
+                        <h:outputText value="#{companyAdminController.selected.recommendedIdList}" title="#{bundle.ViewCompanyAdminTitle_recommendedIdList}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_email}"/>
+                        <h:outputText value="#{companyAdminController.selected.email}" title="#{bundle.ViewCompanyAdminTitle_email}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_username}"/>
+                        <h:outputText value="#{companyAdminController.selected.username}" title="#{bundle.ViewCompanyAdminTitle_username}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_firstName}"/>
+                        <h:outputText value="#{companyAdminController.selected.firstName}" title="#{bundle.ViewCompanyAdminTitle_firstName}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_lastName}"/>
+                        <h:outputText value="#{companyAdminController.selected.lastName}" title="#{bundle.ViewCompanyAdminTitle_lastName}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_id}"/>
+                        <h:outputText value="#{companyAdminController.selected.id}" title="#{bundle.ViewCompanyAdminTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_salt}"/>
+                        <h:outputText value="#{companyAdminController.selected.salt}" title="#{bundle.ViewCompanyAdminTitle_salt}"/>
+                        <h:outputText value="#{bundle.ViewCompanyAdminLabel_password}"/>
+                        <h:outputText value="#{companyAdminController.selected.password}" title="#{bundle.ViewCompanyAdminTitle_password}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CompanyAdminViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

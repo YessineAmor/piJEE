@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProjectManagerEditDlg" widgetVar="ProjectManagerEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProjectManagerTitle}">
+            <h:form id="ProjectManagerEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{projectManagerController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_companyProfile}" for="companyProfile" />
+                        <p:selectOneMenu id="companyProfile" value="#{projectManagerController.selected.companyProfile}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{companyProfileController.itemsAvailableSelectOne}"
+                                           var="companyProfileItem"
+                                           itemValue="#{companyProfileItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_skills}" for="skills" />
+                        <p:inputText id="skills" value="#{projectManagerController.selected.skills}" title="#{bundle.EditProjectManagerTitle_skills}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_skills}" for="skills" />
+                        <p:inputText id="skills" value="#{projectManagerController.selected.skills}" title="#{bundle.EditProjectManagerTitle_skills}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_company}" for="company" />
+                        <p:selectOneMenu id="company" value="#{projectManagerController.selected.company}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{companyProfileController.itemsAvailableSelectOne}"
+                                           var="companyItem"
+                                           itemValue="#{companyItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_manager}" for="manager" />
+                        <p:selectOneMenu id="manager" value="#{projectManagerController.selected.manager}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{employeeController.itemsAvailableSelectOne}"
+                                           var="managerItem"
+                                           itemValue="#{managerItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_introduction}" for="introduction" />
+                        <p:inputText id="introduction" value="#{projectManagerController.selected.introduction}" title="#{bundle.EditProjectManagerTitle_introduction}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_recommendations}" for="recommendations" />
+                        <p:inputText id="recommendations" value="#{projectManagerController.selected.recommendations}" title="#{bundle.EditProjectManagerTitle_recommendations}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_activities}" for="activities" />
+                        <p:inputText id="activities" value="#{projectManagerController.selected.activities}" title="#{bundle.EditProjectManagerTitle_activities}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_curriculumVitaes}" for="curriculumVitaes" />
+                        <p:inputText id="curriculumVitaes" value="#{projectManagerController.selected.curriculumVitaes}" title="#{bundle.EditProjectManagerTitle_curriculumVitaes}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_skills}" for="skills" />
+                        <p:inputText id="skills" value="#{projectManagerController.selected.skills}" title="#{bundle.EditProjectManagerTitle_skills}" required="true" requiredMessage="#{bundle.EditProjectManagerRequiredMessage_skills}"/>
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_visits}" for="visits" />
+                        <p:inputText id="visits" value="#{projectManagerController.selected.visits}" title="#{bundle.EditProjectManagerTitle_visits}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_recommendedIdList}" for="recommendedIdList" />
+                        <p:inputText id="recommendedIdList" value="#{projectManagerController.selected.recommendedIdList}" title="#{bundle.EditProjectManagerTitle_recommendedIdList}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{projectManagerController.selected.email}" title="#{bundle.EditProjectManagerTitle_email}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{projectManagerController.selected.username}" title="#{bundle.EditProjectManagerTitle_username}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{projectManagerController.selected.firstName}" title="#{bundle.EditProjectManagerTitle_firstName}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{projectManagerController.selected.lastName}" title="#{bundle.EditProjectManagerTitle_lastName}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{projectManagerController.selected.id}" title="#{bundle.EditProjectManagerTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_salt}" for="salt" />
+                        <p:inputText id="salt" value="#{projectManagerController.selected.salt}" title="#{bundle.EditProjectManagerTitle_salt}" />
+                        <p:outputLabel value="#{bundle.EditProjectManagerLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{projectManagerController.selected.password}" title="#{bundle.EditProjectManagerTitle_password}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{projectManagerController.update}" value="#{bundle.Save}" update="display,:ProjectManagerListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProjectManagerEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProjectManagerEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

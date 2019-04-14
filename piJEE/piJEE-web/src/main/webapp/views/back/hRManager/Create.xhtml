@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HRManagerCreateDlg" widgetVar="HRManagerCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateHRManagerTitle}">
+            <h:form id="HRManagerCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{hRManagerController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_companyProfile}" for="companyProfile" />
+                        <p:selectOneMenu id="companyProfile" value="#{hRManagerController.selected.companyProfile}" >
+                            <f:selectItems value="#{companyProfileController.itemsAvailableSelectOne}"
+                                           var="companyProfileItem"
+                                           itemValue="#{companyProfileItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_skills}" for="skills" />
+                        <p:inputText id="skills" value="#{hRManagerController.selected.skills}" title="#{bundle.CreateHRManagerTitle_skills}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_company}" for="company" />
+                        <p:inputText id="company" value="#{hRManagerController.selected.company}" title="#{bundle.CreateHRManagerTitle_company}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_skills}" for="skills" />
+                        <p:inputText id="skills" value="#{hRManagerController.selected.skills}" title="#{bundle.CreateHRManagerTitle_skills}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_company}" for="company" />
+                        <p:selectOneMenu id="company" value="#{hRManagerController.selected.company}" >
+                            <f:selectItems value="#{companyProfileController.itemsAvailableSelectOne}"
+                                           var="companyItem"
+                                           itemValue="#{companyItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_manager}" for="manager" />
+                        <p:selectOneMenu id="manager" value="#{hRManagerController.selected.manager}" >
+                            <f:selectItems value="#{employeeController.itemsAvailableSelectOne}"
+                                           var="managerItem"
+                                           itemValue="#{managerItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_introduction}" for="introduction" />
+                        <p:inputText id="introduction" value="#{hRManagerController.selected.introduction}" title="#{bundle.CreateHRManagerTitle_introduction}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_recommendations}" for="recommendations" />
+                        <p:inputText id="recommendations" value="#{hRManagerController.selected.recommendations}" title="#{bundle.CreateHRManagerTitle_recommendations}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_activities}" for="activities" />
+                        <p:inputText id="activities" value="#{hRManagerController.selected.activities}" title="#{bundle.CreateHRManagerTitle_activities}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_curriculumVitaes}" for="curriculumVitaes" />
+                        <p:inputText id="curriculumVitaes" value="#{hRManagerController.selected.curriculumVitaes}" title="#{bundle.CreateHRManagerTitle_curriculumVitaes}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_skills}" for="skills" />
+                        <p:inputText id="skills" value="#{hRManagerController.selected.skills}" title="#{bundle.CreateHRManagerTitle_skills}" required="true" requiredMessage="#{bundle.CreateHRManagerRequiredMessage_skills}"/>
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_visits}" for="visits" />
+                        <p:inputText id="visits" value="#{hRManagerController.selected.visits}" title="#{bundle.CreateHRManagerTitle_visits}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_recommendedIdList}" for="recommendedIdList" />
+                        <p:inputText id="recommendedIdList" value="#{hRManagerController.selected.recommendedIdList}" title="#{bundle.CreateHRManagerTitle_recommendedIdList}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{hRManagerController.selected.email}" title="#{bundle.CreateHRManagerTitle_email}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{hRManagerController.selected.username}" title="#{bundle.CreateHRManagerTitle_username}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{hRManagerController.selected.firstName}" title="#{bundle.CreateHRManagerTitle_firstName}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{hRManagerController.selected.lastName}" title="#{bundle.CreateHRManagerTitle_lastName}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{hRManagerController.selected.id}" title="#{bundle.CreateHRManagerTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_salt}" for="salt" />
+                        <p:inputText id="salt" value="#{hRManagerController.selected.salt}" title="#{bundle.CreateHRManagerTitle_salt}" />
+                        <p:outputLabel value="#{bundle.CreateHRManagerLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{hRManagerController.selected.password}" title="#{bundle.CreateHRManagerTitle_password}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{hRManagerController.create}" value="#{bundle.Save}" update="display,:HRManagerListForm:datalist,:growl" oncomplete="handleSubmit(args,'HRManagerCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HRManagerCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
