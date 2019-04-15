@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCompanyProfileTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="CompanyProfileListForm">
+                <p:panel header="#{bundle.ListCompanyProfileTitle}">
+                    <p:dataTable id="datalist" value="#{companyProfileController.items}" var="item"
+                                 selectionMode="single" selection="#{companyProfileController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_picName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.picName}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_numViews}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numViews}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_summary}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.summary}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_sectorOfActivity}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sectorOfActivity}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_website}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.website}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_companySize}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.companySize}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_dateOfCreation}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dateOfCreation}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_companyAdmin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.companyAdmin}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompanyProfileTitle_companyHRManager}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.companyHRManager}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{companyProfileController.prepareCreate}" update=":CompanyProfileCreateForm" oncomplete="PF('CompanyProfileCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CompanyProfileViewForm" oncomplete="PF('CompanyProfileViewDialog').show()" disabled="#{empty companyProfileController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CompanyProfileEditForm" oncomplete="PF('CompanyProfileEditDialog').show()" disabled="#{empty companyProfileController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{companyProfileController.destroy}" update=":growl,datalist" disabled="#{empty companyProfileController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
