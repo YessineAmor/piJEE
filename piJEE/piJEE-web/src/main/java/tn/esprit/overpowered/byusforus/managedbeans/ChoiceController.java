@@ -1,8 +1,8 @@
-package tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans;
 
-import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
-import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil;
-import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil.PersistAction;
+import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
+import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
+import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,31 +11,32 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.users.CompanyAdminFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
 
 @ManagedBean
-@SessionScoped
-public class CompanyAdminController implements Serializable {
+@javax.faces.bean.SessionScoped
+public class ChoiceController implements Serializable {
 
     @EJB
-    private CompanyAdminFacadeLocal ejbFacade;
-    private List<CompanyAdmin> items = null;
-    private CompanyAdmin selected;
+    private ChoiceFacadeLocal ejbFacade;
+    private List<Choice> items = null;
+    private Choice selected;
 
-    public CompanyAdminController() {
+    public ChoiceController() {
     }
 
-    public CompanyAdmin getSelected() {
+    public Choice getSelected() {
         return selected;
     }
 
-    public void setSelected(CompanyAdmin selected) {
+    public void setSelected(Choice selected) {
         this.selected = selected;
     }
 
@@ -45,36 +46,36 @@ public class CompanyAdminController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private CompanyAdminFacadeLocal getFacade() {
+    private ChoiceFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public CompanyAdmin prepareCreate() {
-        selected = new CompanyAdmin();
+    public Choice prepareCreate() {
+        selected = new Choice();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CompanyAdminCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ChoiceCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CompanyAdminUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ChoiceUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CompanyAdminDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ChoiceDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<CompanyAdmin> getItems() {
+    public List<Choice> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +110,29 @@ public class CompanyAdminController implements Serializable {
         }
     }
 
-    public CompanyAdmin getCompanyAdmin(java.lang.Long id) {
+    public Choice getChoice(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<CompanyAdmin> getItemsAvailableSelectMany() {
+    public List<Choice> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<CompanyAdmin> getItemsAvailableSelectOne() {
+    public List<Choice> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = CompanyAdmin.class)
-    public static class CompanyAdminControllerConverter implements Converter {
+    @FacesConverter(forClass = Choice.class)
+    public static class ChoiceControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CompanyAdminController controller = (CompanyAdminController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "companyAdminController");
-            return controller.getCompanyAdmin(getKey(value));
+            ChoiceController controller = (ChoiceController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "choiceController");
+            return controller.getChoice(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -151,11 +152,11 @@ public class CompanyAdminController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof CompanyAdmin) {
-                CompanyAdmin o = (CompanyAdmin) object;
-                return getStringKey(o.getId());
+            if (object instanceof Choice) {
+                Choice o = (Choice) object;
+                return getStringKey(o.getIdChoice());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CompanyAdmin.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Choice.class.getName()});
                 return null;
             }
         }
