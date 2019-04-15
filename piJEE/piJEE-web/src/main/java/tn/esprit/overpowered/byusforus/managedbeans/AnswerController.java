@@ -1,8 +1,8 @@
-package tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans;
 
-import tn.esprit.overpowered.byusforus.entities.users.Employee;
-import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil;
-import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil.PersistAction;
+import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
+import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
+import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,29 +12,30 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.entrepriseprofile.EmployeeFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.quiz.AnswerFacadeLocal;
 
 @ManagedBean
-@javax.faces.bean.SessionScoped
-public class EmployeeController implements Serializable {
+@SessionScoped
+public class AnswerController implements Serializable {
 
     @EJB
-    private EmployeeFacadeLocal ejbFacade;
-    private List<Employee> items = null;
-    private Employee selected;
+    private AnswerFacadeLocal ejbFacade;
+    private List<Answer> items = null;
+    private Answer selected;
 
-    public EmployeeController() {
+    public AnswerController() {
     }
 
-    public Employee getSelected() {
+    public Answer getSelected() {
         return selected;
     }
 
-    public void setSelected(Employee selected) {
+    public void setSelected(Answer selected) {
         this.selected = selected;
     }
 
@@ -44,36 +45,36 @@ public class EmployeeController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private EmployeeFacadeLocal getFacade() {
+    private AnswerFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Employee prepareCreate() {
-        selected = new Employee();
+    public Answer prepareCreate() {
+        selected = new Answer();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("EmployeeCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AnswerCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("EmployeeUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AnswerUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("EmployeeDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AnswerDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Employee> getItems() {
+    public List<Answer> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -108,29 +109,29 @@ public class EmployeeController implements Serializable {
         }
     }
 
-    public Employee getEmployee(java.lang.Long id) {
+    public Answer getAnswer(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Employee> getItemsAvailableSelectMany() {
+    public List<Answer> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Employee> getItemsAvailableSelectOne() {
+    public List<Answer> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Employee.class)
-    public static class EmployeeControllerConverter implements Converter {
+    @FacesConverter(forClass = Answer.class)
+    public static class AnswerControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            EmployeeController controller = (EmployeeController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "employeeController");
-            return controller.getEmployee(getKey(value));
+            AnswerController controller = (AnswerController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "answerController");
+            return controller.getAnswer(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -150,11 +151,11 @@ public class EmployeeController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Employee) {
-                Employee o = (Employee) object;
+            if (object instanceof Answer) {
+                Answer o = (Answer) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Employee.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Answer.class.getName()});
                 return null;
             }
         }

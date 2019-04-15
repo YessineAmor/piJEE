@@ -1,4 +1,4 @@
-package tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util;
+package tn.esprit.overpowered.byusforus.managedbeans.util;
 
 import java.util.List;
 import javax.faces.application.FacesMessage;

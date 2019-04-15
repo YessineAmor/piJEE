@@ -31,7 +31,7 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQuestion;
     private String questionText;
-    private int questionPoints;
+    private float questionPoints;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -69,7 +69,7 @@ public class Question implements Serializable {
         return questionPoints;
     }
 
-    public void setQuestionPoints(int questionPoints) {
+    public void setQuestionPoints(float questionPoints) {
         this.questionPoints = questionPoints;
     }
 
@@ -88,7 +88,7 @@ public class Question implements Serializable {
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
