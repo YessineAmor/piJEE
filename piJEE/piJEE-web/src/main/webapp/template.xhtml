@@ -19,12 +19,13 @@
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
                 <h:form id="menuForm">
                     <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" icon="ui-icon-home"/>
+                        <p:menuitem value="#{bundle.Home}" outcome="/template.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="#{bundle.Maintenance}">
+                            <p:menuitem value="Quiz" outcome="/views/back/quiz/List.xhtml" />
                             <p:menuitem value="Answer" outcome="/views/back/answer/List.xhtml" />
                             <p:menuitem value="Choice" outcome="/views/back/choice/List.xhtml" />
                             <p:menuitem value="Question" outcome="/views/back/question/List.xhtml" />
-                            <p:menuitem value="Quiz" outcome="/views/back/quiz/list.xhtml" />
+                            <p:menuitem value="QuizTry" outcome="/views/back/quizTry/List.xhtml" />
                         </p:submenu>
                     </p:menubar>
                 </h:form>

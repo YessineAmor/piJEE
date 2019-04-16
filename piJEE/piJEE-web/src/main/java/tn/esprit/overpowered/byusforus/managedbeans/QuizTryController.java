@@ -1,8 +1,8 @@
-package tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans;
 
-import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
-import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil;
-import tn.esprit.overpowered.byusforus.managedbeans.quiz.managedbeans.util.JsfUtil.PersistAction;
+import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
+import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
+import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,30 +12,29 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.quiz.QuizFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.quiz.QuizTryFacadeLocal;
 
 @ManagedBean
-@SessionScoped
-public class QuizController implements Serializable {
+@javax.faces.bean.SessionScoped
+public class QuizTryController implements Serializable {
 
     @EJB
-    private QuizFacadeLocal ejbFacade;
-    private List<Quiz> items = null;
-    private Quiz selected;
+    private QuizTryFacadeLocal ejbFacade;
+    private List<QuizTry> items = null;
+    private QuizTry selected;
 
-    public QuizController() {
+    public QuizTryController() {
     }
 
-    public Quiz getSelected() {
+    public QuizTry getSelected() {
         return selected;
     }
 
-    public void setSelected(Quiz selected) {
+    public void setSelected(QuizTry selected) {
         this.selected = selected;
     }
 
@@ -45,36 +44,36 @@ public class QuizController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private QuizFacadeLocal getFacade() {
+    private QuizTryFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Quiz prepareCreate() {
-        selected = new Quiz();
+    public QuizTry prepareCreate() {
+        selected = new QuizTry();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuizCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuizTryCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuizUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuizTryUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuizDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuizTryDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Quiz> getItems() {
+    public List<QuizTry> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,38 +108,38 @@ public class QuizController implements Serializable {
         }
     }
 
-    public Quiz getQuiz(java.lang.Integer id) {
+    public QuizTry getQuizTry(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Quiz> getItemsAvailableSelectMany() {
+    public List<QuizTry> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Quiz> getItemsAvailableSelectOne() {
+    public List<QuizTry> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Quiz.class)
-    public static class QuizControllerConverter implements Converter {
+    @FacesConverter(forClass = QuizTry.class)
+    public static class QuizTryControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            QuizController controller = (QuizController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "quizController");
-            return controller.getQuiz(getKey(value));
+            QuizTryController controller = (QuizTryController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "quizTryController");
+            return controller.getQuizTry(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -151,11 +150,11 @@ public class QuizController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Quiz) {
-                Quiz o = (Quiz) object;
-                return getStringKey(o.getId());
+            if (object instanceof QuizTry) {
+                QuizTry o = (QuizTry) object;
+                return getStringKey(o.getIdQuizTry());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Quiz.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), QuizTry.class.getName()});
                 return null;
             }
         }

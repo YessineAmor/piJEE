@@ -19,7 +19,11 @@
                         <p:outputLabel value="#{bundle.EditQuestionLabel_questionPoints}" for="questionPoints" />
                         <p:inputText id="questionPoints" value="#{questionController.selected.questionPoints}" title="#{bundle.EditQuestionTitle_questionPoints}" />
                         <p:outputLabel value="#{bundle.EditQuestionLabel_questionType}" for="questionType" />
-                        <p:inputText id="questionType" value="#{questionController.selected.questionType}" title="#{bundle.EditQuestionTitle_questionType}" />
+                       <h:selectOneMenu
+                            value="#{questionController.selected.questionType}">
+                            <f:selectItem id="questionType" itemLabel="#{bundle.CreateQuestionTitle_questionType}" itemValue="#{questionController.selected.questionType}" />
+                            <f:selectItems value="#{enums.questionTypes}" />
+                        </h:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{questionController.update}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuestionEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="QuestionEditDialog.hide()"/>
