@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/resources/templates/template_front.xhtml"
+                template="/resources/templates/template_signUp.xhtml"
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="title"><title>Home</title></ui:define>
@@ -14,16 +14,29 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
             <link rel="stylesheet" href="style.css" />
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css"/>
+            <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
         <h:body style="background : url('backgroud.jpg');">
-            <a class="navbar-brand" href="#"> <img
-                    src="745c75d504f336a83a10e6dcf8db44fa.jpg" width="30" height="30"
-                    class="d-inline-block align-top" alt="" /> Bootstrap </a>
-            <form class="form-inline" action="">
-                <input class="input" type="text" /> <input class="input"
-                                                           type="password" style="margin-left : 10px; margin-right: 10px" /> <input
-                                                           type="submit" class="btn btn-success" />
-            </form>
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#"> <img
+                        src="745c75d504f336a83a10e6dcf8db44fa.jpg" width="30" height="30"
+                        class="d-inline-block align-top" alt="" /> ByUsForUs </a>
+                <h:form class="form-inline" >
+                    <p:growl id="message" showDetail="true" />
+                    <input class="input" type="text" /> <p:password class="input"
+                                                                    style="margin-left : 10px; margin-right: 10px" /> 
+                    <p:commandButton action="#{signUpBean.doLogin()}"
+                                     onclick="PF('dlg3').show();"
+                        value="Login" class="btn btn-success" />
+
+                    <p:dialog header="2FAuth" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="200">
+                        <h:outputText value="Insert code HERE." style="text-align: center" />
+                        <p:inputText value="#{signUpBean.authToken}" class="form-control"/>
+                        <p:commandButton value="continue" actionListener="#{signUpBean.doFinalizeLogin()}"/>
+                    </p:dialog> 
+                </h:form>
+            </nav>
             <div class="container">
                 <div class="row">
                     <div class="col-md-4"></div>
@@ -39,31 +52,45 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="new">
-                                    <form action="">
+                                    <h:form id="regForm">
+                                        <p:growl id="messages" showDetail="true" />
+                                        <div class="form-group">
+                                            <p:outputLabel>Username</p:outputLabel> <p:inputText
+                                                value="#{signUpBean.username}" class="form-control" required="true"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <p:outputLabel>Email</p:outputLabel> <p:inputText
+                                                value="#{signUpBean.email}" class="form-control" required="true"/>
+                                        </div>
                                         <div class="form-group">
                                             <p:outputLabel>First Name</p:outputLabel> <p:inputText
-                                                                          value="prenom" class="form-control" />
+                                                value="#{signUpBean.firstName}" class="form-control" required="true" />
                                         </div>
                                         <div class="form-group">
-                                            <label>Nom</label> <input type="text" name="nom"
-                                                                      class="form-control" />
+                                            <p:outputLabel>Last Name</p:outputLabel> <p:inputText
+                                                value="#{signUpBean.lastName}" class="form-control" required="true" />
                                         </div>
                                         <div class="form-group">
-                                            <label>Email</label> <input name="email"
-                                                                        class="form-control" />
+                                            <p:outputLabel>Password *</p:outputLabel>
+                                            <p:password id="pwd1" value="#{signUpBean.password}" match="pwd2" feedback="true" inline="true"
+                                                        class="form-control" required="true"/>
                                         </div>
                                         <div class="form-group">
-                                            <label>Password</label>
-                                            <p:password id="inlineFeedback" value="pwd" feedback="true" inline="true" class="form-control" />
+                                            <p:outputLabel>Re-Password *</p:outputLabel>
+                                            <p:password id="pwd2" value="#{signUpBean.password}" feedback="true" inline="true" class="form-control" required="true"/>
                                         </div>
                                         <p style="text-align: center">
-                                            En cliquant sur Sâinscrire, vous acceptez les Conditions
-                                            dâutilisation, la Politique de confidentialitÃ©, et la
-                                            Politique relative aux cookies de LinkedIn.
+                                            By Clicking subscribe, You agree to terms and conditions,
+                                            Policy and Confidentiality,And cookies related policy of ByUsForUs.
                                         </p>
-                                        <input type="submit" value="S'incrire"
-                                               class="btn btn-primary btn-block" />
-                                    </form>
+                                        <p:messages showDetail="true"/>
+                                        <p:captcha label="Captcha" />
+                                        <br />
+                                        <p:commandButton type="submit" value="S'incrire"
+                                                         action="#{signUpBean.submit}" ajax="false" icon="pi pi-check"
+                                                         update=":regForm"
+                                                         class="btn btn-primary btn-block" />
+                                    </h:form>
                                 </div>
                                 <div id="old">
                                     <form action="">
