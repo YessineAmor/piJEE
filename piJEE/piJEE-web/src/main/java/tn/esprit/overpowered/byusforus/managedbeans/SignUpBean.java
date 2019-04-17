@@ -18,6 +18,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
 import tn.esprit.overpowered.byusforus.services.authentication.AuthenticationFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacade;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.users.UserFacade;
 import tn.esprit.overpowered.byusforus.services.users.UserFacadeRemote;
 
@@ -27,10 +28,12 @@ import tn.esprit.overpowered.byusforus.services.users.UserFacadeRemote;
  */
 @ManagedBean(name = "signUpBean")
 @SessionScoped
-public class SignUpBean implements Serializable{
+public class SignUpBean implements Serializable {
 
     @EJB
     private UserFacadeRemote userFacade;
+    @EJB
+    private CandidateFacadeRemote candidateFacade;
 
     @EJB
     private AuthenticationFacadeRemote authFacade;
@@ -44,6 +47,9 @@ public class SignUpBean implements Serializable{
     private String firstName;
     private String lastName;
     private String password;
+    private Candidate candidate;
+    private String signUpCode;
+    private String signUpUserCode;
 
     //Information for SignIn
     private String login;
@@ -100,6 +106,30 @@ public class SignUpBean implements Serializable{
         this.password = password;
     }
 
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
+    }
+
+    public String getSignUpCode() {
+        return signUpCode;
+    }
+
+    public void setSignUpCode(String signUpCode) {
+        this.signUpCode = signUpCode;
+    }
+
+    public String getSignUpUserCode() {
+        return signUpUserCode;
+    }
+
+    public void setSignUpUserCode(String signUpUserCode) {
+        this.signUpUserCode = signUpUserCode;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -140,6 +170,14 @@ public class SignUpBean implements Serializable{
         this.userFacade = userFacade;
     }
 
+    public CandidateFacadeRemote getCandidateFacade() {
+        return candidateFacade;
+    }
+
+    public void setCandidateFacade(CandidateFacadeRemote candidateFacade) {
+        this.candidateFacade = candidateFacade;
+    }
+
     public AuthenticationFacadeRemote getAuthFacade() {
         return authFacade;
     }
@@ -148,18 +186,19 @@ public class SignUpBean implements Serializable{
         this.authFacade = authFacade;
     }
 
-    public String SignUpAsUser() throws NoSuchAlgorithmException {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPassword(password.getBytes());
+    public String SignUpAsCandidate() throws NoSuchAlgorithmException {
+        candidate = new Candidate();
+        candidate.setUsername(username);
+        candidate.setEmail(email);
+        candidate.setFirstName(firstName);
+        candidate.setLastName(lastName);
+        candidate.setPassword(password.getBytes());
         String goTo = "null";
-        String result = userFacade.checkExistence(user.getEmail(), user.getUsername());
+        String result = userFacade.checkExistence(candidate.getEmail(), candidate.getUsername());
         if (result.equals("OK")) {
-            Long id = userFacade.createUser(user);
-            goTo = "null";//This is just for testing purpose until the actual page is created;
+            signUpCode= candidateFacade.accountCreationConfirmation(email);
+            goTo = "/views/back/signUp/candidateConfirmSignUp?faces-redirect=true";
+
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "result", result);
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -170,12 +209,26 @@ public class SignUpBean implements Serializable{
     public void submit() throws NoSuchAlgorithmException {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correct", "Correct");
         FacesContext.getCurrentInstance().addMessage("Successfull", msg);
-        this.SignUpAsUser();
+        this.SignUpAsCandidate();
     }
 
     public void doLogin() throws NoSuchAlgorithmException {
         authUid = authFacade.login(login, pass);
 
+    }
+
+    public String doFinalizeCandidateSignUp() {
+        String goTo = "null";
+        if (signUpCode.equals(signUpUserCode)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation</br>Login");
+            FacesContext.getCurrentInstance().addMessage("Successful", msg);
+            candidateFacade.createCandidate(candidate);
+            goTo = "signUp?faces-redirect";
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "Code Error");
+            FacesContext.getCurrentInstance().addMessage("ERROR", msg);
+        }
+        return goTo;
     }
 
     public String doFinalizeLogin() {
