@@ -28,7 +28,7 @@ import tn.esprit.overpowered.byusforus.util.MailSender;
  */
 @Stateless
 public class CandidateFacade extends AbstractFacade<Candidate>
-        implements  CandidateFacadeRemote {
+        implements  CandidateFacadeRemote, CandidateFacadeLocal {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;

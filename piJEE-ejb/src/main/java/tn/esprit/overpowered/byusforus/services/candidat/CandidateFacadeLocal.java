@@ -18,7 +18,7 @@ import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 @Local
 public interface CandidateFacadeLocal {
 
-    void create(Candidate candidate);
+      void create(Candidate candidate);
 
     void edit(Candidate candidate);
 
@@ -31,23 +31,55 @@ public interface CandidateFacadeLocal {
     List<Candidate> findRange(int[] range);
 
     int count();
-    
-    List<Candidate> afficherCandidats();
-    
+
     public List<Candidate> searchByName(String name);
-    
+
     public List<Candidate> searchByLastname(String lastname);
-    
+
     public List<Candidate> searchByPosition(String position);
-    
-    
+
+    public String addContact(Long currendCdtId, Long contactId);
+
     public CompanyProfile searchCompany(String companyName);
-    
+
+    public String subscribe(Long companyId, Long candidateId);
+
     public List<JobOffer> customJobOfferList(Long candidateId);
-    
+
     public List<CompanyProfile> subscriptionList(Long candidateId);
-    
+
+    public String accountCreationConfirmation(String email);
+
     public String createCandidate(Candidate candidate);
+
+    public String recommend(Long candidateId);
+
+    //Cursus
+    // public void affecterCursusCandidate(Long candidateId, Long cursusId);
+    //CurriculumVitae
+    /*
+    public Long createCurriculumVitae(CurriculumVitae curriculumVitae);
+    
+    public void deleteCurriculumVitae(Long curriculumVitaeId);
+    
+    public Long updateCurriculumVitae(CurriculumVitae curriculumVitae);
+    
+    public Long findCurriculumVitae(Long curriculumVitaeId);
+     */
+    //Experience
+    //public void affecterExperienceCandidate(Long expId,  Long candidateId);
+    //Candidate List display
+    //public ObservableList<Candidate> getObservableCandidate();
+    public List<Candidate> findAllCandidate();
+
+    public int incrementVisits(Long cdtId);
+
+    public List<Candidate> searchByEmail(String email);
+
+    public List<Candidate> friendsList(Long cdtId);
+    //  public boolean checkContacts(Long cdtId, Candidate cdt );
+
+    public List<Candidate> afficherCandidats();
     
     
 }

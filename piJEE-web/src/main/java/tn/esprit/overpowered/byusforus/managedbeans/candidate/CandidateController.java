@@ -17,7 +17,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacade;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeLocal;
 
 @Named("candidateController")

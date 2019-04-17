@@ -21,12 +21,64 @@ import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 @SessionScoped
 public class candidateViewController implements Serializable {
     private Candidate cdt ;
+    private String lastName;
+    private String email;
+    private String recommendations;
+    private String firstName;
     @EJB
     CandidateFacadeRemote cdtFacade ;
     
     public List<Candidate> getCandidates()
     {
         return cdtFacade.afficherCandidats();
+    }
+
+    public Candidate getCdt() {
+        return cdt;
+    }
+
+    public void setCdt(Candidate cdt) {
+        this.cdt = cdt;
+    }
+
+    public CandidateFacadeRemote getCdtFacade() {
+        return cdtFacade;
+    }
+
+    public void setCdtFacade(CandidateFacadeRemote cdtFacade) {
+        this.cdtFacade = cdtFacade;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(String recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
     
 }
