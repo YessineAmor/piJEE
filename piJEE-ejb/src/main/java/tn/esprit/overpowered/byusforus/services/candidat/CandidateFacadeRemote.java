@@ -36,41 +36,31 @@ public interface CandidateFacadeRemote {
     List<Candidate> findRange(int[] range);
 
     int count();
-    
+
     public List<Candidate> searchByName(String name);
-    
+
     public List<Candidate> searchByLastname(String lastname);
-    
+
     public List<Candidate> searchByPosition(String position);
-    
+
     public String addContact(Long currendCdtId, Long contactId);
-    
+
     public CompanyProfile searchCompany(String companyName);
-    
+
     public String subscribe(Long companyId, Long candidateId);
-    
+
     public List<JobOffer> customJobOfferList(Long candidateId);
-    
+
     public List<CompanyProfile> subscriptionList(Long candidateId);
-    
+
     public String accountCreationConfirmation(String email);
-    
+
     public String createCandidate(Candidate candidate);
-    
+
     public String recommend(Long candidateId);
-    
+
     //Cursus
-    
-    public Long createCursus(Cursus cursus);
-    
-    public void deleteCursus(Long cursusId);
-    
-    public Long updateCursus(Cursus cursus);
-    
-    public Cursus findCursus(Long cursusId);
-    
-    public void affecterCursusCandidate(Long candidateId, Long cursusId);
-    
+    // public void affecterCursusCandidate(Long candidateId, Long cursusId);
     //CurriculumVitae
     /*
     public Long createCurriculumVitae(CurriculumVitae curriculumVitae);
@@ -80,38 +70,20 @@ public interface CandidateFacadeRemote {
     public Long updateCurriculumVitae(CurriculumVitae curriculumVitae);
     
     public Long findCurriculumVitae(Long curriculumVitaeId);
-    */
+     */
     //Experience
-    
-    public Long createExperience(Experience experience);
-    
-    public void deleteExperience(Long experienceId);
-    
-    public Long updateExperience(Experience experience);
-    
-    public Experience findExperience(Long experienceId);
-    
-    public void affecterExperienceCandidate(Long expId,  Long candidateId);
-    
+    //public void affecterExperienceCandidate(Long expId,  Long candidateId);
     //Candidate List display
-    
     //public ObservableList<Candidate> getObservableCandidate();
-    
-    
     public List<Candidate> findAllCandidate();
-    
-    public int incrementVisits(Long cdtId);
-    
-    public List<Candidate> searchByEmail(String email);
-    
-    public List<Candidate> friendsList(Long cdtId);
-  //  public boolean checkContacts(Long cdtId, Candidate cdt );
-    public Experience getCandidateExperience(Long cdtId);
-    
-    public Cursus getCandidateCursus(Long cdtId);
- 
-    
 
-    
-    
+    public int incrementVisits(Long cdtId);
+
+    public List<Candidate> searchByEmail(String email);
+
+    public List<Candidate> friendsList(Long cdtId);
+    //  public boolean checkContacts(Long cdtId, Candidate cdt );
+
+    public List<Candidate> afficherCandidats();
+
 }

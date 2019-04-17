@@ -91,8 +91,8 @@ public class EmployeeFacade extends AbstractFacade<Employee> implements Employee
     public List<Employee> searchEmployeeByPosition(String position) {
                 List<Employee> employees = this.findAll();
         for (Employee emp : employees) {
-            for (Experience exp : emp.getExperiences()) {
-                if (exp.getPosition().equals(position)) {
+            for (String exp : emp.getExperiences()) {
+                if (exp.contains(position)) {
                     employees.add(emp);
                 }
             }

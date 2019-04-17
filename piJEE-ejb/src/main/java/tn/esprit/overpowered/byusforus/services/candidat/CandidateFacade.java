@@ -5,22 +5,17 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import org.apache.commons.lang.RandomStringUtils;
 //import org.apache.commons.lang3.RandomStringUtils;
 import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
 import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
@@ -35,7 +30,7 @@ import tn.esprit.overpowered.byusforus.util.MailSender;
  */
 @Stateless
 public class CandidateFacade extends AbstractFacade<Candidate>
-        implements CandidateFacadeLocal, CandidateFacadeRemote {
+        implements  CandidateFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -86,8 +81,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public List<Candidate> searchByPosition(String position) {
         List<Candidate> cdts = this.findAll();
         for (Candidate cdt : cdts) {
-            for (Experience exp : cdt.getExperiences()) {
-                if (exp.getPosition().equals(position)) {
+            for (String exp : cdt.getExperiences()) {
+                if (exp.contains(position)) {
                     cdts.add(cdt);
                 }
             }
@@ -106,7 +101,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return comp;
     }
 
-
+/*
     @Override
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
         Experience exp = em.find(Experience.class, expId);
@@ -118,17 +113,18 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             System.out.println("Either candidate or Experience doent exist !");
         }
     }
+    */
 
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
         List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j",JobOffer.class).getResultList();
         Candidate cdt = em.find(Candidate.class, candidateId);
-        List<Experience> exp = cdt.getExperiences();
-        Experience testExp = exp.get(0);
+        List<String> exp = cdt.getExperiences();
+        String testExp = exp.get(0);
         List<JobOffer> customJobs = new ArrayList<>();
         for (JobOffer j: jobList)
         {
-            if(j.getTitle().toLowerCase().contains(testExp.getPosition().toLowerCase()))
+            if(j.getTitle().toLowerCase().contains(testExp.toLowerCase()))
             {
                 customJobs.add(j);
             }
@@ -170,30 +166,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return "mailing system down";
 
     }
-
-    @Override
-    public Long createCursus(Cursus cursus) {
-        em.persist(cursus);
-        return cursus.getId();
-    }
-
-    @Override
-    public void deleteCursus(Long cursusId) {
-        Cursus act = em.find(Cursus.class, cursusId);
-        em.remove(getEntityManager().merge(act));
-    }
-
-    @Override
-    public Long updateCursus(Cursus cursus) {
-        getEntityManager().merge(cursus);
-        return cursus.getId();
-    }
-
-    @Override
-    public Cursus findCursus(Long cursusId) {
-        return em.find(Cursus.class, cursusId);
-    }
-
+    
+/*
     @Override
     public void affecterCursusCandidate(Long candidateId, Long cursusId) {
         Candidate cdt = em.find(Candidate.class, candidateId);
@@ -201,29 +175,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         cdt.getCursus().add(cur);
         cur.setProfessionalCursus(cdt);
     }
-
-    @Override
-    public Long createExperience(Experience experience) {
-        em.persist(experience);
-        return experience.getId();
-    }
-
-    @Override
-    public void deleteExperience(Long experienceId) {
-        Experience act = em.find(Experience.class, experienceId);
-        em.remove(getEntityManager().merge(act));
-    }
-
-    @Override
-    public Long updateExperience(Experience experience) {
-        getEntityManager().merge(experience);
-        return experience.getId();
-    }
-
-    @Override
-    public Experience findExperience(Long experienceId) {
-        return em.find(Experience.class, experienceId);
-    }
+*/
 
     @Override
     public String recommend(Long candidateId) {
@@ -300,7 +252,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return contacts;
          */
     }
-
+/*
     @Override
     public Experience getCandidateExperience(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
@@ -316,7 +268,15 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         }
 
     }
+*/
 
+    @Override
+    public String subscribe(Long companyId, Long candidateId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+/*
     @Override
     public Cursus getCandidateCursus(Long cdtId) {
          Candidate cdt = em.find(Candidate.class, cdtId);
@@ -345,5 +305,5 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             return "Already Friends";
         }
     }
-
+*/
 }
