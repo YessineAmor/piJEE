@@ -223,7 +223,7 @@ public class SignUpBean implements Serializable {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation</br>Login");
             FacesContext.getCurrentInstance().addMessage("Successful", msg);
             candidateFacade.createCandidate(candidate);
-            goTo = "/views/back/signUp/signUp?faces-redirect";
+            goTo = "signUp?faces-redirect";
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "Code Error");
             FacesContext.getCurrentInstance().addMessage("ERROR", msg);
