@@ -5,6 +5,7 @@ import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -116,6 +117,15 @@ public class QuizController implements Serializable {
 
     public List<Quiz> getItemsAvailableSelectMany() {
         return getFacade().findAll();
+    }
+
+    public List<String> getQuizNames() {
+        List<Quiz> q = getFacade().findAll();
+        List<String> namesList = new ArrayList<>();
+        for (Quiz qu : q) {
+            namesList.add(qu.getName());
+        }
+        return namesList;
     }
 
     public List<Quiz> getItemsAvailableSelectOne() {

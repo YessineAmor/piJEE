@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.managedbeans.util;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuestionType;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
  *
@@ -26,6 +27,10 @@ public class Enums implements Serializable {
 
     public QuestionType[] getQuestionTypes() {
         return QuestionType.values();
+    }
+
+    public Skill[] getSkills() {
+        return Skill.values();
     }
 
 }

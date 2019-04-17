@@ -51,6 +51,12 @@
                             </f:facet>
                             <h:outputText value="#{item.questionType}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Quiz"/>
+                            </f:facet>
+                            <h:outputText value="#{item.quiz.name}"/>
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{questionController.prepareCreate}" update=":QuestionCreateForm" oncomplete="PF('QuestionCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuestionViewForm" oncomplete="PF('QuestionViewDialog').show()" disabled="#{empty questionController.selected}"/>
