@@ -7,7 +7,6 @@ package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
 import javax.ejb.Local;
-import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
