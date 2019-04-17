@@ -44,7 +44,7 @@
                         <div class="form">
                             <ul class="tab-group">
                                 <li class="tab active">
-                                    <a href="#new">Register</a>
+                                    <a href="#new" >Register As Candidate</a>
                                 </li>
                                 <li class="tab">
                                     <a href="#old">Login</a>
@@ -86,8 +86,8 @@
                                         <p:messages showDetail="true"/>
                                         <p:captcha label="Captcha" />
                                         <br />
-                                        <p:commandButton type="submit" value="S'incrire"
-                                                         action="#{signUpBean.submit}" ajax="false" icon="pi pi-check"
+                                        <p:commandButton type="submit" value="Subscribe"
+                                                         action="#{signUpBean.SignUpAsCandidate()}" ajax="false" icon="pi pi-check"
                                                          update=":regForm"
                                                          class="btn btn-primary btn-block" />
                                     </h:form>
@@ -153,7 +153,7 @@
                         $(this).parent().addClass('active');
                         $(this).parent().siblings().removeClass('active');
 
-                        target = $(this).attr('href');
+                        var target = $(this).attr('href');
 
                         $('.tab-content > div').not(target).hide();
 
