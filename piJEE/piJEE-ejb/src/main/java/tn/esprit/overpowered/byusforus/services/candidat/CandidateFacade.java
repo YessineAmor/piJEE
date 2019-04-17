@@ -337,7 +337,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public String subscribe(Long companyId, Long candidateId) {
          Candidate currentCdt = em.find(Candidate.class, candidateId);
         CompanyProfile comp = em.find(CompanyProfile.class, companyId);
-        if (!currentCdt.getContacts().contains(comp)) {
+        if (!currentCdt.getSubscribedCompanies().contains(comp)) {
             currentCdt.getSubscribedCompanies().add(comp);
             comp.getSubscribers().add(currentCdt);
             return "Contact Added";
