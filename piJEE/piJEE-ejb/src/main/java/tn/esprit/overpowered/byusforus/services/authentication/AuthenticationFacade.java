@@ -80,7 +80,8 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
                                 return towFactorAuth.getUid();
 
             } catch (MessagingException ex) {
-                Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getAnonymousLogger().info("Erreur");
+                //Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
                 
             }
             
