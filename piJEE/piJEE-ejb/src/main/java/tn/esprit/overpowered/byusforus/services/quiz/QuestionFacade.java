@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.services.quiz;
 
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +29,13 @@ public class QuestionFacade extends AbstractFacade<Question> implements Question
 
     public QuestionFacade() {
         super(Question.class);
+    }
+
+    @Override
+    public ArrayList<Question> findByQuizId(Integer id) {
+        ArrayList<Question> qlist;
+        return qlist = new ArrayList<>(em.createQuery("select q from Question q where q.quiz.id = :quizid").setParameter("quizid", id)
+                .getResultList());
     }
 
 }

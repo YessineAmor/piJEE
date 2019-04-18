@@ -128,6 +128,15 @@ public class QuizController implements Serializable {
         return namesList;
     }
 
+    public Quiz getFirstQuiz() {
+        return getFacade().findAll().get(0);
+    }
+
+    public String redirectToTakeQuiz(Quiz quiz) {
+        this.selected = quiz;
+        return "/views/front/quiz/take_quiz?faces-redirect=true";
+    }
+
     public List<Quiz> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
