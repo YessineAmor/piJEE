@@ -33,11 +33,11 @@ import tn.esprit.overpowered.byusforus.entities.posting.Post;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "USER_TYPE")
 @DiscriminatorValue(value = "USER")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @OneToMany
     Set<Post> posts;
-    
+
     @OneToMany
     Set<Comment> comments;
 
@@ -64,40 +64,40 @@ public class User implements Serializable{
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
     }
-    
+
     @OneToMany
     Set<Message> messages;
-    
-    
+
     private static final long serialVersionUID = 34L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique=true)
-     @Pattern(regexp="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+"
-             + "(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\""
-             + "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-             + "\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b"
-             + "\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)"
-             + "+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|"
-             + "[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|"
-             + "[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-"
-             + "\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
-             message="{invalid.email}")
+    @Column(unique = true)
+    @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+"
+            + "(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\""
+            + "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+            + "\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b"
+            + "\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)"
+            + "+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|"
+            + "[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|"
+            + "[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-"
+            + "\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
+            message = "{invalid.email}")
     private String email;
-    
-    @Column(unique=true)
+
+    @Column(unique = true)
     private String username;
-    
+
     private String firstName;
-    
+
     private String lastName;
 
     //Getting the discriminator value from the database;
     @Transient
-public String getDiscriminatorValue() {
-    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
-}
+    public String getDiscriminatorValue() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
+
     public String getEmail() {
         return email;
     }
@@ -129,8 +129,7 @@ public String getDiscriminatorValue() {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -160,12 +159,22 @@ public String getDiscriminatorValue() {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         this.password = digest.digest(hashBytes);
     }
-    
-    @Column(columnDefinition="BINARY(32) NOT NULL")
-    private byte[] salt;
-    
-    @Column(columnDefinition="BINARY(32) NOT NULL")
-    private byte[] password;
-    
 
+    @Column(columnDefinition = "BINARY(32) NOT NULL")
+    private byte[] salt;
+
+    @Column(columnDefinition = "BINARY(32) NOT NULL")
+    private byte[] password;
+
+    public User( String username, String email, String firstName, String lastName, byte[] password) {
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+    }
+
+    public User() {
+    }
+ 
 }

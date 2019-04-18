@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.services.authentication;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -55,14 +56,33 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
     }
     @Override
     public String login(String username, String password) throws NoSuchAlgorithmException {
+        Logger.getAnonymousLogger().info("given password " + password + "Username "+ username);
         byte[] pwd = password.getBytes(StandardCharsets.UTF_8);
         User user = new UserFacade().getUserByUsername(em, username);
+        
         if (user == null)
             return null;
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hashBytes = new byte[pwd.length + user.getSalt().length];
         System.arraycopy(pwd, 0, hashBytes, 0, pwd.length);
         System.arraycopy(user.getSalt(), 0, hashBytes, pwd.length, user.getSalt().length);
+        Logger.getAnonymousLogger().info("*PASS*****" +user.getPassword());
+         ArrayList<Byte> a;
+        a = new ArrayList<>();
+        for (byte b : user.getPassword())
+            a.add(b);
+        a.add((byte)101);
+        a.add((byte)101);
+        for (byte b: digest.digest(hashBytes) )
+            a.add(b);
+        a.add((byte)101);
+                a.add((byte)101);
+
+        String s = new String();
+        for (byte b: a)
+            s += b;
+        
+         Logger.getAnonymousLogger().info("tow byte arr " + s);
         if (Arrays.equals(user.getPassword(), digest.digest(hashBytes))) {
             // Create new 2FA token + random token for identification
             String uid = UUID.randomUUID().toString();
@@ -80,7 +100,8 @@ public class AuthenticationFacade implements AuthenticationFacadeRemote {
                                 return towFactorAuth.getUid();
 
             } catch (MessagingException ex) {
-                Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getAnonymousLogger().info("Erreur");
+                //Logger.getLogger(AuthenticationFacade.class.getName()).log(Level.SEVERE, null, ex);
                 
             }
             
