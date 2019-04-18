@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
@@ -91,8 +90,8 @@ public class EmployeeFacade extends AbstractFacade<Employee> implements Employee
     public List<Employee> searchEmployeeByPosition(String position) {
                 List<Employee> employees = this.findAll();
         for (Employee emp : employees) {
-            for (Experience exp : emp.getExperiences()) {
-                if (exp.getPosition().equals(position)) {
+            for (String exp : emp.getExperiences()) {
+                if (exp.contains(position)) {
                     employees.add(emp);
                 }
             }
