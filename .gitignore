@@ -1,3 +1,4 @@
-/piJEE-ejb/target/
-/piJEE-web/target/
-/piJEE-ear/target/
+/piJEE/piJEE-ejb/target/
+/piJEE/piJEE-web/target/
+/piJEE/piJEE-ear/target/
+*.xls
