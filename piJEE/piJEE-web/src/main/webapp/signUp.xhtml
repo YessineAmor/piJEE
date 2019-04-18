@@ -17,15 +17,15 @@
             <link rel="stylesheet" href="http://fonts.googleapis.com/css"/>
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
-        <h:body style="background : url('backgroud.jpg');">
+        <h:body style="background : url('backgroud.jpg');" id="myBody">
             <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand" href="#"> <img
                         src="745c75d504f336a83a10e6dcf8db44fa.jpg" width="30" height="30"
                         class="d-inline-block align-top" alt="" /> ByUsForUs </a>
                 <h:form class="form-inline" >
                     <p:growl id="message" showDetail="true" />
-                    <input class="input" type="text" /> <p:password class="input"
-                                                                    style="margin-left : 10px; margin-right: 10px" /> 
+                    <p:inputText class="input" value="#{signUpBean.login}" required="true"/> <p:password class="input"
+                                                value="#{signUpBean.pass}" style="margin-left : 10px; margin-right: 10px" /> 
                     <p:commandButton action="#{signUpBean.doLogin()}"
                                      onclick="PF('dlg3').show();"
                         value="Login" class="btn btn-success" />
@@ -47,7 +47,7 @@
                                     <a href="#new" >Register As Candidate</a>
                                 </li>
                                 <li class="tab">
-                                    <a href="#old">Login</a>
+                                    <a href="#old">Register As Comp Staff</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
