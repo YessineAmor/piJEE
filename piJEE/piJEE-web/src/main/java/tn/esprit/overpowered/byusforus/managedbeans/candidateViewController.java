@@ -33,6 +33,11 @@ public class candidateViewController implements Serializable {
         return cdtFacade.afficherCandidats();
     }
     
+    public void recommend()
+    {
+        cdtFacade.recommend(cdt.getId());
+    }
+    
     public Candidate getCdt() {
         return cdt;
     }

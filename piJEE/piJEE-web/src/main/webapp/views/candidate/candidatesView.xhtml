@@ -36,14 +36,14 @@
         <p:dataViewGridItem>
             <p:panel header="#{cdt.id}" style="text-align:center">
                 <h:panelGrid columns="1" style="width:100%">
-                    <p:graphicImage name="demo/images/cdt/#{cdt.brand}.gif"/> 
+                    <p:graphicImage value="resources/img/b1.jpg"/> 
  
                     <h:outputText value="#{cdt.brand}" />
  
-                    <p:commandLink update=":form:cdtDetail" oncomplete="PF('cdtDialog').show()" title="View Detail">
+                    <p:commandButton action="/views/candidate/ProfileDetails?faces-redirect=true">
                         <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
                         <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                    </p:commandLink>
+                    </p:commandButton>
                 </h:panelGrid>
             </p:panel>
         </p:dataViewGridItem>
@@ -65,36 +65,13 @@
                     </h:panelGrid>
                 </p:outputPanel>
  
-                <p:commandButton value="Details" type="button" onclick="PF('cdtDialog').show();" >
+                <p:commandButton value="Details" action="/views/candidate/ProfileDetails?faces-redirect=true" >
                     <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
                 </p:commandButton>>
             </h:panelGrid>
         </p:dataViewListItem>
     </p:dataView>
- 
-    <p:dialog header="cdt Info" widgetVar="cdtDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="cdtDetail" style="text-align:center;">
-            <p:panelGrid  columns="2" rendered="#{not empty candidateViewController.cdt}" columnClasses="label,value">
-                <f:facet name="header">
-                    <p:graphicImage name="/resources/img/elon.png"/> 
-                </f:facet>
- 
-                <h:outputText value="Id:" />
-                <h:outputText value="#{candidateViewController.cdt.firstName}" />
- 
-                <h:outputText value="Year" />
-                <h:outputText value="#{candidateViewController.cdt.lastName}" />
- 
-                <h:outputText value="Color:" />
-                <h:outputText value="#{candidateViewController.cdt.email}"/>
- 
-                <h:outputText value="Price" />
-                <h:outputText value="$#{candidateViewController.cdt.recommendations}" />
-                
-            </p:panelGrid>
-        </p:outputPanel>
-    </p:dialog>
 </h:form>
     </ui:define>
 

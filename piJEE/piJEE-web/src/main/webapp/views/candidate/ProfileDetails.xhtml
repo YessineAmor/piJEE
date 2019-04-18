@@ -10,6 +10,24 @@
     <ui:define name="title"><title>Home</title></ui:define>
 
     <ui:define name="content">
-
+<p:panelGrid columns="2">
+    <f:facet name="header">
+        <p:graphicImage name="demo/images/misc/kobe.png" />
+    </f:facet>
+     
+    <h:outputText value="Name" />
+    <h:outputText value="#{candidateViewController.cdt.firstName}" />
+     
+    <h:outputText value="Last name" />
+    <h:outputText value="#{candidateViewController.cdt.lastName}" />
+     
+    <h:outputText value="Email" />
+    <h:outputText value="#{candidateViewController.cdt.email}" />
+     
+    <h:outputText value="Recommendations" />
+    <h:outputText value="#{candidateViewController.cdt.recommendations}" />
+    <h:commandButton value="Recommend" onclick="setTimeout('this.disabled = true;', 50);" />
+    <p:commandButton value="Send friend request" onclick="setTimeout('this.disabled = true;', 50);" />
+</p:panelGrid>
     </ui:define>
 </ui:composition>
