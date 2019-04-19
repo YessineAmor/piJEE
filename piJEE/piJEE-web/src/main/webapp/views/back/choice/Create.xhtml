@@ -12,14 +12,18 @@
             <h:form id="ChoiceCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{choiceController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateChoiceLabel_idChoice}" for="idChoice" />
-                        <p:inputText id="idChoice" value="#{choiceController.selected.idChoice}" title="#{bundle.CreateChoiceTitle_idChoice}" />
                         <p:outputLabel value="#{bundle.CreateChoiceLabel_choiceText}" for="choiceText" />
                         <p:inputText id="choiceText" value="#{choiceController.selected.choiceText}" title="#{bundle.CreateChoiceTitle_choiceText}" />
                         <p:outputLabel value="#{bundle.CreateChoiceLabel_isCorrectChoice}" for="isCorrectChoice" />
                         <p:selectBooleanCheckbox id="isCorrectChoice" value="#{choiceController.selected.isCorrectChoice}" />
                         <p:outputLabel value="#{bundle.CreateChoiceLabel_choicePoints}" for="choicePoints" />
                         <p:inputText id="choicePoints" value="#{choiceController.selected.choicePoints}" title="#{bundle.CreateChoiceTitle_choicePoints}" />
+                        <p:outputLabel value="Question" for="question" />
+                        <p:selectOneMenu id="question" value="#{choiceController.selected.question}" >
+                            <f:selectItems value="#{questionController.itemsAvailableSelectOne}"
+                                           var="questionItem"
+                                           itemValue="#{questionItem}" itemLabel="#{questionItem.questionText}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{choiceController.create}" value="#{bundle.Save}" update="display,:ChoiceListForm:datalist,:growl" oncomplete="handleSubmit(args,'ChoiceCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ChoiceCreateDialog.hide()"/>

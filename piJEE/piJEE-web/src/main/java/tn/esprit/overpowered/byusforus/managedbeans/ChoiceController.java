@@ -5,14 +5,13 @@ import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,6 +22,8 @@ import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
 @ManagedBean
 @javax.faces.bean.SessionScoped
 public class ChoiceController implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @EJB
     private ChoiceFacadeLocal ejbFacade;
@@ -54,6 +55,10 @@ public class ChoiceController implements Serializable {
         selected = new Choice();
         initializeEmbeddableKey();
         return selected;
+    }
+
+    public ArrayList<Choice> getChoicesByQuestionId(Long id) {
+        return ejbFacade.getByQuestionId(id);
     }
 
     public void create() {

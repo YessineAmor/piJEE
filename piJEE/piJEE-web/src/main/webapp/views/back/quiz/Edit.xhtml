@@ -12,8 +12,6 @@
             <h:form id="QuizEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{quizController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditQuizLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{quizController.selected.id}" title="#{bundle.EditQuizTitle_id}" />
                         <p:outputLabel value="#{bundle.EditQuizLabel_name}" for="name" />
                         <p:inputText id="name" value="#{quizController.selected.name}" title="#{bundle.EditQuizTitle_name}" />
                         <p:outputLabel value="#{bundle.EditQuizLabel_details}" for="details" />
@@ -27,7 +25,7 @@
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{jobOfferController.itemsAvailableSelectOne}"
                                            var="jobOfferItem"
-                                           itemValue="#{jobOfferItem}"/>
+                                           itemValue="#{jobOfferItem}" itemLabel="#{jobOfferItem.title}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{quizController.update}" value="#{bundle.Save}" update="display,:QuizListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuizEditDialog');"/>

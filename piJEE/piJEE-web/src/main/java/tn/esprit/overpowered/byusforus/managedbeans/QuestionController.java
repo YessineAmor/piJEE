@@ -5,6 +5,7 @@ import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -80,6 +81,10 @@ public class QuestionController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public ArrayList<Question> getQuestionsByQuizId(Integer id) {
+        return ejbFacade.findByQuizId(id);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.services.quiz;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 import tn.esprit.overpowered.byusforus.entities.quiz.Question;
@@ -29,5 +30,7 @@ public interface QuestionFacadeLocal {
     List<Question> findRange(int[] range);
 
     int count();
+    
+    ArrayList<Question> findByQuizId(Integer id);
     
 }
