@@ -97,7 +97,9 @@ public abstract class Professional extends User {
     public Professional(String username, String email, String firstName, String lastName, byte[] password) {
         super(username, email, firstName, lastName, password);
     }
-    
+       public Professional(String username, String email, String firstName, String lastName) {
+        super(username, email, firstName, lastName);
+    }
     public int getRecommendations() {
         return recommendations;
     }

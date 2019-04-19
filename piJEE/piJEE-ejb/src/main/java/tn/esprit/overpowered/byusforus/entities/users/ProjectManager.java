@@ -36,6 +36,10 @@ public class ProjectManager extends Employee implements Serializable {
         super(username, email, firstName, lastName, password);
     }
 
+    public ProjectManager(String username, String email, String firstName, String lastName) {
+        super(username, email, firstName, lastName);
+    }
+
     public CompanyProfile getCompanyProfile() {
         return companyProfile;
     }
@@ -51,8 +55,6 @@ public class ProjectManager extends Employee implements Serializable {
     public void setManagerOffers(Set<JobOffer> managerOffers) {
         this.managerOffers = managerOffers;
     }
-    
-    
 
     @Override
     public Set<Skill> getSkills() {

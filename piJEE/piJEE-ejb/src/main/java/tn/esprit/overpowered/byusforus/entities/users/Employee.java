@@ -44,7 +44,7 @@ public class Employee extends Professional implements Serializable {
 
     @OneToMany(mappedBy = "manager")
     private Set<Employee> subordinates = new HashSet<Employee>();
-    
+
     @Override
     public Set<Skill> getSkills() {
         return skills;
@@ -84,7 +84,8 @@ public class Employee extends Professional implements Serializable {
         super(username, email, firstName, lastName, password);
     }
 
-
-
+    public Employee(String username, String email, String firstName, String lastName) {
+        super(username, email, firstName, lastName);
+    }
 
 }
