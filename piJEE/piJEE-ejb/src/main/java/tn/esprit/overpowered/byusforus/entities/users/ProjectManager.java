@@ -40,6 +40,9 @@ public class ProjectManager extends Employee implements Serializable {
         super(username, email, firstName, lastName);
     }
 
+    public ProjectManager() {
+    }
+
     public CompanyProfile getCompanyProfile() {
         return companyProfile;
     }

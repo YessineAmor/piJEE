@@ -27,6 +27,9 @@ public class CompanyAdmin extends Employee implements Serializable {
     @JoinColumn(name = "FK_COMP_ADMIN_ID")
     private CompanyProfile companyProfile;
 
+    public CompanyAdmin() {
+    }
+
     public CompanyAdmin(String username, String email, String firstName, String lastName, byte[] password) {
         super(username, email, firstName, lastName, password);
     }

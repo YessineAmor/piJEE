@@ -44,6 +44,9 @@ public class HRManager extends Employee implements Serializable {
         super(username, email, firstName, lastName);
     }
 
+    public HRManager() {
+    }
+
     public CompanyProfile getCompanyProfile() {
         return companyProfile;
     }

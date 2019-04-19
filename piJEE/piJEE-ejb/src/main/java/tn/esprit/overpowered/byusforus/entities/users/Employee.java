@@ -88,4 +88,7 @@ public class Employee extends Professional implements Serializable {
         super(username, email, firstName, lastName);
     }
 
+    public Employee() {
+    }
+
 }
