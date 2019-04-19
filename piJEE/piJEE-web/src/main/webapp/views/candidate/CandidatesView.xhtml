@@ -68,6 +68,7 @@
                 <p:commandButton value="Details" action="/views/candidate/ProfileDetails?faces-redirect=true" >
                     <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
                 </p:commandButton>>
             </h:panelGrid>
         </p:dataViewListItem>

@@ -19,7 +19,7 @@ import tn.esprit.overpowered.byusforus.services.users.CompanyProfileFacadeLocal;
  */
 @ManagedBean
 @SessionScoped
-public class companyViewController implements Serializable {
+public class CompanyViewController implements Serializable {
     private CompanyProfile selectedCompany;
     
     @EJB
