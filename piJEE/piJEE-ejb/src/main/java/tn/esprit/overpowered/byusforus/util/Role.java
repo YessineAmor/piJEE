@@ -12,5 +12,6 @@ package tn.esprit.overpowered.byusforus.util;
 public enum Role {
 ADMIN,
 HR,
-MANAGER
+MANAGER,
+EMPLOYEE
 }
