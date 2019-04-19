@@ -29,6 +29,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>signUp.xhtml</welcome-file>
+        <welcome-file>/views/candidate/CandidatesView.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

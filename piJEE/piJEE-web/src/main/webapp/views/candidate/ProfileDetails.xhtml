@@ -26,7 +26,11 @@
      
     <h:outputText value="Recommendations" />
     <h:outputText value="#{candidateViewController.cdt.recommendations}" />
-    <h:commandButton value="Recommend" onclick="setTimeout('this.disabled = true;', 50);" />
+    
+    <h:outputText value="Visits" />
+    <h:outputText value="#{candidateViewController.cdt.visits}" />
+    
+    <h:commandButton value="Recommend" action="#{candidateViewController.recommendCandidate()}"/>
     <p:commandButton value="Send friend request" onclick="setTimeout('this.disabled = true;', 50);" />
 </p:panelGrid>
     </ui:define>

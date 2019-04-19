@@ -19,7 +19,7 @@ import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
  */
 @ManagedBean
 @SessionScoped
-public class candidateViewController implements Serializable {
+public class CandidateViewController implements Serializable {
     private Candidate cdt ;
     private String lastName;
     private String email;
@@ -31,6 +31,17 @@ public class candidateViewController implements Serializable {
     public List<Candidate> getCandidates()
     {
         return cdtFacade.afficherCandidats();
+        
+    }
+    
+    public void recommendCandidate()
+    {
+        cdtFacade.recommend(cdt.getId());
+    }
+    
+    public void incrementVisits()
+    {
+        cdtFacade.incrementVisits(cdt.getId());
     }
     
     public void recommend()

@@ -29,7 +29,7 @@
 </style>
  
 <h:form id="form">
-    <p:dataView var="cdt" value="#{candidateViewController.candidates}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+    <p:dataView var="cdt" value="#{CandidateViewController.candidates}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                 gridIcon="pi pi-th-large" listIcon="pi pi-bars">
  
@@ -42,7 +42,7 @@
  
                     <p:commandButton action="/views/candidate/ProfileDetails?faces-redirect=true">
                         <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                        <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                        <f:setPropertyActionListener value="#{cdt}" target="#{CandidateViewController.cdt}" />
                     </p:commandButton>
                 </h:panelGrid>
             </p:panel>
@@ -67,7 +67,8 @@
  
                 <p:commandButton value="Details" action="/views/candidate/ProfileDetails?faces-redirect=true" >
                     <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                    <f:setPropertyActionListener value="#{cdt}" target="#{CandidateViewController.cdt}" />
+                    <f:actionListener binding="#{CandidateViewController.incrementVisits()}" />
                 </p:commandButton>>
             </h:panelGrid>
         </p:dataViewListItem>
