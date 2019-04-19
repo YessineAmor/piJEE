@@ -94,6 +94,10 @@ public abstract class Professional extends User {
         this.recommendedIdList = new ArrayList<>();
     }
 
+    public Professional(String username, String email, String firstName, String lastName, byte[] password) {
+        super(username, email, firstName, lastName, password);
+    }
+    
     public int getRecommendations() {
         return recommendations;
     }
@@ -189,4 +193,6 @@ public abstract class Professional extends User {
     public void setRecommendedIdList(List<Long> recommendedIdList) {
         this.recommendedIdList = recommendedIdList;
     }
+    
+    
 }

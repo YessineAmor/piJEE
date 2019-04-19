@@ -80,5 +80,11 @@ public class Employee extends Professional implements Serializable {
         this.subordinates = subordinates;
     }
 
+    public Employee(String username, String email, String firstName, String lastName, byte[] password) {
+        super(username, email, firstName, lastName, password);
+    }
+
+
+
 
 }
