@@ -8,6 +8,14 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
     </application>
-
+    <managed-bean>
+        <managed-bean-name>enums</managed-bean-name>
+        <managed-bean-class>tn.esprit.overpowered.byusforus.managedbeans.util.Enums</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
 </faces-config>

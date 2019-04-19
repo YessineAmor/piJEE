@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author EliteBook
  */
 @Stateless
-public class LicenceFacade extends AbstractFacade<Licence> implements LicenceFacadeRemote {
+public class LicenceFacade extends AbstractFacade<Licence> implements LicenceFacadeRemote,LicenceFacadeLocal {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;

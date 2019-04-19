@@ -12,14 +12,22 @@
             <h:form id="QuestionCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questionController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateQuestionLabel_idQuestion}" for="idQuestion" />
-                        <p:inputText id="idQuestion" value="#{questionController.selected.idQuestion}" title="#{bundle.CreateQuestionTitle_idQuestion}" />
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_questionText}" for="questionText" />
                         <p:inputText id="questionText" value="#{questionController.selected.questionText}" title="#{bundle.CreateQuestionTitle_questionText}" />
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_questionPoints}" for="questionPoints" />
                         <p:inputText id="questionPoints" value="#{questionController.selected.questionPoints}" title="#{bundle.CreateQuestionTitle_questionPoints}" />
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_questionType}" for="questionType" />
-                        <p:inputText id="questionType" value="#{questionController.selected.questionType}" title="#{bundle.CreateQuestionTitle_questionType}" />
+                        <h:selectOneMenu
+                            value="#{questionController.selected.questionType}">
+                            <f:selectItem id="questionType" itemLabel="#{bundle.CreateQuestionTitle_questionType}" itemValue="" />
+                            <f:selectItems value="#{enums.questionTypes}" />
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Quiz" for="quiz" />
+                        <p:selectOneMenu id="quiz" value="#{questionController.selected.quiz}" >
+                            <f:selectItems value="#{quizController.itemsAvailableSelectOne}"
+                                           var="quizItem"
+                                           itemValue="#{quizItem}" itemLabel="#{quizItem.name}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{questionController.create}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestionCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="QuestionCreateDialog.hide()"/>

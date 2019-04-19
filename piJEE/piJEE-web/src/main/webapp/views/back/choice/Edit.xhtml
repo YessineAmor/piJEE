@@ -12,9 +12,6 @@
             <h:form id="ChoiceEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{choiceController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditChoiceLabel_idChoice}" for="idChoice" />
-                        <p:inputText id="idChoice" value="#{choiceController.selected.idChoice}" title="#{bundle.EditChoiceTitle_idChoice}" />
-                        <p:outputLabel value="#{bundle.EditChoiceLabel_choiceText}" for="choiceText" />
                         <p:inputText id="choiceText" value="#{choiceController.selected.choiceText}" title="#{bundle.EditChoiceTitle_choiceText}" />
                         <p:outputLabel value="#{bundle.EditChoiceLabel_isCorrectChoice}" for="isCorrectChoice" />
                         <p:selectBooleanCheckbox id="isCorrectChoice" value="#{choiceController.selected.isCorrectChoice}" />

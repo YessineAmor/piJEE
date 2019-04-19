@@ -5,6 +5,7 @@
  */
 package tn.esprit.overpowered.byusforus.services.quiz;
 
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +17,7 @@ import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
  * @author Yassine
  */
 @Stateless
-public class QuestionFacade extends AbstractFacade<Question> implements QuestionFacadeLocal,QuestionFacadeRemote {
+public class QuestionFacade extends AbstractFacade<Question> implements QuestionFacadeLocal, QuestionFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -29,5 +30,12 @@ public class QuestionFacade extends AbstractFacade<Question> implements Question
     public QuestionFacade() {
         super(Question.class);
     }
-    
+
+    @Override
+    public ArrayList<Question> findByQuizId(Integer id) {
+        ArrayList<Question> qlist;
+        return qlist = new ArrayList<>(em.createQuery("select q from Question q where q.quiz.id = :quizid").setParameter("quizid", id)
+                .getResultList());
+    }
+
 }

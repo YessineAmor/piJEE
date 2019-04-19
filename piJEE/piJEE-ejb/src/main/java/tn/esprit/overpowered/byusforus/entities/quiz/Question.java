@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -31,13 +32,15 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQuestion;
     private String questionText;
-    private int questionPoints;
+    private float questionPoints;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "QuestionChoices", joinColumns = @JoinColumn(name = "idChoice"),
             inverseJoinColumns = @JoinColumn(name = "idQuestion"))
     private List<Choice> choices;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Quiz quiz;
 
     public Question() {
     }
@@ -57,12 +60,28 @@ public class Question implements Serializable {
         this.idQuestion = idQuestion;
     }
 
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
     public String getQuestionText() {
         return questionText;
     }
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    public float getQuestionPoints() {
+        return questionPoints;
+    }
+
+    public void setQuestionPoints(float questionPoints) {
+        this.questionPoints = questionPoints;
     }
 
     public QuestionType getQuestionType() {
@@ -79,14 +98,6 @@ public class Question implements Serializable {
 
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
-    }
-
-    public int getQuestionPoints() {
-        return questionPoints;
-    }
-
-    public void setQuestionPoints(int questionPoints) {
-        this.questionPoints = questionPoints;
     }
 
     @Override

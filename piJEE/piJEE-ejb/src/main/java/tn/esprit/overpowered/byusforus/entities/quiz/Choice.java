@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -25,6 +26,16 @@ public class Choice implements Serializable {
     private String choiceText;
     private Boolean isCorrectChoice;
     private float choicePoints;
+    @ManyToOne
+    private Question question;
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
     public Choice() {
         this.isCorrectChoice = false;
