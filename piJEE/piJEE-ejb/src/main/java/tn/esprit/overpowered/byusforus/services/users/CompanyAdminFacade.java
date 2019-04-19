@@ -187,4 +187,16 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
         return jobOffers;
     }
 
+    @Override
+    public CompanyProfile checkCompanyExistence(String compName) {
+         CompanyProfile company= null;
+         try {
+            company = em.createQuery("SELECT C FROM CompanyProfile C where C.name= :name",CompanyProfile.class)
+                    .setParameter("name",compName)
+                    .getSingleResult();
+        } catch (Exception e) {
+        }
+         return company;
+    }
+
 }

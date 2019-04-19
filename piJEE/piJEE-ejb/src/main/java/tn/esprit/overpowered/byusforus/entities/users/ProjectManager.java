@@ -32,6 +32,10 @@ public class ProjectManager extends Employee implements Serializable {
     @OneToMany(mappedBy = "pManager", cascade = {PERSIST, MERGE})
     private Set<JobOffer> managerOffers;
 
+    public ProjectManager(String username, String email, String firstName, String lastName, byte[] password) {
+        super(username, email, firstName, lastName, password);
+    }
+
     public CompanyProfile getCompanyProfile() {
         return companyProfile;
     }
