@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReclamationCreateDlg" widgetVar="ReclamationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateReclamationTitle}">
+            <h:form id="ReclamationCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{reclamationController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_idReclamation}" for="idReclamation" />
+                        <p:inputText id="idReclamation" value="#{reclamationController.selected.idReclamation}" title="#{bundle.CreateReclamationTitle_idReclamation}" />
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_type}" for="type" />
+                        <p:inputText id="type" value="#{reclamationController.selected.type}" title="#{bundle.CreateReclamationTitle_type}" />
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{reclamationController.selected.description}" title="#{bundle.CreateReclamationTitle_description}" />
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_etat}" for="etat" />
+                        <p:inputText id="etat" value="#{reclamationController.selected.etat}" title="#{bundle.CreateReclamationTitle_etat}" />
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_fichier_a_joindre}" for="fichier_a_joindre" />
+                        <p:inputText id="fichier_a_joindre" value="#{reclamationController.selected.fichier_a_joindre}" title="#{bundle.CreateReclamationTitle_fichier_a_joindre}" />
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_dateReclamation}" for="dateReclamation" />
+                        <p:calendar id="dateReclamation" pattern="MM/dd/yyyy HH:mm:ss" value="#{reclamationController.selected.dateReclamation}" title="#{bundle.EditReclamationTitle_dateReclamation}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateReclamationLabel_user}" for="user" />
+                        <p:selectOneMenu id="user" value="#{reclamationController.selected.user}" >
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="userItem"
+                                           itemValue="#{userItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{reclamationController.create}" value="#{bundle.Save}" update="display,:ReclamationListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReclamationCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ReclamationCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

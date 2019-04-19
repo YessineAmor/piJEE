@@ -65,14 +65,6 @@ public class Question implements Serializable {
         this.questionText = questionText;
     }
 
-    public float getQuestionPoints() {
-        return questionPoints;
-    }
-
-    public void setQuestionPoints(int questionPoints) {
-        this.questionPoints = questionPoints;
-    }
-
     public QuestionType getQuestionType() {
         return questionType;
     }
@@ -88,7 +80,15 @@ public class Question implements Serializable {
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
     }
-    
+
+    public int getQuestionPoints() {
+        return questionPoints;
+    }
+
+    public void setQuestionPoints(int questionPoints) {
+        this.questionPoints = questionPoints;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

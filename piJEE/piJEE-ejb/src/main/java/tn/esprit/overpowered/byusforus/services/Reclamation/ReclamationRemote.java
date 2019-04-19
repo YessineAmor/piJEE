@@ -30,6 +30,6 @@ public interface ReclamationRemote
 	public int CalculNombreTotalReclamation();
 	public List<Reclamation> FindByEtat(EtatReclamation etat);
 	public Reclamation FindById(int id);
-	public int DeleteReclamation();
+        public int DeleteReclamation1(Reclamation r);
 	public int CalculNombreReclamationAsupprimer();
 }

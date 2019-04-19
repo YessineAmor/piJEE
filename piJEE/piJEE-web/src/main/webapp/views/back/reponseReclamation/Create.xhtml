@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReponseReclamationCreateDlg" widgetVar="ReponseReclamationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateReponseReclamationTitle}">
+            <h:form id="ReponseReclamationCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{reponseReclamationController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateReponseReclamationLabel_idReponse}" for="idReponse" />
+                        <p:inputText id="idReponse" value="#{reponseReclamationController.selected.idReponse}" title="#{bundle.CreateReponseReclamationTitle_idReponse}" />
+                        <p:outputLabel value="#{bundle.CreateReponseReclamationLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{reponseReclamationController.selected.description}" title="#{bundle.CreateReponseReclamationTitle_description}" />
+                        <p:outputLabel value="#{bundle.CreateReponseReclamationLabel_dateReponse}" for="dateReponse" />
+                        <p:calendar id="dateReponse" pattern="MM/dd/yyyy HH:mm:ss" value="#{reponseReclamationController.selected.dateReponse}" title="#{bundle.EditReponseReclamationTitle_dateReponse}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateReponseReclamationLabel_reclamation}" for="reclamation" />
+                        <p:selectOneMenu id="reclamation" value="#{reponseReclamationController.selected.reclamation}" >
+                            <f:selectItems value="#{reclamationController.itemsAvailableSelectOne}"
+                                           var="reclamationItem"
+                                           itemValue="#{reclamationItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{reponseReclamationController.create}" value="#{bundle.Save}" update="display,:ReponseReclamationListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReponseReclamationCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ReponseReclamationCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

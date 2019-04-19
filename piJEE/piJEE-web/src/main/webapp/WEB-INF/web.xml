@@ -21,4 +21,9 @@
     <welcome-file-list>
         <welcome-file>template.xhtml</welcome-file>
     </welcome-file-list>
+    <ejb-local-ref>
+        <ejb-ref-name>ReclamationService</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>tn.esprit.overpowered.byusforus.services.Reclamation.ReclamationLocal</local>
+    </ejb-local-ref>
 </web-app>

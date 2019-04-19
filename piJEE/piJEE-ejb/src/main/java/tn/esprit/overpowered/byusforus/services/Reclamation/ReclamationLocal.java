@@ -16,22 +16,33 @@ import tn.esprit.overpowered.byusforus.entities.reclamation.EtatReclamation;
 import tn.esprit.overpowered.byusforus.entities.reclamation.Reclamation;
 import tn.esprit.overpowered.byusforus.entities.reclamation.TypeReclamation;
 
-
 @Local
-public interface ReclamationLocal {	
-	
-	public int addReclamation(Reclamation r);
-	public List<Reclamation> All();
-	public List<Reclamation> FindByType(TypeReclamation type);
-	public int EditEtat(int idReclamation, EtatReclamation etat);
-	public Reclamation FindByNomOuPrenomUser(String nom,String prenom);
-	public Reclamation FindByUsername(String UserName);
-	public int CalculNombreTotalReclamationSelonType(TypeReclamation type);
-	public int CalculNombreTotalReclamationSelonEtat(EtatReclamation etat);
-	public int CalculNombreTotalReclamation();
-	public List<Reclamation> FindByEtat(EtatReclamation etat);
-	public Reclamation FindById(int id);
-	public int DeleteReclamation();
-	public int CalculNombreReclamationAsupprimer();
+public interface ReclamationLocal {
+
+    public int addReclamation(Reclamation r);
+
+    public List<Reclamation> All();
+
+    public List<Reclamation> FindByType(TypeReclamation type);
+
+    public int EditEtat(int idReclamation, EtatReclamation etat);
+
+    public Reclamation FindByNomOuPrenomUser(String nom, String prenom);
+
+    public Reclamation FindByUsername(String UserName);
+
+    public int CalculNombreTotalReclamationSelonType(TypeReclamation type);
+
+    public int CalculNombreTotalReclamationSelonEtat(EtatReclamation etat);
+
+    public int CalculNombreTotalReclamation();
+
+    public List<Reclamation> FindByEtat(EtatReclamation etat);
+
+    public Reclamation FindById(int id);
+
+    public int DeleteReclamation1(Reclamation r);
+
+    public int CalculNombreReclamationAsupprimer();
 
 }

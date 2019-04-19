@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package tn.esprit.overpowered.byusforus.services.Reclamation;
-import java.util.List;
 
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,34 +16,37 @@ import tn.esprit.overpowered.byusforus.entities.reclamation.ReponseReclamation;
  *
  * @author amine
  */
-
 @Stateless
-public class ReponseReclamationService implements ReponseReclamationRemote,ReponseReclamationLocal
-{
+public class ReponseReclamationService implements ReponseReclamationRemote, ReponseReclamationLocal {
 
-	@PersistenceContext(unitName="piJEE-ejb")
-	public EntityManager em;
-	@Override
-	public int AddReponse(ReponseReclamation reponse) {
-		em.merge(reponse);
-		em.persist(reponse);
-		return reponse.getIdReponse();
-	}
-	@Override
-	public int RemoveReponse(ReponseReclamation reponse) {
-		return em.createQuery("DELETE FROM ReponseReclamation WHERE idReponse= :id").setParameter("id",reponse.getIdReponse()).executeUpdate();
-	}
-	@Override
-	public List<ReponseReclamation> FindReponseByidReclamation(int id) {
-		return em.createQuery("select r from ReponseReclamation r where r.idReclamation= :id order By r.dateReponse ASC",ReponseReclamation.class).setParameter("id",id).getResultList();
-	}
-	@Override
-	public int CalculTotalReponse(int idReclamation) {
-		Long lol= em.createQuery("select count(r) from ReponseReclamation r where r.idReclamation= :id",Long.class).setParameter("id",idReclamation).getSingleResult();
-		return lol.intValue();
-	}
-	
+    @PersistenceContext(unitName = "piJEE-ejb")
+    public EntityManager em;
 
+    @Override
+    public int AddReponse(ReponseReclamation reponse) {
+        em.merge(reponse);
+        em.persist(reponse);
+        return reponse.getIdReponse();
+    }
+
+    @Override
+    public int RemoveReponse(ReponseReclamation reponse) {
+        return em.createQuery("DELETE FROM ReponseReclamation WHERE idReponse= :id").setParameter("id", reponse.getIdReponse()).executeUpdate();
+    }
+
+    @Override
+    public List<ReponseReclamation> FindReponseByidReclamation(int id) {
+        if (id == -3) {
+            return em.createQuery("select r from ReponseReclamation r order By r.dateReponse ASC", ReponseReclamation.class).getResultList();
+        } else {
+            return em.createQuery("select r from ReponseReclamation r where r.idReclamation= :id order By r.dateReponse ASC", ReponseReclamation.class).setParameter("id", id).getResultList();
+        }
+    }
+
+    @Override
+    public int CalculTotalReponse(int idReclamation) {
+        Long lol = em.createQuery("select count(r) from ReponseReclamation r where r.idReclamation= :id", Long.class).setParameter("id", idReclamation).getSingleResult();
+        return lol.intValue();
+    }
 
 }
-

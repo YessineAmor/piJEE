@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReponseReclamationViewDlg" widgetVar="ReponseReclamationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewReponseReclamationTitle}">
+            <h:form id="ReponseReclamationViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{reponseReclamationController.selected != null}">
+                        <h:outputText value="#{bundle.ViewReponseReclamationLabel_idReponse}"/>
+                        <h:outputText value="#{reponseReclamationController.selected.idReponse}" title="#{bundle.ViewReponseReclamationTitle_idReponse}"/>
+                        <h:outputText value="#{bundle.ViewReponseReclamationLabel_description}"/>
+                        <h:outputText value="#{reponseReclamationController.selected.description}" title="#{bundle.ViewReponseReclamationTitle_description}"/>
+                        <h:outputText value="#{bundle.ViewReponseReclamationLabel_dateReponse}"/>
+                        <h:outputText value="#{reponseReclamationController.selected.dateReponse}" title="#{bundle.ViewReponseReclamationTitle_dateReponse}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewReponseReclamationLabel_reclamation}"/>
+                        <h:outputText value="#{reponseReclamationController.selected.reclamation}" title="#{bundle.ViewReponseReclamationTitle_reclamation}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ReponseReclamationViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
