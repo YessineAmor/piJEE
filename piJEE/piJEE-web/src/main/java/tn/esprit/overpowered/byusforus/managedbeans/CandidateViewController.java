@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
+import util.authentication.Authenticator;
 
 /**
  *
@@ -32,6 +33,12 @@ public class CandidateViewController implements Serializable {
     {
         return cdtFacade.afficherCandidats();
         
+    }
+    
+    public String cdtConnected()
+    {
+        cdt = cdtFacade.find(Authenticator.currentSession.getId());
+        return "";
     }
     
     public void recommendCandidate()
