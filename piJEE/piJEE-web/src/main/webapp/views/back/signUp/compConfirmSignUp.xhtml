@@ -35,9 +35,11 @@
                                         <p:outputLabel>Insert Code HERE</p:outputLabel> <p:inputText
                                             value="#{signUpBean.signUpUserCode}" class="form-control" required="true"/>
                                     </div>
-
+                                    <p:messages showDetail="true"/>
+                                    <p:captcha label="Captcha" />
+                                    <br />
                                     <p:commandButton type="submit" value="Confirm"
-                                                     action="#{signUpBean.doFinalizeCandidateSignUp()}" ajax="false" icon="pi pi-check"
+                                                     action="#{signUpBean.doFinalizeCompStaffSingUp()}" ajax="false" icon="pi pi-check"
                                                      update=":regForm"
                                                      class="btn btn-primary btn-block" />
                                 </h:form>
