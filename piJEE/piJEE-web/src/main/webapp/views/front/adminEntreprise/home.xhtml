@@ -24,8 +24,8 @@
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
                     <div class="col-md-3">
                         <h:form id="userDetailForm">
-                            <p:panel header="My Profile" >
-                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;">
+                            <p:panel header="My Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
+                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandLink >
                                         <p:graphicImage value="adminPic.png" height="50px" width="50px"  />
                                     </p:commandLink>
@@ -33,7 +33,9 @@
                                     <!--p:outputLabel value="#{adminBean.compAdmin.lastName}"/-->
                                     <p:commandLink value="#{adminBean.compAdmin.email}"/>
                                 </p:panelGrid>
-                                <p:commandLink value="Manage Profile"/>
+                                <f:facet name="actions">
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
                             </p:panel>
                         </h:form>
                     </div>
@@ -55,17 +57,17 @@
                         </h:form>
                     </div>
                     <div class="col-md-3"><style type="text/css">
-    .ui-sticky {
-        top: 70px !important;
-    }
-    @media (max-width: 960px) {
-        .ui-sticky {
-            top: 110px !important;
-        }
-    }
-</style>
+                            .ui-sticky {
+                                top: 70px !important;
+                            }
+                            @media (max-width: 960px) {
+                                .ui-sticky {
+                                    top: 110px !important;
+                                }
+                            }
+                        </style>
                         <h:form id="otherInfoForm">
-                            <p:panel header="Company Profile" >
+                            <p:panel header="Company Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;">
                                     <p:commandLink >
                                         <p:graphicImage value="byusforus.png" height="50px" width="50px"  />
@@ -75,7 +77,9 @@
                                     <p:commandLink value="Events"/>
                                     <p:commandLink value="Offers"/>
                                 </p:panelGrid>
-                                <p:commandLink value="Manage Profile"/>
+                                <f:facet name="actions">
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
                             <p:sticky target="userDetailForm" />
