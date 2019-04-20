@@ -14,6 +14,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.services.users.CompanyAdminFacadeRemote;
 import util.authentication.Authenticator;
 
@@ -34,6 +35,7 @@ public class AdminBean {
     
     private Session adminSession;
     private CompanyAdmin compAdmin ;
+    private CompanyProfile company;
 
         private UploadedFile file;
     private String fileName;
@@ -77,6 +79,7 @@ public class AdminBean {
      public AdminBean() {
         this.adminSession = Authenticator.currentSession;
         this.compAdmin = (CompanyAdmin) Authenticator.currentSession.getUser();
+        this.company= compAdmin.getCompanyProfile();
     }
 
     public Session getAdminSession() {
@@ -94,5 +97,4 @@ public class AdminBean {
     public void setCompAdmin(CompanyAdmin compAdmin) {
         this.compAdmin = compAdmin;
     }
-     
 }
