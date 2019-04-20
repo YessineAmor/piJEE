@@ -1,11 +1,10 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
-import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
+import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -13,31 +12,30 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.quiz.AnswerFacadeLocal;
 
 @ManagedBean
-@javax.faces.bean.SessionScoped
-public class ChoiceController implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@SessionScoped
+public class AnswerController implements Serializable {
 
     @EJB
-    private ChoiceFacadeLocal ejbFacade;
-    private List<Choice> items = null;
-    private Choice selected;
+    private AnswerFacadeLocal ejbFacade;
+    private List<Answer> items = null;
+    private Answer selected;
 
-    public ChoiceController() {
+    public AnswerController() {
     }
 
-    public Choice getSelected() {
+    public Answer getSelected() {
         return selected;
     }
 
-    public void setSelected(Choice selected) {
+    public void setSelected(Answer selected) {
         this.selected = selected;
     }
 
@@ -47,40 +45,36 @@ public class ChoiceController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ChoiceFacadeLocal getFacade() {
+    private AnswerFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Choice prepareCreate() {
-        selected = new Choice();
+    public Answer prepareCreate() {
+        selected = new Answer();
         initializeEmbeddableKey();
         return selected;
     }
 
-    public ArrayList<Choice> getChoicesByQuestionId(Long id) {
-        return ejbFacade.getByQuestionId(id);
-    }
-
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ChoiceCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AnswerCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ChoiceUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AnswerUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ChoiceDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AnswerDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Choice> getItems() {
+    public List<Answer> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -115,29 +109,29 @@ public class ChoiceController implements Serializable {
         }
     }
 
-    public Choice getChoice(java.lang.Long id) {
+    public Answer getAnswer(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Choice> getItemsAvailableSelectMany() {
+    public List<Answer> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Choice> getItemsAvailableSelectOne() {
+    public List<Answer> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Choice.class)
-    public static class ChoiceControllerConverter implements Converter {
+    @FacesConverter(forClass = Answer.class)
+    public static class AnswerControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ChoiceController controller = (ChoiceController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "choiceController");
-            return controller.getChoice(getKey(value));
+            AnswerController controller = (AnswerController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "answerController");
+            return controller.getAnswer(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -157,11 +151,11 @@ public class ChoiceController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Choice) {
-                Choice o = (Choice) object;
-                return getStringKey(o.getIdChoice());
+            if (object instanceof Answer) {
+                Answer o = (Answer) object;
+                return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Choice.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Answer.class.getName()});
                 return null;
             }
         }
