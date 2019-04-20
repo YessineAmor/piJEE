@@ -473,7 +473,7 @@ public class SignUpBean implements Serializable {
             Authenticator.currentSession = session;
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", Authenticator.currentSession.getUser().getUsername());
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            goTo = "/views/front/Home/home?faces-redirect=true";//This is just for testing purpose until the actual page is created;
+            goTo = "/views/front/adminEntreprise/home?faces-redirect=true";//This is just for testing purpose until the actual page is created;
 
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unsuccessful", "Check Your Code");
@@ -525,6 +525,11 @@ public class SignUpBean implements Serializable {
         return goTo;
 
     }
+    
+public String doLogout() {
+	FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	return "/signUp?faces-redirect=true";
+}
 
     public SignUpBean() {
     }
