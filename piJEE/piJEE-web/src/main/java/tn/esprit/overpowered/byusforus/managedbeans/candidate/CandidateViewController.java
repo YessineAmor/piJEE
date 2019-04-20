@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.candidate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -37,8 +37,8 @@ public class CandidateViewController implements Serializable {
     
     public String cdtConnected()
     {
-        cdt = cdtFacade.find(Authenticator.currentSession.getId());
-        return "";
+        cdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
+        return "/views/candidate/profile?faces-redirect=true";
     }
     
     public void recommendCandidate()

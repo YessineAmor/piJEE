@@ -403,6 +403,7 @@ public class SignUpBean implements Serializable {
 
     public String doLogin() throws NoSuchAlgorithmException {
         String goTo = "null";
+        System.out.println("====Login"+login+" passssss==="+pass);
         authUid = authFacade.login(login, pass);
         if (authUid != null) {
             goTo = "/views/back/signUp/twoFAConfirm?faces-redirect=true";
@@ -410,6 +411,7 @@ public class SignUpBean implements Serializable {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Unknow Information");
             FacesContext.getCurrentInstance().addMessage("Error", msg);
         }
+        System.out.println("ààààààààà"+goTo);
         return goTo;
     }
 
@@ -471,7 +473,7 @@ public class SignUpBean implements Serializable {
             Authenticator.currentSession = session;
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", Authenticator.currentSession.getUser().getUsername());
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            goTo = "/views/candidate/CandidatesView?faces-redirect=true";//This is just for testing purpose until the actual page is created;
+            goTo = "/views/candidate/candidatesView?faces-redirect=true";//This is just for testing purpose until the actual page is created;
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unsuccessful", "Check Your Code");
             FacesContext.getCurrentInstance().addMessage(null, msg);

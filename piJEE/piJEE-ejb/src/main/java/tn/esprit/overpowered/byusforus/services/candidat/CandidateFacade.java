@@ -304,4 +304,11 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         }
     }
 */
+
+    @Override
+    public Candidate findCandidate(Long cdtId) {
+        Candidate cdt = new Candidate();
+        cdt = em.find(Candidate.class, cdtId);
+        return cdt;
+    }
 }
