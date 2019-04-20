@@ -35,7 +35,7 @@ public class Employee extends Professional implements Serializable {
     private static final long serialVersionUID = 31L;
 
     @ManyToOne
-    @JoinTable(name = "COMPANY_EMPLOYEES")
+    @JoinColumn(name = "FK_COMP_EMP_ID")
     CompanyProfile company;
 
     @ManyToOne(cascade = {PERSIST, MERGE, DETACH}, fetch = FetchType.LAZY)

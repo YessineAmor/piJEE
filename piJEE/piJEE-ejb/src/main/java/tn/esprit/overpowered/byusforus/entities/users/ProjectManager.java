@@ -11,6 +11,7 @@ import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
@@ -27,6 +28,7 @@ public class ProjectManager extends Employee implements Serializable {
     private static final long serialVersionUID = 33L;
 
     @ManyToOne
+    @JoinColumn(name = "FK_COMP_PM_ID")
     private CompanyProfile companyProfile;
 
     @OneToMany(mappedBy = "pManager", cascade = {PERSIST, MERGE})
