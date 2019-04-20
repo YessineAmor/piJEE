@@ -28,21 +28,19 @@ public class CandidateViewController implements Serializable {
     private String recommendations;
     private String firstName;
     @EJB
-    private CandidateFacadeLocal cdtFacade;
+    private CandidateFacadeRemote cdtFacade;
 
     public List<Candidate> getCandidates() {
         return cdtFacade.afficherCandidats();
 
     }
 
-    public String cdtConnected()
-    {
+    public String cdtConnected() {
         cdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
         return "/views/candidate/profile?faces-redirect=true";
     }
 
-    public void recommendCandidate()
-    {
+    public void recommendCandidate() {
         cdtFacade.recommend(cdt.getId());
     }
 
@@ -62,11 +60,11 @@ public class CandidateViewController implements Serializable {
         this.cdt = cdt;
     }
 
-    public CandidateFacadeLocal getCdtFacade() {
+    public CandidateFacadeRemote getCdtFacade() {
         return cdtFacade;
     }
 
-    public void setCdtFacade(CandidateFacadeLocal cdtFacade) {
+    public void setCdtFacade(CandidateFacadeRemote cdtFacade) {
         this.cdtFacade = cdtFacade;
     }
 
