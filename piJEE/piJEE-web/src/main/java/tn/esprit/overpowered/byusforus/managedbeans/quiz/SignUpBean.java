@@ -1,4 +1,4 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

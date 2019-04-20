@@ -1,4 +1,4 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -65,7 +65,9 @@ public class QuizTryController implements Serializable {
         return selections;
     }
 
-    public void setSelections(String[] selections) {
+    public void setSelections(String[] selections) throws IOException {
+        File f = new File("87azeaz.txt");
+        f.createNewFile();
         this.selections = selections;
     }
 
