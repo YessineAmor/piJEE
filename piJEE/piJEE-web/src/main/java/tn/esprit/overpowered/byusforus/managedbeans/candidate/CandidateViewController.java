@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.candidate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
+import util.authentication.Authenticator;
 
 /**
  *
@@ -32,6 +33,12 @@ public class CandidateViewController implements Serializable {
     {
         return cdtFacade.afficherCandidats();
         
+    }
+    
+    public String cdtConnected()
+    {
+        cdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
+        return "/views/candidate/profile?faces-redirect=true";
     }
     
     public void recommendCandidate()

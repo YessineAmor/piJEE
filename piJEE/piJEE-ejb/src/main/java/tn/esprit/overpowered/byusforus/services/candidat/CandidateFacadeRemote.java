@@ -55,6 +55,8 @@ public interface CandidateFacadeRemote {
     public String createCandidate(Candidate candidate);
 
     public String recommend(Long candidateId);
+    
+    public Candidate findCandidate(Long cdtId);
 
     //Cursus
     // public void affecterCursusCandidate(Long candidateId, Long cursusId);
