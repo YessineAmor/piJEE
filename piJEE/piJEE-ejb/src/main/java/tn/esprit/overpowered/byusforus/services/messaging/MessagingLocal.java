@@ -18,8 +18,8 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
  *
  * @author aminos
  */
-@Remote
-public interface MessagingRemote {
+@Local
+public interface MessagingLocal {
     
     public void sendMessage(Message m, Long a, Long b);
     public ArrayList<Message> getMessages(Long userId, Date t);
