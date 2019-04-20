@@ -5,6 +5,8 @@ package tn.esprit.overpowered.byusforus.managedbeans;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import LicenceManager.LicenceFacadeRemote;
+import Licenses.Licence;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
@@ -15,13 +17,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
-import tn.esprit.overpowered.byusforus.entities.users.User;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.Employee;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.services.authentication.AuthenticationFacadeRemote;
-import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacade;
-import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
-import tn.esprit.overpowered.byusforus.services.users.UserFacade;
+import tn.esprit.overpowered.byusforus.services.entrepriseprofile.EmployeeFacadeRemote;
+import tn.esprit.overpowered.byusforus.services.users.CompanyAdminFacadeRemote;
+import tn.esprit.overpowered.byusforus.services.users.HRManagerFacadeRemote;
+import tn.esprit.overpowered.byusforus.services.users.ProjectManagerFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.users.UserFacadeRemote;
+import tn.esprit.overpowered.byusforus.util.Role;
 import util.authentication.Authenticator;
 
 /**
@@ -40,6 +48,21 @@ public class SignUpBean implements Serializable {
     @EJB
     private AuthenticationFacadeRemote authFacade;
 
+    @EJB
+    private LicenceFacadeRemote licenceFacade;
+
+    @EJB
+    private CompanyAdminFacadeRemote compAdminFacade;
+
+    @EJB
+    private HRManagerFacadeRemote hrManagerFacade;
+
+    @EJB
+    private ProjectManagerFacadeRemote pManagerFacade;
+
+    @EJB
+    private EmployeeFacadeRemote employeeFacade;
+
     /**
      * Creates a new instance of SignUpBean
      */
@@ -50,8 +73,18 @@ public class SignUpBean implements Serializable {
     private String lastName;
     private String password;
     private Candidate candidate;
+    private CompanyProfile compProfile;
+    private CompanyAdmin compAdmin;
+    private HRManager hrManager;
+    private ProjectManager pManager;
+    private Employee employee;
     private String signUpCode;
     private String signUpUserCode;
+    private String companyName;
+    private String licenceID;
+    private String licencePass;
+    private Role role;
+    private Role[] roles;
 
     //Information for SignIn
     private String login;
@@ -116,6 +149,54 @@ public class SignUpBean implements Serializable {
         this.candidate = candidate;
     }
 
+    public LicenceFacadeRemote getLicenceFacade() {
+        return licenceFacade;
+    }
+
+    public void setLicenceFacade(LicenceFacadeRemote licenceFacade) {
+        this.licenceFacade = licenceFacade;
+    }
+
+    public CompanyProfile getCompProfile() {
+        return compProfile;
+    }
+
+    public void setCompProfile(CompanyProfile compProfile) {
+        this.compProfile = compProfile;
+    }
+
+    public CompanyAdmin getCompAdmin() {
+        return compAdmin;
+    }
+
+    public void setCompAdmin(CompanyAdmin compAdmin) {
+        this.compAdmin = compAdmin;
+    }
+
+    public HRManager getHrManager() {
+        return hrManager;
+    }
+
+    public void setHrManager(HRManager hrManager) {
+        this.hrManager = hrManager;
+    }
+
+    public ProjectManager getpManager() {
+        return pManager;
+    }
+
+    public void setpManager(ProjectManager pManager) {
+        this.pManager = pManager;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public String getSignUpCode() {
         return signUpCode;
     }
@@ -132,6 +213,47 @@ public class SignUpBean implements Serializable {
         this.signUpUserCode = signUpUserCode;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getLicenceID() {
+        return licenceID;
+    }
+
+    public void setLicenceID(String licenceID) {
+        this.licenceID = licenceID;
+    }
+
+    public String getLicencePass() {
+        return licencePass;
+    }
+
+    public void setLicencePass(String licencePass) {
+        this.licencePass = licencePass;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Role[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Role[] roles) {
+        this.roles = roles;
+    }
+
+    
     public String getLogin() {
         return login;
     }
@@ -188,6 +310,38 @@ public class SignUpBean implements Serializable {
         this.authFacade = authFacade;
     }
 
+    public CompanyAdminFacadeRemote getCompAdminFacade() {
+        return compAdminFacade;
+    }
+
+    public void setCompAdminFacade(CompanyAdminFacadeRemote compAdminFacade) {
+        this.compAdminFacade = compAdminFacade;
+    }
+
+    public HRManagerFacadeRemote getHrManagerFacade() {
+        return hrManagerFacade;
+    }
+
+    public void setHrManagerFacade(HRManagerFacadeRemote hrManagerFacade) {
+        this.hrManagerFacade = hrManagerFacade;
+    }
+
+    public ProjectManagerFacadeRemote getpManagerFacade() {
+        return pManagerFacade;
+    }
+
+    public void setpManagerFacade(ProjectManagerFacadeRemote pManagerFacade) {
+        this.pManagerFacade = pManagerFacade;
+    }
+
+    public EmployeeFacadeRemote getEmployeeFacade() {
+        return employeeFacade;
+    }
+
+    public void setEmployeeFacade(EmployeeFacadeRemote employeeFacade) {
+        this.employeeFacade = employeeFacade;
+    }
+
     public String SignUpAsCandidate() throws NoSuchAlgorithmException {
         candidate = new Candidate();
         candidate.setUsername(username);
@@ -208,6 +362,39 @@ public class SignUpBean implements Serializable {
         return goTo;
     }
 
+    public String SignUpAsCompanyStaff() throws NoSuchAlgorithmException {
+
+        String goTo = "null";
+        String result = userFacade.checkExistence(email, username);
+        if (result.equals("OK")) {
+            switch (role) {
+                case ADMIN:
+                    compAdmin = new CompanyAdmin(username, email, firstName, lastName);
+                    compAdmin.setPassword(password.getBytes(StandardCharsets.UTF_8));
+                    break;
+                case HR:
+                    hrManager = new HRManager(username, email, firstName, lastName);
+                    hrManager.setPassword(password.getBytes(StandardCharsets.UTF_8));
+                    break;
+                case MANAGER:
+                    pManager = new ProjectManager(username, email, firstName, lastName);
+                    pManager.setPassword(password.getBytes(StandardCharsets.UTF_8));
+                    break;
+                default:
+                    employee = new Employee(username, email, firstName, lastName);
+                    employee.setPassword(password.getBytes(StandardCharsets.UTF_8));
+                    break;
+            }
+            goTo = "/views/back/signUp/compVerifSignUp?faces-redirect=true";
+
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "result", result);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
+        return goTo;
+    }
+
     public void submit() throws NoSuchAlgorithmException {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correct", "Correct");
         FacesContext.getCurrentInstance().addMessage("Successfull", msg);
@@ -218,7 +405,7 @@ public class SignUpBean implements Serializable {
         String goTo = "null";
         authUid = authFacade.login(login, pass);
         if (authUid != null) {
-            goTo = "/views/back/signUp/TwoFAConfirm?faces-redirect=true";
+            goTo = "/views/back/signUp/twoFAConfirm?faces-redirect=true";
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Unknow Information");
             FacesContext.getCurrentInstance().addMessage("Error", msg);
@@ -229,10 +416,47 @@ public class SignUpBean implements Serializable {
     public String doFinalizeCandidateSignUp() {
         String goTo = "null";
         if (signUpCode.equals(signUpUserCode)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation</br>Login");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation Please Login");
             FacesContext.getCurrentInstance().addMessage("Successful", msg);
             candidateFacade.createCandidate(candidate);
-            goTo = "/signUp?faces-redirect";
+            goTo = "/signUp?faces-redirect=true";
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "Code Error");
+            FacesContext.getCurrentInstance().addMessage("ERROR", msg);
+        }
+        return goTo;
+    }
+
+    public String doFinalizeCompStaffSingUp() {
+        String goTo = "null";
+        if (signUpCode.equals(signUpUserCode)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation Please Login");
+            FacesContext.getCurrentInstance().addMessage("Successful", msg);
+
+            switch (role) {
+                case ADMIN:
+                    compProfile = new CompanyProfile(companyName);;
+                   Long adminId= compAdminFacade.addCompanyAdmin(compAdmin);
+                   Long compId= compAdminFacade.createCompanyProfile(compProfile);
+                   compAdminFacade.bindCompanyAdminToCompanyProfile(adminId, compId);
+                    break;
+                case HR:
+                    compProfile = compAdminFacade.checkCompanyExistence(companyName);
+                    Long hrID =hrManagerFacade.createHRManager(hrManager);
+                    compAdminFacade.bindCompanyHRToCompanyProfile(hrID, compProfile.getId());
+                    break;
+                case MANAGER:
+                    compProfile = compAdminFacade.checkCompanyExistence(companyName);
+                    Long pmID =pManagerFacade.createPManager(pManager);
+                    compAdminFacade.bindCompanyPMToCompanyProfile(pmID, compProfile.getId());
+                    break;
+                default:
+                    compProfile = compAdminFacade.checkCompanyExistence(companyName);
+                    Long empID =employeeFacade.createEmployee(employee);
+                    compAdminFacade.bindEmployeeToCompanyProfile(empID, compProfile.getId());
+                    break;
+            }
+            goTo = "/signUp?faces-redirect=true";
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "Code Error");
             FacesContext.getCurrentInstance().addMessage("ERROR", msg);
@@ -253,6 +477,50 @@ public class SignUpBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         return goTo;
+    }
+
+    public Role[] Roles() {
+        for(Role r:Role.values())
+            System.out.println("****Roles:***" +r.name());
+        roles = Role.values();
+        return Role.values();
+    }
+
+    public String verifyStaffInfo() {
+        String goTo = "null";
+        Licence licence = new Licence();
+        licence.setCompanyName(companyName);
+        licence.setCompanyLicenceId(licenceID);
+        licence.setUserPass(licencePass);
+        licence.setUserRole(role);
+        if (licenceFacade.verifyLicenceInfo(licence)) {
+            if (role.equals(Role.ADMIN)) {
+                if (compAdminFacade.checkCompanyExistence(companyName) != null) {
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "This Company Already has an ADMIN");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                    goTo = "/signUp?faces-redirect=true";
+                } else {
+                    signUpCode = candidateFacade.accountCreationConfirmation(email);
+                    goTo = "/views/back/signUp/compConfirmSignUp?faces-redirect=true";
+                }
+            } else {
+                if (compAdminFacade.checkCompanyExistence(companyName) == null) {
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "NO EXISING ADMIN FOR COMPANY");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                    goTo = "/signUp?faces-redirect=true";
+                } else {
+                    signUpCode = candidateFacade.accountCreationConfirmation(email);
+                    goTo = "/views/back/signUp/compConfirmSignUp?faces-redirect=true";
+                }
+            }
+
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unsuccessful", "Check Your Information");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
+        return goTo;
+
     }
 
     public SignUpBean() {

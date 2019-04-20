@@ -1,11 +1,16 @@
 package tn.esprit.overpowered.byusforus.managedbeans;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,10 +27,33 @@ import tn.esprit.overpowered.byusforus.services.quiz.QuizTryFacadeLocal;
 @javax.faces.bean.SessionScoped
 public class QuizTryController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @EJB
     private QuizTryFacadeLocal ejbFacade;
     private List<QuizTry> items = null;
     private QuizTry selected;
+
+    private String selections;
+
+    public String getSelections() {
+        return selections;
+    }
+
+    public void setSelections(String selections) {
+        this.selections = selections;
+    }
+
+    public void listen() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        File f = new File("87azeaz.txt");
+        f.createNewFile();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
+            writer.write(params.get("choiceQuestion1"));
+            writer.write(params.get("choiceQuestion2"));
+        }
+    }
 
     public QuizTryController() {
     }

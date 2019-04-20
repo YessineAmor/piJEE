@@ -52,14 +52,13 @@ public class JobOffer implements Serializable {
     private String title;
 
     @Temporal(TemporalType.DATE)
-    private final Date dateOfCreation;
+    private Date dateOfCreation;
 
     @Column(nullable = false)
     private String description;
 
     private String city;
 
-    
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
 
@@ -121,6 +120,10 @@ public class JobOffer implements Serializable {
 
     public Date getDateOfCreation() {
         return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 
     public String getDescription() {
@@ -202,8 +205,6 @@ public class JobOffer implements Serializable {
     public void setpManager(ProjectManager pManager) {
         this.pManager = pManager;
     }
-
-
 
     public List<Candidate> getRegisteredCandidates() {
         return registeredCandidates;

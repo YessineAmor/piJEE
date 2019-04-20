@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -38,6 +39,8 @@ public class Question implements Serializable {
     @JoinTable(name = "QuestionChoices", joinColumns = @JoinColumn(name = "idChoice"),
             inverseJoinColumns = @JoinColumn(name = "idQuestion"))
     private List<Choice> choices;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Quiz quiz;
 
     public Question() {
     }
@@ -55,6 +58,14 @@ public class Question implements Serializable {
 
     public void setIdQuestion(Long idQuestion) {
         this.idQuestion = idQuestion;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
     public String getQuestionText() {
