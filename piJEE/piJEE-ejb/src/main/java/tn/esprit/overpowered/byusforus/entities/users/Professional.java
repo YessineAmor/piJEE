@@ -19,10 +19,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import tn.esprit.overpowered.byusforus.entities.candidat.Certificate;
-import tn.esprit.overpowered.byusforus.entities.candidat.Cursus;
-import tn.esprit.overpowered.byusforus.entities.candidat.Experience;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
@@ -38,7 +34,7 @@ public abstract class Professional extends User {
     @ElementCollection
     private List<Long> recommendedIdList;
     
-        private int recommendations;
+    private int recommendations;
     
     public String getIntroduction() {
         return introduction;
@@ -49,8 +45,8 @@ public abstract class Professional extends User {
     }
     
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Experience> experiences;
+    @ElementCollection(targetClass = String.class)
+    private List<String> experiences;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subscriptions", joinColumns
@@ -64,13 +60,13 @@ public abstract class Professional extends User {
 
     private List<String> activities;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Certificate> certificates;
+   @ElementCollection(targetClass = String.class)
+    private List<String> certificates;
 
     private String curriculumVitaes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Cursus> cursus;
+    @ElementCollection(targetClass = String.class)
+    private List<String> cursus;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="contacts",
@@ -108,13 +104,6 @@ public abstract class Professional extends User {
         this.recommendations = recommendations;
     }
 
-    public List<Experience> getExperiences() {
-        return experiences;
-    }
-
-    public void setExperiences(List<Experience> experiences) {
-        this.experiences = experiences;
-    }
 
     public List<CompanyProfile> getSubscribedCompanies() {
         return subscribedCompanies;
@@ -132,14 +121,6 @@ public abstract class Professional extends User {
         this.activities = activities;
     }
 
-    public List<Certificate> getCertificates() {
-        return certificates;
-    }
-
-    public void setCertificates(List<Certificate> certificates) {
-        this.certificates = certificates;
-    }
-
     public String getCurriculumVitaes() {
         return curriculumVitaes;
     }
@@ -148,13 +129,6 @@ public abstract class Professional extends User {
         this.curriculumVitaes = curriculumVitaes;
     }
 
-    public List<Cursus> getCursus() {
-        return cursus;
-    }
-
-    public void setCursus(List<Cursus> cursus) {
-        this.cursus = cursus;
-    }
 
     public List<Candidate> getContacts() {
         return contacts;
@@ -195,6 +169,29 @@ public abstract class Professional extends User {
     public void setRecommendedIdList(List<Long> recommendedIdList) {
         this.recommendedIdList = recommendedIdList;
     }
-    
+
+    public List<String> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<String> experiences) {
+        this.experiences = experiences;
+    }
+
+    public List<String> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<String> certificates) {
+        this.certificates = certificates;
+    }
+
+    public List<String> getCursus() {
+        return cursus;
+    }
+
+    public void setCursus(List<String> cursus) {
+        this.cursus = cursus;
+    }
     
 }

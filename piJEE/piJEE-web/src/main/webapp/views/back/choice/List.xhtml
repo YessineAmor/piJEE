@@ -27,12 +27,7 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChoiceTitle_idChoice}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idChoice}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListChoiceTitle_choiceText}"/>
@@ -50,6 +45,12 @@
                                 <h:outputText value="#{bundle.ListChoiceTitle_choicePoints}"/>
                             </f:facet>
                             <h:outputText value="#{item.choicePoints}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Question"/>
+                            </f:facet>
+                            <h:outputText value="#{item.question.questionText}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{choiceController.prepareCreate}" update=":ChoiceCreateForm" oncomplete="PF('ChoiceCreateDialog').show()"/>

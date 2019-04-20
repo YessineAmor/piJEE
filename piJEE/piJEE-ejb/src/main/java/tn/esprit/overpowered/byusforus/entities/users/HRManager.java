@@ -6,7 +6,6 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
@@ -14,7 +13,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
@@ -82,3 +80,4 @@ public class HRManager extends Employee implements Serializable {
     }
 
 }
+

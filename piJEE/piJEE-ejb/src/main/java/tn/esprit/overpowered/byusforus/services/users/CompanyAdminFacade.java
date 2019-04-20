@@ -14,7 +14,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
-import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
