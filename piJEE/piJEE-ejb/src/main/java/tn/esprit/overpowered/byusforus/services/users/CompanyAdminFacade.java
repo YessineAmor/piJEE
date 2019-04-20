@@ -17,6 +17,9 @@ import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.Employee;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 
 /**
@@ -68,6 +71,39 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
         if ((compProfile != null) && (compAdmin != null)) {
             compAdmin.setCompanyProfile(compProfile);
             compProfile.setCompanyAdmin(compAdmin);
+        }
+    }
+
+    @Override
+    public void bindCompanyHRToCompanyProfile(Long idHR, Long idComp) {
+        HRManager hrManager = em.find(HRManager.class, idHR);
+        CompanyProfile compProfile = em.find(CompanyProfile.class, idComp);
+
+        if ((compProfile != null) && (hrManager != null)) {
+            hrManager.setCompanyProfile(compProfile);
+            compProfile.setCompanyHRManager(hrManager);
+        }
+    }
+
+    @Override
+    public void bindCompanyPMToCompanyProfile(Long idPM, Long idComp) {
+        ProjectManager pManager = em.find(ProjectManager.class, idPM);
+        CompanyProfile compProfile = em.find(CompanyProfile.class, idComp);
+
+        if ((compProfile != null) && (pManager != null)) {
+            pManager.setCompanyProfile(compProfile);
+            compProfile.getProjectManagers().add(pManager);
+        }
+    }
+
+    @Override
+    public void bindEmployeeToCompanyProfile(Long idEmp, Long idComp) {
+        Employee employee = em.find(Employee.class, idEmp);
+        CompanyProfile compProfile = em.find(CompanyProfile.class, idComp);
+
+        if ((compProfile != null) && (employee != null)) {
+            employee.setCompany(compProfile);
+            compProfile.getEmployees().add(employee);
         }
     }
 
@@ -179,9 +215,8 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     public List<JobOffer> jobOffersByCompany(Long compId) {
         CompanyProfile comp = em.find(CompanyProfile.class, compId);
         List<JobOffer> listJobs = comp.getListOfOffers();
-        List<JobOffer> jobOffers = new ArrayList<>() ;
-        for(JobOffer job: listJobs)
-        {
+        List<JobOffer> jobOffers = new ArrayList<>();
+        for (JobOffer job : listJobs) {
             jobOffers.add(em.find(JobOffer.class, job.getId()));
         }
         return jobOffers;
@@ -189,14 +224,14 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
 
     @Override
     public CompanyProfile checkCompanyExistence(String compName) {
-         CompanyProfile company= null;
-         try {
-            company = em.createQuery("SELECT C FROM CompanyProfile C where C.name= :name",CompanyProfile.class)
-                    .setParameter("name",compName)
+        CompanyProfile company = null;
+        try {
+            company = em.createQuery("SELECT C FROM CompanyProfile C where C.name= :name", CompanyProfile.class)
+                    .setParameter("name", compName)
                     .getSingleResult();
         } catch (Exception e) {
         }
-         return company;
+        return company;
     }
 
 }
