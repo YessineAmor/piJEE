@@ -44,15 +44,8 @@ public class EmployeeFacade extends AbstractFacade<Employee> implements Employee
 
     @Override
     public Long createEmployee(Employee employee) {
-        CompanyProfile company = em.find(CompanyProfile.class,
-                employee.getCompany().getId());
-        
-        if(company != null){
         this.create(employee);
         return employee.getId();
-        }
-        
-        return -1L;
     }
 
     @Override
