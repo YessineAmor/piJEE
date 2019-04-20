@@ -20,7 +20,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
  * @author aminos
  */
 @Stateful
-public class Messaging implements MessagingRemote {
+public class Messaging implements MessagingRemote, MessagingLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")z
