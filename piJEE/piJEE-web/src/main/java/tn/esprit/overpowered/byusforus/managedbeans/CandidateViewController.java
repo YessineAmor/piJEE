@@ -11,7 +11,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
-import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
+import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeLocal;
 
 /**
  *
@@ -20,35 +20,32 @@ import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 @ManagedBean
 @SessionScoped
 public class CandidateViewController implements Serializable {
-    private Candidate cdt ;
+
+    private Candidate cdt;
     private String lastName;
     private String email;
     private String recommendations;
     private String firstName;
     @EJB
-    CandidateFacadeRemote cdtFacade ;
-    
-    public List<Candidate> getCandidates()
-    {
+    private CandidateFacadeLocal cdtFacade;
+
+    public List<Candidate> getCandidates() {
         return cdtFacade.afficherCandidats();
-        
+
     }
-    
-    public void recommendCandidate()
-    {
+
+    public void recommendCandidate() {
         cdtFacade.recommend(cdt.getId());
     }
-    
-    public void incrementVisits()
-    {
+
+    public void incrementVisits() {
         cdtFacade.incrementVisits(cdt.getId());
     }
-    
-    public void recommend()
-    {
+
+    public void recommend() {
         cdtFacade.recommend(cdt.getId());
     }
-    
+
     public Candidate getCdt() {
         return cdt;
     }
@@ -57,11 +54,11 @@ public class CandidateViewController implements Serializable {
         this.cdt = cdt;
     }
 
-    public CandidateFacadeRemote getCdtFacade() {
+    public CandidateFacadeLocal getCdtFacade() {
         return cdtFacade;
     }
 
-    public void setCdtFacade(CandidateFacadeRemote cdtFacade) {
+    public void setCdtFacade(CandidateFacadeLocal cdtFacade) {
         this.cdtFacade = cdtFacade;
     }
 
@@ -96,5 +93,5 @@ public class CandidateViewController implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
 }
