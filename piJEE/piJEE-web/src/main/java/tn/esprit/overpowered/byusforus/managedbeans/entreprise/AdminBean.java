@@ -97,4 +97,17 @@ public class AdminBean {
     public void setCompAdmin(CompanyAdmin compAdmin) {
         this.compAdmin = compAdmin;
     }
+
+    public CompanyProfile getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyProfile company) {
+        this.company = company;
+    }
+    
+    public void doCompanyUpdate(){
+        compAdminFacade.updateCompanyProfile(company);
+        company= compAdminFacade.viewCompanyProfile(company.getId());
+    }
 }
