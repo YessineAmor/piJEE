@@ -18,7 +18,10 @@
                 <div class="row justify-content-center d-flex">
                     <div class="col-lg-12 post-list">          
                         <div class="single-post justify-content-center centerAll" >
-                            <h:inputHidden id="selections" value="#{quizTryController.selections}"/>
+                            <h:form>
+                                <h:inputHidden id="selections" value="#{quizTryController.selections}"/>
+                                <h:commandButton type="hidden" value="hahaha" action="#{quizTryController.submitTry(quizController.selected)}"></h:commandButton>
+                            </h:form>
                             <div>
                                 <h1>#{quizController.selected.name}</h1>
                             </div>
@@ -35,7 +38,7 @@
                             <div id="example-basic">
                                 <ui:repeat value="#{questionController.getQuestionsByQuizId(quizController.selected.id)}" var="question" varStatus="status">
                                     <h3>#{question.questionText}</h3>
-                                    <input title="#{question.idQuestion}" name="selectedChoice" type="hidden"/>
+                                    <input title="#{question.idQuestion}" name="selectedChoices[]" type="hidden"/>
                                     <section class="everythingSection">
                                         <h3>#{question.questionText}</h3>
                                         <div class="choicesSection">
@@ -61,7 +64,12 @@
                 transitionEffect: "slideLeft",
                 autoFocus: true,
                 onFinished: function (event, currentIndex) {
-                    alert("thnks!");
+                    var titles = $('input[name^=selectedChoices]').map(function (idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    console.log(titles);
+                    $("input[type='submit']").click();
                 }
             });
             function choiceClicked(idchoice, idQuestion) {

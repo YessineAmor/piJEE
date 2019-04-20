@@ -21,41 +21,37 @@ import util.authentication.Authenticator;
 @ManagedBean
 @SessionScoped
 public class CandidateViewController implements Serializable {
-    private Candidate cdt ;
+
+    private Candidate cdt;
     private String lastName;
     private String email;
     private String recommendations;
     private String firstName;
     @EJB
-    CandidateFacadeRemote cdtFacade ;
-    
-    public List<Candidate> getCandidates()
-    {
+    private CandidateFacadeRemote cdtFacade;
+
+    public List<Candidate> getCandidates() {
         return cdtFacade.afficherCandidats();
-        
+
     }
-    
-    public String cdtConnected()
-    {
+
+    public String cdtConnected() {
         cdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
         return "/views/candidate/profile?faces-redirect=true";
     }
-    
-    public void recommendCandidate()
-    {
+
+    public void recommendCandidate() {
         cdtFacade.recommend(cdt.getId());
     }
-    
-    public void incrementVisits()
-    {
+
+    public void incrementVisits() {
         cdtFacade.incrementVisits(cdt.getId());
     }
-    
-    public void recommend()
-    {
+
+    public void recommend() {
         cdtFacade.recommend(cdt.getId());
     }
-    
+
     public Candidate getCdt() {
         return cdt;
     }
@@ -103,5 +99,5 @@ public class CandidateViewController implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
 }

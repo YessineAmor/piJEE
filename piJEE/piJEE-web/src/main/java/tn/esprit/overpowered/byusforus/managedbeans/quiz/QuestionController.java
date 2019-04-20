@@ -1,10 +1,11 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
-import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
+import tn.esprit.overpowered.byusforus.entities.quiz.Question;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -12,30 +13,31 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.candidat.CandidateApplicationFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.quiz.QuestionFacadeLocal;
 
 @ManagedBean
-@SessionScoped
-public class CandidateApplicationController implements Serializable {
+@javax.faces.bean.SessionScoped
+public class QuestionController implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @EJB
-    private CandidateApplicationFacadeLocal ejbFacade;
-    private List<CandidateApplication> items = null;
-    private CandidateApplication selected;
+    private QuestionFacadeLocal ejbFacade;
+    private List<Question> items = null;
+    private Question selected;
 
-    public CandidateApplicationController() {
+    public QuestionController() {
     }
 
-    public CandidateApplication getSelected() {
+    public Question getSelected() {
         return selected;
     }
 
-    public void setSelected(CandidateApplication selected) {
+    public void setSelected(Question selected) {
         this.selected = selected;
     }
 
@@ -45,40 +47,44 @@ public class CandidateApplicationController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private CandidateApplicationFacadeLocal getFacade() {
+    private QuestionFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public CandidateApplication prepareCreate() {
-        selected = new CandidateApplication();
+    public Question prepareCreate() {
+        selected = new Question();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CandidateApplicationCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CandidateApplicationUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuestionUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CandidateApplicationDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuestionDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<CandidateApplication> getItems() {
+    public List<Question> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public ArrayList<Question> getQuestionsByQuizId(Integer id) {
+        return ejbFacade.findByQuizId(id);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -109,38 +115,38 @@ public class CandidateApplicationController implements Serializable {
         }
     }
 
-    public CandidateApplication getCandidateApplication(java.lang.Integer id) {
+    public Question getQuestion(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<CandidateApplication> getItemsAvailableSelectMany() {
+    public List<Question> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<CandidateApplication> getItemsAvailableSelectOne() {
+    public List<Question> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = CandidateApplication.class)
-    public static class CandidateApplicationControllerConverter implements Converter {
+    @FacesConverter(forClass = Question.class)
+    public static class QuestionControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CandidateApplicationController controller = (CandidateApplicationController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "candidateApplicationController");
-            return controller.getCandidateApplication(getKey(value));
+            QuestionController controller = (QuestionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "questionController");
+            return controller.getQuestion(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -151,11 +157,11 @@ public class CandidateApplicationController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof CandidateApplication) {
-                CandidateApplication o = (CandidateApplication) object;
-                return getStringKey(o.getId());
+            if (object instanceof Question) {
+                Question o = (Question) object;
+                return getStringKey(o.getIdQuestion());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CandidateApplication.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Question.class.getName()});
                 return null;
             }
         }
