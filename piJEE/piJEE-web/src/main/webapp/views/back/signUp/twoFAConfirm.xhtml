@@ -31,18 +31,20 @@
                             <div class="tab-content">
                                 <h:form id="regForm">
                                     <p:panel id="panel">
-                                    <p:growl id="messages" showDetail="true" />
-                                    <div class="form-group">
-                                        <p:outputLabel>Insert Code HERE</p:outputLabel> <p:inputText
-                                            value="#{signUpBean.authToken}" class="form-control" required="true"/>
-                                    </div>
-
-                                    <p:commandButton type="submit" value="Confirm"
-                                                     action="#{signUpBean.doFinalizeLogin()}" ajax="false" icon="pi pi-check"
-                                                     update=":regForm"
-                                                     class="btn btn-primary btn-block" >
-                                        <p:ajax update="panel" resetValues="true" />
-                                    </p:commandButton>
+                                        <p:growl id="messages" showDetail="true" />
+                                        <div class="form-group">
+                                            <p:outputLabel>Insert Code HERE</p:outputLabel> <p:inputText
+                                                value="#{signUpBean.authToken}" class="form-control" required="true"/>
+                                        </div>
+                                        <p:messages showDetail="true"/>
+                                        <p:captcha label="Captcha" />
+                                        <br />
+                                        <p:commandButton type="submit" value="Confirm"
+                                                         action="#{signUpBean.doFinalizeLogin()}" ajax="false" icon="pi pi-check"
+                                                         update=":regForm"
+                                                         class="btn btn-primary btn-block" >
+                                            <p:ajax update="panel" resetValues="true" />
+                                        </p:commandButton>
                                     </p:panel>
                                 </h:form>
                             </div>
