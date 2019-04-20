@@ -3,6 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="/resources/templates/template_signUp.xhtml"
                 xmlns:p="http://primefaces.org/ui">
 
@@ -30,19 +31,18 @@
                         <div class="form">
                             <div class="tab-content">
                                 <h:form id="regForm">
-                                    <p:panel id="panel">
                                     <p:growl id="messages" showDetail="true" />
-                                    <div class="form-group">
-                                        <p:outputLabel>Insert Code HERE</p:outputLabel> <p:inputText
-                                            value="#{signUpBean.authToken}" class="form-control" required="true"/>
-                                    </div>
+                                    <p:panel id="panel" header="Company Information Verifier">
+                                            <div class="form-group">
+                                                <p:outputLabel value="Company Name"/><p:inputText value="#{signUpBean.companyName}" class="form-group" required="true"/>
+                                                <p:outputLabel value="Licence ID"/><p:password value="#{signUpBean.licenceID}" class="form-group" required="true"/>
+                                                <p:outputLabel value="User Pass"/><p:password value="#{signUpBean.licencePass}" class="form-group" required="true"/>
+                                            </div>
 
-                                    <p:commandButton type="submit" value="Confirm"
-                                                     action="#{signUpBean.doFinalizeLogin()}" ajax="false" icon="pi pi-check"
-                                                     update=":regForm"
-                                                     class="btn btn-primary btn-block" >
-                                        <p:ajax update="panel" resetValues="true" />
-                                    </p:commandButton>
+                                            <p:commandButton type="submit" value="Confirm"
+                                                             action="#{signUpBean.verifyStaffInfo()}" ajax="false"
+                                                             update="regForm"
+                                                             class="btn btn-primary btn-block" />
                                     </p:panel>
                                 </h:form>
                             </div>

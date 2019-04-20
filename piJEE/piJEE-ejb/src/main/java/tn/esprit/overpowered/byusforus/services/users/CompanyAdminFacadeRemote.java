@@ -44,6 +44,12 @@ public interface CompanyAdminFacadeRemote {
     public List<CompanyProfile> searchCompanyProfileByName(String name);
     public CompanyProfile searchCompanyProfileById(Long id);
     public void deleteCompanyProfile(Long idComp);
+    public CompanyProfile checkCompanyExistence(String compName);
+    
+    //Binding Various Users To companyProfile
+    public void bindEmployeeToCompanyProfile(Long idEmp, Long idComp);
+    public void bindCompanyPMToCompanyProfile(Long idPM, Long idComp);
+    public void bindCompanyHRToCompanyProfile(Long idHR, Long idComp);
     
     //Event 
     public Long createEvent(Event event);

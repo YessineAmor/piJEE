@@ -17,10 +17,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
 /**
@@ -35,7 +33,7 @@ public class Employee extends Professional implements Serializable {
     private static final long serialVersionUID = 31L;
 
     @ManyToOne
-    @JoinTable(name = "COMPANY_EMPLOYEES")
+    @JoinColumn(name = "FK_COMP_EMP_ID")
     CompanyProfile company;
 
     @ManyToOne(cascade = {PERSIST, MERGE, DETACH}, fetch = FetchType.LAZY)
@@ -44,7 +42,7 @@ public class Employee extends Professional implements Serializable {
 
     @OneToMany(mappedBy = "manager")
     private Set<Employee> subordinates = new HashSet<Employee>();
-    
+
     @Override
     public Set<Skill> getSkills() {
         return skills;
@@ -80,5 +78,16 @@ public class Employee extends Professional implements Serializable {
         this.subordinates = subordinates;
     }
 
+    public Employee(String username, String email, String firstName, String lastName, byte[] password) {
+        super(username, email, firstName, lastName, password);
+    }
+
+    public Employee(String username, String email, String firstName, String lastName) {
+        super(username, email, firstName, lastName);
+    }
+
+    public Employee() {
+    }
 
 }
+

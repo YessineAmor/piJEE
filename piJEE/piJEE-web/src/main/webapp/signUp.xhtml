@@ -4,7 +4,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/template_signUp.xhtml"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="title"><title>Home</title></ui:define>
 
@@ -14,7 +15,8 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
             <link rel="stylesheet" href="style.css" />
-            <link rel="stylesheet" href="http://fonts.googleapis.com/css"/>
+            <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
+            <link rel="canonical" href="http://localhost:8484/piJEE-web-1.0/signUp.xhtml" />
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
         <h:body style="background : url('backgroud.jpg');" id="myBody">
@@ -25,10 +27,10 @@
                 <h:form class="form-inline" >
                     <p:growl id="message" showDetail="true" />
                     <p:inputText class="input" value="#{signUpBean.login}" required="true"/> <p:password class="input"
-                                                value="#{signUpBean.pass}" style="margin-left : 10px; margin-right: 10px" /> 
+                                                                                                         value="#{signUpBean.pass}" style="margin-left : 10px; margin-right: 10px" /> 
                     <p:commandButton action="#{signUpBean.doLogin()}"
                                      onclick="PF('dlg3').show();"
-                        value="Login" class="btn btn-success" />
+                                     value="Login" class="btn btn-success" />
 
                     <p:dialog header="2FAuth" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="200">
                         <h:outputText value="Insert code HERE." style="text-align: center" />
@@ -93,18 +95,54 @@
                                     </h:form>
                                 </div>
                                 <div id="old">
-                                    <form action="">
-                                        <div class="form-group">
-                                            <label>Email</label> <input name="email"
-                                                                        class="form-control" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Mots de passe</label> <input
-                                                type="password" name="pwd" class="form-control" />
-                                        </div>
-                                        <input type="submit" value="S'incrire"
-                                               class="btn btn-primary btn-block" />
-                                    </form>
+                                    <h:form id="regFormOld">
+                                        <p:panel id="panel">
+                                            <p:growl id="messagesOld" showDetail="true" />
+
+                                            <p:outputLabel value="Role: " />
+                                            <h:selectOneMenu id="rl" value="#{signUpBean.role}" style="width:200px" >
+                                                <f:selectItem itemLabel="Select Role" />
+                                                <f:selectItems value="#{signUpBean.Roles()}" />
+                                            </h:selectOneMenu>
+                                            <div class="form-group">
+                                                <p:outputLabel>Username</p:outputLabel> <p:inputText
+                                                    value="#{signUpBean.username}" class="form-control" required="true"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel>Email</p:outputLabel> <p:inputText
+                                                    value="#{signUpBean.email}" class="form-control" required="true"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel>First Name</p:outputLabel> <p:inputText
+                                                    value="#{signUpBean.firstName}" class="form-control" required="true" />
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel>Last Name</p:outputLabel> <p:inputText
+                                                    value="#{signUpBean.lastName}" class="form-control" required="true" />
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel>Password *</p:outputLabel>
+                                                <p:password id="pwd3" value="#{signUpBean.password}" match="pwd4" feedback="true" inline="true"
+                                                            class="form-control" required="true"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <p:outputLabel>Re-Password *</p:outputLabel>
+                                                <p:password id="pwd4" value="#{signUpBean.password}" feedback="true" inline="true" class="form-control" required="true"/>
+                                            </div>
+
+                                            <p style="text-align: center">
+                                                By Clicking subscribe, You agree to terms and conditions,
+                                                Policy and Confidentiality,And cookies related policy of ByUsForUs.
+                                            </p>
+                                            <p:messages showDetail="true"/>
+                                            <p:captcha label="Captcha" />
+                                            <br />
+                                            <p:commandButton type="submit" value="Subscribe"
+                                                             action="#{signUpBean.SignUpAsCompanyStaff()}" ajax="false" icon="pi pi-check"
+                                                             update="regFormOld"
+                                                             class="btn btn-primary btn-block" />
+                                        </p:panel> 
+                                    </h:form>
                                 </div>
                             </div>
                             <!--  tab-content -->
@@ -118,49 +156,49 @@
                 src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
             type="text/javascript" xml:space="preserve"></script> <script
                 type="text/javascript" xml:space="preserve">//<![CDATA[
-                    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+                                         $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 
-                        var $this = $(this),
-                                label = $this.prev('label');
+                                             var $this = $(this),
+                                                     label = $this.prev('label');
 
-                        if (e.type === 'keyup') {
-                            if ($this.val() === '') {
-                                label.removeClass('active highlight');
-                            } else {
-                                label.addClass('active highlight');
-                            }
-                        } else if (e.type === 'blur') {
-                            if ($this.val() === '') {
-                                label.removeClass('active highlight');
-                            } else {
-                                label.removeClass('highlight');
-                            }
-                        } else if (e.type === 'focus') {
+                                             if (e.type === 'keyup') {
+                                                 if ($this.val() === '') {
+                                                     label.removeClass('active highlight');
+                                                 } else {
+                                                     label.addClass('active highlight');
+                                                 }
+                                             } else if (e.type === 'blur') {
+                                                 if ($this.val() === '') {
+                                                     label.removeClass('active highlight');
+                                                 } else {
+                                                     label.removeClass('highlight');
+                                                 }
+                                             } else if (e.type === 'focus') {
 
-                            if ($this.val() === '') {
-                                label.removeClass('highlight');
-                            } else if ($this.val() !== '') {
-                                label.addClass('highlight');
-                            }
-                        }
+                                                 if ($this.val() === '') {
+                                                     label.removeClass('highlight');
+                                                 } else if ($this.val() !== '') {
+                                                     label.addClass('highlight');
+                                                 }
+                                             }
 
-                    });
+                                         });
 
-                    $('.tab a').on('click', function (e) {
+                                         $('.tab a').on('click', function (e) {
 
-                        e.preventDefault();
+                                             e.preventDefault();
 
-                        $(this).parent().addClass('active');
-                        $(this).parent().siblings().removeClass('active');
+                                             $(this).parent().addClass('active');
+                                             $(this).parent().siblings().removeClass('active');
 
-                        var target = $(this).attr('href');
+                                             var target = $(this).attr('href');
 
-                        $('.tab-content > div').not(target).hide();
+                                             $('.tab-content > div').not(target).hide();
 
-                        $(target).fadeIn(600);
+                                             $(target).fadeIn(600);
 
-                    });
-                    //]]></script>
+                                         });
+                                         //]]></script>
         </h:body>
         <!-- End download Area -->
     </ui:define>
