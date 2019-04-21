@@ -1,11 +1,10 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
-import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -13,31 +12,30 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import tn.esprit.overpowered.byusforus.services.quiz.QuizFacadeLocal;
+import tn.esprit.overpowered.byusforus.services.candidat.CandidateApplicationFacadeLocal;
 
 @ManagedBean
-@javax.faces.bean.SessionScoped
-public class QuizController implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@SessionScoped
+public class CandidateApplicationController implements Serializable {
 
     @EJB
-    private QuizFacadeLocal ejbFacade;
-    private List<Quiz> items = null;
-    private Quiz selected;
+    private CandidateApplicationFacadeLocal ejbFacade;
+    private List<CandidateApplication> items = null;
+    private CandidateApplication selected;
 
-    public QuizController() {
+    public CandidateApplicationController() {
     }
 
-    public Quiz getSelected() {
+    public CandidateApplication getSelected() {
         return selected;
     }
 
-    public void setSelected(Quiz selected) {
+    public void setSelected(CandidateApplication selected) {
         this.selected = selected;
     }
 
@@ -47,36 +45,36 @@ public class QuizController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private QuizFacadeLocal getFacade() {
+    private CandidateApplicationFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Quiz prepareCreate() {
-        selected = new Quiz();
+    public CandidateApplication prepareCreate() {
+        selected = new CandidateApplication();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuizCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CandidateApplicationCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuizUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CandidateApplicationUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuizDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CandidateApplicationDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Quiz> getItems() {
+    public List<CandidateApplication> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -111,47 +109,29 @@ public class QuizController implements Serializable {
         }
     }
 
-    public Quiz getQuiz(java.lang.Integer id) {
+    public CandidateApplication getCandidateApplication(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Quiz> getItemsAvailableSelectMany() {
+    public List<CandidateApplication> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<String> getQuizNames() {
-        List<Quiz> q = getFacade().findAll();
-        List<String> namesList = new ArrayList<>();
-        for (Quiz qu : q) {
-            namesList.add(qu.getName());
-        }
-        return namesList;
-    }
-
-    public Quiz getFirstQuiz() {
-        return getFacade().findAll().get(0);
-    }
-
-    public String redirectToTakeQuiz(Quiz quiz) {
-        this.selected = quiz;
-        return "/views/front/quiz/take_quiz?faces-redirect=true";
-    }
-
-    public List<Quiz> getItemsAvailableSelectOne() {
+    public List<CandidateApplication> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Quiz.class)
-    public static class QuizControllerConverter implements Converter {
+    @FacesConverter(forClass = CandidateApplication.class)
+    public static class CandidateApplicationControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            QuizController controller = (QuizController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "quizController");
-            return controller.getQuiz(getKey(value));
+            CandidateApplicationController controller = (CandidateApplicationController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "candidateApplicationController");
+            return controller.getCandidateApplication(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -171,11 +151,11 @@ public class QuizController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Quiz) {
-                Quiz o = (Quiz) object;
+            if (object instanceof CandidateApplication) {
+                CandidateApplication o = (CandidateApplication) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Quiz.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CandidateApplication.class.getName()});
                 return null;
             }
         }

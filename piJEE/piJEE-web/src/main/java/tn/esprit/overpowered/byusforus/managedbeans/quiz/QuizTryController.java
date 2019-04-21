@@ -1,4 +1,4 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +9,8 @@ import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil;
 import tn.esprit.overpowered.byusforus.managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -21,11 +23,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
+import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
+import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizTryFacadeLocal;
 
 @ManagedBean
 @javax.faces.bean.SessionScoped
 public class QuizTryController implements Serializable {
+
+    @EJB
+    private ChoiceFacadeLocal choiceFacade;
 
     private static final long serialVersionUID = 1L;
 
@@ -34,13 +43,31 @@ public class QuizTryController implements Serializable {
     private List<QuizTry> items = null;
     private QuizTry selected;
 
-    private String selections;
+    private String[] selections;
 
-    public String getSelections() {
+    public ChoiceFacadeLocal getChoiceFacade() {
+        return choiceFacade;
+    }
+
+    public void setChoiceFacade(ChoiceFacadeLocal choiceFacade) {
+        this.choiceFacade = choiceFacade;
+    }
+
+    public QuizTryFacadeLocal getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(QuizTryFacadeLocal ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public String[] getSelections() {
         return selections;
     }
 
-    public void setSelections(String selections) {
+    public void setSelections(String[] selections) throws IOException {
+        File f = new File("87azeaz.txt");
+        f.createNewFile();
         this.selections = selections;
     }
 
@@ -53,6 +80,22 @@ public class QuizTryController implements Serializable {
             writer.write(params.get("choiceQuestion1"));
             writer.write(params.get("choiceQuestion2"));
         }
+    }
+
+    public void submitTry(Quiz quiz) {
+        QuizTry qt = new QuizTry();
+        qt.setFinishDate(new Date());
+        qt.setQuiz(quiz);
+        // Get choice by id
+        ArrayList<Answer> answerList = new ArrayList<>();
+        for (String id : selections) {
+            Choice c = choiceFacade.find(Long.parseLong(id));
+            Answer answer = new Answer();
+            answer.setAnswer(c);
+            answerList.add(answer);
+        }
+        qt.setAnswers(answerList);
+        ejbFacade.create(qt);
     }
 
     public QuizTryController() {
