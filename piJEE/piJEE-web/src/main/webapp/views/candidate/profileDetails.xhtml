@@ -10,7 +10,40 @@
     <ui:define name="title"><title>Home</title></ui:define>
 
     <ui:define name="content">
-<p:panelGrid columns="2">
+        <!-- start banner Area -->
+        <h:head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+                  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+            <link rel="stylesheet" href="style.css" />
+            <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
+            <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
+            <script src="https://www.google.com/recaptcha/api.js"></script>
+        </h:head>
+        <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue;" id="myBody">
+            <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
+                <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
+                    <div class="col-md-3">
+                        <h:form id="userDetailForm">
+                            <p:panel header="Manage UserINFO Here">
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                                <h:commandButton value="Candidates" action="/views/candidate/candidatesView?faces-redirect=true"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                    <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+                   
+                            <h:form id="postForm">
+                            <p:panel header="Manage Posts Here">
+                                <p:outputLabel value="Manage Posts HERE"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                            </p:panel>
+                        </h:form>
+                            <h:form id="feedsForm">
+                            <p:panel header="Insert Feeds Here">
+                               <p:panelGrid columns="2">
     <f:facet name="header">
         <p:graphicImage name="demo/images/misc/kobe.png" />
     </f:facet>
@@ -31,7 +64,26 @@
     <h:outputText value="#{candidateViewController.cdt.visits}" />
     
     <h:commandButton value="Recommend" action="#{candidateViewController.recommendCandidate()}"/>
-    <p:commandButton value="Send friend request" onclick="setTimeout('this.disabled = true;', 50);" />
+    <p:commandButton value="Send friend request" action="#{candidateViewController.sendFriendRequest()}" />
 </p:panelGrid>
+                            </p:panel>
+                        </h:form>
+                </div>
+                    <div class="col-md-3">
+                        <h:form id="otherInfoForm">
+                            <p:panel header="Insert Any Info Here">
+                                <p:outputLabel value="Ins"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                            </p:panel>
+                        </h:form>
+                    </div>
+            </div>
+            </div>
+        </h:body>
+        <!-- End download Area -->
     </ui:define>
+
+
 </ui:composition>
+

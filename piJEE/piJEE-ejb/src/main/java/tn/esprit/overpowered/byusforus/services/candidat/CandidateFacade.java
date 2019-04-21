@@ -5,10 +5,10 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
@@ -28,7 +28,7 @@ import tn.esprit.overpowered.byusforus.util.MailSender;
  */
 @Stateless
 public class CandidateFacade extends AbstractFacade<Candidate>
-        implements  CandidateFacadeRemote, CandidateFacadeLocal {
+        implements CandidateFacadeRemote, CandidateFacadeLocal {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -99,7 +99,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return comp;
     }
 
-/*
+    /*
     @Override
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
         Experience exp = em.find(Experience.class, expId);
@@ -111,23 +111,20 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             System.out.println("Either candidate or Experience doent exist !");
         }
     }
-    */
-
+     */
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
-        List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j",JobOffer.class).getResultList();
+        List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j", JobOffer.class).getResultList();
         Candidate cdt = em.find(Candidate.class, candidateId);
         List<String> exp = cdt.getExperiences();
         String testExp = exp.get(0);
         List<JobOffer> customJobs = new ArrayList<>();
-        for (JobOffer j: jobList)
-        {
-            if(j.getTitle().toLowerCase().contains(testExp.toLowerCase()))
-            {
+        for (JobOffer j : jobList) {
+            if (j.getTitle().toLowerCase().contains(testExp.toLowerCase())) {
                 customJobs.add(j);
             }
         }
-        return customJobs ;
+        return customJobs;
     }
 
     @Override
@@ -164,8 +161,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return "mailing system down";
 
     }
-    
-/*
+
+    /*
     @Override
     public void affecterCursusCandidate(Long candidateId, Long cursusId) {
         Candidate cdt = em.find(Candidate.class, candidateId);
@@ -173,8 +170,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         cdt.getCursus().add(cur);
         cur.setProfessionalCursus(cdt);
     }
-*/
-
+     */
     @Override
     public String recommend(Long candidateId) {
         Candidate cdt = em.find(Candidate.class, candidateId);
@@ -227,7 +223,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return cdtt.getContacts().contains(cdt);
     }
      */
-
     @Override
     public List<Candidate> friendsList(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
@@ -250,7 +245,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return contacts;
          */
     }
-/*
+
+    /*
     @Override
     public Experience getCandidateExperience(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
@@ -266,15 +262,14 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         }
 
     }
-*/
-
+     */
     @Override
     public String subscribe(Long companyId, Long candidateId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
-/*
+    /*
     @Override
     public Cursus getCandidateCursus(Long cdtId) {
          Candidate cdt = em.find(Candidate.class, cdtId);
@@ -303,12 +298,66 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             return "Already Friends";
         }
     }
-*/
-
+     */
     @Override
     public Candidate findCandidate(Long cdtId) {
         Candidate cdt = new Candidate();
         cdt = em.find(Candidate.class, cdtId);
         return cdt;
     }
+
+    @Override
+    public String sendFriendRequest(Long currentId, Long friendId) {
+        Candidate currentCdt = em.find(Candidate.class, currentId);
+        Candidate friend = em.find(Candidate.class, friendId);
+       if (currentCdt.getFriendRequests().contains(friendId)) {
+          return "Exist";
+        } else {
+            //currentCdt.getPendingRequests().add(friend);
+            friend.getFriendRequests().add(currentCdt);
+            return "OK";
+        }
+    }
+
+    @Override
+    public String acceptFriendRequest(Long currentId, Long friendId) {
+        this.addContact(currentId, friendId);
+        Candidate currentCdt = em.find(Candidate.class, currentId);
+        Candidate friend = em.find(Candidate.class, friendId);
+        currentCdt.getPendingRequests().remove(friendId);
+        friend.getFriendRequests().remove(currentId);
+        return "OK";
+    }
+
+    @Override
+    public String rejectFriendRequest(Long currentId, Long friendId) {
+        Candidate currentCdt = em.find(Candidate.class, currentId);
+        Candidate friend = em.find(Candidate.class, friendId);
+        currentCdt.getPendingRequests().remove(friendId);
+        friend.getFriendRequests().remove(currentId);
+        return "OK";
+    }
+
+    @Override
+    public List<Candidate> friendRequestList(Long currentId) {
+        Candidate cdt = em.find(Candidate.class, currentId);
+        Set<Candidate> listCdt = cdt.getPendingRequests();
+        List<Candidate> friendRequests = new ArrayList<>();
+        for (Candidate cdtt : listCdt) {
+            friendRequests.add(em.find(Candidate.class, cdtt.getId()));
+        }
+        return friendRequests;
+    }
+
+    @Override
+    public List<Candidate> pendingList(Long currentId) {
+        Candidate cdt = em.find(Candidate.class, currentId);
+        Set<Candidate> listCdt = cdt.getPendingRequests();
+        List<Candidate> pendingRequests = new ArrayList<>();
+        for (Candidate cdtt : listCdt) {
+            pendingRequests.add(em.find(Candidate.class, cdtt.getId()));
+        }
+        return pendingRequests;
+    }
+
 }

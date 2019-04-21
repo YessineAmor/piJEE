@@ -26,6 +26,7 @@ public class CandidateViewController implements Serializable {
     private String email;
     private String recommendations;
     private String firstName;
+    private List<Candidate> friendRequests;
     @EJB
     CandidateFacadeRemote cdtFacade ;
     
@@ -39,6 +40,32 @@ public class CandidateViewController implements Serializable {
     {
         cdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
         return "/views/candidate/profile?faces-redirect=true";
+    }
+    
+    public void sendFriendRequest()
+    {
+        cdtFacade.sendFriendRequest(Authenticator.currentSession.getUser().getId(), cdt.getId());
+    }
+    
+    public String friendRequestList()
+    {
+        friendRequests = cdtFacade.friendRequestList(Authenticator.currentSession.getUser().getId());
+        return "/views/candidate/friendRequestList?faces-redirect=true";
+    }
+    
+    public List<Candidate> pendingRequests()
+    {
+        return cdtFacade.pendingList(Authenticator.currentSession.getUser().getId());
+    }
+    
+    public void acceptFriendRequest()
+    {
+        cdtFacade.acceptFriendRequest(Authenticator.currentSession.getUser().getId(), cdt.getId());
+    }
+    
+    public void rejectFriendRequest()
+    {
+      cdtFacade.rejectFriendRequest(Authenticator.currentSession.getUser().getId(), cdt.getId());
     }
     
     public void recommendCandidate()
@@ -102,6 +129,14 @@ public class CandidateViewController implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public List<Candidate> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(List<Candidate> friendRequests) {
+        this.friendRequests = friendRequests;
     }
     
 }

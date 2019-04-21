@@ -55,7 +55,7 @@ public interface CandidateFacadeRemote {
     public String createCandidate(Candidate candidate);
 
     public String recommend(Long candidateId);
-    
+
     public Candidate findCandidate(Long cdtId);
 
     //Cursus
@@ -84,5 +84,15 @@ public interface CandidateFacadeRemote {
     //  public boolean checkContacts(Long cdtId, Candidate cdt );
 
     public List<Candidate> afficherCandidats();
+
+    public String sendFriendRequest(Long currentId, Long friendId);
+
+    public String acceptFriendRequest(Long currentId, Long friendId);
+
+    public String rejectFriendRequest(Long currentId, Long friendId);
+    
+    public List<Candidate> friendRequestList(Long currentId);
+    
+    public List<Candidate> pendingList(Long currentId);
 
 }

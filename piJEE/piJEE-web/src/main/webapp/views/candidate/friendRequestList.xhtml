@@ -30,7 +30,7 @@
                                 <p:outputLabel value="InsertConnected USER Info"/>
                                 <p:outputLabel value="InsertConnected USER Info"/>
                                  <p:commandButton action="#{candidateViewController.cdtConnected()}" value="Profile"/>
-                                 <p:commandButton action="#{candidateViewController.friendRequestList()}" value="Friend requests"/>
+                                 <p:commandButton action="#{candidateViewController.cdtConnected()}" value="Friend requests"/>
                             </p:panel>
                         </h:form>
                     </div>
@@ -46,7 +46,7 @@
                             <h:form id="feedsForm">
                             <p:panel>
                                 <h:form id="form">
-    <p:dataView var="cdt" value="#{candidateViewController.candidates}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+                                    <p:dataView var="cdt" value="#{candidateViewController.friendRequests}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                 gridIcon="pi pi-th-large" listIcon="pi pi-bars">
         <p:dataViewListItem>
@@ -63,14 +63,21 @@
  
                         <h:outputText value="Recommendations:" />
                         <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
-                    </h:panelGrid>
-                </p:outputPanel>
- 
-                <h:commandButton value="Details" action="/views/candidate/profileDetails?faces-redirect=true" >
+                         <h:commandButton value="Accept" action="/views/candidate/friendRequestList?faces-redirect=true" >
                     <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
                     <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
-                </h:commandButton>>
+                </h:commandButton>
+                 <h:commandButton value="Reject" action="/views/candidate/friendRequestList?faces-redirect=true" >
+                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
+                </h:commandButton>
+                    </h:panelGrid>
+                    
+                </p:outputPanel>
+ 
+               
             </h:panelGrid>
         </p:dataViewListItem>
     </p:dataView>
