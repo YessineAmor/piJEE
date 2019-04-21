@@ -20,8 +20,45 @@
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
         <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
+            <style type="text/css">
+                .ui-sticky {
+                    top: 70px !important;
+                }
+                @media (max-width: 960px) {
+                    .ui-sticky {
+                        top: 110px !important;
+                    }
+                }
+                <!--for Datascroller Management-->
+                .logo {
+                    width: 5%;
+                }
+
+                .detail {
+                    width: 95%;
+                    padding-left: 2px;
+                }
+
+                .detail td {
+                    font-size: 12px;
+                }
+
+                .ui-datascroller .ui-datascroller-item {
+                    border-bottom: 1px solid #A8A8A8;
+                    padding: 2px 2px;
+                    /* with the exported variables from Nova and Luna Themes*/
+                    border-bottom-color:var(--input-border-color, #A8A8A8);
+                }
+
+                .ui-dataview-list .ui-dataview-row {
+                    border-bottom: 1px solid #A8A8A8;
+                    padding: 2px 2px;
+                    /* with the exported variables from Nova and Luna Themes*/
+                    border-bottom-color:var(--input-border-color, #A8A8A8);
+                }
+            </style>
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
-                <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
+                <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
                     <div class="col-md-3">
                         <h:form id="AdminForm">
                             <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
@@ -34,20 +71,44 @@
                                     <p:commandLink value="#{adminBean.compAdmin.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
+                                <f:facet name="options">
+                                    <p:menu >
+                                        <p:menuitem value="New Event" url="#" icon="pi pi-clone" onclick="#" />
+                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-times" onclick="#" />
+                                    </p:menu>
                                 </f:facet>
                             </p:panel>
                         </h:form>
-                        <h:form id="HRForm">
-                            <p:panel header="Human Resource Manager" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
-                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
-                                    <p:commandLink >
-                                        <p:graphicImage value="hrManager.jpg" height="90px" width="100px"  />
-                                    </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.companyHRManager.firstName} #{adminBean.compAdmin.companyProfile.companyHRManager.lastName}"/>
-                                    <!--p:outputLabel value="#{adminBean.compAdmin.lastName}"/-->
-                                    <p:commandLink value="#{adminBean.compAdmin.companyProfile.companyHRManager.email}"/>
-                                </p:panelGrid>
+                        <h:form id="eventsForm">
+                            <p:panel header="Events" toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto;">
+                                <!--p:panelGrid -->
+                                <p:dataScroller value="#{adminBean.events}" var="evt" chunkSize="2" >
+                                    <f:facet name="header">
+                                        Scroll Down to Load More Events
+                                    </f:facet>
+                                    <p:panelGrid columns="2"  style ="width: 100%" columnClasses="logo,detail">
+                                        <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
+                                        <p:outputPanel style="width: auto">
+                                            <h:panelGrid columns="2" cellpadding="1">
+                                                <h:outputText value="Title:" />
+                                                <h:outputText value="#{evt.name}" style="font-weight: bold"/>
+
+                                                <h:outputText value="Start:" />
+                                                <h:outputText value="#{evt.startDate}" style="font-weight: bold"/>
+
+                                                <h:outputText value="End:" />
+                                                <h:outputText value="#{evt.endDate}" style="font-weight: bold"/>
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                        <f:facet name="footer">
+                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewEvent(evt.id)}"/>
+                                        </f:facet>
+                                    </p:panelGrid>
+
+                                </p:dataScroller>
+                                <!--/p:panelGrid-->
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
@@ -57,60 +118,41 @@
                     <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: auto">
 
                         <h:form id="infoForm">
-                            <p:panel header="Company Profile" style="text-align: center; ">
+                            <p:growl id="msgs" showDetail="true" />
+                            <p:panel header="OTHER"   style="text-align: center;">
                                 <f:facet name="header" >
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
+                                    <p:outputLabel value="#{adminBean.previewedEvent.name}"/>
                                 </f:facet>
-                                <p:panelGrid layout="grid" columns="1">
-                                    <p:row ><p:outputLabel value="Summary"/></p:row>
-                                    <p:row><p:inputTextarea value="#{adminBean.company.summary}"/></p:row>
-                                    <p:row ><p:column ><p:outputLabel value="Sector of Activity:"/></p:column>
-                                        <p:column><p:inputText value="#{adminBean.company.sectorOfActivity}"/></p:column>
-                                    </p:row>
-                                    <p:row><p:column ><p:outputLabel value="Website:"/></p:column>
-                                        <p:column><p:inputText value="#{adminBean.company.website}"/></p:column>
-                                    </p:row>
-                                    <p:row><p:column ><p:outputLabel value="Since:"/></p:column>
-                                        <p:column><p:inputText value="#{adminBean.company.dateOfCreation}"/></p:column>
-                                    </p:row>
-                                    <p:row><p:column ><p:commandLink value="Project Managers:" action="#"/></p:column>
-                                        <p:column><p:outputLabel value="15"/></p:column>
-                                    </p:row>
-                                    <p:row><p:column ><p:commandLink value="Employees:" action="#"/></p:column>
-                                        <p:column><p:outputLabel value="14"/></p:column>
-                                    </p:row>
-                                    <p:row><p:column ><p:commandLink value="Views:" action="#"/></p:column>
-                                        <p:column><p:outputLabel value="#{adminBean.compAdmin.companyProfile.numViews}"/></p:column>
-                                    </p:row>
+                                <p:panelGrid columns="2"  style ="width: 100%" columnClasses="logo,detail">
+                                    <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
+                                    <p:outputPanel style="width: auto">
+                                        <h:panelGrid columns="2" cellpadding="1">
+                                            <h:outputText value="Title:" />
+                                            <h:inputText value="#{adminBean.previewedEvent.name}" style="font-weight: bold"/>
+
+                                            <h:outputText value="Location:" />
+                                            <h:inputText value="#{adminBean.previewedEvent.location}" style="font-weight: bold"/>
+
+                                            <h:outputText value="Start:" />
+                                            <p:datePicker id="Stime" value="#{adminBean.previewedEvent.startDate}" style="font-weight: bold" showTime="true"/>
+
+                                            <h:outputText value="End:" />
+                                            <p:datePicker id="Etime" value="#{adminBean.previewedEvent.endDate}" style="font-weight: bold" showTime="true"/>
+                                       
+                                            <h:outputText value="Description:" />
+                                            <p:inputTextarea value="#{adminBean.previewedEvent.description}" style="font-weight: bold"/>
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                    <f:facet name="footer">
+                                        <p:commandLink value="Update" action="#{adminBean.doUpdateEvent()}" style="margin-right: 10px"/>
+                                        <p:commandLink value="Delete" action="#{adminBean.doDeleteEvent()}" style="margin-right: 10px"/>
+                                        <p:commandLink value="Create" action="#{adminBean.doCreateEvent()}" style="margin-right: 10px"/>               
+                                    </f:facet>
                                 </p:panelGrid>
-                                <f:facet name="footer" >
-                                    <p:row>
-                                        <p:column>
-                                            <p:commandLink value="Update" action="#{adminBean.doCompanyUpdate()}" 
-                                                           update="infoForm" style="margin-right: 10px">
-                                                <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
-                                            </p:commandLink>
-                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-                                            </p:confirmDialog>
-                                        </p:column>
-                                        <p:column><p:commandLink value="Delete" /></p:column>
-                                    </p:row>
-                                </f:facet>
                             </p:panel>
                         </h:form>
                     </div>
-                    <div class="col-md-3"><style type="text/css">
-                            .ui-sticky {
-                                top: 70px !important;
-                            }
-                            @media (max-width: 960px) {
-                                .ui-sticky {
-                                    top: 110px !important;
-                                }
-                            }
-                        </style>
+                    <div class="col-md-3">
                         <h:form id="otherInfoForm">
                             <p:panel header="Company Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;">
@@ -126,8 +168,7 @@
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
-                            <p:sticky target="AdminForm" />
-                            <p:sticky target="HRForm" />
+                            <p:sticky target="eventsForm" />
                             <p:sticky target="infoForm" />
                         </h:form>
                     </div>
