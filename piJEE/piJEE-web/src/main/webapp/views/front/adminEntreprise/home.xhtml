@@ -36,6 +36,13 @@
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
+                                <f:facet name="options">
+                                    <p:menu >
+                                        <p:menuitem value="Profile" url="#" icon="pi pi-clone" onclick="#" />
+                                        <p:menuitem value="Events" url="#" action="#{adminBean.viewEvents()}" icon="pi pi-times" onclick="#" />
+                                        <p:menuitem value="Offers" url="#" icon="pi pi-times" onclick="#" />
+                                    </p:menu>
+                                </f:facet>
                             </p:panel>
                         </h:form>
                     </div>
@@ -74,7 +81,7 @@
                                     </p:commandLink>
                                     <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
                                     <p:outputLabel value="HR Manager: #{adminBean.compAdmin.companyProfile.companyHRManager.lastName}"/>
-                                    <p:commandLink value="Events"/>
+                                    <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
                                     <p:commandLink value="Offers"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
