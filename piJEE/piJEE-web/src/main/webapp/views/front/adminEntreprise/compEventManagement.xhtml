@@ -75,8 +75,8 @@
                                 </f:facet>
                                 <f:facet name="options">
                                     <p:menu >
-                                        <p:menuitem value="New Event" url="#" icon="pi pi-clone" onclick="#" />
-                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-times" onclick="#" />
+                                        <p:menuitem value="New Event" url="#" icon="pi pi-clone"  />
+                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-times"  />
                                     </p:menu>
                                 </f:facet>
                             </p:panel>
@@ -119,28 +119,28 @@
 
                         <h:form id="infoForm">
                             <p:growl id="msgs" showDetail="true" />
-                            <p:panel header="OTHER"   style="text-align: center;">
+                            <p:panel header="OTHER"   style="text-align: center;" id="infoPanel">
                                 <f:facet name="header" >
-                                    <p:outputLabel value="#{adminBean.previewedEvent.name}"/>
+                                    <p:outputLabel value="#{adminBean.eventName}"/>
                                 </f:facet>
-                                <p:panelGrid columns="2"  style ="width: 100%" columnClasses="logo,detail">
+                                <p:panelGrid columns="2"  style ="width: 100%" columnClasses="logo,detail" id="infoPanelGrid1">
                                     <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
                                     <p:outputPanel style="width: auto">
-                                        <h:panelGrid columns="2" cellpadding="1">
+                                        <h:panelGrid columns="2" cellpadding="1" id="infoPanelGrid2">
                                             <h:outputText value="Title:" />
-                                            <h:inputText value="#{adminBean.previewedEvent.name}" style="font-weight: bold"/>
+                                            <h:inputText value="#{adminBean.eventName}" style="font-weight: bold"/>
 
                                             <h:outputText value="Location:" />
-                                            <h:inputText value="#{adminBean.previewedEvent.location}" style="font-weight: bold"/>
+                                            <h:inputText value="#{adminBean.eventLocation}" style="font-weight: bold"/>
 
                                             <h:outputText value="Start:" />
-                                            <p:datePicker id="Stime" value="#{adminBean.previewedEvent.startDate}" style="font-weight: bold" showTime="true"/>
+                                            <p:datePicker id="Stime" value="#{adminBean.eventStartDate}" style="font-weight: bold" showTime="true"/>
 
                                             <h:outputText value="End:" />
-                                            <p:datePicker id="Etime" value="#{adminBean.previewedEvent.endDate}" style="font-weight: bold" showTime="true"/>
+                                            <p:datePicker id="Etime" value="#{adminBean.eventEndDate}" style="font-weight: bold" showTime="true"/>
                                        
                                             <h:outputText value="Description:" />
-                                            <p:inputTextarea value="#{adminBean.previewedEvent.description}" style="font-weight: bold"/>
+                                            <p:inputTextarea value="#{adminBean.eventDescription}" style="font-weight: bold"/>
                                         </h:panelGrid>
                                     </p:outputPanel>
                                     <f:facet name="footer">
