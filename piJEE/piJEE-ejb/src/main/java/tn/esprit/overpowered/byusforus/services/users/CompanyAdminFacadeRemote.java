@@ -59,7 +59,7 @@ public interface CompanyAdminFacadeRemote {
     public void deleteEvent(Long eventId);
     
     public Event searchEventById(Long eventId);
-    
+    public Event findEvent(String name);
     public List<Event> searchEventByDate(Date startDate, Date endDate);
     
     public List<Event> searchEventByDate(Date startDate);
@@ -67,6 +67,8 @@ public interface CompanyAdminFacadeRemote {
     public List<Event> searchEventByName(String name);
     
     public List<Event> searchEventByLocation(String location);
+    
+    public List<Event> viewAllEvents();
     
     public List<CompanyProfile> findAllCompanies();
     
