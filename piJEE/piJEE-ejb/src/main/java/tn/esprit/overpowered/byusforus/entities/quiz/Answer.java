@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 
 /**
@@ -25,8 +26,8 @@ public class Answer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @ManyToOne
-//    private Question question;
+    @OneToOne
+    private Question question;
     @ManyToOne
     @JoinColumn(name = "answer_fk")
     private Choice answer;
@@ -68,6 +69,14 @@ public class Answer implements Serializable {
 
     public void setCandidate(Candidate candidate) {
         this.candidate = candidate;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     @Override
