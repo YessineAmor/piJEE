@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
@@ -171,6 +172,17 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     }
 
     @Override
+    public Event findEvent(String name){
+        Event e = null;
+        try {
+            e= em.createQuery("SELECT E FROM Event E where E.name= :name",Event.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+        }
+        return e;
+    }
+    @Override
     public List<Event> searchEventByDate(Date startDate, Date endDate) {
         List<Event> events = em.createQuery("select e from Event e where"
                 + " e.startDate= :startDate and e.endDate= :endDate", Event.class)
@@ -200,6 +212,16 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
         return em.createQuery("select e from Event e where"
                 + " e.location LIKE CONCAT('%',:location,'%')", Event.class)
                 .getResultList();
+    }
+
+    @Override
+    public List<Event> viewAllEvents() {
+        List<Event> events = new ArrayList<>();
+        try {
+            events = em.createQuery("SELECT E FROM Event E").getResultList();
+        } catch (Exception e) {
+        }
+        return events;
     }
 
     @Override

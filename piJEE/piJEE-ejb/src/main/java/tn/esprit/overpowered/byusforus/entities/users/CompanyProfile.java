@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
@@ -74,9 +75,20 @@ public class CompanyProfile implements Serializable {
     private List<Workshop> workshops;
 
     public CompanyProfile() {
+        this.name="";
+        this.numViews=0;
+        this.sectorOfActivity="";
+        this.summary="";
+        this.website="";
+        this.companyAdmin= new CompanyAdmin();
+        this.companyHRManager = new HRManager();
+        this.projectManagers = new ArrayList<>();
+        this.employees = new ArrayList<>();
+        
     }
 
     public CompanyProfile(String name) {
+        super();
         this.name = name;
     }
 
