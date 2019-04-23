@@ -23,9 +23,11 @@
                             <div>
                                 <c:if test="#{quizTryController.breachType eq 'NO_FACE'}">
                                     <h3 style="margin-bottom: 1em;">No faces have been detected from your webcam feed. This automatically disqualifies you from the quiz.</h3>
+
                                     <h4 style="margin-bottom: 1em;">If you think this decision is not right, you can submit a claim by clicking here.</h4>
                                     <video download="download" src="#{quizTryController.recordingBlob}" controls="controls"></video>
-                                    <p:commandLink />
+                                    <br></br>
+                                    <a href="#{quizTryController.recordingBlob}" download="MyQuizVid.webm">Download video</a>
                                 </c:if>
                                 <c:if test="#{quizTryController.breachType eq 'NO_BREACH'}">
                                     <h3>You scored #{quizTryController.selected.percentage}% on the #{quizTryController.selected.quiz.name}</h3>
@@ -47,7 +49,6 @@
                                     </c:if>
                                 </c:if>
                                 <br></br>
-
                             </div>
                         </div>
                     </div>

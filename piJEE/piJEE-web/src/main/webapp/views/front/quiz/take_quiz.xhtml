@@ -34,7 +34,7 @@
                                 <h1>#{quizController.selected.name}</h1>
                             </div>
                             <p:remoteCommand name="sendBlobBase64" 
-                                             actionListener="#{quizTryController.onBlobBase64Sent}" process="@this"/>
+                                             actionListener="#{quizTryController.onBlobBase64Sent()}" process="@this"/>
                             <p:remoteCommand name="breachDetected" 
                                              actionListener="#{quizTryController.breachDetected()}" process="@this"/>
                             <div>
@@ -138,9 +138,9 @@
                 this.disabled = true;
                 recorder.stopRecording(stopRecordingCallback);
             };
-
-
-
+            
+            
+            
         </script>
     </ui:define>
 

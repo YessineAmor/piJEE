@@ -117,11 +117,12 @@ public class QuizTryController implements Serializable {
     }
 
     public void onBlobBase64Sent() throws FileNotFoundException, IOException {
-        recordingName = "QUIZ_TRY_" + new Random().nextInt() + ".ts.webm";
+        String path = "../standalone/deployments/piJEE-web-1.0.war/media/";
+        this.recordingName = "QUIZ_TRY_" + new Random().nextInt() + ".ts.webm";
         String blobBase64 = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("blobBase64Name");
         byte[] blob = java.util.Base64.getDecoder().decode(blobBase64.split(",")[1]);
         this.recordingBlob = blobBase64;
-        try (FileOutputStream fos = new FileOutputStream(recordingName)) {
+        try (FileOutputStream fos = new FileOutputStream(path + recordingName)) {
             fos.write(blob);
         }
 
