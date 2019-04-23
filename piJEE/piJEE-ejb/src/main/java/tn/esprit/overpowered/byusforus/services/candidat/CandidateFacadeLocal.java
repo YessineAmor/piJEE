@@ -91,4 +91,6 @@ public interface CandidateFacadeLocal {
     
     public List<Candidate> pendingList(Long currentId);
     
+     public String deleteFriend(Long cdtId, Long friendId);
+    
 }

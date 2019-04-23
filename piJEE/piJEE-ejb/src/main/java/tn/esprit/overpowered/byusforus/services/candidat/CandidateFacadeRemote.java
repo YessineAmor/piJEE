@@ -94,5 +94,7 @@ public interface CandidateFacadeRemote {
     public List<Candidate> friendRequestList(Long currentId);
     
     public List<Candidate> pendingList(Long currentId);
+    
+    public String deleteFriend(Long friendId, Long fId);
 
 }

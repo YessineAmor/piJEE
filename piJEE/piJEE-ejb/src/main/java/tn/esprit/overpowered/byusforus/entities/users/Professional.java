@@ -48,7 +48,7 @@ public abstract class Professional extends User {
     @ElementCollection(targetClass = String.class)
     private List<String> experiences;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "subscriptions", joinColumns
             = {
                 @JoinColumn(name = "candidate_id")}, inverseJoinColumns
@@ -60,13 +60,13 @@ public abstract class Professional extends User {
 
     private List<String> activities;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "friend_request",
             joinColumns = @JoinColumn(name = "personId"),
             inverseJoinColumns = @JoinColumn(name = "friendId"))
     private Set<Candidate> friendRequests;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "friend_request",
             joinColumns = @JoinColumn(name = "friendId"),
             inverseJoinColumns = @JoinColumn(name = "personId"))

@@ -313,7 +313,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
        if (currentCdt.getFriendRequests().contains(friendId)) {
           return "Exist";
         } else {
-            //currentCdt.getPendingRequests().add(friend);
+            currentCdt.getFriendRequests().add(friend);
             friend.getFriendRequests().add(currentCdt);
             return "OK";
         }
@@ -324,8 +324,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         this.addContact(currentId, friendId);
         Candidate currentCdt = em.find(Candidate.class, currentId);
         Candidate friend = em.find(Candidate.class, friendId);
-        currentCdt.getPendingRequests().remove(friendId);
-        friend.getFriendRequests().remove(currentId);
+        friend.getFriendRequests().remove(currentCdt);
         return "OK";
     }
 
@@ -333,8 +332,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public String rejectFriendRequest(Long currentId, Long friendId) {
         Candidate currentCdt = em.find(Candidate.class, currentId);
         Candidate friend = em.find(Candidate.class, friendId);
-        currentCdt.getPendingRequests().remove(friendId);
-        friend.getFriendRequests().remove(currentId);
+         friend.getFriendRequests().remove(currentCdt);
+
         return "OK";
     }
 
@@ -358,6 +357,16 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             pendingRequests.add(em.find(Candidate.class, cdtt.getId()));
         }
         return pendingRequests;
+    }
+
+    @Override
+    public String deleteFriend(Long currentCdtId, Long contactId) {
+        Candidate currentCdt = em.find(Candidate.class, currentCdtId);
+        Candidate contact = em.find(Candidate.class, contactId);
+        
+            currentCdt.getContacts().remove(contact);
+            contact.getContacts().remove(currentCdt);
+            return "Contact deleted";
     }
 
 }

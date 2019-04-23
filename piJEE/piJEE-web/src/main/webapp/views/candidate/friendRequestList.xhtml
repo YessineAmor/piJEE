@@ -24,68 +24,77 @@
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
                     <div class="col-md-3">
                         <h:form id="userDetailForm">
-                            <p:panel header="Profile">
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <h:commandButton value="Candidates" action="/views/candidate/candidatesView?faces-redirect=true"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                 <p:commandButton action="#{candidateViewController.cdtConnected()}" value="Profile"/>
-                                 <p:commandButton action="#{candidateViewController.cdtConnected()}" value="Friend requests"/>
+                            <p:panel header="My Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
+                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                    <p:commandLink >
+                                        <h:commandLink action="#{candidateViewController.cdtConnected()}">
+                                            <h:graphicImage value="elon.png" height="50px" width="50px"  />
+                                        </h:commandLink>
+                                    </p:commandLink>
+                                    <p:outputLabel value="#{candidateViewController.cdt.firstName} #{candidateViewController.cdt.lastName}"/>
+                                    <p:commandLink value="#{candidateViewController.cdt.email}"/>
+                                </p:panelGrid>
+                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                    <p:commandButton action="#{candidateViewController.friendRequestList()}" value="Friend requests"/>
+                                    <p:commandButton action="#{candidateViewController.friendList()}" value="Friends"/>
+                                    <p:commandButton action="#{candidateViewController.candidatesList()}" value="Candidates"/>
+                                </p:panelGrid>
+                                <f:facet name="actions">
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
                             </p:panel>
                         </h:form>
                     </div>
                     <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
-                   
-                            <h:form id="postForm">
+
+                        <h:form id="postForm">
                             <p:panel header="Manage Posts Here">
                                 <p:outputLabel value="Manage Posts HERE"/>
                                 <p:outputLabel value="InsertConnected USER Info"/>
                                 <p:outputLabel value="InsertConnected USER Info"/>
                             </p:panel>
                         </h:form>
-                            <h:form id="feedsForm">
+                        <h:form id="feedsForm">
                             <p:panel>
                                 <h:form id="form">
                                     <p:dataView var="cdt" value="#{candidateViewController.friendRequests}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
-                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-        <p:dataViewListItem>
-            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                <p:graphicImage value="elon.png" height="70px" width="50px" /> 
- 
-                <p:outputPanel>
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="First name:" />
-                        <h:outputText value="#{cdt.firstName}" style="font-weight: bold"/>
- 
-                        <h:outputText value="Email:" />
-                        <h:outputText value="#{cdt.email}" style="font-weight: bold"/>
- 
-                        <h:outputText value="Recommendations:" />
-                        <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
-                         <h:commandButton value="Accept" action="/views/candidate/friendRequestList?faces-redirect=true" >
-                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
-                </h:commandButton>
-                 <h:commandButton value="Reject" action="/views/candidate/friendRequestList?faces-redirect=true" >
-                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
-                </h:commandButton>
-                    </h:panelGrid>
-                    
-                </p:outputPanel>
- 
-               
-            </h:panelGrid>
-        </p:dataViewListItem>
-    </p:dataView>
-   
-</h:form>
+                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                                        <p:dataViewListItem>
+                                            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                                                <p:graphicImage value="elon.png" height="70px" width="50px" /> 
+
+                                                <p:outputPanel>
+                                                    <h:panelGrid columns="2" cellpadding="5">
+                                                        <h:outputText value="First name:" />
+                                                        <h:outputText value="#{cdt.firstName}" style="font-weight: bold"/>
+
+                                                        <h:outputText value="Email:" />
+                                                        <h:outputText value="#{cdt.email}" style="font-weight: bold"/>
+
+                                                        <h:outputText value="Recommendations:" />
+                                                        <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
+                                                        <h:commandButton value="Accept" action="#{candidateViewController.acceptFriendRequest()}">
+                                                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                            <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                        </h:commandButton>
+                                                        <h:commandButton value="Reject" action="#{candidateViewController.rejectFriendRequest()}" >
+                                                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                            <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                        </h:commandButton>
+                                                    </h:panelGrid>
+
+                                                </p:outputPanel>
+
+
+                                            </h:panelGrid>
+                                        </p:dataViewListItem>
+                                    </p:dataView>
+
+                                </h:form>
                             </p:panel>
                         </h:form>
-                </div>
+                    </div>
                     <div class="col-md-3">
                         <h:form id="otherInfoForm">
                             <p:panel header="Insert Any Info Here">
@@ -95,7 +104,7 @@
                             </p:panel>
                         </h:form>
                     </div>
-            </div>
+                </div>
             </div>
         </h:body>
         <!-- End download Area -->
