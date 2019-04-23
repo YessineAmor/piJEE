@@ -29,5 +29,7 @@ public interface AnswerFacadeLocal {
     List<Answer> findRange(int[] range);
 
     int count();
-    
+
+    Answer findByChoiceAndQuiz(Long choiceId, Long QuizId);
+
 }

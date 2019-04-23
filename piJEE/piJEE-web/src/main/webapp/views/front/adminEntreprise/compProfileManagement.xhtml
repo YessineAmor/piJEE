@@ -36,6 +36,12 @@
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
+                                <f:facet name="options">
+                                    <p:menu >
+                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-clone"  />
+                                        <p:menuitem value="Company" url="#" icon="pi pi-times"  />
+                                    </p:menu>
+                                </f:facet>
                             </p:panel>
                         </h:form>
                         <h:form id="HRForm">
@@ -49,7 +55,7 @@
                                     <p:commandLink value="#{adminBean.compAdmin.companyProfile.companyHRManager.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
                             </p:panel>
                         </h:form>
@@ -118,11 +124,11 @@
                                         <p:graphicImage value="byusforus.png" height="150px" width="120px"  />
                                     </p:commandLink>
                                     <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
-                                    <p:commandLink value="Events"/>
+                                    <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
                                     <p:commandLink value="Offers"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
