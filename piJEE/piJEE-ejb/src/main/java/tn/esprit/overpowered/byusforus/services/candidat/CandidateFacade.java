@@ -310,7 +310,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public String sendFriendRequest(Long currentId, Long friendId) {
         Candidate currentCdt = em.find(Candidate.class, currentId);
         Candidate friend = em.find(Candidate.class, friendId);
-       if (currentCdt.getFriendRequests().contains(friendId)) {
+       if (currentCdt.getFriendRequests().contains(friend)) {
           return "Exist";
         } else {
             currentCdt.getFriendRequests().add(friend);
