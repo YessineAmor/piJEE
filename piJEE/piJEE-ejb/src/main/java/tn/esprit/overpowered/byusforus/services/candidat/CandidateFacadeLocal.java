@@ -81,5 +81,16 @@ public interface CandidateFacadeLocal {
 
     public List<Candidate> afficherCandidats();
     
+    public String sendFriendRequest(Long currentId, Long friendId);
+    
+    public String acceptFriendRequest(Long currentId, Long friendId);
+    
+    public String rejectFriendRequest(Long currentId, Long friendId);
+    
+    public List<Candidate> friendRequestList(Long currentId);
+    
+    public List<Candidate> pendingList(Long currentId);
+    
+     public String deleteFriend(Long cdtId, Long friendId);
     
 }

@@ -36,9 +36,8 @@
                                 </p:panelGrid>
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandButton action="#{candidateViewController.friendRequestList()}" value="Friend requests"/>
-                                <p:commandButton action="#{candidateViewController.friendList()}" value="Friends"/>
-                                <p:commandButton action="#{candidateViewController.jobofferList()}" value="Job Offers"/>
-                                <p:commandButton action="#{companyViewController.listComp()}" value="Companies"/>
+                                    <p:commandButton action="#{candidateViewController.friendList()}" value="Friends"/>
+                                    <p:commandButton action="#{candidateViewController.candidatesList()}" value="Candidates"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -58,7 +57,7 @@
                         <h:form id="feedsForm">
                             <p:panel>
                                 <h:form id="form">
-                                    <p:dataView var="cdt" value="#{candidateViewController.candidates}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+                                    <p:dataView var="cdt" value="#{candidateViewController.friendRequests}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                 gridIcon="pi pi-th-large" listIcon="pi pi-bars">
                                         <p:dataViewListItem>
@@ -75,14 +74,19 @@
 
                                                         <h:outputText value="Recommendations:" />
                                                         <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
+                                                        <h:commandButton value="Accept" action="#{candidateViewController.acceptFriendRequest()}">
+                                                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                            <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                        </h:commandButton>
+                                                        <h:commandButton value="Reject" action="#{candidateViewController.rejectFriendRequest()}" >
+                                                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                            <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                        </h:commandButton>
                                                     </h:panelGrid>
+
                                                 </p:outputPanel>
 
-                                                <h:commandButton value="Details" action="/views/candidate/profileDetails?faces-redirect=true" >
-                                                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                                                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
-                                                </h:commandButton>
+
                                             </h:panelGrid>
                                         </p:dataViewListItem>
                                     </p:dataView>

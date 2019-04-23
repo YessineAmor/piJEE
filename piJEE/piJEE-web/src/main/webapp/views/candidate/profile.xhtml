@@ -10,27 +10,95 @@
     <ui:define name="title"><title>Home</title></ui:define>
 
     <ui:define name="content">
-<p:panelGrid columns="2">
-    <f:facet name="header">
-        <p:graphicImage name="demo/images/misc/kobe.png" />
-    </f:facet>
-     
-    <h:outputText value="Name" />
-    <h:outputText value="#{candidateViewController.cdt.firstName}" />
-     
-    <h:outputText value="Last name" />
-    <h:outputText value="#{candidateViewController.cdt.lastName}" />
-     
-    <h:outputText value="Email" />
-    <h:outputText value="#{candidateViewController.cdt.email}" />
-     
-    <h:outputText value="Recommendations" />
-    <h:outputText value="#{candidateViewController.cdt.recommendations}" />
-    
-    <h:outputText value="Visits" />
-    <h:outputText value="#{candidateViewController.cdt.visits}" />
-    
-    <h:commandButton value="Recommend" action="#{candidateViewController.recommendCandidate()}"/>
-</p:panelGrid>
+        <!-- start banner Area -->
+        <h:head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+                  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+            <link rel="stylesheet" href="style.css" />
+            <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
+            <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
+            <script src="https://www.google.com/recaptcha/api.js"></script>
+        </h:head>
+        <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
+            <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
+                <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
+                    <div class="col-md-3">
+                          <h:form id="userDetailForm">
+                            <p:panel header="My Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
+                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                    <p:commandLink >
+                                        <h:commandLink action="#{candidateViewController.cdtConnected()}">
+                                            <h:graphicImage value="elon.png" height="50px" width="50px"  />
+                                        </h:commandLink>
+                                    </p:commandLink>
+                                    <p:outputLabel value="#{candidateViewController.cdt.firstName} #{candidateViewController.cdt.lastName}"/>
+                                    <p:commandLink value="#{candidateViewController.cdt.email}"/>
+                                </p:panelGrid>
+                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                    <p:commandButton action="#{candidateViewController.friendRequestList()}" value="Friend requests"/>
+                                    <p:commandButton action="#{candidateViewController.friendList()}" value="Friends"/>
+                                    <p:commandButton action="#{candidateViewController.candidatesList()}" value="Candidates"/>
+                                </p:panelGrid>
+                                <f:facet name="actions">
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                    <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+
+                        <h:form id="postForm">
+                            <p:panel header="Manage Posts Here">
+                                <p:outputLabel value="Manage Posts HERE"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                            </p:panel>
+                        </h:form>
+                        <h:form id="feedsForm">
+                            <p:panel>
+                                <h:form id="form">
+                                    <p:panelGrid columns ="1">  
+                                        <h:graphicImage value="elon.png" height="200px" width="200px"  />
+                                    </p:panelGrid>
+                                    <p:panelGrid columns="2">
+                                    <f:facet name="header">
+                                        <p:graphicImage name="demo/images/misc/kobe.png" />
+                                    </f:facet>
+
+                                    <h:outputText value="Name" />
+                                    <h:outputText value="#{candidateViewController.cdt.firstName}" />
+
+                                    <h:outputText value="Last name" />
+                                    <h:outputText value="#{candidateViewController.cdt.lastName}" />
+
+                                    <h:outputText value="Email" />
+                                    <h:outputText value="#{candidateViewController.cdt.email}" />
+
+                                    <h:outputText value="Recommendations" />
+                                    <h:outputText value="#{candidateViewController.cdt.recommendations}" />
+
+                                    <h:outputText value="Visits" />
+                                    <h:outputText value="#{candidateViewController.cdt.visits}" />
+
+                                    <h:commandButton value="Edit" action="#{candidateViewController.recommendCandidate()}"/>
+                                </p:panelGrid>
+
+                                </h:form>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                    <div class="col-md-3">
+                        <h:form id="otherInfoForm">
+                            <p:panel header="Insert Any Info Here">
+                                <p:outputLabel value="Ins"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                                <p:outputLabel value="InsertConnected USER Info"/>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </h:body>
+        <!-- End download Area -->
     </ui:define>
 </ui:composition>
