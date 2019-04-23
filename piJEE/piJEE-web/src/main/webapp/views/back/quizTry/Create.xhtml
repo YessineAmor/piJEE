@@ -12,8 +12,6 @@
             <h:form id="QuizTryCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{quizTryController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateQuizTryLabel_idQuizTry}" for="idQuizTry" />
-                        <p:inputText id="idQuizTry" value="#{quizTryController.selected.idQuizTry}" title="#{bundle.CreateQuizTryTitle_idQuizTry}" />
                         <p:outputLabel value="#{bundle.CreateQuizTryLabel_quiz}" for="quiz" />
                         <p:selectOneMenu id="quiz" value="#{quizTryController.selected.quiz}" >
                             <f:selectItems value="#{quizController.itemsAvailableSelectOne}"
@@ -34,8 +32,6 @@
                                            var="candidateItem"
                                            itemValue="#{candidateItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateQuizTryLabel_serialVersionUID}" for="serialVersionUID" />
-                        <p:inputText id="serialVersionUID" value="#{quizTryController.selected.serialVersionUID}" title="#{bundle.CreateQuizTryTitle_serialVersionUID}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{quizTryController.create}" value="#{bundle.Save}" update="display,:QuizTryListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuizTryCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="QuizTryCreateDialog.hide()"/>

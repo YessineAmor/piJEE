@@ -29,15 +29,9 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuizTryTitle_idQuizTry}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idQuizTry}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuizTryTitle_quiz}"/>
                             </f:facet>
-                            <h:outputText value="#{item.quiz}"/>
+                            <h:outputText value="#{item.quiz.name}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -73,12 +67,7 @@
                             </f:facet>
                             <h:outputText value="#{item.candidate}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuizTryTitle_serialVersionUID}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.serialVersionUID}"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{quizTryController.prepareCreate}" update=":QuizTryCreateForm" oncomplete="PF('QuizTryCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuizTryViewForm" oncomplete="PF('QuizTryViewDialog').show()" disabled="#{empty quizTryController.selected}"/>

@@ -12,14 +12,12 @@
             <h:form id="QuizTryEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{quizTryController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditQuizTryLabel_idQuizTry}" for="idQuizTry" />
-                        <p:inputText id="idQuizTry" value="#{quizTryController.selected.idQuizTry}" title="#{bundle.EditQuizTryTitle_idQuizTry}" />
                         <p:outputLabel value="#{bundle.EditQuizTryLabel_quiz}" for="quiz" />
                         <p:selectOneMenu id="quiz" value="#{quizTryController.selected.quiz}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{quizController.itemsAvailableSelectOne}"
                                            var="quizItem"
-                                           itemValue="#{quizItem}"/>
+                                           itemValue="#{quizItem}" itemLabel="#{quizItem.name}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditQuizTryLabel_percentage}" for="percentage" />
                         <p:inputText id="percentage" value="#{quizTryController.selected.percentage}" title="#{bundle.EditQuizTryTitle_percentage}" />
@@ -36,8 +34,6 @@
                                            var="candidateItem"
                                            itemValue="#{candidateItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditQuizTryLabel_serialVersionUID}" for="serialVersionUID" />
-                        <p:inputText id="serialVersionUID" value="#{quizTryController.selected.serialVersionUID}" title="#{bundle.EditQuizTryTitle_serialVersionUID}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{quizTryController.update}" value="#{bundle.Save}" update="display,:QuizTryListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuizTryEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="QuizTryEditDialog.hide()"/>

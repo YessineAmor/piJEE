@@ -29,5 +29,12 @@ public class AnswerFacade extends AbstractFacade<Answer> implements AnswerFacade
     public AnswerFacade() {
         super(Answer.class);
     }
-    
+
+    @Override
+    public Answer findByChoiceAndQuiz(Long choiceId, Long questionId) {
+        return (Answer) em.createQuery("select a from Answer a where a.answer.idChoice =:idchoice and a.question.idQuestion=:questionId")
+                .setParameter("idchoice", choiceId).setParameter("questionId", questionId)
+                .getResultList().get(0);
+    }
+
 }
