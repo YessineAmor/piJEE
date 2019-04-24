@@ -112,13 +112,13 @@ public class AdminBean {
                 this.compAdmin = (CompanyAdmin) Authenticator.currentSession.getUser();
                 this.company = compAdmin.getCompanyProfile();
                 break;
-            case "HUMAN_RESOURCE_MANAGER":
+            case "HUMAN_RESOURCES_MANAGER":
                 this.hrManager = (HRManager) Authenticator.currentSession.getUser();
                 this.company = hrManager.getCompanyProfile();
                 break;
             case "PROJECT_MANAGER":
                 this.prManager = (ProjectManager) Authenticator.currentSession.getUser();
-                this.company = prManager.getCompanyProfile();
+                this.company = prManager.getCompany();
             default:
                 this.employee = (Employee) Authenticator.currentSession.getUser();
                 this.company = employee.getCompany();
