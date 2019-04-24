@@ -2,6 +2,8 @@ package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import tn.esprit.overpowered.byusforus.entities.quiz.QuizTry;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,12 +29,16 @@ import javax.faces.convert.FacesConverter;
 import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
 import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.services.quiz.AnswerFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizTryFacadeLocal;
 
 @ManagedBean
 @javax.faces.bean.SessionScoped
 public class QuizTryController implements Serializable {
+
+    @EJB
+    private AnswerFacadeLocal answerFacade;
 
     @EJB
     private ChoiceFacadeLocal choiceFacade;
@@ -43,7 +50,47 @@ public class QuizTryController implements Serializable {
     private List<QuizTry> items = null;
     private QuizTry selected;
 
-    private String[] selections;
+    private String selections;
+
+    private String recordingFile;
+
+    private String recordingName;
+
+    private String breachType = "";
+
+    private String recordingBlob;
+
+    public String getRecordingBlob() {
+        return recordingBlob;
+    }
+
+    public void setRecordingBlob(String recordingBlob) {
+        this.recordingBlob = recordingBlob;
+    }
+
+    public String getRecordingName() {
+        return recordingName;
+    }
+
+    public void setRecordingName(String recordingName) {
+        this.recordingName = recordingName;
+    }
+
+    public String getBreachType() {
+        return breachType;
+    }
+
+    public void setBreachType(String breachType) {
+        this.breachType = breachType;
+    }
+
+    public String getRecordingFile() {
+        return recordingFile;
+    }
+
+    public void setRecordingFile(String recordingFile) throws IOException {
+        this.recordingFile = recordingFile;
+    }
 
     public ChoiceFacadeLocal getChoiceFacade() {
         return choiceFacade;
@@ -61,14 +108,24 @@ public class QuizTryController implements Serializable {
         this.ejbFacade = ejbFacade;
     }
 
-    public String[] getSelections() {
+    public String getSelections() {
         return selections;
     }
 
-    public void setSelections(String[] selections) throws IOException {
-        File f = new File("87azeaz.txt");
-        f.createNewFile();
+    public void setSelections(String selections) throws IOException {
         this.selections = selections;
+    }
+
+    public void onBlobBase64Sent() throws FileNotFoundException, IOException {
+        String path = "../standalone/deployments/piJEE-web-1.0.war/media/";
+        this.recordingName = "QUIZ_TRY_" + new Random().nextInt() + ".ts.webm";
+        String blobBase64 = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("blobBase64Name");
+        byte[] blob = java.util.Base64.getDecoder().decode(blobBase64.split(",")[1]);
+        this.recordingBlob = blobBase64;
+        try (FileOutputStream fos = new FileOutputStream(path + recordingName)) {
+            fos.write(blob);
+        }
+
     }
 
     public void listen() throws IOException {
@@ -82,20 +139,62 @@ public class QuizTryController implements Serializable {
         }
     }
 
-    public void submitTry(Quiz quiz) {
+    public float calculateScore(Choice choice) {
+        float score = 0f;
+        return score;
+    }
+
+    public void createNewFile(String fileName) throws IOException {
+        File f = new File(fileName + ".txt");
+        f.createNewFile();
+    }
+
+    public String breachDetected() throws IOException {
+        this.createNewFile("87azeaz breach");
+        this.breachType = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("type");
+        return "quiz_results?faces-redirect=true";
+    }
+
+    public String submitTry(Quiz quiz) throws IOException {
         QuizTry qt = new QuizTry();
+        qt.setRecording(recordingName);
         qt.setFinishDate(new Date());
         qt.setQuiz(quiz);
-        // Get choice by id
+        // Un-comment this when I connect with candidate
+        //  qt.setCandidate((Candidate) Authenticator.currentSession.getUser());
         ArrayList<Answer> answerList = new ArrayList<>();
-        for (String id : selections) {
-            Choice c = choiceFacade.find(Long.parseLong(id));
-            Answer answer = new Answer();
-            answer.setAnswer(c);
-            answerList.add(answer);
+        if (!this.breachType.equals("NO_BREACH")) {
+            // breach happened
+            // get candidate application and set status to breach type
+        } else {
+
+//        // Get choice by id
+            ArrayList<Answer> answerListToPersist = new ArrayList<>();
+            float score = 0f;
+            float totalPoints = 0f;
+            float candidatePoints = 0f;
+            for (String id : selections.split(",")) {
+                Choice c = choiceFacade.find(Long.parseLong(id));
+                totalPoints += c.getQuestion().getQuestionPoints();
+                if (c.getIsCorrectChoice()) {
+                    candidatePoints += c.getQuestion().getQuestionPoints();
+                }
+                Answer answer = new Answer();
+                answer.setAnswer(c);
+                answer.setQuestion(c.getQuestion());
+                answerFacade.create(answer);
+                answerList.add(answer);
+            }
+            score = candidatePoints / totalPoints;
+            for (Answer a : answerList) {
+                answerListToPersist.add(answerFacade.findByChoiceAndQuiz(a.getAnswer().getIdChoice(), a.getQuestion().getIdQuestion()));
+            }
+            qt.setAnswers(answerListToPersist);
+            qt.setPercentage(100 * score);
         }
-        qt.setAnswers(answerList);
+        this.selected = qt;
         ejbFacade.create(qt);
+        return "quiz_results?faces-redirect=true";
     }
 
     public QuizTryController() {
