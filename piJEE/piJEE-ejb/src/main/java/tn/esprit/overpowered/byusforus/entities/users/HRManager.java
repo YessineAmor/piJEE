@@ -31,7 +31,7 @@ public class HRManager extends Employee implements Serializable {
     @JoinColumn(name = "FK_COMP_HR_ID")
     private CompanyProfile companyProfile;
 
-    @OneToMany(mappedBy = "hRManager", cascade = {PERSIST, MERGE})
+    @OneToMany(mappedBy = "hRManager", cascade = {PERSIST, MERGE},fetch = FetchType.EAGER)
     private Set<JobOffer> jobOffers;
 
     public HRManager(String username, String email, String firstName, String lastName, byte[] password) {

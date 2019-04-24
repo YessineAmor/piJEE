@@ -25,13 +25,16 @@
                     <div class="col-md-3">
                         <h:form id="AdminForm">
                             <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
+                                <f:facet name="header" >
+                                    <p:outputLabel value="#{adminBean.userType}" />
+                                </f:facet>        
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandLink >
                                         <p:graphicImage value="adminPic.png" height="90px" width="100px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.firstName} #{adminBean.compAdmin.lastName}"/>
-                                    <!--p:outputLabel value="#{adminBean.compAdmin.lastName}"/-->
-                                    <p:commandLink value="#{adminBean.compAdmin.email}"/>
+                                    <p:outputLabel value="#{adminBean.firstName} #{adminBean.lastName}"/>
+                                    <!--p:outputLabel value="#{adminBean.lastName}"/-->
+                                    <p:commandLink value="#{adminBean.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -39,7 +42,7 @@
                                 <f:facet name="options">
                                     <p:menu >
                                         <p:menuitem value="Edit Profile" url="#" icon="pi pi-clone"  />
-                                        <p:menuitem value="Company" url="#" icon="pi pi-times"  />
+                                        <p:menuitem value="Company" url="#" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true" icon="pi pi-times"  />
                                     </p:menu>
                                 </f:facet>
                             </p:panel>
@@ -50,9 +53,9 @@
                                     <p:commandLink >
                                         <p:graphicImage value="hrManager.jpg" height="90px" width="100px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.companyHRManager.firstName} #{adminBean.compAdmin.companyProfile.companyHRManager.lastName}"/>
+                                    <p:outputLabel value="#{adminBean.company.companyHRManager.firstName} #{adminBean.company.companyHRManager.lastName}"/>
                                     <!--p:outputLabel value="#{adminBean.compAdmin.lastName}"/-->
-                                    <p:commandLink value="#{adminBean.compAdmin.companyProfile.companyHRManager.email}"/>
+                                    <p:commandLink value="#{adminBean.company.companyHRManager.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -63,9 +66,10 @@
                     <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: auto">
 
                         <h:form id="infoForm">
+                            <p:growl id="messages" showDetail="true" />
                             <p:panel header="Company Profile" style="text-align: center; ">
                                 <f:facet name="header" >
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
+                                    <p:outputLabel value="#{adminBean.company.name}"/>
                                 </f:facet>
                                 <p:panelGrid layout="grid" columns="1">
                                     <p:row ><p:outputLabel value="Summary"/></p:row>
@@ -86,7 +90,7 @@
                                         <p:column><p:outputLabel value="14"/></p:column>
                                     </p:row>
                                     <p:row><p:column ><p:commandLink value="Views:" action="#"/></p:column>
-                                        <p:column><p:outputLabel value="#{adminBean.compAdmin.companyProfile.numViews}"/></p:column>
+                                        <p:column><p:outputLabel value="#{adminBean.company.numViews}"/></p:column>
                                     </p:row>
                                 </p:panelGrid>
                                 <f:facet name="footer" >
@@ -123,12 +127,12 @@
                                     <p:commandLink >
                                         <p:graphicImage value="byusforus.png" height="150px" width="120px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
+                                    <p:outputLabel value="#{adminBean.company.name}"/>
                                     <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
                                     <p:commandLink value="Offers"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
