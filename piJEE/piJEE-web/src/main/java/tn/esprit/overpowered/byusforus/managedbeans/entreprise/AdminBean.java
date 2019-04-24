@@ -19,6 +19,9 @@ import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.Employee;
+import tn.esprit.overpowered.byusforus.entities.users.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.services.users.CompanyAdminFacadeRemote;
 import util.authentication.Authenticator;
 
@@ -36,8 +39,18 @@ public class AdminBean {
     @EJB
     private CompanyAdminFacadeRemote compAdminFacade;
 
+    //Elements for profile management to ensure login of various company staff members
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String userType;
+
     private Session adminSession;
     private CompanyAdmin compAdmin;
+    private HRManager hrManager;
+    private ProjectManager prManager;
+    private Employee employee;
     private CompanyProfile company;
     private List<Event> events;
     private Event previewedEvent;
@@ -88,12 +101,75 @@ public class AdminBean {
     }
 
     public AdminBean() {
+        userType = Authenticator.currentSession.getUser().getDiscriminatorValue();
+        username= Authenticator.currentSession.getUser().getUsername();
+        firstName= Authenticator.currentSession.getUser().getFirstName();
+        lastName= Authenticator.currentSession.getUser().getLastName();
+        email= Authenticator.currentSession.getUser().getEmail();
+        switch (userType) {
+
+            case "COMPANY_ADMIN":
+                this.compAdmin = (CompanyAdmin) Authenticator.currentSession.getUser();
+                this.company = compAdmin.getCompanyProfile();
+                break;
+            case "HUMAN_RESOURCE_MANAGER":
+                this.hrManager = (HRManager) Authenticator.currentSession.getUser();
+                this.company = hrManager.getCompanyProfile();
+                break;
+            case "PROJECT_MANAGER":
+                this.prManager = (ProjectManager) Authenticator.currentSession.getUser();
+                this.company = prManager.getCompanyProfile();
+            default:
+                this.employee = (Employee) Authenticator.currentSession.getUser();
+                this.company = employee.getCompany();
+
+        }
         this.adminSession = Authenticator.currentSession;
-        this.compAdmin = (CompanyAdmin) Authenticator.currentSession.getUser();
-        this.company = compAdmin.getCompanyProfile();
+
+        
         //this.events = compAdminFacade.viewAllEvents();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+    
     public Session getAdminSession() {
         return adminSession;
     }
@@ -108,6 +184,30 @@ public class AdminBean {
 
     public void setCompAdmin(CompanyAdmin compAdmin) {
         this.compAdmin = compAdmin;
+    }
+
+    public HRManager getHrManager() {
+        return hrManager;
+    }
+
+    public void setHrManager(HRManager hrManager) {
+        this.hrManager = hrManager;
+    }
+
+    public ProjectManager getPrManager() {
+        return prManager;
+    }
+
+    public void setPrManager(ProjectManager prManager) {
+        this.prManager = prManager;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public CompanyProfile getCompany() {
@@ -175,7 +275,13 @@ public class AdminBean {
     }
 
     public void doCompanyUpdate() {
-        compAdminFacade.updateCompanyProfile(company);
+        if (userType.equals("COMPANY_ADMIN")) {
+            compAdminFacade.updateCompanyProfile(company);
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "No Enough Privilege For Such Action");
+            FacesContext.getCurrentInstance().addMessage("!!", msg);
+        }
+
         company = compAdminFacade.viewCompanyProfile(company.getId());
     }
 
@@ -204,33 +310,45 @@ public class AdminBean {
     }
 
     public String doDeleteEvent() {
-        Event e = compAdminFacade.findEvent(eventName);
-        if (e != null) {
-            compAdminFacade.deleteEvent(e.getId());
-            PrimeFaces.current().resetInputs(":infoForm");
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfull", "Event Deleted");
-            FacesContext.getCurrentInstance().addMessage("Successfull", msg);
+        if (userType.equals("COMPANY_ADMIN")) {
+            Event e = compAdminFacade.findEvent(eventName);
+            if (e != null) {
+                compAdminFacade.deleteEvent(e.getId());
+                PrimeFaces.current().resetInputs(":infoForm");
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfull", "Event Deleted");
+                FacesContext.getCurrentInstance().addMessage("Successfull", msg);
+            } else {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unable to delete", "This Event doesn't Exist");
+                FacesContext.getCurrentInstance().addMessage("Unable", msg);
+            }
+
         } else {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unable to delete", "This Event doesn't Exist");
-            FacesContext.getCurrentInstance().addMessage("Unable", msg);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "No Enough Privilege For Such Action");
+            FacesContext.getCurrentInstance().addMessage("!!", msg);
         }
 
         return this.viewEvents();
     }
 
     public String doUpdateEvent() {
-        Event e = compAdminFacade.findEvent(eventName);
-        if (e != null) {
-            e.setLocation(eventLocation);
-            e.setDescription(eventDescription);
-            e.setStartDate(eventStartDate);
-            e.setEndDate(eventEndDate);
-            compAdminFacade.updateEvent(e);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfull", "Event Update");
-            FacesContext.getCurrentInstance().addMessage("Successfull", msg);
+        if (userType.equals("COMPANY_ADMIN")) {
+            Event e = compAdminFacade.findEvent(eventName);
+            if (e != null) {
+                e.setLocation(eventLocation);
+                e.setDescription(eventDescription);
+                e.setStartDate(eventStartDate);
+                e.setEndDate(eventEndDate);
+                compAdminFacade.updateEvent(e);
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfull", "Event Update");
+                FacesContext.getCurrentInstance().addMessage("Successfull", msg);
+            } else {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "This Event doesn't Exist");
+                FacesContext.getCurrentInstance().addMessage("ERROR", msg);
+            }
+
         } else {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "This Event doesn't Exist");
-            FacesContext.getCurrentInstance().addMessage("ERROR", msg);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "No Enough Privilege For Such Action");
+            FacesContext.getCurrentInstance().addMessage("!!", msg);
         }
 
         return this.viewEvents();
@@ -238,19 +356,26 @@ public class AdminBean {
 
     public String doCreateEvent() {
         String goTo = "null";
-        if (compAdminFacade.findEvent(eventName) != null) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "Event Name Already Exit");
-            FacesContext.getCurrentInstance().addMessage("!!", msg);
+
+        if (userType.equals("COMPANY_ADMIN")) {
+            if (compAdminFacade.findEvent(eventName) != null) {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "Event Name Already Exit");
+                FacesContext.getCurrentInstance().addMessage("!!", msg);
+            } else {
+                Event newEvent = new Event();
+                newEvent.setName(eventName);
+                newEvent.setLocation(eventLocation);
+                newEvent.setStartDate(eventStartDate);
+                newEvent.setDescription(eventDescription);
+                newEvent.setEndDate(eventEndDate);
+                newEvent.setCompany(compAdmin.getCompanyProfile());
+                compAdminFacade.createEvent(newEvent);
+            }
         } else {
-            Event newEvent = new Event();
-            newEvent.setName(eventName);
-            newEvent.setLocation(eventLocation);
-            newEvent.setStartDate(eventStartDate);
-            newEvent.setDescription(eventDescription);
-            newEvent.setEndDate(eventEndDate);
-            newEvent.setCompany(compAdmin.getCompanyProfile());
-            compAdminFacade.createEvent(newEvent);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "No Enough Privilege For Such Action");
+            FacesContext.getCurrentInstance().addMessage("!!", msg);
         }
+
         return this.viewEvents();
     }
 }
