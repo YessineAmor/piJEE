@@ -17,6 +17,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizFacadeLocal;
 
 @ManagedBean
@@ -55,6 +56,12 @@ public class QuizController implements Serializable {
         selected = new Quiz();
         initializeEmbeddableKey();
         return selected;
+    }
+
+    public String goToQuizDetails(JobOffer jobOffer) {
+        this.selected = ejbFacade.getQuizByJobOfferId(jobOffer.getId());
+        return "/views/front/quiz/quiz_details?faces-redirect=true";
+
     }
 
     public void create() {

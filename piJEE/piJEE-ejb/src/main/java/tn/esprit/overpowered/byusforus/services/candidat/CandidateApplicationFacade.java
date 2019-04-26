@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
@@ -38,12 +39,16 @@ public class CandidateApplicationFacade extends AbstractFacade<CandidateApplicat
 
     @Override
     public CandidateApplication getApplicationByCandidateId(Long candidateId, Long jobOfferId) {
-        CandidateApplication cdtApp = em.createQuery(
-                "SELECT ca FROM CandidateApplication ca WHERE "
-                + "ca.candidate.id  = :cid and ca.jobOffer.id = :jib", CandidateApplication.class)
-                .setParameter("cid", 1L)
-                .setParameter("jib", 1L)
-                .getSingleResult();
+        CandidateApplication cdtApp = null;
+        try {
+            cdtApp = em.createQuery(
+                    "SELECT ca FROM CandidateApplication ca WHERE "
+                    + "ca.candidate.id  = :cid and ca.jobOffer.id = :jib", CandidateApplication.class)
+                    .setParameter("cid", candidateId)
+                    .setParameter("jib", jobOfferId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+        }
         return cdtApp;
     }
 
