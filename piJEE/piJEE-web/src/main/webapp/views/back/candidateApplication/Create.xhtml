@@ -20,12 +20,6 @@
                         <p:inputText id="resume" value="#{candidateApplicationController.selected.resume}" title="#{bundle.CreateCandidateApplicationTitle_resume}" />
                         <p:outputLabel value="#{bundle.CreateCandidateApplicationLabel_jobApplicationState}" for="jobApplicationState" />
                         <p:inputText id="jobApplicationState" value="#{candidateApplicationController.selected.jobApplicationState}" title="#{bundle.CreateCandidateApplicationTitle_jobApplicationState}" />
-                        <p:outputLabel value="#{bundle.CreateCandidateApplicationLabel_jobOffer}" for="jobOffer" />
-                        <p:selectOneMenu id="jobOffer" value="#{candidateApplicationController.selected.jobOffer}" >
-                            <f:selectItems value="#{jobOfferController.itemsAvailableSelectOne}"
-                                           var="jobOfferItem"
-                                           itemValue="#{jobOfferItem}"/>
-                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateCandidateApplicationLabel_id}" for="id" />
                         <p:inputText id="id" value="#{candidateApplicationController.selected.id}" title="#{bundle.CreateCandidateApplicationTitle_id}" />
                         <p:outputLabel value="#{bundle.CreateCandidateApplicationLabel_candidate}" for="candidate" />

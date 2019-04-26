@@ -65,7 +65,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuizTryTitle_candidate}"/>
                             </f:facet>
-                            <h:outputText value="#{item.candidate}"/>
+                            <h:outputText value="#{item.candidate.firstName.concat(' ').concat(item.candidate.lastName)}"/>
                         </p:column>
 
                         <f:facet name="footer">

@@ -29,9 +29,11 @@ import javax.faces.convert.FacesConverter;
 import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
 import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
+import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.services.quiz.AnswerFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizTryFacadeLocal;
+import util.authentication.Authenticator;
 
 @ManagedBean
 @javax.faces.bean.SessionScoped
@@ -117,7 +119,7 @@ public class QuizTryController implements Serializable {
     }
 
     public void onBlobBase64Sent() throws FileNotFoundException, IOException {
-        String path = "../standalone/deployments/piJEE-web-1.0.war/media/";
+        String path = "../standalone/deployments/piJEE-web-1.0.war/";
         this.recordingName = "QUIZ_TRY_" + new Random().nextInt() + ".ts.webm";
         String blobBase64 = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("blobBase64Name");
         byte[] blob = java.util.Base64.getDecoder().decode(blobBase64.split(",")[1]);
@@ -161,7 +163,7 @@ public class QuizTryController implements Serializable {
         qt.setFinishDate(new Date());
         qt.setQuiz(quiz);
         // Un-comment this when I connect with candidate
-        //  qt.setCandidate((Candidate) Authenticator.currentSession.getUser());
+        qt.setCandidate((Candidate) Authenticator.currentSession.getUser());
         ArrayList<Answer> answerList = new ArrayList<>();
         if (!this.breachType.equals("NO_BREACH")) {
             // breach happened
