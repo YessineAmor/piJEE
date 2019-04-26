@@ -7,7 +7,9 @@ package tn.esprit.overpowered.byusforus.managedbeans.entreprise;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -136,29 +138,7 @@ public class AdminBean {
         offers = new ArrayList<JobOffer>();
                 //offers = jobOfferFacade.viewAllOffers();
 
-        offerSkills = new ArrayList<>();
-        SelectItemGroup skills = new SelectItemGroup("Skills");
-        skills.setSelectItems(new SelectItem[]{
-            /*new SelectItem("C", (Skill.C).toString()),
-            new SelectItem("C", (Skill.JAVA).toString()),
-            new SelectItem("C", (Skill.MICROSOFT).toString()),
-            new SelectItem("C", (Skill.NETWORKING).toString()),
-            new SelectItem("C", (Skill.PYTHON).toString()),
-            new SelectItem("C", (Skill.SOC).toString())*/
-            new SelectItem("C", "C"),
-            new SelectItem("C", "C")
-
-        });
-
-        //offerSkills.add(skills);
-        offerSkills.add(Skill.C);
-        offerSkills.add(Skill.JAVA);
-        offerSkills.add(Skill.MICROSOFT);
-        //offerSkills.add(Skill.C);
-        /*
-        System.out.println("Skills  ");
-        for(Skill s : offerSkills)
-            System.out.println(s);*/
+        
         userType = Authenticator.currentSession.getUser().getDiscriminatorValue();
         username = Authenticator.currentSession.getUser().getUsername();
         firstName = Authenticator.currentSession.getUser().getFirstName();
@@ -578,7 +558,11 @@ public class AdminBean {
                 newOffer.setOfferStatus(OfferStatus.AVAILABLE);
                 newOffer.setDescription(offerDescription);
                 newOffer.setDateOfArchive(offerDateOfArchive);
-                    System.out.println("Checking out skills:---"+selectedSkills.get(0));
+                Set<Skill> sk= new HashSet<>() ;
+                       for(Skill s:selectedSkills)
+                            sk.add(s);
+                newOffer.setSkills(sk);
+                    System.out.println("Checking out skills:---"+sk.size());
                 //newOffer.setCompany(company);
                 //newOffer.sethRManager(hrManager);
                     System.out.println("CityLocation:--"+offerCity);
@@ -612,6 +596,17 @@ public class AdminBean {
 
 
         return this.viewOffers();
+    }
+    
+    public String doPreviewOffer(){
+        
+       /* for(Skill s:selectedOffer.getSkills()){
+            offerSkills.add(s);
+            System.out.println("Trying to view skills*******"+s);
+        }*/
+        
+        return "/views/front/adminEntreprise/offerDetail?faces-redirect=true";
+        
     }
 
     public List<Skill> getOfferSkills() {
