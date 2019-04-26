@@ -533,7 +533,7 @@ public class AdminBean {
             System.out.println("------Event:--" + offers.get(0).getTitle());
             goTo = "/views/front/adminEntreprise/compOfferManagement?faces-redirect=true";
         } else {
-            offers.add(new JobOffer());
+            //offers.add(new JobOffer());
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "No Offer found");
             FacesContext.getCurrentInstance().addMessage("!!", msg);
             goTo = "/views/front/adminEntreprise/compOfferManagement?faces-redirect=true";
