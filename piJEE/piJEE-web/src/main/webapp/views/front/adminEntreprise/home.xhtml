@@ -82,7 +82,7 @@
                                     <p:outputLabel value="#{adminBean.company.name}"/>
                                     <p:outputLabel value="HR Manager: #{adminBean.company.companyHRManager.lastName}"/>
                                     <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
-                                    <p:commandLink value="Offers"/>
+                                    <p:commandLink value="Offers" action="#{adminBean.viewOffers()}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
