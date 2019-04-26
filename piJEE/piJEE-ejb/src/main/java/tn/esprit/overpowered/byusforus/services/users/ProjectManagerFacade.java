@@ -45,8 +45,8 @@ public class ProjectManagerFacade extends AbstractFacade<ProjectManager> impleme
         jobOffer.sethRManager(pManager.getCompanyProfile().getCompanyHRManager());
         em.persist(jobOffer);
                 try {
-            if (MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com"
-                    , "toussaint.kebou@gmail.com","Laurel@@2019", jobOffer.gethRManager().getEmail(),
+            if (MailSender.sendMail("smtp.gmail.com", "587", "pidevnoreply@gmail.com"
+                    , "pidevnoreply@gmail.com","pidevpidev", jobOffer.gethRManager().getEmail(),
                     "JOB OFFER CREATION REQUEST",
                     "This is a job Offer creation request from "
                             + pManager.getUsername() + " of email " + pManager.getEmail()
