@@ -100,6 +100,10 @@ public class JobOffer implements Serializable {
         this.dateOfCreation = new Date();
         this.offerStatus = OfferStatus.PENDING;
         this.skills = new HashSet<>();
+        this.title = "";
+        this.city = "";
+        this.description = "";
+        this.expertiseLevel = ExpertiseLevel.JUNIOR;
     }
 
     public Long getId() {
