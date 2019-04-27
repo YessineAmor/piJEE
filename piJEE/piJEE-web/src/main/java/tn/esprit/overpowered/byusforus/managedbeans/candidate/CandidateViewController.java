@@ -31,6 +31,7 @@ public class CandidateViewController implements Serializable {
     private String firstName;
     private String experience ;
     private String cursus;
+    private String username;
     private List<Candidate> friendRequests;
     private List<Candidate> friends;
     private List<Candidate> candidatesList;
@@ -40,6 +41,22 @@ public class CandidateViewController implements Serializable {
     private List<JobOffer> jobOffers;
     @EJB
     private JobOfferFacadeRemote jobFacade;
+    
+    public String editProfile()
+    {
+        List<String> moreExp = cdt.getExperiences();
+        List<String> moreCursus = cdt.getCursus();
+        Candidate newCdt = new Candidate();
+        newCdt.setEmail(email);
+        newCdt.setFirstName(firstName);
+        newCdt.setLastName(lastName);
+        moreExp.add(experience);
+        newCdt.setExperiences(moreExp);
+        moreCursus.add(cursus);
+        newCdt.setCursus(moreCursus);
+        cdtFacade.edit(newCdt);
+        return "/view/candidate/Profile?faces-redirect=true";
+    }
     
     public String jobofferList()
     {
@@ -219,6 +236,14 @@ public class CandidateViewController implements Serializable {
 
     public void setCursus(String cursus) {
         this.cursus = cursus;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     
