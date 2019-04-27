@@ -11,6 +11,7 @@ import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,11 +28,11 @@ public class ProjectManager extends Employee implements Serializable {
 
     private static final long serialVersionUID = 33L;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_COMP_PM_ID")
     private CompanyProfile companyProfile;
 
-    @OneToMany(mappedBy = "pManager", cascade = {PERSIST, MERGE})
+    @OneToMany(mappedBy = "pManager", cascade = {PERSIST, MERGE},fetch = FetchType.EAGER)
     private Set<JobOffer> managerOffers;
 
     public ProjectManager(String username, String email, String firstName, String lastName, byte[] password) {

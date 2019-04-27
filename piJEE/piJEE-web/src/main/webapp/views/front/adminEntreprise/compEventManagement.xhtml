@@ -59,16 +59,21 @@
             </style>
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
-                    <div class="col-md-3">
+                    
+  
+                    <div class="col-md-3" >
                         <h:form id="AdminForm">
                             <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
+                                <f:facet name="header" >
+                                    <p:outputLabel value="#{adminBean.userType}" />
+                                </f:facet> 
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandLink >
                                         <p:graphicImage value="adminPic.png" height="90px" width="100px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.firstName} #{adminBean.compAdmin.lastName}"/>
-                                    <!--p:outputLabel value="#{adminBean.compAdmin.lastName}"/-->
-                                    <p:commandLink value="#{adminBean.compAdmin.email}"/>
+                                    <p:outputLabel value="#{adminBean.firstName} #{adminBean.lastName}"/>
+                                    <!--p:outputLabel value="#{adminBean.lastName}"/-->
+                                    <p:commandLink value="#{adminBean.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -81,14 +86,14 @@
                                 </f:facet>
                             </p:panel>
                         </h:form>
-                        <h:form id="eventsForm">
-                            <p:panel header="Events" toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto;">
+                        <h:form id="eventsForm" >
+                            <p:panel header="Events"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
                                 <!--p:panelGrid -->
                                 <p:dataScroller value="#{adminBean.events}" var="evt" chunkSize="2" >
-                                    <f:facet name="header">
+                                    <f:facet  name="header">
                                         Scroll Down to Load More Events
                                     </f:facet>
-                                    <p:panelGrid columns="2"  style ="width: 100%" columnClasses="logo,detail">
+                                    <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
                                         <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
                                         <p:outputPanel style="width: auto">
                                             <h:panelGrid columns="2" cellpadding="1">
@@ -134,19 +139,37 @@
                                             <h:inputText value="#{adminBean.eventLocation}" style="font-weight: bold"/>
 
                                             <h:outputText value="Start:" />
-                                            <p:datePicker id="Stime" value="#{adminBean.eventStartDate}" style="font-weight: bold" showTime="true"/>
+                                            <p:datePicker id="Stime" value="#{adminBean.eventStartDate}" style="font-weight: bold" showTime="true" showIcon=""/>
 
                                             <h:outputText value="End:" />
-                                            <p:datePicker id="Etime" value="#{adminBean.eventEndDate}" style="font-weight: bold" showTime="true"/>
-                                       
+                                            <p:datePicker id="Etime" value="#{adminBean.eventEndDate}" style="font-weight: bold" showTime="true" showIcon="true"/>
+
                                             <h:outputText value="Description:" />
                                             <p:inputTextarea value="#{adminBean.eventDescription}" style="font-weight: bold"/>
                                         </h:panelGrid>
                                     </p:outputPanel>
                                     <f:facet name="footer">
-                                        <p:commandLink value="Update" action="#{adminBean.doUpdateEvent()}" style="margin-right: 10px"/>
-                                        <p:commandLink value="Delete" action="#{adminBean.doDeleteEvent()}" style="margin-right: 10px"/>
-                                        <p:commandLink value="Create" action="#{adminBean.doCreateEvent()}" style="margin-right: 10px"/>               
+                                        <p:commandLink value="Update" action="#{adminBean.doUpdateEvent()}" style="margin-right: 10px">
+                                            <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
+                                        </p:commandLink>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                        </p:confirmDialog>
+                                        <p:commandLink value="Delete" action="#{adminBean.doDeleteEvent()}" style="margin-right: 10px">
+                                            <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
+                                        </p:commandLink>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                        </p:confirmDialog>
+                                        <p:commandLink value="Create" action="#{adminBean.doCreateEvent()}" style="margin-right: 10px">
+                                            <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
+                                        </p:commandLink>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                        </p:confirmDialog>
                                     </f:facet>
                                 </p:panelGrid>
                             </p:panel>
@@ -159,16 +182,15 @@
                                     <p:commandLink >
                                         <p:graphicImage value="byusforus.png" height="150px" width="120px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
-                                    <p:commandLink value="Events"/>
-                                    <p:commandLink value="Offers"/>
+                                    <p:outputLabel value="#{adminBean.company.name}"/>
+                                    <p:commandLink class="btn btn-primary" value="Offers"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
-                            <p:sticky target="eventsForm" />
+                            <!--p:sticky target="panel" /-->
                             <p:sticky target="infoForm" />
                         </h:form>
                     </div>
@@ -178,5 +200,5 @@
         <!-- End download Area -->
     </ui:define>
 
-
+   
 </ui:composition>

@@ -92,7 +92,13 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
 
         if ((compProfile != null) && (pManager != null)) {
             pManager.setCompanyProfile(compProfile);
-            compProfile.getProjectManagers().add(pManager);
+            List<ProjectManager> liste = new ArrayList<>();
+            if (compProfile.getProjectManagers() == null) {
+                liste.add(pManager);
+                compProfile.setProjectManagers(liste);
+            } else {
+                compProfile.getProjectManagers().add(pManager);
+            }
         }
     }
 
@@ -103,7 +109,13 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
 
         if ((compProfile != null) && (employee != null)) {
             employee.setCompany(compProfile);
-            compProfile.getEmployees().add(employee);
+            List<Employee> liste = new ArrayList<>();
+            if (compProfile.getEmployees() == null) {
+                liste.add(employee);
+                compProfile.setEmployees(liste);
+            } else {
+                compProfile.getEmployees().add(employee);
+            }
         }
     }
 
@@ -172,16 +184,17 @@ public class CompanyAdminFacade extends AbstractFacade<CompanyAdmin> implements 
     }
 
     @Override
-    public Event findEvent(String name){
+    public Event findEvent(String name) {
         Event e = null;
         try {
-            e= em.createQuery("SELECT E FROM Event E where E.name= :name",Event.class)
+            e = em.createQuery("SELECT E FROM Event E where E.name= :name", Event.class)
                     .setParameter("name", name)
                     .getSingleResult();
         } catch (NoResultException nre) {
         }
         return e;
     }
+
     @Override
     public List<Event> searchEventByDate(Date startDate, Date endDate) {
         List<Event> events = em.createQuery("select e from Event e where"

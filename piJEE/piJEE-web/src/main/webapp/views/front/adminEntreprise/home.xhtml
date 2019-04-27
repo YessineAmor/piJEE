@@ -29,9 +29,9 @@
                                     <p:commandLink >
                                         <p:graphicImage value="adminPic.png" height="50px" width="50px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.firstName} #{adminBean.compAdmin.lastName}"/>
-                                    <!--p:outputLabel value="#{adminBean.compAdmin.lastName}"/-->
-                                    <p:commandLink value="#{adminBean.compAdmin.email}"/>
+                                    <p:outputLabel value="#{adminBean.firstName} #{adminBean.lastName}"/>
+                                    <p:outputLabel value="#{adminBean.userType}"/>
+                                    <p:commandLink value="#{adminBean.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -39,7 +39,7 @@
                                 <f:facet name="options">
                                     <p:menu >
                                         <p:menuitem value="Profile" url="#" icon="pi pi-clone"  />
-                                        <p:menuitem value="Events" url="#" action="#{adminBean.viewEvents()}" icon="pi pi-times" onclick="#" />
+                                        <p:menuitem value="Events" url="#" action="#{adminBean.viewEvents()}" icon="pi pi-times" />
                                         <p:menuitem value="Offers" url="#" icon="pi pi-times"  />
                                     </p:menu>
                                 </f:facet>
@@ -79,10 +79,10 @@
                                     <p:commandLink >
                                         <p:graphicImage value="byusforus.png" height="50px" width="50px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.compAdmin.companyProfile.name}"/>
-                                    <p:outputLabel value="HR Manager: #{adminBean.compAdmin.companyProfile.companyHRManager.lastName}"/>
+                                    <p:outputLabel value="#{adminBean.company.name}"/>
+                                    <p:outputLabel value="HR Manager: #{adminBean.company.companyHRManager.lastName}"/>
                                     <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
-                                    <p:commandLink value="Offers"/>
+                                    <p:commandLink value="Offers" action="#{adminBean.viewOffers()}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>

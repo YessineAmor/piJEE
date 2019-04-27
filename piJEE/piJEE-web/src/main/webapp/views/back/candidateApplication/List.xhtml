@@ -55,19 +55,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCandidateApplicationTitle_jobOffer}"/>
                             </f:facet>
-                            <h:outputText value="#{item.jobOffer}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCandidateApplicationTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <h:outputText value="#{item.jobOffer.title}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCandidateApplicationTitle_candidate}"/>
                             </f:facet>
-                            <h:outputText value="#{item.candidate}"/>
+                            <h:outputText value="#{item.candidate.firstName.concat(' ').concat(item.candidate.lastName)}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{candidateApplicationController.prepareCreate}" update=":CandidateApplicationCreateForm" oncomplete="PF('CandidateApplicationCreateDialog').show()"/>
