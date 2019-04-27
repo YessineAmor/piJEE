@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.candidate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,13 +21,15 @@ import tn.esprit.overpowered.byusforus.services.users.CompanyProfileFacadeLocal;
 @SessionScoped
 public class CompanyViewController implements Serializable {
     private CompanyProfile selectedCompany;
+    private List<CompanyProfile> companies;
     
     @EJB
     private CompanyProfileFacadeLocal compFacade;
     
-    public List<CompanyProfile> listComp()
+    public String listComp()
     {
-        return compFacade.findAll();
+        companies = compFacade.findAll();
+        return "/views/candidate/companiesView?faces-redirect=true";
     }
 
     public CompanyProfile getSelectedCompanies() {
@@ -44,6 +46,22 @@ public class CompanyViewController implements Serializable {
 
     public void setCompFacade(CompanyProfileFacadeLocal compFacade) {
         this.compFacade = compFacade;
+    }
+
+    public CompanyProfile getSelectedCompany() {
+        return selectedCompany;
+    }
+
+    public void setSelectedCompany(CompanyProfile selectedCompany) {
+        this.selectedCompany = selectedCompany;
+    }
+
+    public List<CompanyProfile> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<CompanyProfile> companies) {
+        this.companies = companies;
     }
     
 }

@@ -79,9 +79,15 @@ List<JobOffer> offers = em.createQuery(
 
     @Override
     public List<JobOffer> searchByDate(Date date) {
-        return em.createQuery("select j from JobOffer j where j.dateOfCreation "
+        List<JobOffer> offers = null;
+        try {
+            offers = em.createQuery("select j from JobOffer j where j.dateOfCreation "
                 + "= :givenDate", JobOffer.class).setParameter(""
                         + "givenDate", date).getResultList();
+            
+        } catch (NoResultException nre) {
+        }
+        return offers;
     }
 
     @Override
@@ -162,9 +168,15 @@ List<JobOffer> offers = em.createQuery(
 
     @Override
     public JobOffer searchJobOfferByTitle(String title) {
-        return em.createQuery("SELECT j from JobOffer j where j.title= :titre",
+        
+        JobOffer job = null;
+        try {
+            job = em.createQuery("SELECT j from JobOffer j where j.title= :titre",
                 JobOffer.class).setParameter("titre", title)
                 .getSingleResult();
+        } catch (Exception e) {
+        }
+        return job;
     }
 
 

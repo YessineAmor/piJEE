@@ -1,4 +1,4 @@
-package tn.esprit.overpowered.byusforus.managedbeans;
+package tn.esprit.overpowered.byusforus.managedbeans.quiz;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,6 +10,8 @@ import Licenses.Licence;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Set;
 import javax.faces.bean.SessionScoped;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,6 +24,8 @@ import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
+import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 import tn.esprit.overpowered.byusforus.services.authentication.AuthenticationFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.EmployeeFacadeRemote;
@@ -85,6 +89,8 @@ public class SignUpBean implements Serializable {
     private String licencePass;
     private Role role;
     private Role[] roles;
+    private List<Skill> selectedSkills;
+    private Set<ExpertiseLevel> selectedLevels;
 
     //Information for SignIn
     private String login;
@@ -253,7 +259,6 @@ public class SignUpBean implements Serializable {
         this.roles = roles;
     }
 
-    
     public String getLogin() {
         return login;
     }
@@ -403,6 +408,7 @@ public class SignUpBean implements Serializable {
 
     public String doLogin() throws NoSuchAlgorithmException {
         String goTo = "null";
+        System.out.println("====Login" + login + " passssss===" + pass);
         authUid = authFacade.login(login, pass);
         if (authUid != null) {
             goTo = "/views/back/signUp/twoFAConfirm?faces-redirect=true";
@@ -410,6 +416,7 @@ public class SignUpBean implements Serializable {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Unknow Information");
             FacesContext.getCurrentInstance().addMessage("Error", msg);
         }
+        System.out.println("ààààààààà" + goTo);
         return goTo;
     }
 
@@ -435,24 +442,25 @@ public class SignUpBean implements Serializable {
 
             switch (role) {
                 case ADMIN:
-                    compProfile = new CompanyProfile(companyName);;
-                   Long adminId= compAdminFacade.addCompanyAdmin(compAdmin);
-                   Long compId= compAdminFacade.createCompanyProfile(compProfile);
-                   compAdminFacade.bindCompanyAdminToCompanyProfile(adminId, compId);
+                    compProfile = new CompanyProfile(companyName);
+                    ;
+                    Long adminId = compAdminFacade.addCompanyAdmin(compAdmin);
+                    Long compId = compAdminFacade.createCompanyProfile(compProfile);
+                    compAdminFacade.bindCompanyAdminToCompanyProfile(adminId, compId);
                     break;
                 case HR:
                     compProfile = compAdminFacade.checkCompanyExistence(companyName);
-                    Long hrID =hrManagerFacade.createHRManager(hrManager);
+                    Long hrID = hrManagerFacade.createHRManager(hrManager);
                     compAdminFacade.bindCompanyHRToCompanyProfile(hrID, compProfile.getId());
                     break;
                 case MANAGER:
                     compProfile = compAdminFacade.checkCompanyExistence(companyName);
-                    Long pmID =pManagerFacade.createPManager(pManager);
+                    Long pmID = pManagerFacade.createPManager(pManager);
                     compAdminFacade.bindCompanyPMToCompanyProfile(pmID, compProfile.getId());
                     break;
                 default:
                     compProfile = compAdminFacade.checkCompanyExistence(companyName);
-                    Long empID =employeeFacade.createEmployee(employee);
+                    Long empID = employeeFacade.createEmployee(employee);
                     compAdminFacade.bindEmployeeToCompanyProfile(empID, compProfile.getId());
                     break;
             }
@@ -471,7 +479,11 @@ public class SignUpBean implements Serializable {
             Authenticator.currentSession = session;
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", Authenticator.currentSession.getUser().getUsername());
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            goTo = "/views/front/Home/home?faces-redirect=true";//This is just for testing purpose until the actual page is created;
+            if (("CANDIDATE").equals(Authenticator.currentSession.getUser().getDiscriminatorValue())) {
+                goTo = "/views/candidate/candidatesView?faces-redirect=true";//This is just for testing purpose until the actual page is created;
+            } else {
+                goTo = "/views/front/adminEntreprise/home?faces-redirect=true";
+            }
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Unsuccessful", "Check Your Code");
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -480,10 +492,25 @@ public class SignUpBean implements Serializable {
     }
 
     public Role[] Roles() {
-        for(Role r:Role.values())
-            System.out.println("****Roles:***" +r.name());
+        for (Role r : Role.values()) {
+            System.out.println("****Roles:***" + r.name());
+        }
         roles = Role.values();
         return Role.values();
+    }
+
+    public Skill[] Skills() {
+        for (Skill r : Skill.values()) {
+            System.out.println("****Skills:***" + r.name());
+        }
+        
+        return Skill.values();
+    }
+    
+    public ExpertiseLevel[] Levels(){
+        for(ExpertiseLevel e : ExpertiseLevel.values())
+            System.out.println("---------Levels------"+ e.name());
+        return ExpertiseLevel.values();
     }
 
     public String verifyStaffInfo() {
@@ -523,7 +550,29 @@ public class SignUpBean implements Serializable {
 
     }
 
+    public String doLogout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/signUp?faces-redirect=true";
+    }
+
     public SignUpBean() {
     }
 
+    public List<Skill> getSelectedSkills() {
+        return selectedSkills;
+    }
+
+    public void setSelectedSkills(List<Skill> selectedSkills) {
+        this.selectedSkills = selectedSkills;
+    }
+
+    public Set<ExpertiseLevel> getSelectedLevels() {
+        return selectedLevels;
+    }
+
+    public void setSelectedLevels(Set<ExpertiseLevel> selectedLevels) {
+        this.selectedLevels = selectedLevels;
+    }
+    
+    
 }
