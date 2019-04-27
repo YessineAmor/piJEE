@@ -22,28 +22,37 @@
     </properties>
     
     <dependencies>
+        <!-- Primefaces -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>7.0</version>
         </dependency>
+        
+        <!-- Hibernate EM -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.1.Final</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- Hibernate JPA ModGen -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>5.2.6.Final</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- piJEE-ejb -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>piJEE-ejb</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        <!-- JEE web api -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
