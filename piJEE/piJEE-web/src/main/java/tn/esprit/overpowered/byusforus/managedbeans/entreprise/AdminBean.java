@@ -23,6 +23,7 @@ import org.primefaces.model.UploadedFile;
 import tn.esprit.overpowered.byusforus.entities.authentication.Session;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Notif;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyAdmin;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
@@ -93,6 +94,9 @@ public class AdminBean {
     private String eventDescription;
     private Date eventStartDate;
     private Date eventEndDate;
+    
+    //Notif 
+    private List<Notif> notifs;
 
     private UploadedFile file;
     private String fileName;
@@ -419,6 +423,16 @@ public class AdminBean {
         this.hrmFacade = hrmFacade;
     }
 
+    public List<Notif> getNotifs() {
+        return notifs;
+    }
+
+    public void setNotifs(List<Notif> notifs) {
+        this.notifs = notifs;
+    }
+
+    
+
     
     public void doCompanyUpdate() {
         if (userType.equals("COMPANY_ADMIN")) {
@@ -599,14 +613,16 @@ public class AdminBean {
     }
     
     public String doPreviewOffer(){
-        
-       /* for(Skill s:selectedOffer.getSkills()){
-            offerSkills.add(s);
-            System.out.println("Trying to view skills*******"+s);
-        }*/
-        
         return "/views/front/adminEntreprise/offerDetail?faces-redirect=true";
         
+    }
+    
+    public String[] notifMessages(){
+        String[] notifMess = null;
+        notifs = hrmFacade.retrieveUserNofifs(Authenticator.currentSession.getId());
+        for(Notif s:notifs)
+            notifMess[notifs.indexOf(s)] = s.getMessage();
+        return notifMess; 
     }
 
     public List<Skill> getOfferSkills() {
