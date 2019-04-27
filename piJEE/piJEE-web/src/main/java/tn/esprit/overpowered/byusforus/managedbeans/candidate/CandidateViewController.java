@@ -29,6 +29,8 @@ public class CandidateViewController implements Serializable {
     private String email;
     private String recommendations;
     private String firstName;
+    private String experience ;
+    private String cursus;
     private List<Candidate> friendRequests;
     private List<Candidate> friends;
     private List<Candidate> candidatesList;
@@ -201,6 +203,22 @@ public class CandidateViewController implements Serializable {
 
     public void setJobFacade(JobOfferFacadeRemote jobFacade) {
         this.jobFacade = jobFacade;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getCursus() {
+        return cursus;
+    }
+
+    public void setCursus(String cursus) {
+        this.cursus = cursus;
     }
 
     
