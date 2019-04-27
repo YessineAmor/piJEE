@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.Professional;
 import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
@@ -265,7 +266,34 @@ public class CandidateFacade extends AbstractFacade<Candidate>
      */
     @Override
     public String subscribe(Long companyId, Long candidateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String info;
+        Candidate cdt = em.find(Candidate.class,candidateId);
+        CompanyProfile comp = em.find(CompanyProfile.class, companyId);
+            List<Professional> subscribers = new ArrayList<>();
+            List<CompanyProfile> subscribedCompanies = new ArrayList<>();
+            if(cdt.getSubscribedCompanies()==null){
+                subscribedCompanies.add(comp);
+                cdt.setSubscribedCompanies(subscribedCompanies);
+                    if(comp.getSubscribers()==null){
+                        subscribers.add(cdt);
+                        comp.setSubscribers(subscribers);
+                        info = "Subscribed";
+                    }
+                    else{
+                        comp.getSubscribers().add(cdt);
+                        info = "Subscribed";
+                    }
+            }
+            else {
+                if(cdt.getSubscribedCompanies().contains(comp))
+                    info="Already Subscribed";
+                else{
+                cdt.getSubscribedCompanies().add(comp);
+                info = "Subscribed";
+                }
+                
+            }
+            return info;
     }
 
 
