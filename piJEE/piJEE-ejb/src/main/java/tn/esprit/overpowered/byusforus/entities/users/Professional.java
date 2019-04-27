@@ -54,7 +54,7 @@ public abstract class Professional extends User {
                 @JoinColumn(name = "candidate_id")}, inverseJoinColumns
             = {
                 @JoinColumn(name = "company_id")})
-    private List<CompanyProfile> subscribedCompanies;
+    protected List<CompanyProfile> subscribedCompanies;
 
     @ElementCollection(targetClass = String.class)
 
