@@ -46,13 +46,13 @@
         </dependency>
         
         <!-- piJEE-ejb -->
+        
+        <!-- JEE web api -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>piJEE-ejb</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
-        <!-- JEE web api -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -61,16 +61,15 @@
         </dependency>
         
         <!-- PrimeFaces community themes -->
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>cupertino</artifactId>
-            <version>1.0.10</version>
-        </dependency>
-    
-	
+        
         <dependency>
             <groupId>org.primefaces.themes</groupId>
             <artifactId>all-themes</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>cupertino</artifactId>
             <version>1.0.10</version>
         </dependency>
     </dependencies>

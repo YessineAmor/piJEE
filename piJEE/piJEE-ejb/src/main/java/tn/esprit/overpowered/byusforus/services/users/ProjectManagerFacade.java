@@ -85,6 +85,23 @@ public class ProjectManagerFacade extends AbstractFacade<ProjectManager> impleme
         
     }
 
+    @Override
+    public CompanyProfile retrieveCompanyInfo(Long idPR) {
+     ProjectManager prManager = em.find(ProjectManager.class, idPR);
+     Long id = prManager.getCompanyProfile().getId();
+     CompanyProfile comp = new CompanyProfile("BOBO");
+     
+        try {
+            /*comp= em.createQuery("SELECT C FROM CompanyProfile C,User U where :manager in C.projectManagers",CompanyProfile.class)
+                    .setParameter("manager", prManager).getSingleResult();*/
+           comp= em.find(CompanyProfile.class,1);
+        } catch (NoResultException nre) {
+            System.out.println("Unable to get any CompanyProfile for this Project Manager");
+        }
+     
+     return comp;
+    }
+
 
     
 }

@@ -147,14 +147,14 @@
                                              itemLabel="#{skill}"
                                              itemValue="#{skill}" /-->
                                 <p:dataList  value="#{adminBean.selectedOffer.skills}"
-                                                var="car"
-                                                type="ordered"
-                                                style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
-                                        <!--f:facet name="header">
-                                            Basic
-                                        </f:facet-->
-                                        #{car}
-                                    </p:dataList>
+                                             var="car"
+                                             type="ordered"
+                                             style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
+                                    <!--f:facet name="header">
+                                        Basic
+                                    </f:facet-->
+                                    #{car}
+                                </p:dataList>
                                 <button style="position: absolute; bottom: 5px; left: 5px;" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                                     <i class="fa fa-edit"></i> &nbsp; Edit
                                 </button>
@@ -203,25 +203,16 @@
 
                         <div class="dropdown">
                             <h:form>
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span style="color: red;">1</span>
+                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
+                                    <span style="color: red;"><p:outputLabel value="2"/></span>
                                     <i class="fa fa-bell"></i>
+                                <p:selectOneMenu class="btn btn-secondary" id="country" value="#{signUpBean.role}" style="width:0px ; background-color: #6c757d">
+                                    
+                                    <!--p:ajax listener="#{dropdownView.onCountryChange}" update="city" /-->
+                                    <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{signUpBean.Roles()}" />
+                                </p:selectOneMenu>
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <!--p:orderList class="dropdown-item" value="#{signUpBean.Roles()}"
-                                                 var="skill" controlsLocation="none"
-                                                 itemLabel="#{skill}"
-                                                 itemValue="#{skill}" 
-                                                 /-->
-                                    <p:dataList class="dropdown-item" value="#{signUpBean.Roles()}"
-                                                var="car"
-                                                type="ordered">
-                                        <f:facet name="header">
-                                            Basic
-                                        </f:facet>
-                                        #{car}
-                                    </p:dataList>
-                                </div>
                             </h:form>
                         </div>
                     </div>

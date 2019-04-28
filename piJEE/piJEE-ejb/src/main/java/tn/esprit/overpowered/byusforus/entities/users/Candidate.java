@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -22,11 +23,14 @@ public class Candidate extends Professional implements Serializable {
 
     private static final long serialVersionUID = 28L;
 
+    @Override
+    public List<CompanyProfile> getSubscribedCompanies() {
+        return subscribedCompanies;
+    }
 
-
-    
-
-
-
+    @Override
+    public void setSubscribedCompanies(List<CompanyProfile> subscribedCompanies) {
+        this.subscribedCompanies = subscribedCompanies;
+    }
 
 }
