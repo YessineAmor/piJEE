@@ -161,14 +161,16 @@ public class AdminBean {
                 break;
             case "PROJECT_MANAGER":
                 this.prManager = (ProjectManager) Authenticator.currentSession.getUser();
-                this.company = prManager.getCompany();
-            default:
+                this.company = prManager.getCompanyProfile();
+                     break;
+            case "EMPLOYEE":
                 this.employee = (Employee) Authenticator.currentSession.getUser();
                 this.company = employee.getCompany();
+                break;
 
         }
         this.adminSession = Authenticator.currentSession;
-
+   
         //this.events = compAdminFacade.viewAllEvents();
     }
 

@@ -58,13 +58,13 @@ public class CompanyProfile implements Serializable {
     private List<JobOffer> listOfOffers;
 
     @ManyToMany(mappedBy = "subscribedCompanies",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Professional> subscribers;
 
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "companyProfile", cascade = {ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "companyProfile", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<ProjectManager> projectManagers;
 
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
