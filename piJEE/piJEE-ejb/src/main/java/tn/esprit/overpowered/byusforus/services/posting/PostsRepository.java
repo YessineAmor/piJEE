@@ -15,7 +15,7 @@ import tn.esprit.overpowered.byusforus.entities.users.User;
  * @author aminos
  */
 public class PostsRepository {
-    public ArrayList<Post> getPosts(EntityManager em, User user) {
+    public static ArrayList<Post> getPosts(EntityManager em, User user) {
          ArrayList<Post> result = new ArrayList();
         result.addAll(em.createQuery(
                 "SELECT p FROM Post p WHERE p.by = :u ", Post.class)
