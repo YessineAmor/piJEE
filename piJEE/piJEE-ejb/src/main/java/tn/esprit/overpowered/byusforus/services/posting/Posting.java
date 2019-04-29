@@ -33,7 +33,7 @@ public class Posting implements  PostingLocal, PostingRemote {
 
     @Override
     public ArrayList<Post> getPosts(Long userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return PostsRepository.getPosts(em, em.find(User.class, userId));
     }
 
     @Override
