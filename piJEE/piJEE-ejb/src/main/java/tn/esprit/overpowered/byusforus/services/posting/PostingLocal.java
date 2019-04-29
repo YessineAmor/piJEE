@@ -19,8 +19,8 @@ import tn.esprit.overpowered.byusforus.entities.posting.Post;
 public interface PostingLocal {
      public EntityManager getEntityManager();
      public void createPost(Post p, Long a);
-     public void updatePost(Long p);
      public ArrayList<Post> getPosts(Long u);
      public void deletePost(Long p);
      public Post getPost(Long p);
+     public void updatePost(Post p);
 }
