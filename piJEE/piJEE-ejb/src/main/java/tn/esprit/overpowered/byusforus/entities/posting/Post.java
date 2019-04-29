@@ -30,6 +30,14 @@ public class Post implements Serializable {
     private Long id;
     
     private String text;
+
+    public User getBy() {
+        return by;
+    }
+
+    public void setBy(User by) {
+        this.by = by;
+    }
     private String filePath;
     private String fileType;
 
