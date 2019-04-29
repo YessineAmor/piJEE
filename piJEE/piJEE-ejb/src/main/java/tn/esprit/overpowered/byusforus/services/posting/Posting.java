@@ -27,7 +27,7 @@ public class Posting implements  PostingLocal, PostingRemote {
 
     @Override
     public void createPost(Post post, Long userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.persist(post);
     }
 
     @Override
