@@ -10,6 +10,7 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.posting.Post;
+import tn.esprit.overpowered.byusforus.entities.users.User;
 
 /**
  *
@@ -31,22 +32,28 @@ public class Posting implements  PostingLocal, PostingRemote {
     }
 
     @Override
-    public void updatePost(Long postId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public ArrayList<Post> getPosts(Long userId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void deletePost(Long postId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.remove(em.find(Post.class, postId));
     }
 
     @Override
     public Post getPost(Long p) {
+        return em.find(Post.class, p);
+    }
+
+    @Override
+    public void updatePost(Post p) {
+        Post tmp = em.find(Post.class, p.getId());
+        tmp.setText(p.getText());
+        tmp.setFilePath(p.getFilePath());
+        tmp.setFileType(p.getFileType());
+        em.merge(tmp);
+        em.flush();
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
