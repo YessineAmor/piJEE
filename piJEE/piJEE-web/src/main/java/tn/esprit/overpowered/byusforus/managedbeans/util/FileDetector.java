@@ -46,9 +46,6 @@ public class FileDetector {
     }
            
     
-    public static void main(String[] args) throws TikaException, IOException {
-        File f = new File("/home/aminos/Videos/[EgyBest].Eternal.Sunshine.Of.The.Spotless.Mind.2004.BluRay.480p.x264_ar.mp4");
-        System.out.println(isMP4(f));
-        
+    public static void main(String[] args) throws TikaException, IOException {       
     }
 }
