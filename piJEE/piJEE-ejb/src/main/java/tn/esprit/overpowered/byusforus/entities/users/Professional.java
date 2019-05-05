@@ -64,6 +64,7 @@ public abstract class Professional extends User {
     @JoinTable(name = "friend_request",
             joinColumns = @JoinColumn(name = "personId"),
             inverseJoinColumns = @JoinColumn(name = "friendId"))
+    /* this doesn't make any sens */
     private Set<Candidate> friendRequests;
 
     @ManyToMany(cascade = CascadeType.ALL)
