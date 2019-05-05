@@ -33,5 +33,7 @@ public interface ReclamationLocal {
 	public Reclamation FindById(int id);
 	public int DeleteReclamation();
 	public int CalculNombreReclamationAsupprimer();
+        public int DeleteReclamation1(Reclamation r);
+
 
 }

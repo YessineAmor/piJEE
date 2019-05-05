@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VirementEditDlg" widgetVar="VirementEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditVirementTitle}">
+            <h:form id="VirementEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{virementController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditVirementLabel_paiment}" for="paiment" />
+                        <p:selectOneMenu id="paiment" value="#{virementController.selected.paiment}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paimentController.itemsAvailableSelectOne}"
+                                           var="paimentItem"
+                                           itemValue="#{paimentItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditVirementLabel_idVirement}" for="idVirement" />
+                        <p:inputText id="idVirement" value="#{virementController.selected.idVirement}" title="#{bundle.EditVirementTitle_idVirement}" />
+                        <p:outputLabel value="#{bundle.EditVirementLabel_bank}" for="bank" />
+                        <p:inputText id="bank" value="#{virementController.selected.bank}" title="#{bundle.EditVirementTitle_bank}" />
+                        <p:outputLabel value="#{bundle.EditVirementLabel_agence}" for="agence" />
+                        <p:inputText id="agence" value="#{virementController.selected.agence}" title="#{bundle.EditVirementTitle_agence}" />
+                        <p:outputLabel value="#{bundle.EditVirementLabel_codeVirement}" for="codeVirement" />
+                        <p:inputText id="codeVirement" value="#{virementController.selected.codeVirement}" title="#{bundle.EditVirementTitle_codeVirement}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{virementController.update}" value="#{bundle.Save}" update="display,:VirementListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VirementEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VirementEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

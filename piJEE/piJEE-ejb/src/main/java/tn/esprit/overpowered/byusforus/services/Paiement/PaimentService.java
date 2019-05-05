@@ -8,12 +8,11 @@ import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import tn.esprit.overpowered.byusforus.entities.Paiement.Cheque;
+import tn.esprit.overpowered.byusforus.entities.Paiement.BankCard;
 import tn.esprit.overpowered.byusforus.entities.Paiement.Cheque;
 import tn.esprit.overpowered.byusforus.entities.Paiement.Paiment;
-import tn.esprit.overpowered.byusforus.entities.Paiement.Paiment;
 import tn.esprit.overpowered.byusforus.entities.Paiement.Virement;
-import tn.esprit.overpowered.byusforus.entities.Paiement.Virement;
+import tn.esprit.overpowered.byusforus.entities.reclamation.Reclamation;
 import tn.esprit.overpowered.byusforus.entities.users.User;
 
 
@@ -23,14 +22,19 @@ public class PaimentService implements PaimentRemote, PaimentLocal {
 
 	@PersistenceContext(unitName = "piJEE-ejb")
 	private EntityManager em;
-
-	@Override
-	public List<Paiment> DisplayPaimentDeclaration() {
-		TypedQuery<Paiment> query = em
-				.createQuery("select p from Paiment p where p.Title='declaration' order By p.Status", Paiment.class);
-		return query.getResultList();
+        @Override
+	public List<Paiment> All() {
+		return em.createQuery("select p from Paiment p order By p.Status ",Paiment.class).getResultList();
 	}
-        
+	
+        @Override
+	public List<Cheque> FindCheque() {
+		return em.createQuery("select p from Cheque p",Cheque.class).getResultList();
+	}
+         @Override
+	public List<Virement> FindVirement() {
+		return em.createQuery("select p from Virement p",Virement.class).getResultList();
+	}
 	@Override
 	public List<Paiment> DisplayPaimentDeposit() {
 		TypedQuery<Paiment> query = em.createQuery("select p from Paiment p where p.Title='deposit' order By p.Status",
@@ -52,9 +56,10 @@ public class PaimentService implements PaimentRemote, PaimentLocal {
 	}
 
 	@Override
-	public void AddPaiment(Paiment p) {
+	public int AddPaiment(Paiment p) {
 		// TODO Auto-generated method stub
 		em.persist(p);
+                return p.getID();
 	}
 
 	@Override
@@ -90,7 +95,17 @@ public class PaimentService implements PaimentRemote, PaimentLocal {
 		// TODO Auto-generated method stub
 		return em.find(Paiment.class, id);
 	}
+        	@Override
+	public Cheque findByIdCheque(int id) {
+		// TODO Auto-generated method stub
+		return em.find(Cheque.class, id);
+	}
 
+   	@Override
+	public Virement findByIdVirement(int id) {
+		// TODO Auto-generated method stub
+		return em.find(Virement.class, id);
+	}
 	@Override
 	public Cheque addCheque(Cheque cheque) {
 		// TODO Auto-generated method stub
@@ -104,6 +119,12 @@ public class PaimentService implements PaimentRemote, PaimentLocal {
 		em.persist(virement);
 		return virement;
 	}
+        @Override
+	public BankCard addBankcard(BankCard BankCard) {
+		em.persist(BankCard);
+		return BankCard;
+	}
+
 
 	@Override
 	public List<Paiment> DisplayMyPaimentDeposit(User u) {
@@ -129,4 +150,30 @@ public class PaimentService implements PaimentRemote, PaimentLocal {
 		return query.getResultList();
 	}
 
+        @Override
+        public int edit(Paiment r) {
+         em.merge(r);
+         return 0;
+    }
+           @Override
+        public int remove(Paiment r) {
+         em.merge(r);
+         return 0;
+    }
+            @Override
+        public int editCheque(Cheque r) {
+        em.merge(r);
+         return 0;
+    }
+            @Override
+        public int editViement(Virement r) {
+        em.merge(r);
+         return 0;
+    }
+            @Override
+        public int removeViement(Virement r) {
+        em.remove(em.merge(r));
+         return 0;
+    }
 }
+

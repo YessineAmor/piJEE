@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ChequeCreateDlg" widgetVar="ChequeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateChequeTitle}">
+            <h:form id="ChequeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{chequeController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_paiment}" for="paiment" />
+                        <p:selectOneMenu id="paiment" value="#{chequeController.selected.paiment}" >
+                            <f:selectItems value="#{paimentController.itemsAvailableSelectOne}"
+                                           var="paimentItem"
+                                           itemValue="#{paimentItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_idCheque}" for="idCheque" />
+                        <p:inputText id="idCheque" value="#{chequeController.selected.idCheque}" title="#{bundle.CreateChequeTitle_idCheque}" />
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_num}" for="num" />
+                        <p:inputText id="num" value="#{chequeController.selected.num}" title="#{bundle.CreateChequeTitle_num}" />
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_bank}" for="bank" />
+                        <p:inputText id="bank" value="#{chequeController.selected.bank}" title="#{bundle.CreateChequeTitle_bank}" />
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_agence}" for="agence" />
+                        <p:inputText id="agence" value="#{chequeController.selected.agence}" title="#{bundle.CreateChequeTitle_agence}" />
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_price}" for="price" />
+                        <p:inputText id="price" value="#{chequeController.selected.price}" title="#{bundle.CreateChequeTitle_price}" />
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{chequeController.selected.status}" title="#{bundle.CreateChequeTitle_status}" />
+                        <p:outputLabel value="#{bundle.CreateChequeLabel_image}" for="image" />
+                        <p:inputText id="image" value="#{chequeController.selected.image}" title="#{bundle.CreateChequeTitle_image}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{chequeController.create}" value="#{bundle.Save}" update="display,:ChequeListForm:datalist,:growl" oncomplete="handleSubmit(args,'ChequeCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ChequeCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

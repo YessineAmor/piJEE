@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaimentViewDlg" widgetVar="PaimentViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPaimentTitle}">
+            <h:form id="PaimentViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paimentController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPaimentLabel_ID}"/>
+                        <h:outputText value="#{paimentController.selected.ID}" title="#{bundle.ViewPaimentTitle_ID}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_price}"/>
+                        <h:outputText value="#{paimentController.selected.price}" title="#{bundle.ViewPaimentTitle_price}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_date}"/>
+                        <h:outputText value="#{paimentController.selected.date}" title="#{bundle.ViewPaimentTitle_date}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_status}"/>
+                        <h:outputText value="#{paimentController.selected.status}" title="#{bundle.ViewPaimentTitle_status}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_cheque}"/>
+                        <h:outputText value="#{paimentController.selected.cheque}" title="#{bundle.ViewPaimentTitle_cheque}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_virement}"/>
+                        <h:outputText value="#{paimentController.selected.virement}" title="#{bundle.ViewPaimentTitle_virement}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_bankcard}"/>
+                        <h:outputText value="#{paimentController.selected.bankcard}" title="#{bundle.ViewPaimentTitle_bankcard}"/>
+                        <h:outputText value="#{bundle.ViewPaimentLabel_user}"/>
+                        <h:outputText value="#{paimentController.selected.user}" title="#{bundle.ViewPaimentTitle_user}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PaimentViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

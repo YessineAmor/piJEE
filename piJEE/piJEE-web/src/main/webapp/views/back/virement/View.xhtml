@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VirementViewDlg" widgetVar="VirementViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewVirementTitle}">
+            <h:form id="VirementViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{virementController.selected != null}">
+                        <h:outputText value="#{bundle.ViewVirementLabel_paiment}"/>
+                        <h:outputText value="#{virementController.selected.paiment}" title="#{bundle.ViewVirementTitle_paiment}"/>
+                        <h:outputText value="#{bundle.ViewVirementLabel_idVirement}"/>
+                        <h:outputText value="#{virementController.selected.idVirement}" title="#{bundle.ViewVirementTitle_idVirement}"/>
+                        <h:outputText value="#{bundle.ViewVirementLabel_bank}"/>
+                        <h:outputText value="#{virementController.selected.bank}" title="#{bundle.ViewVirementTitle_bank}"/>
+                        <h:outputText value="#{bundle.ViewVirementLabel_agence}"/>
+                        <h:outputText value="#{virementController.selected.agence}" title="#{bundle.ViewVirementTitle_agence}"/>
+                        <h:outputText value="#{bundle.ViewVirementLabel_codeVirement}"/>
+                        <h:outputText value="#{virementController.selected.codeVirement}" title="#{bundle.ViewVirementTitle_codeVirement}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VirementViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

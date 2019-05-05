@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BankCardViewDlg" widgetVar="BankCardViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBankCardTitle}">
+            <h:form id="BankCardViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bankCardController.selected != null}">
+                        <h:outputText value="#{bundle.ViewBankCardLabel_paiment}"/>
+                        <h:outputText value="#{bankCardController.selected.paiment}" title="#{bundle.ViewBankCardTitle_paiment}"/>
+                        <h:outputText value="#{bundle.ViewBankCardLabel_idBank}"/>
+                        <h:outputText value="#{bankCardController.selected.idBank}" title="#{bundle.ViewBankCardTitle_idBank}"/>
+                        <h:outputText value="#{bundle.ViewBankCardLabel_expirationDate}"/>
+                        <h:outputText value="#{bankCardController.selected.expirationDate}" title="#{bundle.ViewBankCardTitle_expirationDate}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="BankCardViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
