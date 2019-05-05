@@ -22,7 +22,27 @@
         <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
+                    
                     <div class="col-md-3">
+                        <div class="row">
+                            
+                                                                   
+                        <div class="dropdown">
+                            <h:form>
+                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
+                                    <span style="color: red;"><p:outputLabel value="#{adminBean.numberNotifs}"/></span>
+                                    <i class="fa fa-bell"></i>
+                                <p:selectOneMenu class="btn btn-secondary" id="country" value="#{signUpBean.role}" style="width:0px ; background-color: #6c757d">
+                                    
+                                    <!--p:ajax listener="#{dropdownView.onCountryChange}" update="city" /-->
+                                    <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{adminBean.notifMessages()}" />
+                                </p:selectOneMenu>
+                                </button>
+                            </h:form>
+                        </div>
+                        </div>
+                        <div class="row">
                         <h:form id="userDetailForm">
                             <p:panel header="My Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
@@ -46,6 +66,8 @@
                             </p:panel>
                         </h:form>
                     </div>
+                    </div>
+                   
                     <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
 
                         <h:form id="postForm">
@@ -92,6 +114,7 @@
                         </h:form>
                     </div>
                     <div class="col-md-3">
+                        <div class="row">
                         <h:form id="otherInfoForm">
                             <p:panel header="Insert Any Info Here">
                                 <p:outputLabel value="Ins"/>
@@ -99,7 +122,10 @@
                                 <p:outputLabel value="InsertConnected USER Info"/>
                             </p:panel>
                         </h:form>
+                        </div>
                     </div>
+         
+                   
                 </div>
             </div>
         </h:body>

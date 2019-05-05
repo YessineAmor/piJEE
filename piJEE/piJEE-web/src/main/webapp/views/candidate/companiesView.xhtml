@@ -58,6 +58,7 @@
                         <h:form id="feedsForm">
                             <p:panel>
                                 <h:form id="form">
+                                    <p:growl id="messages" showDetail="true"/>
                                     <p:dataView var="comp" value="#{companyViewController.companies}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                 gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -77,12 +78,19 @@
                                                         <h:outputText value="#{comp.dateOfCreation}" style="font-weight: bold"/>
                                                     </h:panelGrid>
                                                 </p:outputPanel>
-
-                                                <h:commandButton value="Job offers" action="/views/candidate/profileDetails?faces-redirect=true" >
+                                                <h:column>
+                                                    <h:commandButton value="Job offers" action="/views/candidate/profileDetails?faces-redirect=true" >
                                                     <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                    <f:setPropertyActionListener value="#{comp}" target="#{candidateViewController.cdt}" />
                                                     <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
                                                 </h:commandButton>
+                                                    <h:commandButton value="Subscribe" action="#{candidateViewController.subscribeToCompany()}" >
+                                                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                    <f:setPropertyActionListener value="#{comp}" target="#{candidateViewController.selectedCompany}" />
+                                                </h:commandButton>
+                                                    
+                                                </h:column>
+                                                
                                             </h:panelGrid>
                                         </p:dataViewListItem>
                                     </p:dataView>
