@@ -112,6 +112,18 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         }
         return false;
     }
+    
+        @Override
+    public void deleteOffer(Long idOffer) {
+        JobOffer offer = em.find(JobOffer.class,idOffer);
+        em.remove(offer);
+    }
+
+    @Override
+    public void archiveOffer(Long idOffer) {
+        JobOffer offer = em.find(JobOffer.class,idOffer);
+        offer.setOfferStatus(OfferStatus.ARCHIVED);
+    }
 
     @Override
     public Long createHRManager(HRManager hrManger) {
@@ -147,5 +159,7 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         }
         return notifs;
     }
+
+
 
 }
