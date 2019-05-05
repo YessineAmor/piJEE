@@ -1,4 +1,4 @@
-
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -37,7 +37,8 @@
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandButton action="#{candidateViewController.friendRequestList()}" value="Friend requests"/>
                                     <p:commandButton action="#{candidateViewController.friendList()}" value="Friends"/>
-                                    <p:commandButton action="#{candidateViewController.candidatesList()}" value="Candidates"/>
+                                    <p:commandButton action="#{candidateViewController.jobofferList()}" value="Job Offers"/>
+                                    <p:commandButton action="#{companyViewController.listComp()}" value="Companies"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -57,40 +58,37 @@
                         <h:form id="feedsForm">
                             <p:panel>
                                 <h:form id="form">
-                                    <p:dataView var="cdt" value="#{candidateViewController.friendRequests}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
-                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-                                        <p:dataViewListItem>
-                                            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                                                <p:graphicImage value="elon.png" height="70px" width="50px" /> 
+                                    <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                        <h:outputText value="Name: "/>  
+                                        <h:inputText id="name" value="#{candidateViewController.firstName}"/> 
+                                        <p:watermark for="name" value=" #{candidateViewController.cdt.firstName}" id="watermark" />
 
-                                                <p:outputPanel>
-                                                    <h:panelGrid columns="2" cellpadding="5">
-                                                        <h:outputText value="First name:" />
-                                                        <h:outputText value="#{cdt.firstName}" style="font-weight: bold"/>
+                                        <h:outputText value="Last name: "/>  
+                                        <h:inputText id="lastname" value="#{candidateViewController.lastName}"/> 
+                                        <p:watermark for="lastname" value=" #{candidateViewController.cdt.lastName}" id="lastnamewatermark" />
 
-                                                        <h:outputText value="Email:" />
-                                                        <h:outputText value="#{cdt.email}" style="font-weight: bold"/>
+                                        <h:outputText value="Username: "/>  
+                                        <h:inputText id="username" value="#{candidateViewController.username}"/> 
+                                        <p:watermark for="lastname" value=" #{candidateViewController.cdt.username}" id="usernameatermark" />
 
-                                                        <h:outputText value="Recommendations:" />
-                                                        <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
-                                                        <h:commandButton value="Accept" action="#{candidateViewController.acceptFriendRequest()}">
-                                                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                            <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                                                        </h:commandButton>
-                                                        <h:commandButton value="Reject" action="#{candidateViewController.rejectFriendRequest()}" >
-                                                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                            <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                                                        </h:commandButton>
-                                                    </h:panelGrid>
+                                        <h:outputText value="Email: "/>  
+                                        <h:inputText id="email" value="#{candidateViewController.email}"/> 
+                                        <p:watermark for="lastname" value=" #{candidateViewController.cdt.email}" id="emailwatermark" />
+                                        
+                                        <h:outputText value="Experiences: "/>  
+                                        <h:inputText id="experience" value="#{candidateViewController.experience}"/> 
+                                        <p:watermark for="experience" value=" #{candidateViewController.cdt.experiences}" id="experiencewatermark" />
 
-                                                </p:outputPanel>
+                                        <h:outputText value="Cursus: "/>  
+                                        <p:inputTextarea rows="5" cols="30" counter="display" maxlength="20" counterTemplate="{0} characters remaining." autoResize="false" />
 
-
-                                            </h:panelGrid>
-                                        </p:dataViewListItem>
-                                    </p:dataView>
-
+                                        <h:outputText value="Experience: "/>  
+                                        <p:inputTextarea rows="5" cols="30" counter="display" maxlength="20" counterTemplate="{0} characters remaining." autoResize="false" />
+                                        <br />
+                                        <h:outputText id="display" />
+                                                              
+                                        <h:commandButton value="Submit changes" action="#{candidateViewController.editProfile()}"/>
+                                    </p:panelGrid>
                                 </h:form>
                             </p:panel>
                         </h:form>
@@ -112,4 +110,3 @@
 
 
 </ui:composition>
-
