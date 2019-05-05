@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.posting;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +29,8 @@ public class Posting implements  PostingLocal, PostingRemote {
 
     @Override
     public void createPost(Post post, Long userId) {
+        User tmp = em.find(User.class, userId);
+        post.setBy(tmp);
         em.persist(post);
     }
 
@@ -54,6 +57,12 @@ public class Posting implements  PostingLocal, PostingRemote {
         tmp.setFileType(p.getFileType());
         em.merge(tmp);
         em.flush();
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList<Post> getPostsAfterDate(Long u, Date d) {
+        return PostsRepository.getPostsByDate(em, em.find(User.class, u), d);
+    }
+    
+    
 }
