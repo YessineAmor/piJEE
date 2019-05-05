@@ -34,7 +34,7 @@
                                     <p:commandLink value="#{adminBean.email}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink action ="#{adminBean.profileView()}" styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
                                 <f:facet name="options">
                                     <p:menu >
@@ -79,13 +79,13 @@
                                     <p:commandLink >
                                         <p:graphicImage value="byusforus.png" height="50px" width="50px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.company.name}"/>
+                                    <p:commandLink action="/views/front/adminEntreprise/compMap?faces-redirect=true"><p:outputLabel value="#{adminBean.company.name}"/></p:commandLink>
                                     <p:outputLabel value="HR Manager: #{adminBean.company.companyHRManager.lastName}"/>
                                     <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
                                     <p:commandLink value="Offers" action="#{adminBean.viewOffers()}"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
-                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="#{adminBean.compProfileView()}"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
