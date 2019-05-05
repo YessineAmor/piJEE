@@ -62,6 +62,7 @@
             </style>
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
+
                     <div class="col-md-3" >
                         <h:form id="AdminForm">
                             <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
@@ -84,9 +85,9 @@
                                                             <p:menuitem value="Candidates"  icon="pi pi-clone" action="#{candidateViewController.candidatesList()}" ajax="false"/>
                                                             <p:menuitem value="Profile"  icon="pi pi-times" action="#{candidateViewController.cdtConnected()}" ajax="false"/>
                                                             <p:menuitem value="Job Offers" icon="pi pi-clone" action="#{candidateViewController.jobofferList()}" ajax="false" />
-                                                            <p:menuitem value="Companies"  icon="pi pi-times" action="#{companyViewController.listComp()}" />
-                                                            <p:menuitem value="Friends"  icon="pi pi-clone" action="#{candidateViewController.friendList()}" />
-                                                            <p:menuitem value="Friend Requests"  icon="pi pi-times" action="#{candidateViewController.friendRequestList()}" />
+                                                            <p:menuitem value="Companies"  icon="pi pi-times" action="#{companyViewController.listComp()}" ajax="false" />
+                                                            <p:menuitem value="Friends"  icon="pi pi-clone" action="#{candidateViewController.friendList()}" ajax="false"/>
+                                                            <p:menuitem value="Friend Requests"  icon="pi pi-times" action="#{candidateViewController.friendRequestList()}" ajax="false" />
 
                                                         </p:menu>
                                                     </f:facet>
