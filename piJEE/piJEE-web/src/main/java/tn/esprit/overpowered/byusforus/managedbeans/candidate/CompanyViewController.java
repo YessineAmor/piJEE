@@ -26,6 +26,11 @@ public class CompanyViewController implements Serializable {
     @EJB
     private CompanyProfileFacadeLocal compFacade;
     
+    public String companyDetails()
+    {
+        return "/views/candidate/companyDetails?faces-redirect=true";
+    }
+    
     public String listComp()
     {
         companies = compFacade.findAll();

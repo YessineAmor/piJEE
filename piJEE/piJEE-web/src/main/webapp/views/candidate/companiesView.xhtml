@@ -83,67 +83,62 @@
                                                 </p:panel>
                                             </h:form>
                                         </div>
-                    <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+                    <div class="col-md-9" style="background-color: white; margin-top: 20px;">
 
-                        <h:form id="postForm">
-                            <p:panel header="Manage Posts Here">
-                                <p:outputLabel value="Manage Posts HERE"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                            </p:panel>
-                        </h:form>
-                        <h:form id="feedsForm">
-                            <p:panel>
-                                <h:form id="form">
-                                    <p:growl id="messages" showDetail="true"/>
-                                    <p:dataView var="comp" value="#{companyViewController.companies}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
-                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-                                        <p:dataViewListItem>
-                                            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                                                <p:graphicImage value="elon.png" height="70px" width="50px" /> 
 
-                                                <p:outputPanel>
-                                                    <h:panelGrid columns="2" cellpadding="5">
-                                                        <h:outputText value="Name:" />
-                                                        <h:outputText value="#{comp.name}" style="font-weight: bold"/>
+                        <div class="row" style="margin-top: 50px">
+                            <h:form id="form">
+                                <p:dataView var="comp" value="#{companyViewController.companies}" rows="8" paginator="true" rowsPerPageTemplate="2,4,8"
+                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
-                                                        <h:outputText value="Sector of activity:" />
-                                                        <h:outputText value="#{comp.sectorOfActivity}" style="font-weight: bold"/>
+                                    <p:dataViewGridItem>
+                                        <p:panel header="#{comp.name}" style="text-align:center">
+                                            <h:panelGrid columns="1" style="width:100%">
+                                                <p:graphicImage value="byusforus.png"/> 
 
-                                                        <h:outputText value="Date of creation:" />
-                                                        <h:outputText value="#{comp.dateOfCreation}" style="font-weight: bold"/>
-                                                    </h:panelGrid>
-                                                </p:outputPanel>
-                                                <h:column>
-                                                    <h:commandButton value="Job offers" action="/views/candidate/profileDetails?faces-redirect=true" >
-                                                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                    <f:setPropertyActionListener value="#{comp}" target="#{candidateViewController.cdt}" />
-                                                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
-                                                </h:commandButton>
-                                                    <h:commandButton value="Subscribe" action="#{candidateViewController.subscribeToCompany()}" >
-                                                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                    <f:setPropertyActionListener value="#{comp}" target="#{candidateViewController.selectedCompany}" />
-                                                </h:commandButton>
+
+
+                                                <p:commandButton update=":form" title="View Detail" action="#{companyViewController.companyDetails()}">
                                                     
-                                                </h:column>
-                                                
+                                                    <f:setPropertyActionListener value="#{comp}" target="#{companyViewController.selectedCompany}" />
+                                                </p:commandButton>
                                             </h:panelGrid>
-                                        </p:dataViewListItem>
-                                    </p:dataView>
+                                        </p:panel>
+                                    </p:dataViewGridItem>
 
-                                </h:form>
-                            </p:panel>
-                        </h:form>
-                    </div>
-                    <div class="col-md-3">
-                        <h:form id="otherInfoForm">
-                            <p:panel header="Insert Any Info Here">
-                                <p:outputLabel value="Ins"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                            </p:panel>
-                        </h:form>
+                                    <p:dataViewListItem>
+                                        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                                            <p:graphicImage value="byusforus.png" /> 
+
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="2" cellpadding="5">
+                                                    <h:outputText value="Name:" />
+                                                    <h:outputText value="#{comp.name}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Sector of Activity:" />
+                                                    <h:outputText value="#{comp.sectorOfActivity}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Size:" />
+                                                    <h:outputText value="#{comp.companySize}" style="font-weight: bold"/>
+                                                    
+                                                    <h:outputText value="Creation date:" />
+                                                    <h:outputText value="#{comp.dateOfCreation}" style="font-weight: bold"/>
+                                                    
+                                                    <h:outputText value="Visits:" />
+                                                    <h:outputText value="#{comp.numViews}" style="font-weight: bold"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+
+                                            <p:commandButton value="Visit"  action="#{companyViewController.companyDetails()}">
+                                                
+                                                <f:setPropertyActionListener value="#{comp}" target="#{companyViewController.selectedCompany}" />
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </p:dataViewListItem>
+                                </p:dataView>
+                            </h:form>
+                        </div>
                     </div>
                 </div>
             </div>
