@@ -1,8 +1,8 @@
-package tn.esprit.overpowered.byusforus.managedbeans.reclamation;
+package tn.esprit.overpowered.byusforus.managedbeans.Reclamation;
 
 import tn.esprit.overpowered.byusforus.entities.reclamation.Reclamation;
-import tn.esprit.overpowered.byusforus.managedbeans.reclamation.util.JsfUtil;
-import tn.esprit.overpowered.byusforus.managedbeans.reclamation.util.JsfUtil.PersistAction;
+import tn.esprit.overpowered.byusforus.managedbeans.Reclamation.util.JsfUtil;
+import tn.esprit.overpowered.byusforus.managedbeans.Reclamation.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,8 +23,7 @@ import tn.esprit.overpowered.byusforus.services.Reclamation.ReclamationLocal;
 @ManagedBean
 @javax.faces.bean.SessionScoped
 public class ReclamationController implements Serializable {
-
-    @EJB
+ @EJB
     private ReclamationLocal ejbFacade;
 
     private List<Reclamation> items = null;
@@ -161,5 +162,4 @@ public class ReclamationController implements Serializable {
         }
 
     }
-
 }

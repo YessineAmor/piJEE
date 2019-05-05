@@ -1,8 +1,8 @@
 package tn.esprit.overpowered.byusforus.managedbeans.reclamation;
 
 import tn.esprit.overpowered.byusforus.entities.users.User;
-import tn.esprit.overpowered.byusforus.managedbeans.reclamation.util.JsfUtil;
-import tn.esprit.overpowered.byusforus.managedbeans.reclamation.util.JsfUtil.PersistAction;
+import tn.esprit.overpowered.byusforus.managedbeans.Paiement.util.JsfUtil;
+import tn.esprit.overpowered.byusforus.managedbeans.Paiement.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;

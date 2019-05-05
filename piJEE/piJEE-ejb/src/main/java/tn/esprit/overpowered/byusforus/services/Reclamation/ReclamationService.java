@@ -82,16 +82,16 @@ import tn.esprit.overpowered.byusforus.entities.reclamation.EtatReclamation;
 		return em.createQuery("select r from Reclamation r where r.idReclamation= :id",Reclamation.class ).setParameter("id",id).getSingleResult();
 	}
 
-	@Override
-	public int DeleteReclamation() {
-		 
-         return 0;
- 		
-	}
+	
             @Override
         public int DeleteReclamation1(Reclamation r) {
          em.remove(em.merge(r));
          return 0;
+    }
+
+    @Override
+    public int CalculNombreReclamationAsupprimer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

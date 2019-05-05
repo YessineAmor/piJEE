@@ -1,4 +1,4 @@
-package tn.esprit.overpowered.byusforus.managedbeans.reclamation.util;
+package tn.esprit.overpowered.byusforus.managedbeans.Reclamation.util;
 
 import java.util.List;
 import javax.faces.application.FacesMessage;

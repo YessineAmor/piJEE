@@ -32,6 +32,5 @@ public interface ReclamationRemote
 	public Reclamation FindById(int id);
         public int DeleteReclamation1(Reclamation r);
 	public int CalculNombreReclamationAsupprimer();
-        public int DeleteReclamation1(Reclamation r);
 
 }
