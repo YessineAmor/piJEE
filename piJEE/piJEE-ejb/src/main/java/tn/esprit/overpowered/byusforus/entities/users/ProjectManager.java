@@ -11,6 +11,8 @@ import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
@@ -26,11 +28,23 @@ public class ProjectManager extends Employee implements Serializable {
 
     private static final long serialVersionUID = 33L;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_COMP_PM_ID")
     private CompanyProfile companyProfile;
 
-    @OneToMany(mappedBy = "pManager", cascade = {PERSIST, MERGE})
+    @OneToMany(mappedBy = "pManager", cascade = {PERSIST, MERGE},fetch = FetchType.EAGER)
     private Set<JobOffer> managerOffers;
+
+    public ProjectManager(String username, String email, String firstName, String lastName, byte[] password) {
+        super(username, email, firstName, lastName, password);
+    }
+
+    public ProjectManager(String username, String email, String firstName, String lastName) {
+        super(username, email, firstName, lastName);
+    }
+
+    public ProjectManager() {
+    }
 
     public CompanyProfile getCompanyProfile() {
         return companyProfile;
@@ -47,8 +61,6 @@ public class ProjectManager extends Employee implements Serializable {
     public void setManagerOffers(Set<JobOffer> managerOffers) {
         this.managerOffers = managerOffers;
     }
-    
-    
 
     @Override
     public Set<Skill> getSkills() {
@@ -60,3 +72,4 @@ public class ProjectManager extends Employee implements Serializable {
         this.skills = skills;
     }
 }
+

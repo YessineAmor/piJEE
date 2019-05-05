@@ -56,6 +56,15 @@ public class Event implements Serializable {
     @ManyToOne
     @JoinTable(name = "COMPANY_EVENTS")
     private CompanyProfile company;
+
+    public Event() {
+        this.name="";
+        this.description="";
+        this.location="";
+        this.startDate=new Date();
+        this.endDate= new Date();
+        
+    }
     
     
     

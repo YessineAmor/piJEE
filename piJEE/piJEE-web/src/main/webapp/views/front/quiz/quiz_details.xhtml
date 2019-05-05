@@ -20,17 +20,17 @@
                             </div>
                             <h:form>
                                 <div>
-                                    <h:outputText value="Name: #{quizController.firstQuiz.name}"/>
+                                    <h:outputText value="Name: #{quizController.selected.name}"/>
                                     <br></br>
-                                    <h:outputText value="Details: #{quizController.firstQuiz.details}" />
+                                    <h:outputText value="Details: #{quizController.selected.details}" />
                                     <br></br>
-                                    <h:outputText value="Number of questions:#{questionController.getQuestionsByQuizId(quizController.firstQuiz.id).size()} " />
+                                    <h:outputText value="Number of questions:#{questionController.getQuestionsByQuizId(quizController.selected.id).size()} " />
                                     <br></br>
-                                    <h:outputText value="Percentage needed to pass: #{quizController.firstQuiz.percentageToPass}" />
+                                    <h:outputText value="Percentage needed to pass: #{quizController.selected.percentageToPass}" />
                                     <br></br>
                                     <br></br>
                                     <br></br>
-                                    <h:commandButton class="genric-btn primary" value="Stassrt quiz" action="#{quizController.redirectToTakeQuiz(quizController.firstQuiz)}"/>
+                                    <h:commandButton class="genric-btn primary" value="Start quiz" action="#{quizController.redirectToTakeQuiz(quizController.selected)}"/>
                                 </div>
                             </h:form>
                         </div>

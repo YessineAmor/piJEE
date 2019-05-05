@@ -5,6 +5,8 @@
  */
 package tn.esprit.overpowered.byusforus.services.users;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -13,8 +15,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Notif;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
+import tn.esprit.overpowered.byusforus.entities.users.Professional;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
 import tn.esprit.overpowered.byusforus.util.MailSender;
@@ -44,6 +48,12 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         offer.setCompany(hrm.getCompanyProfile());
         offer.sethRManager(hrm);
         em.persist(offer);
+        CompanyProfile comp = hrm.getCompanyProfile();
+        if (comp.getSubscribers() != null) {
+            for (Professional cdt : comp.getSubscribers()) {
+                em.persist(new Notif(offer.getTitle(), cdt.getId(), offer.getId()));
+            }
+        }
 
     }
 
@@ -62,8 +72,14 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
                     "RESPONSE TO JOB OFFER REQUEST",
                     "Your request has been granted and Enterprise Subscribers have"
                     + " been notified")) {
+                CompanyProfile comp = jobOffer.getCompany();
+                if (comp.getSubscribers() != null) {
+                    for (Professional cdt : comp.getSubscribers()) {
+                        em.persist(new Notif(jobOffer.getTitle(), cdt.getId(), jobOffer.getId()));
+                    }
+                }
+
                 return true;
-            } else {
             }
 
         } catch (MessagingException ex) {
@@ -117,6 +133,19 @@ public class HRManagerFacade extends AbstractFacade<HRManager> implements HRMana
         }
         return comp != null;
 
+    }
+
+    @Override
+    public List<Notif> retrieveUserNofifs(Long userId) {
+        List<Notif> notifs = null;
+
+        try {
+            notifs = em.createQuery("SELECT N FROM Notif N where N.cdtId= :id", Notif.class)
+                    .setParameter("id", userId)
+                    .getResultList();
+        } catch (NoResultException nre) {
+        }
+        return notifs;
     }
 
 }

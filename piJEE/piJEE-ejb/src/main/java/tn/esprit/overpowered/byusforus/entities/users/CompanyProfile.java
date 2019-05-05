@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.entities.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
@@ -16,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -58,13 +58,13 @@ public class CompanyProfile implements Serializable {
     private List<JobOffer> listOfOffers;
 
     @ManyToMany(mappedBy = "subscribedCompanies",
-            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Professional> subscribers;
 
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "companyProfile", cascade = {ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "companyProfile", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<ProjectManager> projectManagers;
 
     @OneToMany(mappedBy = "company", cascade = {ALL}, fetch = FetchType.LAZY)
@@ -74,9 +74,20 @@ public class CompanyProfile implements Serializable {
     private List<Workshop> workshops;
 
     public CompanyProfile() {
+        this.name="";
+        this.numViews=0;
+        this.sectorOfActivity="";
+        this.summary="";
+        this.website="";
+        this.companyAdmin= new CompanyAdmin();
+        this.companyHRManager = new HRManager();
+        this.projectManagers = new ArrayList<>();
+        this.employees = new ArrayList<>();
+        
     }
 
     public CompanyProfile(String name) {
+        super();
         this.name = name;
     }
 

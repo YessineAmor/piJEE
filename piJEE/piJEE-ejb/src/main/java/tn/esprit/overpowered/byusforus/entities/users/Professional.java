@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
 
@@ -28,14 +29,14 @@ import tn.esprit.overpowered.byusforus.entities.util.Skill;
  */
 @Entity
 public abstract class Professional extends User {
-     
+
     private String introduction;
 
     @ElementCollection
     private List<Long> recommendedIdList;
-    
+
     private int recommendations;
-    
+
     public String getIntroduction() {
         return introduction;
     }
@@ -43,24 +44,35 @@ public abstract class Professional extends User {
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
-    
-    
+
     @ElementCollection(targetClass = String.class)
     private List<String> experiences;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "subscriptions", joinColumns
             = {
                 @JoinColumn(name = "candidate_id")}, inverseJoinColumns
             = {
                 @JoinColumn(name = "company_id")})
-    private List<CompanyProfile> subscribedCompanies;
+    protected List<CompanyProfile> subscribedCompanies;
 
     @ElementCollection(targetClass = String.class)
 
     private List<String> activities;
 
-   @ElementCollection(targetClass = String.class)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "friend_request",
+            joinColumns = @JoinColumn(name = "personId"),
+            inverseJoinColumns = @JoinColumn(name = "friendId"))
+    private Set<Candidate> friendRequests;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "friend_request",
+            joinColumns = @JoinColumn(name = "friendId"),
+            inverseJoinColumns = @JoinColumn(name = "personId"))
+    private Set<Candidate> pendingRequests;
+
+    @ElementCollection(targetClass = String.class)
     private List<String> certificates;
 
     private String curriculumVitaes;
@@ -69,14 +81,17 @@ public abstract class Professional extends User {
     private List<String> cursus;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name="contacts",
-                joinColumns={           @JoinColumn(name="current_id")},
-                inverseJoinColumns={    @JoinColumn(name="contact_id")})
-    private List<Candidate> contacts = new ArrayList<Candidate>();;
+    @JoinTable(name = "contacts",
+            joinColumns = {
+                @JoinColumn(name = "current_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "contact_id")})
+    private List<Candidate> contacts = new ArrayList<Candidate>();
+    ;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<JobOffer> registeredOffers;
- 
+
     @ElementCollection(targetClass = Skill.class)
     @JoinTable(name = "T_CANDIDATE_Skills")
     @Column(nullable = false)
@@ -90,6 +105,14 @@ public abstract class Professional extends User {
         this.recommendedIdList = new ArrayList<>();
     }
 
+    public Professional(String username, String email, String firstName, String lastName, byte[] password) {
+        super(username, email, firstName, lastName, password);
+    }
+
+    public Professional(String username, String email, String firstName, String lastName) {
+        super(username, email, firstName, lastName);
+    }
+
     public int getRecommendations() {
         return recommendations;
     }
@@ -97,7 +120,6 @@ public abstract class Professional extends User {
     public void setRecommendations(int recommendations) {
         this.recommendations = recommendations;
     }
-
 
     public List<CompanyProfile> getSubscribedCompanies() {
         return subscribedCompanies;
@@ -122,7 +144,6 @@ public abstract class Professional extends User {
     public void setCurriculumVitaes(String curriculumVitaes) {
         this.curriculumVitaes = curriculumVitaes;
     }
-
 
     public List<Candidate> getContacts() {
         return contacts;
@@ -187,5 +208,21 @@ public abstract class Professional extends User {
     public void setCursus(List<String> cursus) {
         this.cursus = cursus;
     }
-    
+
+    public Set<Candidate> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(Set<Candidate> friendRequests) {
+        this.friendRequests = friendRequests;
+    }
+
+    public Set<Candidate> getPendingRequests() {
+        return pendingRequests;
+    }
+
+    public void setPendingRequests(Set<Candidate> pendingRequests) {
+        this.pendingRequests = pendingRequests;
+    }
+
 }

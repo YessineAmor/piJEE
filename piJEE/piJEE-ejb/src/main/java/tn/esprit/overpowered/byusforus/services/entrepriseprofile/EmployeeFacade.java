@@ -13,11 +13,9 @@ import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
-import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.Employee;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
-import tn.esprit.overpowered.byusforus.entities.users.User;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import tn.esprit.overpowered.byusforus.util.MailSender;
 
@@ -43,15 +41,8 @@ public class EmployeeFacade extends AbstractFacade<Employee> implements Employee
 
     @Override
     public Long createEmployee(Employee employee) {
-        CompanyProfile company = em.find(CompanyProfile.class,
-                employee.getCompany().getId());
-        
-        if(company != null){
         this.create(employee);
         return employee.getId();
-        }
-        
-        return -1L;
     }
 
     @Override

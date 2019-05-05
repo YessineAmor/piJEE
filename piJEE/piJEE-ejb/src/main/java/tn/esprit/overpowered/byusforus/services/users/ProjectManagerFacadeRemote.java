@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.services.users;
 import java.util.List;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 
 /**
@@ -36,5 +37,8 @@ public interface ProjectManagerFacadeRemote {
     public Long createPManager(ProjectManager pManager);
 
     public boolean affecterPMtoCompany(Long pManagerId, String compName);
+    
+        //Company
+    public CompanyProfile retrieveCompanyInfo(Long idPR);
 
 }

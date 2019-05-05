@@ -41,7 +41,7 @@ public class QuizTry implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishDate;
     private String recording;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     List<Answer> answers;
     @OneToOne
     private Candidate candidate;

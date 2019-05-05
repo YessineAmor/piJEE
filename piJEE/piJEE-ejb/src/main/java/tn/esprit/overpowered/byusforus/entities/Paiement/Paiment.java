@@ -27,8 +27,6 @@ public class Paiment implements Serializable {
     private Virement virement;
     @OneToOne
     private BankCard bankcard;
-    @OneToOne
-    private Premium oeuvreDeclaration;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
@@ -36,8 +34,6 @@ public class Paiment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    @Enumerated(EnumType.STRING)
-    private EtatTitle Title;
 
     private int Price;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -52,13 +48,6 @@ public class Paiment implements Serializable {
         ID = iD;
     }
 
-    public EtatTitle getTitle() {
-        return Title;
-    }
-
-    public void setTitle(EtatTitle title) {
-        Title = title;
-    }
 
     public int getPrice() {
         return Price;
@@ -124,16 +113,10 @@ public class Paiment implements Serializable {
     @Override
     public String toString() {
         return "Paiment [cheque=" + cheque + ", virement=" + virement + ", bankcard=" + bankcard + ", ID=" + ID
-                + ", Title=" + Title + ", Price=" + Price + ", Date=" + Date + ", Status=" + Status + "]";
+                +  ", Price=" + Price + ", Date=" + Date + ", Status=" + Status + "]";
     }
 
-    public Premium getOeuvreDeclaration() {
-        return oeuvreDeclaration;
-    }
 
-    public void setOeuvreDeclaration(Premium oeuvreDeclaration) {
-        this.oeuvreDeclaration = oeuvreDeclaration;
-    }
 
     public User getUser() {
         return user;

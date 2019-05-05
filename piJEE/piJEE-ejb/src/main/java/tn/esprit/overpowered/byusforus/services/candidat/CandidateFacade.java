@@ -5,10 +5,10 @@
  */
 package tn.esprit.overpowered.byusforus.services.candidat;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.users.Professional;
 import tn.esprit.overpowered.byusforus.util.MailSender;
 
 /**
@@ -28,7 +29,7 @@ import tn.esprit.overpowered.byusforus.util.MailSender;
  */
 @Stateless
 public class CandidateFacade extends AbstractFacade<Candidate>
-        implements  CandidateFacadeRemote, CandidateFacadeLocal {
+        implements CandidateFacadeRemote, CandidateFacadeLocal {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -99,7 +100,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return comp;
     }
 
-/*
+    /*
     @Override
     public void affecterExperienceCandidate(Long expId, Long candidateId) {
         Experience exp = em.find(Experience.class, expId);
@@ -111,23 +112,20 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             System.out.println("Either candidate or Experience doent exist !");
         }
     }
-    */
-
+     */
     @Override
     public List<JobOffer> customJobOfferList(Long candidateId) {
-        List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j",JobOffer.class).getResultList();
+        List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j", JobOffer.class).getResultList();
         Candidate cdt = em.find(Candidate.class, candidateId);
         List<String> exp = cdt.getExperiences();
         String testExp = exp.get(0);
         List<JobOffer> customJobs = new ArrayList<>();
-        for (JobOffer j: jobList)
-        {
-            if(j.getTitle().toLowerCase().contains(testExp.toLowerCase()))
-            {
+        for (JobOffer j : jobList) {
+            if (j.getTitle().toLowerCase().contains(testExp.toLowerCase())) {
                 customJobs.add(j);
             }
         }
-        return customJobs ;
+        return customJobs;
     }
 
     @Override
@@ -146,8 +144,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         int code = 10000 + new Random().nextInt(90000);
         System.out.println("this is the code " + code);
         try {
-            MailSender.sendMail("smtp.gmail.com", "587", "toussaint.kebou@gmail.com",
-                    "toussaint.kebou@gmail.com", "Laurel@@2019", email,
+            MailSender.sendMail("smtp.gmail.com", "587", "pidevnoreply@gmail.com",
+                    "pidevnoreply@gmail.com", "pidevpidev", email,
                     "Account creation Confirmation Mail",
                     "If you are receiving this Email then you are one step away from"
                     + " joining the BYUSFORUS group thanks you for your trust"
@@ -164,8 +162,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return "mailing system down";
 
     }
-    
-/*
+
+    /*
     @Override
     public void affecterCursusCandidate(Long candidateId, Long cursusId) {
         Candidate cdt = em.find(Candidate.class, candidateId);
@@ -173,8 +171,7 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         cdt.getCursus().add(cur);
         cur.setProfessionalCursus(cdt);
     }
-*/
-
+     */
     @Override
     public String recommend(Long candidateId) {
         Candidate cdt = em.find(Candidate.class, candidateId);
@@ -227,7 +224,6 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return cdtt.getContacts().contains(cdt);
     }
      */
-
     @Override
     public List<Candidate> friendsList(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
@@ -250,7 +246,8 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return contacts;
          */
     }
-/*
+
+    /*
     @Override
     public Experience getCandidateExperience(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
@@ -266,15 +263,41 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         }
 
     }
-*/
-
+     */
     @Override
     public String subscribe(Long companyId, Long candidateId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String info;
+        Candidate cdt = em.find(Candidate.class,candidateId);
+        CompanyProfile comp = em.find(CompanyProfile.class, companyId);
+            List<Professional> subscribers = new ArrayList<>();
+            List<CompanyProfile> subscribedCompanies = new ArrayList<>();
+            if(cdt.getSubscribedCompanies()==null){
+                subscribedCompanies.add(comp);
+                cdt.setSubscribedCompanies(subscribedCompanies);
+                    if(comp.getSubscribers()==null){
+                        subscribers.add(cdt);
+                        comp.setSubscribers(subscribers);
+                        info = "Subscribed";
+                    }
+                    else{
+                        comp.getSubscribers().add(cdt);
+                        info = "Subscribed";
+                    }
+            }
+            else {
+                if(cdt.getSubscribedCompanies().contains(comp))
+                    info="Already Subscribed";
+                else{
+                cdt.getSubscribedCompanies().add(comp);
+                info = "Subscribed";
+                }
+                
+            }
+            return info;
     }
 
 
-/*
+    /*
     @Override
     public Cursus getCandidateCursus(Long cdtId) {
          Candidate cdt = em.find(Candidate.class, cdtId);
@@ -303,5 +326,75 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             return "Already Friends";
         }
     }
-*/
+     */
+    @Override
+    public Candidate findCandidate(Long cdtId) {
+        Candidate cdt = new Candidate();
+        cdt = em.find(Candidate.class, cdtId);
+        return cdt;
+    }
+
+    @Override
+    public String sendFriendRequest(Long currentId, Long friendId) {
+        Candidate currentCdt = em.find(Candidate.class, currentId);
+        Candidate friend = em.find(Candidate.class, friendId);
+       if (currentCdt.getFriendRequests().contains(friend)) {
+          return "Exist";
+        } else {
+            currentCdt.getFriendRequests().add(friend);
+            friend.getFriendRequests().add(currentCdt);
+            return "OK";
+        }
+    }
+
+    @Override
+    public String acceptFriendRequest(Long currentId, Long friendId) {
+        this.addContact(currentId, friendId);
+        Candidate currentCdt = em.find(Candidate.class, currentId);
+        Candidate friend = em.find(Candidate.class, friendId);
+        friend.getFriendRequests().remove(currentCdt);
+        return "OK";
+    }
+
+    @Override
+    public String rejectFriendRequest(Long currentId, Long friendId) {
+        Candidate currentCdt = em.find(Candidate.class, currentId);
+        Candidate friend = em.find(Candidate.class, friendId);
+         friend.getFriendRequests().remove(currentCdt);
+
+        return "OK";
+    }
+
+    @Override
+    public List<Candidate> friendRequestList(Long currentId) {
+        Candidate cdt = em.find(Candidate.class, currentId);
+        Set<Candidate> listCdt = cdt.getPendingRequests();
+        List<Candidate> friendRequests = new ArrayList<>();
+        for (Candidate cdtt : listCdt) {
+            friendRequests.add(em.find(Candidate.class, cdtt.getId()));
+        }
+        return friendRequests;
+    }
+
+    @Override
+    public List<Candidate> pendingList(Long currentId) {
+        Candidate cdt = em.find(Candidate.class, currentId);
+        Set<Candidate> listCdt = cdt.getPendingRequests();
+        List<Candidate> pendingRequests = new ArrayList<>();
+        for (Candidate cdtt : listCdt) {
+            pendingRequests.add(em.find(Candidate.class, cdtt.getId()));
+        }
+        return pendingRequests;
+    }
+
+    @Override
+    public String deleteFriend(Long currentCdtId, Long contactId) {
+        Candidate currentCdt = em.find(Candidate.class, currentCdtId);
+        Candidate contact = em.find(Candidate.class, contactId);
+        
+            currentCdt.getContacts().remove(contact);
+            contact.getContacts().remove(currentCdt);
+            return "Contact deleted";
+    }
+
 }

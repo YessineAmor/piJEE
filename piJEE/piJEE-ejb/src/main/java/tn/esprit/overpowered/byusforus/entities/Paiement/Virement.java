@@ -1,6 +1,10 @@
 package tn.esprit.overpowered.byusforus.entities.Paiement;
 
 import java.io.Serializable;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +18,7 @@ public class Virement implements Serializable {
 
     private static final long serialVersionUID = 5L;
 
-    @OneToOne(mappedBy = "virement")
+    @OneToOne(cascade={PERSIST, MERGE, REFRESH, DETACH})
     private Paiment paiment;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
