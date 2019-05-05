@@ -17,14 +17,54 @@
             <link rel="stylesheet" href="style.css" />
             <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
             <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
+            <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/-->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
-        <div id="fb-root"></div>
-        <script async="async defer" crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;version=v3.3"></script>
         <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
+            <style type="text/css">
+                .ui-sticky {
+                    top: 70px !important;
+                }
+                @media (max-width: 960px) {
+                    .ui-sticky {
+                        top: 110px !important;
+                    }
+                }
+                <!--for Datascroller Management-->
+                .logo {
+                    width: 5%;
+                }
+
+                .detail {
+                    width: 95%;
+                    padding-left: 2px;
+                }
+
+                .detail td {
+                    font-size: 12px;
+                }
+
+                .ui-datascroller .ui-datascroller-item {
+                    border-bottom: 1px solid #A8A8A8;
+                    padding: 2px 2px;
+                    /* with the exported variables from Nova and Luna Themes*/
+                    border-bottom-color:var(--input-border-color, #A8A8A8);
+                }
+
+                .ui-dataview-list .ui-dataview-row {
+                    border-bottom: 1px solid #A8A8A8;
+                    padding: 25px 10px;
+                    /* with the exported variables from Nova and Luna Themes*/
+                    border-bottom-color: var(--input-border-color, #A8A8A8);
+                }
+            </style>
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
-                <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
-                     <div class="col-md-3" >
+                <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
+
+
+                    <div class="col-md-3" >
                         <h:form id="AdminForm">
                             <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <f:facet name="header" >
@@ -85,59 +125,59 @@
                             </p:panel>
                         </h:form>
                     </div>
-                    <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+                    <div class="col-md-8" style="border: 1px solid #ccc; margin-top: 50px">
+                        <p class="h2" style="text-align: center" ><p:outputLabel value=" #{companyViewController.selectedCompanies.name}"/></p>
 
-                        <h:form id="postForm">
-                            <p:panel header="Manage Posts Here">
-                                <p:outputLabel value="Manage Posts HERE"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                            </p:panel>
-                        </h:form>
-                        <h:form id="feedsForm">
-                            <p:panel>
-                                <h:form id="form">
-                                    <p:panelGrid columns ="1">  
-                                        <h:graphicImage value="elon.png" height="200px" width="200px"  />
-                                    </p:panelGrid>
-                                    <p:panelGrid columns="2">
-                                        <f:facet name="header">
-                                            <p:graphicImage name="demo/images/misc/kobe.png" />
-                                        </f:facet>
+                        <div style="margin-bottom: 20px">
+                            <p class="h7"  style="display: inline;"><p:outputLabel value="Founded on: #{companyViewController.selectedCompanies.dateOfCreation} " /></p>
 
-                                        <h:outputText value="Name" />
-                                        <h:outputText value="#{candidateViewController.cdt.firstName}" />
+                        </div>
+                        <div class="column">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p:graphicImage value="bufulogo.png" alt="" style="max-height: 200px"/>
+                                    <p class="h5">Website :</p>
+                                    <p><p:outputLabel value="#{companyViewController.selectedCompanies.website}"/></p>
+                                    <p class="h5">Sector of activity :</p>
+                                    <p><p:outputLabel value="#{companyViewController.selectedCompanies.sectorOfActivity}"/></p>
 
-                                        <h:outputText value="Last name" />
-                                        <h:outputText value="#{candidateViewController.cdt.lastName}" />
+                                    <p class="h5">Summary :</p>
+                                    <p><p:outputLabel value="#{companyViewController.selectedCompanies.summary}"/></p>
 
-                                        <h:outputText value="Email" />
-                                        <h:outputText value="#{candidateViewController.cdt.email}" />
+                                    <p class="h5">Visits :</p>
+                                    <p><p:outputLabel value="#{companyViewController.selectedCompanies.numViews}"/></p>
 
-                                        <h:outputText value="Recommendations" />
-                                        <h:outputText value="#{candidateViewController.cdt.recommendations}" />
+                                    <p class="h5">Skills :</p>
+                                    <!--p:orderList value="#{candidateViewController.offerSkills}"
+                                                 var="skill" controlsLocation="none"
+                                                 itemLabel="#{skill}"
+                                                 itemValue="#{skill}" /-->
+                                    <p:dataList  value="#{candidateViewController.selectedOffer.skills}"
+                                                 var="car"
+                                                 type="ordered"
+                                                 style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
+                                        <!--f:facet name="header">
+                                            Basic
+                                        </f:facet-->
 
-                                        <h:outputText value="Visits" />
-                                        <h:outputText value="#{candidateViewController.cdt.visits}" />
+                                    </p:dataList>
+                                    <!-- Modal -->
 
-                                        <h:commandButton value="Recommend" action="#{candidateViewController.recommendCandidate()}"/>
-                                        <h:commandButton value="Send friend request" action="#{candidateViewController.sendFriendRequest()}" />
-                                    </p:panelGrid>
-                                   
-                                </h:form>
-                            </p:panel>
-                        </h:form>
+                                </div>
+
+                            </div>
+                            <div class="row" style="margin-top: 10px">
+                                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBy-Us-For-Us-2710188445690496&amp;tabs=timeline&amp;width=340&amp;height=500&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=true&amp;appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div class="col-md-3">
-                        <h:form id="otherInfoForm">
-                            <p:panel header="Insert Any Info Here">
-                                <p:outputLabel value="Ins"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                            </p:panel>
-                        </h:form>
-                    </div>
+
+
                 </div>
+
+
             </div>
         </h:body>
         <!-- End download Area -->
