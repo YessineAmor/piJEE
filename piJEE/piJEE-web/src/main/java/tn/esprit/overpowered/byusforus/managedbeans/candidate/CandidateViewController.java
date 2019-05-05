@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeRemote;
 import util.authentication.Authenticator;
@@ -27,6 +28,8 @@ import util.authentication.Authenticator;
 @SessionScoped
 public class CandidateViewController implements Serializable {
 
+    private String rejectMotif;
+    private List<Skill> offerSkills;
     private Candidate cdt;
     private String lastName;
     private String email;
@@ -55,12 +58,7 @@ public class CandidateViewController implements Serializable {
     
      public String doPreviewOffer(){
         
-       /* for(Skill s:selectedOffer.getSkills()){
-            offerSkills.add(s);
-            System.out.println("Trying to view skills*******"+s);
-        }*/
-        
-        return "/view/candidate/jobOfferDetails?faces-redirect=true";
+        return "/views/candidate/jobOfferDetails?faces-redirect=true";
         
     }
      
@@ -330,6 +328,22 @@ public class CandidateViewController implements Serializable {
 
     public void setSelectedCompany(CompanyProfile selectedCompany) {
         this.selectedCompany = selectedCompany;
+    }
+
+    public List<Skill> getOfferSkills() {
+        return offerSkills;
+    }
+
+    public void setOfferSkills(List<Skill> offerSkills) {
+        this.offerSkills = offerSkills;
+    }
+
+    public String getRejectMotif() {
+        return rejectMotif;
+    }
+
+    public void setRejectMotif(String rejectMotif) {
+        this.rejectMotif = rejectMotif;
     }
 
 
