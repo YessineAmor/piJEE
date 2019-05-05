@@ -23,32 +23,65 @@
     
     <dependencies>
         <!-- Primefaces -->
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>7.0</version>
-        </dependency>
-        
+        <!-- Primefaces -->
+
+
+
+<dependency>
+
+<groupId>org.primefaces</groupId>
+
+<artifactId>primefaces</artifactId>
+
+<version>7.0</version>
+
+</dependency>
+
+<!-- Hibernate EM -->
+
+
+
+<dependency>
+
+<groupId>org.hibernate</groupId>
+
+<artifactId>hibernate-entitymanager</artifactId>
+
+<version>4.3.1.Final</version>
+
+<scope>provided</scope>
+
+</dependency>
+
+<!-- Hibernate JPA ModGen -->
+
+
+
+<dependency>
+
+<groupId>org.hibernate</groupId>
+
+<artifactId>hibernate-jpamodelgen</artifactId>
+
+<version>5.2.6.Final</version>
+
+<scope>provided</scope>
+
+</dependency>
+
+<!-- piJEE-ejb -->
+
+
+<!-- JEE web api -->
+
+
+
         <!-- Hibernate EM -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.1.Final</version>
-            <scope>provided</scope>
-        </dependency>
         
         <!-- Hibernate JPA ModGen -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <version>5.2.6.Final</version>
-            <scope>provided</scope>
-        </dependency>
-        
         <!-- piJEE-ejb -->
         
         <!-- JEE web api -->
-       
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>piJEE-ejb</artifactId>
