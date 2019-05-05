@@ -8,10 +8,13 @@ package tn.esprit.overpowered.byusforus.managedbeans.candidate;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeRemote;
 import util.authentication.Authenticator;
@@ -35,8 +38,13 @@ public class CandidateViewController implements Serializable {
     private List<Candidate> friendRequests;
     private List<Candidate> friends;
     private List<Candidate> candidatesList;
+
+    //Company
+    private CompanyProfile selectedCompany;
+
     @EJB
     private CandidateFacadeRemote cdtFacade;
+
     private Candidate connectedCdt;
     private List<JobOffer> customJobs;
     private List<JobOffer> jobOffers;
@@ -92,37 +100,43 @@ public class CandidateViewController implements Serializable {
     public String jobofferList()
     {
         connectedCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
-        jobOffers = jobFacade.findAll();
+        jobOffers = jobFacade.viewAllOffers();
         return "/views/candidate/jobOfferView?faces-redirect=true";
     }
     
-     public String candidatesList()
+
+    public String subscribeToCompany() {
+        String result;
+        String goTo= "/views/candidate/companiesView?faces-redirect=true";
+        result = cdtFacade.subscribe(selectedCompany.getId(), Authenticator.currentSession.getUser().getId());
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", result);
+        FacesContext.getCurrentInstance().addMessage("!!", msg);
+        return goTo;
+    }
+ public String candidatesList()
     {
         connectedCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
+
         candidatesList = cdtFacade.afficherCandidats();
         return "/views/candidate/candidatesView?faces-redirect=true";
     }
-    
-    public String deleteFriend()
-    {
+
+    public String deleteFriend() {
         cdtFacade.deleteFriend(Authenticator.currentSession.getUser().getId(), cdt.getId());
         return this.friendList();
     }
-    
-    public String acceptFriendRequest()
-    {
+
+    public String acceptFriendRequest() {
         cdtFacade.acceptFriendRequest(Authenticator.currentSession.getUser().getId(), cdt.getId());
         return this.friendRequestList();
     }
-    
-    public String friendList()
-    {
-         friends = cdtFacade.friendsList(Authenticator.currentSession.getUser().getId());
-         return "/views/candidate/friendList?faces-redirect=true";
+
+    public String friendList() {
+        friends = cdtFacade.friendsList(Authenticator.currentSession.getUser().getId());
+        return "/views/candidate/friendList?faces-redirect=true";
     }
-    
-    public String rejectFriendRequest()
-    {
+
+    public String rejectFriendRequest() {
         cdtFacade.rejectFriendRequest(Authenticator.currentSession.getUser().getId(), cdt.getId());
         return this.friendRequestList();
     }
@@ -137,25 +151,20 @@ public class CandidateViewController implements Serializable {
         return "/views/candidate/profile?faces-redirect=true";
     }
 
-    
-    public void sendFriendRequest()
-    {
+    public void sendFriendRequest() {
         cdtFacade.sendFriendRequest(Authenticator.currentSession.getUser().getId(), cdt.getId());
     }
-    
-    public String friendRequestList()
-    {
+
+    public String friendRequestList() {
         friendRequests = cdtFacade.friendRequestList(Authenticator.currentSession.getUser().getId());
         return "/views/candidate/friendRequestList?faces-redirect=true";
     }
-    
-    public List<Candidate> pendingRequests()
-    {
+
+    public List<Candidate> pendingRequests() {
         return cdtFacade.pendingList(Authenticator.currentSession.getUser().getId());
     }
-    
-    public void recommendCandidate()
-    {
+
+    public void recommendCandidate() {
         cdtFacade.recommend(cdt.getId());
     }
 
@@ -255,6 +264,7 @@ public class CandidateViewController implements Serializable {
         this.jobFacade = jobFacade;
     }
 
+
     public String getExperience() {
         return experience;
     }
@@ -313,4 +323,14 @@ public class CandidateViewController implements Serializable {
 
     
     
+
+    public CompanyProfile getSelectedCompany() {
+        return selectedCompany;
+    }
+
+    public void setSelectedCompany(CompanyProfile selectedCompany) {
+        this.selectedCompany = selectedCompany;
+    }
+
+
 }

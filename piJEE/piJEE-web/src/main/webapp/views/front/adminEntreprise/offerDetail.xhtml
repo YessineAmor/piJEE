@@ -90,28 +90,30 @@
                             </p:panel>
                         </h:form>
                         <h:form id="eventsForm" >
-                            <p:panel header="Events"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
+                            <p:panel header="User Offers"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
                                 <!--p:panelGrid -->
-                                <p:dataScroller value="#{adminBean.events}" var="evt" chunkSize="2" >
+                                <p:dataScroller value="#{adminBean.userOffers}" var="off" chunkSize="2" >
                                     <f:facet  name="header">
-                                        Scroll Down to Load More Events
+                                        Scroll Down to Load More Offers
                                     </f:facet>
                                     <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
                                         <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
                                         <p:outputPanel style="width: auto">
                                             <h:panelGrid columns="2" cellpadding="1">
                                                 <h:outputText value="Title:" />
-                                                <h:outputText value="#{evt.name}" style="font-weight: bold"/>
+                                                <h:outputText value="#{off.title}" style="font-weight: bold"/>
 
-                                                <h:outputText value="Start:" />
-                                                <h:outputText value="#{evt.startDate}" style="font-weight: bold"/>
+                                                <h:outputText value="Location:" />
+                                                <h:outputText value="#{off.city}" style="font-weight: bold"/>
 
-                                                <h:outputText value="End:" />
-                                                <h:outputText value="#{evt.endDate}" style="font-weight: bold"/>
+                                                <h:outputText value="Company:" />
+                                                <h:outputText value="#{off.company.name}" style="font-weight: bold"/>
                                             </h:panelGrid>
                                         </p:outputPanel>
                                         <f:facet name="footer">
-                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewEvent(evt.id)}"/>
+                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewOffer()}" >
+                                                <f:setPropertyActionListener value="#{off}" target="#{adminBean.selectedOffer}"/>
+                                            </p:commandLink>
                                         </f:facet>
                                     </p:panelGrid>
 
@@ -124,7 +126,7 @@
                         </h:form>
                     </div>
                     <div class="col-md-8" style="border: 1px solid #ccc; margin-top: 50px">
-                        <p class="h2" style="text-align: center" >Title</p>
+                        <p class="h2" style="text-align: center" ><p:outputLabel value="Title: #{adminBean.selectedOffer.title}"/></p>
 
                         <div style="margin-bottom: 20px">
                             <p class="h7" style="display: inline;"><a target="__blank" href="https://map.google.com?q=#{adminBean.selectedOffer.city}"><i class="fa fa-map"></i> &nbsp;<p:outputLabel value="#{adminBean.selectedOffer.city}" /></a> </p>
@@ -132,13 +134,13 @@
                             <p class="h7"  style="display: inline;"><p:outputLabel value="Expires on: #{adminBean.selectedOffer.dateOfArchive}" /></p>
                         </div>
                         <h:form >
-                            <p:commandButton class="btn btn-danger" title="" styleClass="fa fa-trash btn btn-danger" style="border-radius: 50%; position: absolute; top: 5px; right: 5px;">
+                            <p:commandButton action="#{adminBean.doDeleteOffer()}" class="btn btn-danger" title="" styleClass="fa fa-trash btn btn-danger" style="border-radius: 50%; position: absolute; top: 5px; right: 5px;">
 
                             </p:commandButton>
                         </h:form>
                         <div class="row">
                             <div class="col-md-6">
-                                <p:graphicImage url="https://parismatch.be/app/uploads/2018/04/Macaca_nigra_self-portrait_large-e1524567086123-1100x715.jpg" alt="" style="max-height: 200px"/>
+                                <p:graphicImage value="byusforus.png" alt="" style="max-height: 200px"/>
                                 <p class="h4">Expertise Level :</p>
                                 <p><p:outputLabel value="#{adminBean.selectedOffer.expertiseLevel}"/></p>
                                 <p class="h4">Skills :</p>
@@ -147,21 +149,20 @@
                                              itemLabel="#{skill}"
                                              itemValue="#{skill}" /-->
                                 <p:dataList  value="#{adminBean.selectedOffer.skills}"
-                                                var="car"
-                                                type="ordered"
-                                                style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
-                                        <!--f:facet name="header">
-                                            Basic
-                                        </f:facet-->
-                                        #{car}
-                                    </p:dataList>
+                                             var="car"
+                                             type="ordered"
+                                             style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
+                                    <!--f:facet name="header">
+                                        Basic
+                                    </f:facet-->
+                                    #{car}
+                                </p:dataList>
                                 <button style="position: absolute; bottom: 5px; left: 5px;" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                                     <i class="fa fa-edit"></i> &nbsp; Edit
                                 </button>
                                 <button class="btn btn-danger" style="position: absolute; bottom: 5px; left: 120px">
                                     <i class="fa fa-book"></i> &nbsp; Quiz
                                 </button>
-
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -194,6 +195,46 @@
                                 <p class="h4">Status :</p>
                                 <p style="color: yellowgreen">
                                     <p:outputLabel value="#{adminBean.selectedOffer.offerStatus}" />
+                                    <p:row>
+                                        <p:column>
+                                            <p:commandLink class="btn btn-primary" action="#{adminBean.doApproveOfferRequest()}" value="Approve" style="position: absolute; bottom: 5px; left: 5px;">
+                                            <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
+                                            </p:commandLink>
+                                        </p:column>
+                                         <p:column>
+                                             <button  type="button" class="btn btn-secondary" style="position: absolute; bottom: 5px; right: 5px" data-toggle="modal" data-target="#myModal">Decline</button>
+                          <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Rejection Motif</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="h4">Motif :</p>
+                                                <p style="text-align: justify">
+                                                    <p:inputTextarea required="true" value="#{adminBean.rejectMotif}" requiredMessage="Include Motif"/>
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <p:commandButton value="Send" action="#{adminBean.doDeclineOfferRequest()}" class="btn btn-primary">
+                                                    <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                        
+                                        </p:column>
+                                    </p:row>
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                        </p:confirmDialog>
                                 </p>
                             </div>
                         </div>
@@ -203,25 +244,16 @@
 
                         <div class="dropdown">
                             <h:form>
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span style="color: red;">1</span>
+                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
+                                    <span style="color: red;"><p:outputLabel value="2"/></span>
                                     <i class="fa fa-bell"></i>
+                                    <p:selectOneMenu class="btn btn-secondary" id="country" value="#{signUpBean.role}" style="width:0px ; background-color: #6c757d">
+
+<!--p:ajax listener="#{dropdownView.onCountryChange}" update="city" /-->
+                                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{signUpBean.Roles()}" />
+                                    </p:selectOneMenu>
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <!--p:orderList class="dropdown-item" value="#{signUpBean.Roles()}"
-                                                 var="skill" controlsLocation="none"
-                                                 itemLabel="#{skill}"
-                                                 itemValue="#{skill}" 
-                                                 /-->
-                                    <p:dataList class="dropdown-item" value="#{signUpBean.Roles()}"
-                                                var="car"
-                                                type="ordered">
-                                        <f:facet name="header">
-                                            Basic
-                                        </f:facet>
-                                        #{car}
-                                    </p:dataList>
-                                </div>
                             </h:form>
                         </div>
                     </div>

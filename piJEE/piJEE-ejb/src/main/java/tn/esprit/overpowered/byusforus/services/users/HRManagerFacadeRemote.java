@@ -8,6 +8,8 @@ package tn.esprit.overpowered.byusforus.services.users;
 import java.util.List;
 import javax.ejb.Remote;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
+import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Notif;
+import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
 import tn.esprit.overpowered.byusforus.entities.users.HRManager;
 
 /**
@@ -38,8 +40,16 @@ public interface HRManagerFacadeRemote {
     
     public void createOffer(Long idManager,JobOffer offer);
     
+    public void deleteOffer(Long idOffer);
+    public void archiveOffer(Long idOffer);
+    
     //HR
     public Long createHRManager(HRManager hrManger);
     
     public boolean affecterHRtoCompany(Long hrManagerId, String compName);
+    
+    //Notification service
+    public List<Notif> retrieveUserNofifs(Long userId);
+   
+
 }

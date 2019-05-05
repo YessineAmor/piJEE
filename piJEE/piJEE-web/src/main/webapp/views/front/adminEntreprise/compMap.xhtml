@@ -22,46 +22,14 @@
         <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
-                    <div class="col-md-3">
-                        <h:form id="userDetailForm">
-                            <p:panel header="My Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
-                                <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
-                                    <p:commandLink >
-                                        <p:graphicImage value="adminPic.png" height="50px" width="50px"  />
-                                    </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.firstName} #{adminBean.lastName}"/>
-                                    <p:outputLabel value="#{adminBean.userType}"/>
-                                    <p:commandLink value="#{adminBean.email}"/>
-                                </p:panelGrid>
-                                <f:facet name="actions">
-                                    <h:commandLink action ="#{adminBean.profileView()}" styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
-                                </f:facet>
-                                <f:facet name="options">
-                                    <p:menu >
-                                        <p:menuitem value="Profile" url="#" icon="pi pi-clone"  />
-                                        <p:menuitem value="Events" url="#" action="#{adminBean.viewEvents()}" icon="pi pi-times" />
-                                        <p:menuitem value="Offers" url="#" icon="pi pi-times"  />
-                                    </p:menu>
-                                </f:facet>
-                            </p:panel>
-                        </h:form>
-                    </div>
-                    <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+                 
+                    <div class="col-md-9" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+                        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
-                        <h:form id="postForm">
-                            <p:panel header="Manage Posts Here">
-                                <p:outputLabel value="Manage Posts HERE"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                            </p:panel>
-                        </h:form>
-                        <h:form id="feedsForm">
-                            <p:panel header="Insert Feeds Here">
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                                <p:outputLabel value="InsertConnected USER Info"/>
-                            </p:panel>
-                        </h:form>
+
+                        <p:gmap center="36.890257,30.707417" zoom="13" type="HYBRID"
+                                style="width:100%;height:600px" model="#{adminBean.simpleModel}" />
+
                     </div>
                     <div class="col-md-3"><style type="text/css">
                             .ui-sticky {
@@ -79,8 +47,7 @@
                                     <p:commandLink >
                                         <p:graphicImage value="byusforus.png" height="50px" width="50px"  />
                                     </p:commandLink>
-                                    <p:commandLink action="/views/front/adminEntreprise/compMap?faces-redirect=true"><p:outputLabel value="#{adminBean.company.name}"/></p:commandLink>
-                                    <p:outputLabel value="HR Manager: #{adminBean.company.companyHRManager.lastName}"/>
+                                    <p:outputLabel value="#{adminBean.company.name}"/>
                                     <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
                                     <p:commandLink value="Offers" action="#{adminBean.viewOffers()}"/>
                                 </p:panelGrid>
@@ -89,7 +56,6 @@
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
-                            <p:sticky target="userDetailForm" />
                         </h:form>
                     </div>
                 </div>
