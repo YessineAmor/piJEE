@@ -92,26 +92,28 @@
                         <h:form id="eventsForm" >
                             <p:panel header="Events"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
                                 <!--p:panelGrid -->
-                                <p:dataScroller value="#{adminBean.events}" var="evt" chunkSize="2" >
+                                <p:dataScroller value="#{adminBean.userOffers}" var="off" chunkSize="2" >
                                     <f:facet  name="header">
-                                        Scroll Down to Load More Events
+                                        Scroll Down to Load More Offers
                                     </f:facet>
                                     <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
                                         <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
                                         <p:outputPanel style="width: auto">
                                             <h:panelGrid columns="2" cellpadding="1">
                                                 <h:outputText value="Title:" />
-                                                <h:outputText value="#{evt.name}" style="font-weight: bold"/>
+                                                <h:outputText value="#{off.title}" style="font-weight: bold"/>
 
-                                                <h:outputText value="Start:" />
-                                                <h:outputText value="#{evt.startDate}" style="font-weight: bold"/>
+                                                <h:outputText value="Location:" />
+                                                <h:outputText value="#{off.city}" style="font-weight: bold"/>
 
-                                                <h:outputText value="End:" />
-                                                <h:outputText value="#{evt.endDate}" style="font-weight: bold"/>
+                                                <h:outputText value="Company:" />
+                                                <h:outputText value="#{off.company.name}" style="font-weight: bold"/>
                                             </h:panelGrid>
                                         </p:outputPanel>
                                         <f:facet name="footer">
-                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewEvent(evt.id)}"/>
+                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewOffer()}" >
+                                                <f:setPropertyActionListener value="#{off}" target="#{adminBean.selectedOffer}"/>
+                                            </p:commandLink>
                                         </f:facet>
                                     </p:panelGrid>
 

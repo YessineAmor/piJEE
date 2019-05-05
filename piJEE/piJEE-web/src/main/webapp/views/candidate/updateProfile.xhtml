@@ -19,8 +19,6 @@
             <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
-        <div id="fb-root"></div>
-        <script async="async defer" crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;version=v3.3"></script>
         <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
@@ -39,7 +37,8 @@
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandButton action="#{candidateViewController.friendRequestList()}" value="Friend requests"/>
                                     <p:commandButton action="#{candidateViewController.friendList()}" value="Friends"/>
-                                    <p:commandButton action="#{candidateViewController.candidatesList()}" value="Candidates"/>
+                                    <p:commandButton action="#{candidateViewController.jobofferList()}" value="Job Offers"/>
+                                    <p:commandButton action="#{companyViewController.listComp()}" value="Companies"/>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
@@ -59,33 +58,37 @@
                         <h:form id="feedsForm">
                             <p:panel>
                                 <h:form id="form">
-                                    <p:panelGrid columns ="1">  
-                                        <h:graphicImage value="elon.png" height="200px" width="200px"  />
+                                    <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                        <h:outputText value="Name: "/>  
+                                        <h:inputText id="name" value="#{candidateViewController.firstName}"/> 
+                                        <p:watermark for="name" value=" #{candidateViewController.cdt.firstName}" id="watermark" />
+
+                                        <h:outputText value="Last name: "/>  
+                                        <h:inputText id="lastname" value="#{candidateViewController.lastName}"/> 
+                                        <p:watermark for="lastname" value=" #{candidateViewController.cdt.lastName}" id="lastnamewatermark" />
+
+                                        <h:outputText value="Username: "/>  
+                                        <h:inputText id="username" value="#{candidateViewController.username}"/> 
+                                        <p:watermark for="lastname" value=" #{candidateViewController.cdt.username}" id="usernameatermark" />
+
+                                        <h:outputText value="Email: "/>  
+                                        <h:inputText id="email" value="#{candidateViewController.email}"/> 
+                                        <p:watermark for="lastname" value=" #{candidateViewController.cdt.email}" id="emailwatermark" />
+                                        
+                                        <h:outputText value="Experiences: "/>  
+                                        <h:inputText id="experience" value="#{candidateViewController.experience}"/> 
+                                        <p:watermark for="experience" value=" #{candidateViewController.cdt.experiences}" id="experiencewatermark" />
+
+                                        <h:outputText value="Cursus: "/>  
+                                        <p:inputTextarea rows="5" cols="30" counter="display" maxlength="20" counterTemplate="{0} characters remaining." autoResize="false" />
+
+                                        <h:outputText value="Experience: "/>  
+                                        <p:inputTextarea rows="5" cols="30" counter="display" maxlength="20" counterTemplate="{0} characters remaining." autoResize="false" />
+                                        <br />
+                                        <h:outputText id="display" />
+                                                              
+                                        <h:commandButton value="Submit changes" action="#{candidateViewController.editProfile()}"/>
                                     </p:panelGrid>
-                                    <p:panelGrid columns="2">
-                                        <f:facet name="header">
-                                            <p:graphicImage name="demo/images/misc/kobe.png" />
-                                        </f:facet>
-
-                                        <h:outputText value="Name" />
-                                        <h:outputText value="#{candidateViewController.cdt.firstName}" />
-
-                                        <h:outputText value="Last name" />
-                                        <h:outputText value="#{candidateViewController.cdt.lastName}" />
-
-                                        <h:outputText value="Email" />
-                                        <h:outputText value="#{candidateViewController.cdt.email}" />
-
-                                        <h:outputText value="Recommendations" />
-                                        <h:outputText value="#{candidateViewController.cdt.recommendations}" />
-
-                                        <h:outputText value="Visits" />
-                                        <h:outputText value="#{candidateViewController.cdt.visits}" />
-
-                                        <h:commandButton value="Recommend" action="#{candidateViewController.recommendCandidate()}"/>
-                                        <h:commandButton value="Send friend request" action="#{candidateViewController.sendFriendRequest()}" />
-                                    </p:panelGrid>
-                                    <div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
                                 </h:form>
                             </p:panel>
                         </h:form>
