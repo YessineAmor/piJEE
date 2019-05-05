@@ -23,7 +23,7 @@
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
                     <div class="col-md-3">
-                          <h:form id="userDetailForm">
+                        <h:form id="userDetailForm">
                             <p:panel header="My Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandLink >
@@ -61,27 +61,29 @@
                                         <h:graphicImage value="elon.png" height="200px" width="200px"  />
                                     </p:panelGrid>
                                     <p:panelGrid columns="2">
-                                    <f:facet name="header">
-                                        <p:graphicImage name="demo/images/misc/kobe.png" />
-                                    </f:facet>
+                                        <f:facet name="header">
+                                            <p:graphicImage name="demo/images/misc/kobe.png" />
+                                        </f:facet>
 
-                                    <h:outputText value="Name" />
-                                    <h:outputText value="#{candidateViewController.cdt.firstName}" />
+                                        <h:outputText value="Name" />
+                                        <h:outputText value="#{candidateViewController.cdt.firstName}" />
 
-                                    <h:outputText value="Last name" />
-                                    <h:outputText value="#{candidateViewController.cdt.lastName}" />
+                                        <h:outputText value="Last name" />
+                                        <h:outputText value="#{candidateViewController.cdt.lastName}" />
 
-                                    <h:outputText value="Email" />
-                                    <h:outputText value="#{candidateViewController.cdt.email}" />
+                                        <h:outputText value="Email" />
+                                        <h:outputText value="#{candidateViewController.cdt.email}" />
 
-                                    <h:outputText value="Recommendations" />
-                                    <h:outputText value="#{candidateViewController.cdt.recommendations}" />
+                                        
 
-                                    <h:outputText value="Visits" />
-                                    <h:outputText value="#{candidateViewController.cdt.visits}" />
+                                        <h:outputText value="Recommendations" />
+                                        <h:outputText value="#{candidateViewController.cdt.recommendations}" />
 
-                                    <h:commandButton value="Edit" action="/views/candidate/updateProfile"/>
-                                </p:panelGrid>
+                                        <h:outputText value="Visits" />
+                                        <h:outputText value="#{candidateViewController.cdt.visits}" />
+
+                                        <h:commandButton value="Edit" action="/views/candidate/updateProfile"/>
+                                    </p:panelGrid>
 
                                 </h:form>
                             </p:panel>

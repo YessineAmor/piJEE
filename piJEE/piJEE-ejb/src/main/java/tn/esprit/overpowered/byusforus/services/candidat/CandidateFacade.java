@@ -369,4 +369,16 @@ public class CandidateFacade extends AbstractFacade<Candidate>
             return "Contact deleted";
     }
 
+    @Override
+    public void editCandidate(Candidate cdt) {
+        em.merge(cdt);
+    }
+
+    @Override
+    public List<String> getCandidateExperience(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        List<String> experiences = cdt.getExperiences();
+        return experiences;
+    }
+
 }

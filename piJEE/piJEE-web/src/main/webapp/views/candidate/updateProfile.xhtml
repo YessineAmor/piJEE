@@ -74,6 +74,10 @@
                                         <h:outputText value="Email: "/>  
                                         <h:inputText id="email" value="#{candidateViewController.email}"/> 
                                         <p:watermark for="lastname" value=" #{candidateViewController.cdt.email}" id="emailwatermark" />
+                                        
+                                        <h:outputText value="Experiences: "/>  
+                                        <h:inputText id="experience" value="#{candidateViewController.experience}"/> 
+                                        <p:watermark for="experience" value=" #{candidateViewController.cdt.experiences}" id="experiencewatermark" />
 
                                         <h:outputText value="Cursus: "/>  
                                         <p:inputTextarea rows="5" cols="30" counter="display" maxlength="20" counterTemplate="{0} characters remaining." autoResize="false" />
