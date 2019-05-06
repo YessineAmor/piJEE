@@ -56,6 +56,12 @@ public class CandidateViewController implements Serializable {
     private JobOffer selectedOffer ;
     private String cdtExperience;
     
+    public String jobOfferListByCompany()
+    {
+        jobOffers = cdtFacade.jobOfferByCompany(selectedCompany.getId());
+        return "/views/candidate/jobOfferView?faces-redirect=true";
+    }
+    
      public String doPreviewOffer(){
         
         return "/views/candidate/jobOfferDetails?faces-redirect=true";

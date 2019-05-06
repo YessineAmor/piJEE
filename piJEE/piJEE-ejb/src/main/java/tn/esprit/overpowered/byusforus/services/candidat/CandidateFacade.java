@@ -409,4 +409,19 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         return experiences;
     }
 
+    @Override
+    public List<JobOffer> jobOfferByCompany(Long compId) {
+       CompanyProfile comp = em.find(CompanyProfile.class, compId);
+       List<JobOffer> jobs = new ArrayList<>();
+       for(JobOffer j: comp.getListOfOffers())
+       {
+           JobOffer job = em.createQuery("select j from "
+                   + "JobOffer j where j.title = :title",JobOffer.class)
+                   .setParameter("title", j.getTitle())
+                   .getSingleResult();
+           jobs.add(job);
+       }
+       return jobs;
+    }
+
 }
