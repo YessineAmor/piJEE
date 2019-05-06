@@ -29,8 +29,45 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    private String text;
+
+    public User getBy() {
+        return by;
+    }
+
+    public void setBy(User by) {
+        this.by = by;
+    }
+    private String filePath;
+    private String fileType;
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+    
     @OneToOne
     User by;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+    
     
     @OneToMany(cascade = CascadeType.ALL)
     Set<Comment> comments;

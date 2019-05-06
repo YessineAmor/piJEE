@@ -89,6 +89,7 @@
                                         <p:menuitem value="Companies"  icon="pi pi-times" action="#{companyViewController.listComp()}" />
                                         <p:menuitem value="Friends"  icon="pi pi-clone" action="#{candidateViewController.friendList()}" />
                                         <p:menuitem value="Friend Requests"  icon="pi pi-times" action="#{candidateViewController.friendRequestList()}" />
+
                                     </p:menu>
                                 </f:facet>
                             </p:panel>
@@ -107,7 +108,6 @@
 
                                                 <h:outputText value="Company:" />
                                                 <h:outputText value="#{job.company}" style="font-weight: bold"/>
-
                                                 <h:outputText value="End:" />
                                                 <h:outputText value="#{job.skills}" style="font-weight: bold"/>
                                             </h:panelGrid>
@@ -125,54 +125,62 @@
                             </p:panel>
                         </h:form>
                     </div>
-                    <div class="col-md-9" style="background-color: white; margin-top: 20px;">
+                    <div class="col-md-8" style="border: 1px solid #ccc; margin-top: 50px">
+                        <p class="h2" style="text-align: center" ><p:outputLabel value="Title: #{candidateViewController.selectedOffer.title}"/></p>
 
+                        <div style="margin-bottom: 20px">
+                            <p class="h7" style="display: inline;"><a target="__blank" href="https://map.google.com?q=#{candidateViewController.selectedOffer.city}"><i class="fa fa-map"></i> &nbsp;<p:outputLabel value="#{candidateViewController.selectedOffer.city}" /></a> </p>
+                            <p class="h7"  style="display: inline;"><p:outputLabel value="| Added on: #{candidateViewController.selectedOffer.dateOfCreation}| " /></p>
+                            <p class="h7"  style="display: inline;"><p:outputLabel value="Expires on: #{candidateViewController.selectedOffer.dateOfArchive}" /></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p:graphicImage value="byusforus.png" alt="" style="max-height: 200px"/>
+                                <p class="h5">Expertise Level :</p>
+                                <p><p:outputLabel value="#{candidateViewController.selectedOffer.expertiseLevel}"/></p>
+                                <p class="h5">City :</p>
+                                <p><p:outputLabel value="#{candidateViewController.selectedOffer.city}"/></p>
+                                
+                                <p class="h5">Description :</p>
+                                <p><p:outputLabel value="#{candidateViewController.selectedOffer.description}"/></p>
+                                
+                                <p class="h5">Skills :</p>
+                                <!--p:orderList value="#{candidateViewController.offerSkills}"
+                                             var="skill" controlsLocation="none"
+                                             itemLabel="#{skill}"
+                                             itemValue="#{skill}" /-->
+                                <p:dataList  value="#{candidateViewController.selectedOffer.skills}"
+                                             var="car"
+                                             type="ordered"
+                                             style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
+                                    <!--f:facet name="header">
+                                        Basic
+                                    </f:facet-->
+                                   
+                                </p:dataList>
+                                 <iframe src="https://www.facebook.com/plugins/share_button.php?href=https://www.facebook.com/By-Us-For-Us-2710188445690496/&amp;layout=button_count&amp;size=small&amp;width=83&amp;height=20&amp;appId" width="83" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
 
-                        <div class="row" style="margin-top: 50px">
-                            <h:form id="form">
-                                <p:dataView var="job" value="#{candidateViewController.jobOffers}" rows="8" paginator="true" rowsPerPageTemplate="2,4,8"
-                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                                <!-- Modal -->
 
-                                    <p:dataViewGridItem>
-                                        <p:panel header="#{job.title}" style="text-align:center">
-                                            <h:panelGrid columns="1" style="width:100%">
-                                                <p:graphicImage value="byusforus.png"/> 
+                            </div>
+                           
+                        </div>
 
+                    </div>
+                    <div class="col-md-1" style="margin-top: 10px">
 
+                        <div class="dropdown">
+                            <h:form>
+                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
+                                    <span style="color: red;"><p:outputLabel value="2"/></span>
+                                    <i class="fa fa-bell"></i>
+                                    <p:selectOneMenu class="btn btn-secondary" id="country" value="#{signUpBean.role}" style="width:0px ; background-color: #6c757d">
 
-                                                <p:commandButton update=":form" title="View Detail" action="#{candidateViewController.doPreviewOffer()}">
-                                                    
-                                                    <f:setPropertyActionListener value="#{job}" target="#{candidateViewController.selectedOffer}" />
-                                                </p:commandButton>
-                                            </h:panelGrid>
-                                        </p:panel>
-                                    </p:dataViewGridItem>
-
-                                    <p:dataViewListItem>
-                                        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                                            <p:graphicImage value="byusforus.png" /> 
-
-                                            <p:outputPanel>
-                                                <h:panelGrid columns="2" cellpadding="5">
-                                                    <h:outputText value="Title:" />
-                                                    <h:outputText value="#{job.title}" style="font-weight: bold"/>
-
-                                                    <h:outputText value="CreatedOn:" />
-                                                    <h:outputText value="#{job.dateOfCreation}" style="font-weight: bold"/>
-
-                                                    <h:outputText value="Status:" />
-                                                    <h:outputText value="#{job.offerStatus}" style="font-weight: bold"/>
-                                                </h:panelGrid>
-                                            </p:outputPanel>
-
-                                            <p:commandButton value="Details"  action="#{candidateViewController.doPreviewOffer()}">
-                                                
-                                                <f:setPropertyActionListener value="#{job}" target="#{candidateViewController.selectedOffer}" />
-                                            </p:commandButton>
-                                        </h:panelGrid>
-                                    </p:dataViewListItem>
-                                </p:dataView>
+<!--p:ajax listener="#{dropdownView.onCountryChange}" update="city" /-->
+                                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{signUpBean.Roles()}" />
+                                    </p:selectOneMenu>
+                                </button>
                             </h:form>
                         </div>
                     </div>

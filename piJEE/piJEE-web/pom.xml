@@ -67,10 +67,25 @@
             <artifactId>all-themes</artifactId>
             <version>1.0.10</version>
         </dependency>
+
         <dependency>
             <groupId>org.primefaces.themes</groupId>
             <artifactId>cupertino</artifactId>
             <version>1.0.10</version>
+        </dependency>
+        
+        <!-- Bootfaces -->
+        <dependency>
+            <groupId>net.bootsfaces</groupId>
+            <artifactId>bootsfaces</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        
+        <!-- Apache Tika -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.20</version>
         </dependency>
     </dependencies>
 

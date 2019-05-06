@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.entities.users.CompanyProfile;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeRemote;
 import util.authentication.Authenticator;
@@ -27,11 +28,16 @@ import util.authentication.Authenticator;
 @SessionScoped
 public class CandidateViewController implements Serializable {
 
+    private String rejectMotif;
+    private List<Skill> offerSkills;
     private Candidate cdt;
     private String lastName;
     private String email;
     private String recommendations;
     private String firstName;
+    private String experience ;
+    private String cursus;
+    private String username;
     private List<Candidate> friendRequests;
     private List<Candidate> friends;
     private List<Candidate> candidatesList;
@@ -42,9 +48,60 @@ public class CandidateViewController implements Serializable {
     @EJB
     private CandidateFacadeRemote cdtFacade;
 
+    private Candidate connectedCdt;
+    private List<JobOffer> customJobs;
     private List<JobOffer> jobOffers;
     @EJB
     private JobOfferFacadeRemote jobFacade;
+    private JobOffer selectedOffer ;
+    private String cdtExperience;
+    
+     public String doPreviewOffer(){
+        
+        return "/views/candidate/jobOfferDetails?faces-redirect=true";
+        
+    }
+     
+    public List<JobOffer> customJobs()
+    {
+        customJobs = cdtFacade.customJobOfferList(Authenticator.currentSession.getUser().getId());
+        /*if(customJobs == null)
+        {
+            customJobs = jobFacade.viewAllOffers();
+        }
+*/
+        return customJobs;
+    }
+    public String editProfile()
+    {
+        List<String> moreExp = cdt.getExperiences();
+        List<String> moreCursus = cdt.getCursus();
+        Candidate newCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
+        if(!email.isEmpty())
+        newCdt.setEmail(email);
+        if(!firstName.isEmpty())
+        {
+        newCdt.setFirstName(firstName);
+        }
+        if(!lastName.isEmpty())
+        {
+        newCdt.setLastName(lastName);
+        }
+        moreExp.add(experience);
+        newCdt.setExperiences(moreExp);
+        moreCursus.add(cursus);
+        newCdt.setCursus(moreCursus);
+        cdtFacade.editCandidate(newCdt);
+        return "/view/candidate/Profile?faces-redirect=true";
+    }
+    
+    public String jobofferList()
+    {
+        connectedCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
+        jobOffers = jobFacade.viewAllOffers();
+        return "/views/candidate/jobOfferView?faces-redirect=true";
+    }
+    
 
     public String subscribeToCompany() {
         String result;
@@ -54,13 +111,10 @@ public class CandidateViewController implements Serializable {
         FacesContext.getCurrentInstance().addMessage("!!", msg);
         return goTo;
     }
+ public String candidatesList()
+    {
+        connectedCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
 
-    public String jobofferList() {
-        jobOffers = jobFacade.findAll();
-        return "/views/candidate/jobOfferView?faces-redirect=true";
-    }
-
-    public String candidatesList() {
         candidatesList = cdtFacade.afficherCandidats();
         return "/views/candidate/candidatesView?faces-redirect=true";
     }
@@ -208,6 +262,66 @@ public class CandidateViewController implements Serializable {
         this.jobFacade = jobFacade;
     }
 
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getCursus() {
+        return cursus;
+    }
+
+    public void setCursus(String cursus) {
+        this.cursus = cursus;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Candidate getConnectedCdt() {
+        return connectedCdt;
+    }
+
+    public void setConnectedCdt(Candidate connectedCdt) {
+        this.connectedCdt = connectedCdt;
+    }
+
+    public List<JobOffer> getCustomJobs() {
+        return customJobs;
+    }
+
+    public void setCustomJobs(List<JobOffer> customJobs) {
+        this.customJobs = customJobs;
+    }
+
+    public JobOffer getSelectedOffer() {
+        return selectedOffer;
+    }
+
+    public void setSelectedOffer(JobOffer selectedOffer) {
+        this.selectedOffer = selectedOffer;
+    }
+
+    public String getCdtExperience() {
+        return cdtExperience;
+    }
+
+    public void setCdtExperience(String cdtExperience) {
+        this.cdtExperience = cdtExperience;
+    }
+
+    
+    
+
     public CompanyProfile getSelectedCompany() {
         return selectedCompany;
     }
@@ -215,5 +329,22 @@ public class CandidateViewController implements Serializable {
     public void setSelectedCompany(CompanyProfile selectedCompany) {
         this.selectedCompany = selectedCompany;
     }
+
+    public List<Skill> getOfferSkills() {
+        return offerSkills;
+    }
+
+    public void setOfferSkills(List<Skill> offerSkills) {
+        this.offerSkills = offerSkills;
+    }
+
+    public String getRejectMotif() {
+        return rejectMotif;
+    }
+
+    public void setRejectMotif(String rejectMotif) {
+        this.rejectMotif = rejectMotif;
+    }
+
 
 }
