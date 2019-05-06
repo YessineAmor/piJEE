@@ -97,4 +97,6 @@ public interface CandidateFacadeLocal {
      
     public List<String> getCandidateExperience(Long cdtId);
     
+    public List<JobOffer> jobOfferByCompany(Long compId);
+    
 }
