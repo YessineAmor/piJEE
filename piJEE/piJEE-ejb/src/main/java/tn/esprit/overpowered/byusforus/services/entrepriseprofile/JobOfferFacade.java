@@ -180,5 +180,25 @@ List<JobOffer> offers = em.createQuery(
         return job;
     }
 
+    @Override
+    public List<JobOffer> generalSearch(String title, String location, ExpertiseLevel expLevel) {
+        List<JobOffer> offers = null;
+                
+                try{ 
+                    offers = em.createQuery(
+                "select j from JobOffer j where j.title"
+                + " LIKE CONCAT('%',:titre,'%') or "
+                        + "j.city LIKE CONCAT('%',:locate,'%') or "
+                        + "j.expertiseLevel = :niveau ",
+                JobOffer.class).setParameter("titre", title)
+                            .setParameter("locate", location)
+                            .setParameter("niveau", expLevel)
+                            .getResultList();
+                }catch(NoResultException nre){
+                
+                }
+            return offers;    
+    }
+
 
 }

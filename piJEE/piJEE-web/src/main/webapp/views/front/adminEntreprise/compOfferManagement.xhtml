@@ -127,23 +127,29 @@
                     </div>
                     <div class="col-md-9" style="background-color: white; margin-top: 20px;">
                         <div class="input-group mb-3">
+                            <h:form>
                             <div class="input-group-prepend">
-                                <input type="text" class="form-control" style="width: 200px; margin-right : 5px; border : 2px solid red" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1"/>
-                                <input type="text" class="form-control" style="width: 200px; margin-right : 5px;" placeholder="Location" aria-label="Username" aria-describedby="basic-addon1"/>
-                                <select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
+                                
+                                <p:inputText  value="#{adminBean.searchTitle}" class="form-control" style="width: 200px; margin-right : 5px; border : 2px solid red" placeholder="Title"/>
+                                <p:inputText value="#{adminBean.searchLocation}" class="form-control" style="width: 200px; margin-right : 5px ;border : 2px solid red;" placeholder="Location"/>
+                                <!--select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
                                     <option value="Junior" style="padding : 5px;" >Junior</option>
                                     <option value="Senior">Senior</option>
                                     <option value="Something">Something</option>
-                                </select>
+                                </select-->
 
-                                <select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
+                                <!--select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
                                     <option value="Junior" style="padding : 5px">Junior</option>
                                     <option value="Senior">Senior</option>
                                     <option value="Something">Something</option>
-                                </select>
-                                <button type="button" class="btn btn-primary" style="border-radius: 5px; margin-right : 5px;" aria-label="Left Align">
-                                    <span class="fa fa-search" aria-hidden="true"></span>
-                                </button>
+                                </select-->
+                                <p:selectOneMenu value="#{adminBean.searchExpertise}" style="padding : 5px; border-radius: 2px; width: 150px; margin-right : 5px;">
+                                    <!--f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" /-->
+                                    <f:selectItems value="#{signUpBean.Levels()}" />
+                                </p:selectOneMenu>
+                                <p:commandButton  action="#{adminBean.generalOfferSearch()}" value=" " class="btn btn-primary fa fa-search" style="border-radius: 5px; margin-right : 5px;" >
+
+                                </p:commandButton>
                                 <!--Implementing modal class for job offer creation-->
                                 <button type="button" class="btn btn-success" style="border-radius: 5px" aria-label="Left Align"
                                         data-toggle="modal" data-target="#exampleModalScrollable">
@@ -209,6 +215,7 @@
                                 </h:form>
                                 <!--End of Modal class implementation-->
                             </div>
+                            </h:form>
                         </div>
 
                         <div class="row" style="margin-top: 50px">

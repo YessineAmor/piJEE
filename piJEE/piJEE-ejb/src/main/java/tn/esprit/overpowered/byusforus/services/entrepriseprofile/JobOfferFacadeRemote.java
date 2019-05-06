@@ -43,6 +43,7 @@ public interface JobOfferFacadeRemote {
     public List<JobOffer> viewOffersByUserSkill(List <JobOffer> offers, Long idUser);
     public List<JobOffer> viewAllOffers();
     public JobOffer searchJobOfferByTitle(String title);
+    public List<JobOffer> generalSearch(String title, String location, ExpertiseLevel expLevel);
     
     
     

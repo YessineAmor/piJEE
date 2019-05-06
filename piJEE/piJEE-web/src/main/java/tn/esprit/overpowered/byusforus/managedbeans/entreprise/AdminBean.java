@@ -53,9 +53,7 @@ import util.authentication.Authenticator;
  */
 @ManagedBean(name = "adminBean")
 @SessionScoped
-public class AdminBean implements Serializable{
-
-    /**
+public class AdminBean implements Serializable{  /**
      * Creates a new instance of AdminBean
      */
     @EJB
@@ -136,6 +134,11 @@ public class AdminBean implements Serializable{
     //Notif 
     private List<Notif> notifs;
     private int numberNotifs;
+    
+    //Search
+    private String searchTitle;
+    private String searchLocation;
+    private ExpertiseLevel searchExpertise;
 
     private UploadedFile file;
     private String fileName;
@@ -537,6 +540,33 @@ public class AdminBean implements Serializable{
         this.numberNotifs = numberNotifs;
     }
 
+    public String getSearchTitle() {
+        return searchTitle;
+    }
+
+    public void setSearchTitle(String searchTitle) {
+        this.searchTitle = searchTitle;
+    }
+
+    public String getSearchLocation() {
+        return searchLocation;
+    }
+
+    public void setSearchLocation(String searchLocation) {
+        this.searchLocation = searchLocation;
+    }
+
+    public ExpertiseLevel getSearchExpertise() {
+        return searchExpertise;
+    }
+
+    public void setSearchExpertise(ExpertiseLevel searchExpertise) {
+        this.searchExpertise = searchExpertise;
+    }
+
+    
+
+    
     public void doCompanyUpdate() {
         if (userType.equals("COMPANY_ADMIN")) {
             compAdminFacade.updateCompanyProfile(company);
@@ -791,6 +821,17 @@ public class AdminBean implements Serializable{
         }
         numberNotifs = notifs.size();
         return mess;
+    }
+    
+    public String generalOfferSearch(){
+        String goTo ;
+        offers = jobOfferFacade.generalSearch(searchTitle, searchLocation, searchExpertise);
+        if(offers!=null)
+            goTo = "/views/front/adminEntreprise/compOfferManagement?faces-redirect=true";
+        else
+            goTo = this.viewOffers();
+        return goTo;
+        
     }
 
     public String doUpdateProfile() {
