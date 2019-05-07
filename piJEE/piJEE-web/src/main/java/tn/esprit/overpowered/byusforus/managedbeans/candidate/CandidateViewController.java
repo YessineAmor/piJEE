@@ -56,11 +56,18 @@ public class CandidateViewController implements Serializable {
     private JobOffer selectedOffer ;
     private String cdtExperience;
     
-    /*public String jobOfferListByCompany()
+
+    public int friendRequestNumber()
     {
-        jobOffers = cdtFacade.jobOfferByCompany(selectedCompany.getId());
+        return cdtFacade.friendRequestNumber(Authenticator.currentSession.getUser().getId());
+    }
+    
+    public String jobOfferListByCompany()
+
+    {
+        //jobOffers = cdtFacade.jobOfferByCompany(selectedCompany.getId());
         return "/views/candidate/jobOfferView?faces-redirect=true";
-    }*/
+    }
     
      public String doPreviewOffer(){
         
@@ -70,12 +77,11 @@ public class CandidateViewController implements Serializable {
      
     public List<JobOffer> customJobs()
     {
-        customJobs = cdtFacade.customJobOfferList(Authenticator.currentSession.getUser().getId());
-        /*if(customJobs == null)
+        customJobs = jobFacade.viewAllOffers();
+        if(customJobs == null)
         {
             customJobs = jobFacade.viewAllOffers();
         }
-        */
         return customJobs;
     }
 

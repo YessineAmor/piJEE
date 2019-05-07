@@ -92,40 +92,30 @@
                                 <p:outputLabel value="InsertConnected USER Info"/>
                             </p:panel>
                         </h:form>
-                        <h:form id="feedsForm">
-                            <p:panel>
-                                <h:form id="form">
-                                    <p:panelGrid columns ="1">  
-                                        <h:graphicImage value="elon.png" height="200px" width="200px"  />
-                                    </p:panelGrid>
-                                    <p:panelGrid columns="2">
-                                        <f:facet name="header">
-                                            <p:graphicImage name="demo/images/misc/kobe.png" />
-                                        </f:facet>
+                       <div class="col-md-8" style="border: 1px solid #ccc; margin-top: 20px; width: 1500px">
+                        <p class="h2" style="text-align: center" ><p:outputLabel value="Candidate"/></p>
 
-                                        <h:outputText value="Name" />
-                                        <h:outputText value="#{candidateViewController.cdt.firstName}" />
+                       
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p:graphicImage value="user.png" alt="" style="max-height: 300px;  margin-top: 20px"/>
+                                <p class="h5">Name: <p class="h6"><p:outputLabel value="#{candidateViewController.connectedCdt.firstName}"/></p></p>
+                                
+                                <p class="h5">Last Name :</p>
+                                <p><p:outputLabel value="#{candidateViewController.connectedCdt.lastName}"/></p>
+                                
+                                <p class="h5">Experience :</p>
+                                <p><p:outputLabel value="#{candidateViewController.connectedCdt.experiences}"/></p>
+                                 <p class="h5">Introduction :</p>
+                                 <p><p:outputLabel value="#{candidateViewController.connectedCdt.introduction}"/></p>
+                                 <p:commandButton value="edit" action="/views/candidate/updateProfile?faces-redirect=true"/>
+                                <!-- Modal -->
 
-                                        <h:outputText value="Last name" />
-                                        <h:outputText value="#{candidateViewController.cdt.lastName}" />
+                            </div>
+                           
+                        </div>
 
-                                        <h:outputText value="Email" />
-                                        <h:outputText value="#{candidateViewController.cdt.email}" />
-
-                                        
-
-                                        <h:outputText value="Recommendations" />
-                                        <h:outputText value="#{candidateViewController.cdt.recommendations}" />
-
-                                        <h:outputText value="Visits" />
-                                        <h:outputText value="#{candidateViewController.cdt.visits}" />
-
-                                        <h:commandButton value="Edit" action="/views/candidate/updateProfile"/>
-                                    </p:panelGrid>
-
-                                </h:form>
-                            </p:panel>
-                        </h:form>
+                    </div>
                     </div>
 
                 </div>

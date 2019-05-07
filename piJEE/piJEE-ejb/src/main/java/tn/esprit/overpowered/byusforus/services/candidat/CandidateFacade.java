@@ -424,4 +424,12 @@ public class CandidateFacade extends AbstractFacade<Candidate>
        return jobs;
     }
 
+    @Override
+    public int friendRequestNumber(Long cdtId) {
+        Candidate cdt = em.find(Candidate.class, cdtId);
+        Set<Candidate> listCdt = cdt.getPendingRequests();
+        int num = listCdt.size();
+        return num;
+    }
+
 }
