@@ -125,13 +125,19 @@
                         </p:panel>
                     </div>
                     <div class="col-md-9" style="background-color: white; margin-top: 20px;">
-
-
+<h:form id="postForm">
+                                <p:panel header="Search Job Offers">
+                                    <h:inputText id="search" value="#{candidateViewController.searchText}"/> 
+                                    <p:watermark for="search" value="Search" id="watermark" />
+                                    <p:commandButton update=":form" title="Search" action="#{candidateViewController.jobofferList()}"/>
+                                </p:panel>
+                            </h:form>
                         <div class="row" style="margin-top: 50px">
+                            
                             <h:form id="form">
                                 <p:dataView var="job" value="#{candidateViewController.jobOffers}" rows="8" paginator="true" rowsPerPageTemplate="2,4,8"
                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars" >
 
                                     <p:dataViewGridItem>
                                         <p:panel header="#{job.title}" style="text-align:center">
