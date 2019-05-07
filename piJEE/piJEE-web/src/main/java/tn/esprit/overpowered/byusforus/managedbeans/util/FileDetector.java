@@ -24,8 +24,6 @@ public class FileDetector {
         Metadata metadata = new Metadata();
         metadata.set(Metadata.RESOURCE_NAME_KEY, file.toString());
         MediaType mimeType = tika.getDetector().detect(TikaInputStream.get(file), metadata);
-        System.out.println(mimeType.getType());
-        System.out.println(mimeType.getSubtype());
         return mimeType.getSubtype().contains("png");
     }
     
