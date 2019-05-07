@@ -87,7 +87,7 @@
                                                                 <h:commandButton value="Take Quiz" action="#{quizController.goToQuizDetails(job)}"/>
                                                             </c:if>
                                                             <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'PENDING'}">
-                                                                <h:commandButton value="You have applied to this job"/>
+                                                                <h:outputText value="Your application is pending approval."/>
                                                             </c:if>
                                                             <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'ACCEPTED_FOR_INTERVIEW'}">
                                                                 <h:commandButton value="You have been accepted for an interview" action="#{quizController.goToQuizDetails(job)}"/>
