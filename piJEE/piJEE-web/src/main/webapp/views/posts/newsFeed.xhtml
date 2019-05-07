@@ -8,6 +8,9 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{postingModel.checkAuth()}" />
+</f:metadata>
     </h:head>
     <h:body>
         <div>
@@ -102,6 +105,10 @@
                                     src="#{post.filePath}"
                                     rendered="#{post.filePath != null and post.fileType.contains('mp4')}">
                                 </b:video>
+                                <b:image 
+                                    style="width:100%"
+                                    value="#{post.filePath}"
+                                    rendered="#{post.filePath != null and not post.fileType.contains('mp4')}"/>
                             </b:column>
                         </b:row>
                     </b:panel>
