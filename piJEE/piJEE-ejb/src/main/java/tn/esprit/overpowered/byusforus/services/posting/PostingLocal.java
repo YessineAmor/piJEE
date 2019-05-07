@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.posting;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.Local;
 import javax.persistence.EntityManager;
 import tn.esprit.overpowered.byusforus.entities.posting.Post;
@@ -23,4 +24,5 @@ public interface PostingLocal {
      public void deletePost(Long p);
      public Post getPost(Long p);
      public void updatePost(Post p);
+     public ArrayList<Post> getPostsAfterDate(Long u, Date d);
 }
