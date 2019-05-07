@@ -29,6 +29,7 @@ import util.authentication.Authenticator;
 @SessionScoped
 public class CandidateViewController implements Serializable {
 
+    private String searchText;
     private String rejectMotif;
     private List<Skill> offerSkills;
     private Candidate cdt;
@@ -50,7 +51,7 @@ public class CandidateViewController implements Serializable {
     private CandidateFacadeRemote cdtFacade;
     @EJB
     private JobOfferFacadeRemote jobOfferFacade;
-
+    private List<JobOffer> filteredOffers;
     private Candidate connectedCdt;
     private List<JobOffer> customJobs;
     private List<JobOffer> jobOffers;
@@ -77,8 +78,7 @@ public class CandidateViewController implements Serializable {
     public List<JobOffer> customJobs() {
         customJobs = jobOfferFacade.viewOffersByUserSkill(jobOffers, Authenticator.currentSession.getUser().getId());
         customJobs.addAll(cdtFacade.customJobOfferList(Authenticator.currentSession.getUser().getId()));
-        if(customJobs.isEmpty())
-        {
+        if (customJobs.isEmpty()) {
             customJobs = jobOffers;
         }
         return customJobs;
@@ -107,7 +107,19 @@ public class CandidateViewController implements Serializable {
 
     public String jobofferList() {
         connectedCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
-        jobOffers = jobFacade.viewAllOffers();
+        if (searchText != null) {
+             if(jobOffers!= null)
+            {
+               jobOffers.clear(); 
+            }
+            jobOffers = jobFacade.searchByTitle(searchText);
+        } else {
+            if(jobOffers!= null)
+            {
+               jobOffers.clear(); 
+            }
+            jobOffers = jobFacade.viewAllOffers();
+        }
         return "/views/candidate/jobOfferView?faces-redirect=true";
     }
 
@@ -348,6 +360,30 @@ public class CandidateViewController implements Serializable {
 
     public void setRejectMotif(String rejectMotif) {
         this.rejectMotif = rejectMotif;
+    }
+
+    public JobOfferFacadeRemote getJobOfferFacade() {
+        return jobOfferFacade;
+    }
+
+    public void setJobOfferFacade(JobOfferFacadeRemote jobOfferFacade) {
+        this.jobOfferFacade = jobOfferFacade;
+    }
+
+    public List<JobOffer> getFilteredOffers() {
+        return filteredOffers;
+    }
+
+    public void setFilteredOffers(List<JobOffer> filteredOffers) {
+        this.filteredOffers = filteredOffers;
+    }
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
 }
