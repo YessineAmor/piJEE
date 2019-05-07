@@ -7,6 +7,7 @@ package tn.esprit.overpowered.byusforus.managedbeans.candidate;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -75,17 +76,17 @@ public class CandidateViewController implements Serializable {
      
     public List<JobOffer> customJobs()
     {
-        customJobs = jobFacade.viewAllOffers();
-        if(customJobs == null)
+        customJobs = cdtFacade.customJobOfferList(Authenticator.currentSession.getUser().getId());
+      /*  if(customJobs == null)
         {
             customJobs = jobFacade.viewAllOffers();
         }
-
+        */
         return customJobs;
     }
     public String editProfile()
     {
-        List<String> moreExp = cdt.getExperiences();
+        Set<String> moreExp = cdt.getExperiences();
         List<String> moreCursus = cdt.getCursus();
         Candidate newCdt = cdtFacade.findCandidate(Authenticator.currentSession.getUser().getId());
         if(!email.isEmpty())

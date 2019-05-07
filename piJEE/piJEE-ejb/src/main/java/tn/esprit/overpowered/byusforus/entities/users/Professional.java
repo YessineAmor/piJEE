@@ -45,8 +45,8 @@ public abstract class Professional extends User {
         this.introduction = introduction;
     }
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> experiences;
+    @ElementCollection(targetClass = String.class,fetch = FetchType.EAGER)
+    private Set<String> experiences;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "subscriptions", joinColumns
@@ -185,11 +185,11 @@ public abstract class Professional extends User {
         this.recommendedIdList = recommendedIdList;
     }
 
-    public List<String> getExperiences() {
+    public Set<String> getExperiences() {
         return experiences;
     }
 
-    public void setExperiences(List<String> experiences) {
+    public void setExperiences(Set<String> experiences) {
         this.experiences = experiences;
     }
 
