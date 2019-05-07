@@ -157,7 +157,7 @@
                                     </f:facet-->
                                     #{car}
                                 </p:dataList>
-                                <button style="position: absolute; bottom: 5px; left: 5px;" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                <button style="position: absolute; bottom: 5px; left: 5px;" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalScrollable">
                                     <i class="fa fa-edit"></i> &nbsp; Edit
                                 </button>
                                 <button class="btn btn-danger" style="position: absolute; bottom: 5px; left: 120px">
@@ -165,25 +165,63 @@
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                              <h:form>
+                                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Job Offer</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <p:outputLabel> Title </p:outputLabel>
+                                                        <p:inputText class="form-control" value="#{adminBean.selectedOffer.title}" title="Title" > </p:inputText>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:outputLabel> Location </p:outputLabel>
+                                                        <p:inputText class="form-control" value="#{adminBean.selectedOffer.city}" title="Location" > </p:inputText>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:outputLabel> People Needed </p:outputLabel>
+                                                        <p:inputNumber class="form-control" value="#{adminBean.selectedOffer.peopleNeeded}" title="PeopleNeeded" > </p:inputNumber>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:outputLabel> Expires On </p:outputLabel>
+                                                        <p:datePicker value="#{adminBean.selectedOffer.dateOfArchive}" class="form-control" showTime="true" showIcon="true"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:selectOneMenu id="Exp" value="#{adminBean.selectedOffer.expertiseLevel}" >
+                                                            <f:selectItem itemLabel="Select Expertise Level" />
+                                                            <f:selectItems value="#{signUpBean.Levels()}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:outputLabel for="multiple" value="Select Strings" />
+                                                        <h:panelGrid columns="2" cellpadding="5">
+                                                            <p:selectManyCheckbox id="multiple" value="#{adminBean.selectedOffer.skills}" layout="grid" columns="1">
+                                                                <f:selectItems value="#{signUpBean.Skills()}" var="theme" itemLabel="#{theme}" itemValue="#{theme}" />
+                                                            </p:selectManyCheckbox>
+                                                        </h:panelGrid>
+                                                    </div>                                       
+
+                                                    <div class="form-group">
+                                                        <p:outputLabel> Description </p:outputLabel>
+                                                        <p:inputTextarea value="#{adminBean.selectedOffer.description}" title="Description" class="form-control"></p:inputTextarea>
+                                                    </div>
+
+
+                                                </div> 
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <p:commandButton  class="btn btn-primary" title="Edit" action="#{adminBean.doUpdateJobOffer()}"></p:commandButton>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </h:form>
                             </div>
                             <div class="col-md-6">
                                 <p:outputPanel deferred="true" deferredMode="visible">
@@ -241,21 +279,7 @@
 
                     </div>
                     <div class="col-md-1" style="margin-top: 10px">
-
-                        <div class="dropdown">
-                            <h:form>
-                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
-                                    <span style="color: red;"><p:outputLabel value="2"/></span>
-                                    <i class="fa fa-bell"></i>
-                                    <p:selectOneMenu class="btn btn-secondary" id="country" value="#{signUpBean.role}" style="width:0px ; background-color: #6c757d">
-
-<!--p:ajax listener="#{dropdownView.onCountryChange}" update="city" /-->
-                                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{signUpBean.Roles()}" />
-                                    </p:selectOneMenu>
-                                </button>
-                            </h:form>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
