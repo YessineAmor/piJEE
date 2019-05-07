@@ -28,6 +28,26 @@ import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.services.candidat.CandidateApplicationFacadeLocal;
 import tn.esprit.overpowered.byusforus.util.JobApplicationState;
 import util.authentication.Authenticator;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.geom.Rectangle;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.canvas.parser.EventType;
+import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
+import com.itextpdf.kernel.pdf.canvas.parser.data.IEventData;
+import com.itextpdf.kernel.pdf.canvas.parser.data.TextRenderInfo;
+import com.itextpdf.kernel.pdf.canvas.parser.filter.TextRegionEventFilter;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.FilteredEventListener;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.LocationTextExtractionStrategy;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import javax.mail.MessagingException;
+import tn.esprit.overpowered.byusforus.entities.util.Skill;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 
 @ManagedBean
 @SessionScoped
@@ -38,8 +58,17 @@ public class CandidateApplicationController implements Serializable {
     private List<CandidateApplication> items = null;
     private CandidateApplication selected;
     private Part file;
+    private float userScore;
 
     public CandidateApplicationController() {
+    }
+
+    public float getUserScore() {
+        return userScore;
+    }
+
+    public void setUserScore(float userScore) {
+        this.userScore = userScore;
     }
 
     public Part getFile() {
@@ -84,7 +113,9 @@ public class CandidateApplicationController implements Serializable {
         String randomFileName = new Random().nextInt() + file.getSubmittedFileName();
         this.selected.setResume(randomFileName);
         try (InputStream input = file.getInputStream()) {
-            Files.copy(input, new File("../standalone/deployments/piJEE-web-1.0.war/", randomFileName).toPath());
+            File f = new File(randomFileName);
+            Files.copy(input, f.toPath());
+            Files.copy(f.toPath(), new File("../standalone/deployments/piJEE-web-1.0.war/", randomFileName).toPath());
         }
     }
 
@@ -96,6 +127,15 @@ public class CandidateApplicationController implements Serializable {
     }
 
     public String inviteToTakeQuiz() {
+        try {
+            MailSender.sendMail("smtp.gmail.com", "587",
+                    "pidevnoreply@gmail.com", "pidevnoreply",
+                    "pidevpidev", this.selected.getCandidate().getEmail(), "You have been invited!",
+                    "You have been invited to pass a quiz for the following job offer: "
+                    + this.selected.getJobOffer().getTitle());
+        } catch (MessagingException e) {
+
+        }
         this.selected.setJobApplicationState(JobApplicationState.INVITED_FOR_QUIZ);
         this.selected.setAdditionalInfo("Waiting for candidate to take quiz");
         this.update();
@@ -103,6 +143,15 @@ public class CandidateApplicationController implements Serializable {
     }
 
     public String rejectCandidacy() {
+        try {
+            MailSender.sendMail("smtp.gmail.com", "587",
+                    "pidevnoreply@gmail.com", "pidevnoreply",
+                    "pidevpidev", this.selected.getCandidate().getEmail(), "Your application results",
+                    "We are sorry to inform you that your application for the job offer "
+                    + this.selected.getJobOffer().getTitle() + "has been refused.");
+        } catch (MessagingException e) {
+
+        }
         this.selected.setJobApplicationState(JobApplicationState.REFUSED);
         this.selected.setAdditionalInfo("candidacy refuesd.");
         this.update();
@@ -110,9 +159,113 @@ public class CandidateApplicationController implements Serializable {
     }
 
     public Boolean hasAlreadyApplied(JobOffer jobOffer) {
-        CandidateApplication cApp = ejbFacade.getApplicationByCandidateId(Authenticator.currentSession.getUser().getId(), jobOffer.getId());
+//        CandidateApplication cApp = ejbFacade.getApplicationByCandidateId(Authenticator.currentSession.getUser().getId(), jobOffer.getId());
+        CandidateApplication cApp = ejbFacade.getApplicationByCandidateId(1L, 2L);
         this.selected = cApp;
         return cApp != null;
+    }
+
+    public int numberOfCandidacies() {
+        List<CandidateApplication> allApplications = ejbFacade.getCandidateApplicationByJobOFfer(this.selected.getJobOffer().getId());
+        return allApplications.size();
+    }
+
+    public int getCandidateRanking() throws IOException {
+        List<CandidateApplication> allApplications = ejbFacade.getCandidateApplicationByJobOFfer(this.selected.getJobOffer().getId());
+        int candidateRanking = 0;
+        Map<Float, Candidate> candidateScoreMap = new TreeMap<>();
+        for (CandidateApplication cApp : allApplications) {
+            candidateScoreMap.put(getCandidateScore(cApp), cApp.getCandidate());
+        }
+        int index = 1;
+        for (Candidate cd : candidateScoreMap.values()) {
+            if (cd.getEmail().equals(this.selected.getCandidate().getEmail())) {
+                return index;
+            }
+            index++;
+        }
+
+        return candidateRanking;
+    }
+
+    private float getCandidateScore(CandidateApplication cApp) throws IOException {
+        float matchingSkills = 0f;
+        float nbSkills = cApp.getJobOffer().getSkills().size();
+//        float nbSkills = jobOffer.getSkills().size();
+        float skillsScore = 0f;
+        Set<Skill> skillSet = getSkillsFromResume(cApp);
+        return skillsScore = (skillSet.size() / nbSkills);
+    }
+
+    public Set<Skill> getSkillsFromResume(CandidateApplication cApp) throws IOException {
+        PdfDocument pdfDoc = new PdfDocument(new PdfReader(cApp.getResume()));
+        Rectangle rect = new Rectangle(pdfDoc.getFirstPage().getArtBox());
+
+        FontFilter fontFilter = new FontFilter(rect);
+        FilteredEventListener listener = new FilteredEventListener();
+        LocationTextExtractionStrategy extractionStrategy = listener.attachEventListener(new LocationTextExtractionStrategy(), fontFilter);
+        new PdfCanvasProcessor(listener).processPageContent(pdfDoc.getFirstPage());
+
+        String actualText = extractionStrategy.getResultantText();
+        float matchingSkills = 0f;
+//        float nbSkills = this.selected.getJobOffer().getSkills().size();
+        float nbSkills = cApp.getJobOffer().getSkills().size();
+//        float nbSkills = jobOffer.getSkills().size();
+        float skillsScore = 0f;
+        Set<Skill> skillSet = new HashSet<>();
+        for (Skill skill : cApp.getJobOffer().getSkills()) {
+//        for (Skill skill : jobOffer.getSkills()) {
+            if (actualText.toLowerCase().contains(skill.name().toLowerCase())) {
+                matchingSkills++;
+                skillSet.add(skill);
+            }
+        }
+        skillsScore = (matchingSkills / nbSkills);
+        FileOutputStream fos = new FileOutputStream("resultat1112.txt");
+        fos.write(actualText.getBytes());
+        FileOutputStream foskill = new FileOutputStream("skillset.txt");
+        foskill.write(skillSet.toString().getBytes());
+        foskill.write(String.valueOf(skillsScore).getBytes());
+        pdfDoc.close();
+        return skillSet;
+    }
+
+    class FontFilter extends TextRegionEventFilter {
+
+        public FontFilter(Rectangle filterRect) {
+            super(filterRect);
+        }
+
+        @Override
+        public boolean accept(IEventData data, EventType type) {
+            if (type.equals(EventType.RENDER_TEXT)) {
+                TextRenderInfo renderInfo = (TextRenderInfo) data;
+
+                String text = renderInfo.getActualText();
+                PdfFont font = renderInfo.getFont();
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream("pdffont.txt");
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(CandidateApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    fos.write(font.getFontProgram().getFontNames().getFontName().getBytes());
+                    fos.write(renderInfo.getText().getBytes());
+                } catch (IOException ex) {
+                    Logger.getLogger(CandidateApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (null != font) {
+//                    String fontName = font.getFontProgram().getFontNames().getFontName();
+//                    return fontName.endsWith("HOTXCE");
+                    return true;
+                }
+//                if (null != text) {
+//                    return text.contains("Linux");
+//                }
+            }
+            return false;
+        }
     }
 
     public void create() {
