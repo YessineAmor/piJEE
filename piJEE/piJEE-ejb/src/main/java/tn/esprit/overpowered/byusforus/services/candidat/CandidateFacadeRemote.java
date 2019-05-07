@@ -102,5 +102,7 @@ public interface CandidateFacadeRemote {
     public List<String> getCandidateExperience(Long cdtId);
     
     public List<JobOffer> jobOfferByCompany(Long compId);
+    
+    public int friendRequestNumber(Long cdtId);
 
 }

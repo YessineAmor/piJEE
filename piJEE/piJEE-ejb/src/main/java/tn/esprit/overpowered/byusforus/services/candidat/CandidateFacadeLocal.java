@@ -99,4 +99,6 @@ public interface CandidateFacadeLocal {
     
     public List<JobOffer> jobOfferByCompany(Long compId);
     
+    public int friendRequestNumber(Long cdtId);
+    
 }
