@@ -139,4 +139,14 @@ public class PostingModel {
         testFile.delete();
         return false;
     }
+    
+    public void checkAuth() throws IOException {
+        if (Authenticator.currentSession == null)
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/webapp/signUp.xhtml");
+    }
+    
+      public String comeBaby() {
+        return "/views/posts/newsFeed?faces-redirect=true";
+    }
+
 }
