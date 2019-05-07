@@ -99,6 +99,10 @@ public interface CandidateFacadeRemote {
     
     public void editCandidate(Candidate cdt);
     
-    public List<String> getCandidateExperience(Long cdtId);
+    public Set<String> getCandidateExperience(Long cdtId);
+    
+    public List<JobOffer> jobOfferByCompany(Long compId);
+    
+    public int friendRequestNumber(Long cdtId);
 
 }

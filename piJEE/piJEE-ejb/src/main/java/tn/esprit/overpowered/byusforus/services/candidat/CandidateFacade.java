@@ -117,12 +117,18 @@ public class CandidateFacade extends AbstractFacade<Candidate>
     public List<JobOffer> customJobOfferList(Long candidateId) {
         List<JobOffer> jobList = em.createQuery("SELECT j from JobOffer j", JobOffer.class).getResultList();
         Candidate cdt = em.find(Candidate.class, candidateId);
-        List<String> exp = cdt.getExperiences();
-        String testExp = exp.get(0);
+        Set<String> exp = cdt.getExperiences();
+
+        //System.out.println("theexperienceis: "+exp.get(1));
         List<JobOffer> customJobs = new ArrayList<>();
         for (JobOffer j : jobList) {
-            if (j.getTitle().toLowerCase().contains(testExp.toLowerCase())) {
+            for(String s: exp)
+            {
+                System.out.println("the experience is: "+s);
+            if (j.getTitle().toLowerCase().contains(s.toLowerCase()) & s.length()!=0) {
+                System.out.println("the title is: "+j.getTitle());
                 customJobs.add(j);
+            }
             }
         }
         return customJobs;
@@ -402,10 +408,34 @@ public class CandidateFacade extends AbstractFacade<Candidate>
         em.merge(cdt);
     }
 
+
     @Override
-    public List<String> getCandidateExperience(Long cdtId) {
+    public List<JobOffer> jobOfferByCompany(Long compId) {
+       CompanyProfile comp = em.find(CompanyProfile.class, compId);
+       List<JobOffer> jobs = new ArrayList<>();
+       for(JobOffer j: comp.getListOfOffers())
+       {
+           JobOffer job = em.createQuery("select j from "
+                   + "JobOffer j where j.title = :title",JobOffer.class)
+                   .setParameter("title", j.getTitle())
+                   .getSingleResult();
+           jobs.add(job);
+       }
+       return jobs;
+    }
+
+    @Override
+    public int friendRequestNumber(Long cdtId) {
         Candidate cdt = em.find(Candidate.class, cdtId);
-        List<String> experiences = cdt.getExperiences();
+        Set<Candidate> listCdt = cdt.getPendingRequests();
+        int num = listCdt.size();
+        return num;
+    }
+
+    @Override
+    public Set<String> getCandidateExperience(Long cdtId) {
+       Candidate cdt = em.find(Candidate.class, cdtId);
+        Set<String> experiences = cdt.getExperiences();
         return experiences;
     }
 

@@ -64,112 +64,137 @@
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
 
                     <div class="col-md-3" >
-                        <h:form id="AdminForm">
-                            <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
-                                <f:facet name="header" >
-                                    <p:outputLabel value="Candidate" />
-                                </f:facet> 
-                                                    <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
-                                                        <p:commandLink >
-                                                            <p:graphicImage value="adminPic.png" height="90px" width="100px"  />
-                                                        </p:commandLink>
-                                                        <p:outputLabel value="#{candidateViewController.connectedCdt.firstName} #{candidateViewController.connectedCdt.lastName}"/>
-
-                                                        <p:commandLink value="#{candidateViewController.connectedCdt.email}"/>
-                                                    </p:panelGrid>
-                                                    <f:facet name="actions">
-                                                        <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
-                                                    </f:facet>
-                                                    <f:facet name="options">
-                                                        <p:menu >
-                                                            <p:menuitem value="Candidates"  icon="pi pi-clone" action="#{candidateViewController.candidatesList()}" ajax="false"/>
-                                                            <p:menuitem value="Profile"  icon="pi pi-times" action="#{candidateViewController.cdtConnected()}" ajax="false"/>
-                                                            <p:menuitem value="Job Offers" icon="pi pi-clone" action="#{candidateViewController.jobofferList()}" ajax="false" />
-                                                            <p:menuitem value="Companies"  icon="pi pi-times" action="#{companyViewController.listComp()}" ajax="false" />
-                                                            <p:menuitem value="Friends"  icon="pi pi-clone" action="#{candidateViewController.friendList()}" ajax="false"/>
-                                                            <p:menuitem value="Friend Requests"  icon="pi pi-times" action="#{candidateViewController.friendRequestList()}" ajax="false" />
-
-                                                        </p:menu>
-                                                    </f:facet>
-                                                </p:panel>
-                                            </h:form>
-                                            <h:form id="eventsForm" >
-                                                <p:panel header="Job offers you might like"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
-                                                    <!--p:panelGrid -->
-                                                    <p:dataScroller value="#{candidateViewController.customJobs()}" var="job" chunkSize="2" >
-
-                                                        <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
-                                                            <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
-                                                            <p:outputPanel style="width: auto">
-                                                                <h:panelGrid columns="2" cellpadding="1">
-                                                                    <h:outputText value="Title:" />
-                                                                    <h:outputText value="#{job.title}" style="font-weight: bold"/>
-
-                                                                    <h:outputText value="Company:" />
-                                                                    <h:outputText value="#{job.company}" style="font-weight: bold"/>
-                                                                        <h:outputText value="End:" />
-                                                                        <h:outputText value="#{job.skills}" style="font-weight: bold"/>
-                                                                </h:panelGrid>
-                                                            </p:outputPanel>
-                                                            <f:facet name="footer">
-                                                                <p:commandLink value="Preview" action="#{candidateViewController.customJobs()}"/>
-                                                            </f:facet>
-                                                        </p:panelGrid>
-
-                                                    </p:dataScroller>
-                                                    <!--/p:panelGrid-->
-                                                    <f:facet name="actions">
-                                                        <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
-                                                    </f:facet>
-                                                </p:panel>
-                                            </h:form>
-                                        </div>
-                                        <div class="col-md-9" style="background-color: white; margin-top: 20px;">
 
 
-                                            <div class="row" style="margin-top: 50px">
+                        <div class="row">
+                            <div class="dropdown">
+                                <h:form>
+                                    <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
+                                        <span style="color: red;"><p:outputLabel value="#{adminBean.numberNotifs}"/></span>
+                                        <i class="fa fa-bell"></i>
+                                        <p:selectOneMenu class="btn btn-secondary" id="country" value="" style="width:0px ; background-color: #6c757d">
+                                            <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{adminBean.notifMessages()}" />
+                                        </p:selectOneMenu>
+                                    </button>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h:form id="AdminForm" style="width: 100%">
+                                <p:panel header="Admin" toggleable="true" toggleOrientation="horizontal" style="text-align: center; width: 90%">
+                                    <f:facet name="header" >
+                                        <p:outputLabel value="Candidate" />
+                                    </f:facet> 
+                                    <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
+                                        <p:commandLink >
+                                            <p:graphicImage value="elon.png" height="90px" width="100px"  />
+                                        </p:commandLink>
+                                        <p:outputLabel value="#{candidateViewController.connectedCdt.firstName} #{candidateViewController.connectedCdt.lastName}"/>
 
-                                                <h:form id="form">
-                                                    <p:dataView var="cdt" value="#{candidateViewController.candidates}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
-                                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
-                                                        <p:dataViewListItem>
-                                                            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                                                                <p:graphicImage value="elon.png" height="70px" width="50px" /> 
+                                        <p:commandLink value="#{candidateViewController.connectedCdt.email}"/>
+                                    </p:panelGrid>
+                                    <f:facet name="actions">
+                                        <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText title="view detail" value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    </f:facet>
+                                    <f:facet name="options">
+                                        <p:menu >
+                                            <p:menuitem value="Candidates"  icon="pi pi-clone" action="#{candidateViewController.candidatesList()}" ajax="false"/>
+                                            <p:menuitem value="Profile"  icon="pi pi-times" action="#{candidateViewController.cdtConnected()}" ajax="false"/>
+                                            <p:menuitem value="Job Offers" icon="pi pi-clone" action="#{candidateViewController.jobofferList()}" ajax="false" />
+                                            <p:menuitem value="Companies"  icon="pi pi-times" action="#{companyViewController.listComp()}" ajax="false" />
+                                            <p:menuitem value="Friends"  icon="pi pi-clone" action="#{candidateViewController.friendList()}" ajax="false"/>
+                                            <p:menuitem value="Friend Requests"  icon="pi pi-times" action="#{candidateViewController.friendRequestList()}" ajax="false" />
 
-                                                                <p:outputPanel>
-                                                                    <h:panelGrid columns="2" cellpadding="5">
-                                                                        <h:outputText value="First name:" />
-                                                                        <h:outputText value="#{cdt.firstName}" style="font-weight: bold"/>
+                                        </p:menu>
+                                    </f:facet>
+                                </p:panel>
+                            </h:form>
+                        </div>
+                        <div class="row">
+                            <h:form id="eventsForm" >
+                                <p:panel header="Job offers you might like"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
+                                    <!--p:panelGrid -->
+                                    <p:dataScroller value="#{candidateViewController.customJobs()}" var="job" chunkSize="2" >
 
-                                                                        <h:outputText value="Email:" />
-                                                                        <h:outputText value="#{cdt.email}" style="font-weight: bold"/>
+                                        <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
+                                            <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
+                                            <p:outputPanel style="width: auto">
+                                                <h:panelGrid columns="2" cellpadding="1">
+                                                    <h:outputText value="Title:" />
+                                                    <h:outputText value="#{job.title}" style="font-weight: bold"/>
 
-                                                                        <h:outputText value="Recommendations:" />
-                                                                        <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
-                                                                    </h:panelGrid>
-                                                                </p:outputPanel>
+                                                    <h:outputText value="Positions:" />
+                                                    <h:outputText value="#{job.peopleNeeded}" style="font-weight: bold"/>
+                                                    <h:outputText value="Status:" />
+                                                    <h:outputText value="#{job.offerStatus}" style="font-weight: bold"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+                                            <f:facet name="footer">
+                                                <p:commandLink value="Preview"  action="#{candidateViewController.doPreviewOffer()}">
+                                                    <f:setPropertyActionListener value="#{job}" target="#{candidateViewController.selectedOffer}" />
+                                                </p:commandLink>
+                                            </f:facet>
+                                        </p:panelGrid>
 
-                                                                <h:commandButton value="Details" action="/views/candidate/profileDetails?faces-redirect=true" >
-                                                                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
-                                                                    <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
-                                                                    <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
-                                                                </h:commandButton>
+                                    </p:dataScroller>
+                                    <!--/p:panelGrid-->
+                                    <f:facet name="actions">
+                                        <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                    </f:facet>
+                                </p:panel>
+                            </h:form>
+                        </div>
 
-                                                                <iframe src="https://www.facebook.com/plugins/share_button.php?href=http://chillyfacts.com/create-facebook-share-button-for-website-webpages/&amp;layout=button_count&amp;size=large&amp;mobile_iframe=true&amp;width=83&amp;height=28&amp;appId" width="83" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-
-                                                            </h:panelGrid>
-                                                        </p:dataViewListItem>
-                                                    </p:dataView>
-
-                                                </h:form>
-                                            </div>
-                                        </div>     
-                                    </div>
-                                </div>
-                                </h:body>
-                                <!-- End download Area -->
-                                </ui:define>
+                    </div>
+                    <div class="col-md-9" style="background-color: white; margin-top: 20px;">
 
 
-                                </ui:composition>
+                        <div class="row" style="margin-top: 50px">
+
+                            <h:form id="form">
+                                <p:dataView var="cdt" value="#{candidateViewController.candidates}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                                    <p:dataViewListItem>
+                                        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                                            <p:graphicImage value="user.png" height="70px" width="70px" /> 
+
+
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="2" cellpadding="5">
+                                                    <h:outputText value="First name:" />
+                                                    <h:outputText value="#{cdt.firstName}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Email:" />
+                                                    <h:outputText value="#{cdt.email}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Recommendations:" />
+                                                    <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+
+                                            <h:commandButton value="Details" action="/views/candidate/profileDetails?faces-redirect=true" >
+                                                <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
+                                            </h:commandButton>
+
+                                        </h:panelGrid>
+                                    </p:dataViewListItem>
+                                </p:dataView>
+
+                            </h:form>
+                        </div>
+
+                    </div> 
+
+                </div>
+            </div>
+        </h:body>
+        <!-- End download Area -->
+    </ui:define>
+
+
+</ui:composition>
+

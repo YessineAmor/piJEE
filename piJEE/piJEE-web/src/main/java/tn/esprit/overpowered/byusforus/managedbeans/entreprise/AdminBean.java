@@ -39,6 +39,7 @@ import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
+import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.EmployeeFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.users.CompanyAdminFacadeRemote;
@@ -53,17 +54,17 @@ import util.authentication.Authenticator;
  */
 @ManagedBean(name = "adminBean")
 @SessionScoped
-public class AdminBean implements Serializable{
+public class AdminBean implements Serializable {
 
     /**
      * Creates a new instance of AdminBean
      */
     @EJB
     private CompanyAdminFacadeRemote compAdminFacade;
-    
+
     @EJB
     private CompanyProfileFacadeRemote compFacade;
-    
+
     @EJB
     private JobOfferFacadeRemote jobOfferFacade;
 
@@ -76,19 +77,24 @@ public class AdminBean implements Serializable{
     @EJB
     private EmployeeFacadeRemote empFacade;
     
+     @EJB
+    private CandidateFacadeRemote cdtFacade;
+
     //Google Map
     private MapModel simpleModel;
+
     @PostConstruct
     public void init() {
         simpleModel = new DefaultMapModel();
-          
+
         //Shared coordinates
         LatLng coord1 = new LatLng(36.898615, 10.189732);
-          
+
         //Basic marker
         simpleModel.addOverlay(new Marker(coord1, "ESPRIT"));
+        numberNotifs = hrmFacade.retrieveUserNofifs(Authenticator.currentSession.getUser().getId()).size();
     }
-  
+
     public MapModel getSimpleModel() {
         return simpleModel;
     }
@@ -136,6 +142,11 @@ public class AdminBean implements Serializable{
     //Notif 
     private List<Notif> notifs;
     private int numberNotifs;
+
+    //Search
+    private String searchTitle;
+    private String searchLocation;
+    private ExpertiseLevel searchExpertise;
 
     private UploadedFile file;
     private String fileName;
@@ -487,7 +498,6 @@ public class AdminBean implements Serializable{
         this.numOfEMP = numOfEMP;
     }
 
-    
     public JobOfferFacadeRemote getJobOfferFacade() {
         return jobOfferFacade;
     }
@@ -520,7 +530,6 @@ public class AdminBean implements Serializable{
         this.compFacade = compFacade;
     }
 
-    
     public List<Notif> getNotifs() {
         return notifs;
     }
@@ -535,6 +544,30 @@ public class AdminBean implements Serializable{
 
     public void setNumberNotifs(int numberNotifs) {
         this.numberNotifs = numberNotifs;
+    }
+
+    public String getSearchTitle() {
+        return searchTitle;
+    }
+
+    public void setSearchTitle(String searchTitle) {
+        this.searchTitle = searchTitle;
+    }
+
+    public String getSearchLocation() {
+        return searchLocation;
+    }
+
+    public void setSearchLocation(String searchLocation) {
+        this.searchLocation = searchLocation;
+    }
+
+    public ExpertiseLevel getSearchExpertise() {
+        return searchExpertise;
+    }
+
+    public void setSearchExpertise(ExpertiseLevel searchExpertise) {
+        this.searchExpertise = searchExpertise;
     }
 
     public void doCompanyUpdate() {
@@ -649,6 +682,7 @@ public class AdminBean implements Serializable{
         if (offers != null) {
             System.out.println("------Event:--" + offers.get(0).getTitle());
             userOffers = jobOfferFacade.viewOffersByUserSkill(offers, Authenticator.currentSession.getUser().getId());
+            userOffers.addAll(cdtFacade.customJobOfferList(Authenticator.currentSession.getUser().getId()));
             goTo = "/views/front/adminEntreprise/compOfferManagement?faces-redirect=true";
         } else {
             //offers.add(new JobOffer());
@@ -721,6 +755,58 @@ public class AdminBean implements Serializable{
         return this.viewOffers();
     }
 
+    public String doUpdateJobOffer() {
+        String goTo = "null";
+
+        switch (userType) {
+
+            case "HUMAN_RESOURCES_MANAGER":
+                if (jobOfferFacade.searchJobOfferByTitle(selectedOffer.getTitle()) == null) {
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "Offer Title Doesn't Exit");
+                    FacesContext.getCurrentInstance().addMessage("!!", msg);
+                } else {
+
+                    Set<Skill> sk = new HashSet<>();
+                    for (Skill s : selectedSkills) {
+                        sk.add(s);
+                    }
+                    selectedOffer.setSkills(sk);
+                    jobOfferFacade.edit(selectedOffer);
+                    System.out.println("Checking out skills:---" + sk.size());
+                    //newOffer.setCompany(company);
+                    //newOffer.sethRManager(hrManager);
+                    System.out.println("CityLocation:--" + selectedOffer.getCity());
+                    System.out.println("DescriptionDESSS:--" + selectedOffer.getDescription());
+                }
+                break;
+            case "PROJECT_MANAGER":
+                if (jobOfferFacade.searchJobOfferByTitle(selectedOffer.getTitle()) == null) {
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "Offer Title Doesnt Exit");
+                    FacesContext.getCurrentInstance().addMessage("!!", msg);
+                } else {
+                    if (selectedOffer.getOfferStatus().equals(OfferStatus.PENDING)) {
+                        Set<Skill> sk = new HashSet<>();
+                        for (Skill s : selectedSkills) {
+                            sk.add(s);
+                        }
+                        selectedOffer.setSkills(sk);
+                        jobOfferFacade.edit(selectedOffer);
+                        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "Your Job Offer Request Has Been Updated");
+                        FacesContext.getCurrentInstance().addMessage("!!", msg);
+                    }
+
+                }
+                break;
+            default:
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "!!", "No Enough Privilege For Such Action");
+                FacesContext.getCurrentInstance().addMessage("!!", msg);
+                break;
+        }
+
+        return this.viewOffers();
+
+    }
+
     public String doApproveOfferRequest() {
         String goTo = "null";
 
@@ -791,6 +877,18 @@ public class AdminBean implements Serializable{
         }
         numberNotifs = notifs.size();
         return mess;
+    }
+
+    public String generalOfferSearch() {
+        String goTo;
+        offers = jobOfferFacade.generalSearch(searchTitle, searchLocation, searchExpertise);
+        if (offers != null) {
+            goTo = "/views/front/adminEntreprise/compOfferManagement?faces-redirect=true";
+        } else {
+            goTo = this.viewOffers();
+        }
+        return goTo;
+
     }
 
     public String doUpdateProfile() {
@@ -891,13 +989,13 @@ public class AdminBean implements Serializable{
         }
         return "/views/front/adminEntreprise/userProfileManagement?faces-redirect=true";
     }
-    
-    public String compProfileView(){
+
+    public String compProfileView() {
         //numOfPM = Long.valueOf(company.getProjectManagers().size());
         numOfEMP = Long.valueOf(company.getEmployees().size());
         //numOfEMP = compFacade.numberOfEmployees(company.getId());
         numOfPM = compFacade.numberOfProjectManagers(company.getId());
-        company.setNumViews(company.getNumViews()+1);
+        company.setNumViews(company.getNumViews() + 1);
         compAdminFacade.updateCompanyProfile(company);
         return "/views/front/adminEntreprise/compProfileManagement?faces-redirect=true";
     }
@@ -920,6 +1018,14 @@ public class AdminBean implements Serializable{
 
     public void setSelectedSkills(List<Skill> selectedSkills) {
         this.selectedSkills = selectedSkills;
+    }
+
+    public CandidateFacadeRemote getCdtFacade() {
+        return cdtFacade;
+    }
+
+    public void setCdtFacade(CandidateFacadeRemote cdtFacade) {
+        this.cdtFacade = cdtFacade;
     }
 
 }
