@@ -65,19 +65,20 @@
 
                     <div class="col-md-3" >
 
+
                         <div class="row">
                             <div class="dropdown">
-                            <h:form>
-                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
-                                    <span style="color: red;"><p:outputLabel value="#{adminBean.numberNotifs}"/></span>
-                                    <i class="fa fa-bell"></i>
-                                    <p:selectOneMenu class="btn btn-secondary" id="country" value="" style="width:0px ; background-color: #6c757d">
-                                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{adminBean.notifMessages()}" />
-                                    </p:selectOneMenu>
-                                </button>
-                            </h:form>
-                        </div>
+                                <h:form>
+                                    <button class="btn btn-secondary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false">
+                                        <span style="color: red;"><p:outputLabel value="#{adminBean.numberNotifs}"/></span>
+                                        <i class="fa fa-bell"></i>
+                                        <p:selectOneMenu class="btn btn-secondary" id="country" value="" style="width:0px ; background-color: #6c757d">
+                                            <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{adminBean.notifMessages()}" />
+                                        </p:selectOneMenu>
+                                    </button>
+                                </h:form>
+                            </div>
                         </div>
                         <div class="row">
                             <h:form id="AdminForm" style="width: 100%">
@@ -112,9 +113,9 @@
                         </div>
                         <div class="row">
                             <h:form id="eventsForm" >
-                                <p:panel header="Job offers you might like"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; width: 100%;height: auto;margin-bottom: auto; display: list-item">
+                                <p:panel header="Job offers you might like"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
                                     <!--p:panelGrid -->
-                                    <p:dataScroller value="#{adminBean.userOffers}" var="job" chunkSize="2" >
+                                    <p:dataScroller value="#{candidateViewController.customJobs()}" var="job" chunkSize="2" >
 
                                         <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
                                             <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
@@ -123,14 +124,16 @@
                                                     <h:outputText value="Title:" />
                                                     <h:outputText value="#{job.title}" style="font-weight: bold"/>
 
-                                                    <h:outputText value="Company:" />
-                                                    <h:outputText value="#{job.company}" style="font-weight: bold"/>
-                                                    <h:outputText value="End:" />
-                                                    <h:outputText value="#{job.skills}" style="font-weight: bold"/>
+                                                    <h:outputText value="Positions:" />
+                                                    <h:outputText value="#{job.peopleNeeded}" style="font-weight: bold"/>
+                                                    <h:outputText value="Status:" />
+                                                    <h:outputText value="#{job.offerStatus}" style="font-weight: bold"/>
                                                 </h:panelGrid>
                                             </p:outputPanel>
                                             <f:facet name="footer">
-                                                <p:commandLink value="Preview" action="#"/>
+                                                <p:commandLink value="Preview"  action="#{candidateViewController.doPreviewOffer()}">
+                                                    <f:setPropertyActionListener value="#{job}" target="#{candidateViewController.selectedOffer}" />
+                                                </p:commandLink>
                                             </f:facet>
                                         </p:panelGrid>
 
@@ -142,6 +145,7 @@
                                 </p:panel>
                             </h:form>
                         </div>
+
                     </div>
                     <div class="col-md-9" style="background-color: white; margin-top: 20px;">
 
@@ -154,7 +158,8 @@
                                             gridIcon="pi pi-th-large" listIcon="pi pi-bars">
                                     <p:dataViewListItem>
                                         <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                                            <p:graphicImage value="elon.png" height="70px" width="50px" /> 
+                                            <p:graphicImage value="user.png" height="70px" width="70px" /> 
+
 
                                             <p:outputPanel>
                                                 <h:panelGrid columns="2" cellpadding="5">
@@ -181,7 +186,9 @@
 
                             </h:form>
                         </div>
+
                     </div> 
+
                 </div>
             </div>
         </h:body>

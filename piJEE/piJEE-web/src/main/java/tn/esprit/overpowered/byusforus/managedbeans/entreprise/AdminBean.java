@@ -39,6 +39,7 @@ import tn.esprit.overpowered.byusforus.entities.users.ProjectManager;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
 import tn.esprit.overpowered.byusforus.entities.util.Skill;
+import tn.esprit.overpowered.byusforus.services.candidat.CandidateFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.EmployeeFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.entrepriseprofile.JobOfferFacadeRemote;
 import tn.esprit.overpowered.byusforus.services.users.CompanyAdminFacadeRemote;
@@ -75,6 +76,9 @@ public class AdminBean implements Serializable {
 
     @EJB
     private EmployeeFacadeRemote empFacade;
+    
+     @EJB
+    private CandidateFacadeRemote cdtFacade;
 
     //Google Map
     private MapModel simpleModel;
@@ -678,6 +682,7 @@ public class AdminBean implements Serializable {
         if (offers != null) {
             System.out.println("------Event:--" + offers.get(0).getTitle());
             userOffers = jobOfferFacade.viewOffersByUserSkill(offers, Authenticator.currentSession.getUser().getId());
+            userOffers.addAll(cdtFacade.customJobOfferList(Authenticator.currentSession.getUser().getId()));
             goTo = "/views/front/adminEntreprise/compOfferManagement?faces-redirect=true";
         } else {
             //offers.add(new JobOffer());
@@ -1013,6 +1018,14 @@ public class AdminBean implements Serializable {
 
     public void setSelectedSkills(List<Skill> selectedSkills) {
         this.selectedSkills = selectedSkills;
+    }
+
+    public CandidateFacadeRemote getCdtFacade() {
+        return cdtFacade;
+    }
+
+    public void setCdtFacade(CandidateFacadeRemote cdtFacade) {
+        this.cdtFacade = cdtFacade;
     }
 
 }
