@@ -48,6 +48,7 @@ public class CandidateApplicationFacade extends AbstractFacade<CandidateApplicat
                     .setParameter("jib", jobOfferId)
                     .getSingleResult();
         } catch (NoResultException e) {
+            return null;
         }
         return cdtApp;
     }

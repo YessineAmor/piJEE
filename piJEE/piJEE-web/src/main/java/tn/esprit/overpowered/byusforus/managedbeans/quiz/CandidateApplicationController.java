@@ -41,6 +41,7 @@ import com.itextpdf.kernel.pdf.canvas.parser.listener.FilteredEventListener;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.LocationTextExtractionStrategy;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -158,9 +159,12 @@ public class CandidateApplicationController implements Serializable {
         return "List?faces-redirect=true";
     }
 
-    public Boolean hasAlreadyApplied(JobOffer jobOffer) {
-//        CandidateApplication cApp = ejbFacade.getApplicationByCandidateId(Authenticator.currentSession.getUser().getId(), jobOffer.getId());
-        CandidateApplication cApp = ejbFacade.getApplicationByCandidateId(1L, 2L);
+    public Boolean hasAlreadyApplied(Long jobOfferId) {
+        Long currentCandidateID = Authenticator.currentSession.getUser().getId();
+        if (ejbFacade.getApplicationByCandidateId(currentCandidateID, jobOfferId) == null) {
+            return false;
+        }
+        CandidateApplication cApp = ejbFacade.getApplicationByCandidateId(currentCandidateID, jobOfferId);
         this.selected = cApp;
         return cApp != null;
     }
@@ -173,7 +177,7 @@ public class CandidateApplicationController implements Serializable {
     public int getCandidateRanking() throws IOException {
         List<CandidateApplication> allApplications = ejbFacade.getCandidateApplicationByJobOFfer(this.selected.getJobOffer().getId());
         int candidateRanking = 0;
-        Map<Float, Candidate> candidateScoreMap = new TreeMap<>();
+        Map<Float, Candidate> candidateScoreMap = new TreeMap<>(Collections.reverseOrder());
         for (CandidateApplication cApp : allApplications) {
             candidateScoreMap.put(getCandidateScore(cApp), cApp.getCandidate());
         }

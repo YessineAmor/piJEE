@@ -169,23 +169,23 @@
 
                                                     <h:outputText value="Status:" />
                                                     <h:outputText value="#{job.offerStatus}" style="font-weight: bold"/>
-                                                    <c:if test="#{candidateApplicationController.hasAlreadyApplied(job) eq true}">
-                                                        <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'INVITED_FOR_QUIZ'}">
-                                                            <h:commandButton value="Take Quiz" action="#{quizController.goToQuizDetails(job)}"/>
-                                                        </c:if>
-                                                        <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'PENDING'}">
-                                                            <h:outputText value="Your application is pending approval."/>
-                                                        </c:if>
-                                                        <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'ACCEPTED_FOR_INTERVIEW'}">
-                                                            <h:commandButton value="You have been accepted for an interview" action="#{quizController.goToQuizDetails(job)}"/>
-                                                        </c:if>
-                                                        <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'REFUSED'}">
-                                                            <h:outputText style="color:red;" value="Application refused."/>
-                                                        </c:if>
-                                                    </c:if>
-                                                    <c:if test="#{candidateApplicationController.hasAlreadyApplied(job) eq false}">
-                                                        <p:commandButton value="Apply to this job" ajax="false"  action="#{candidateApplicationController.showApplicationForm(job)}"/>
-                                                    </c:if>
+                                                    <h:outputText value="#{job.id}" style="font-weight: bold"/>
+                                                    <h:commandButton value="Take Quiz" action="#{quizController.goToQuizDetails(job)}" rendered="#{candidateApplicationController.hasAlreadyApplied(job.id)
+                                                                                                 and candidateApplicationController.selected.jobApplicationState == 'INVITED_FOR_QUIZ'}"/>
+                                                    <h:outputText value="Your application is pending approval." 
+                                                                  rendered="#{candidateApplicationController.hasAlreadyApplied(job.id)
+                                                                              and candidateApplicationController.selected.jobApplicationState == 'PENDING'}"
+                                                                  />
+                                                    <h:commandButton value="You have been accepted for an interview" action="#{quizController.goToQuizDetails(job)}"
+                                                                     rendered="#{candidateApplicationController.hasAlreadyApplied(job.id)
+                                                                                 and candidateApplicationController.selected.jobApplicationState == 'ACCEPTED_FOR_INTERVIEW'}"
+                                                                     />
+                                                    <h:outputText style="color:red;" value="Application refused." 
+                                                                  rendered="#{candidateApplicationController.hasAlreadyApplied(job.id)
+                                                                              and candidateApplicationController.selected.jobApplicationState == 'REFUSED'}"
+                                                                  />
+                                                    <p:commandButton value="Apply to this job" ajax="false"  action="#{candidateApplicationController.showApplicationForm(job)}"
+                                                                     rendered="#{candidateApplicationController.hasAlreadyApplied(job.id) eq false}"/>
                                                 </h:panelGrid>
                                             </p:outputPanel>
 
