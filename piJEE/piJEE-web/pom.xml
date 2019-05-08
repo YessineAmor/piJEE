@@ -95,6 +95,13 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+        
+        <!-- owasp sanitizer -->
+        <dependency>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+            <version>20180219.1</version>
+        </dependency>
     </dependencies>
 
     <build>
