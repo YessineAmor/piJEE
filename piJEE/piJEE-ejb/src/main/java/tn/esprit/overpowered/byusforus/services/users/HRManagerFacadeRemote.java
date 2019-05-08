@@ -40,6 +40,9 @@ public interface HRManagerFacadeRemote {
     
     public void createOffer(Long idManager,JobOffer offer);
     
+    public void deleteOffer(Long idOffer);
+    public void archiveOffer(Long idOffer);
+    
     //HR
     public Long createHRManager(HRManager hrManger);
     

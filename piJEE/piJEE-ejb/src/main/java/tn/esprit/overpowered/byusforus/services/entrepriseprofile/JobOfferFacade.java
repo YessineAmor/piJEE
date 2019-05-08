@@ -18,6 +18,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
+import tn.esprit.overpowered.byusforus.entities.users.Professional;
 import tn.esprit.overpowered.byusforus.entities.util.AbstractFacade;
 import tn.esprit.overpowered.byusforus.entities.util.ExpertiseLevel;
 import tn.esprit.overpowered.byusforus.entities.util.OfferStatus;
@@ -103,7 +104,7 @@ List<JobOffer> offers = em.createQuery(
     public List<JobOffer> viewOffersByUserSkill(List<JobOffer> offers, Long idUser) {
 
         List<JobOffer> userSkillOffers = new ArrayList<>();
-        Candidate user = em.find(Candidate.class, idUser);
+        Professional user = em.find(Professional.class, idUser);
 
         Set<Skill> userSkills = new HashSet<>();
 
@@ -177,6 +178,26 @@ List<JobOffer> offers = em.createQuery(
         } catch (Exception e) {
         }
         return job;
+    }
+
+    @Override
+    public List<JobOffer> generalSearch(String title, String location, ExpertiseLevel expLevel) {
+        List<JobOffer> offers = null;
+                
+                try{ 
+                    offers = em.createQuery(
+                "select j from JobOffer j where j.title"
+                + " LIKE CONCAT('%',:titre,'%') or "
+                        + "j.city LIKE CONCAT('%',:locate,'%') or "
+                        + "j.expertiseLevel = :niveau ",
+                JobOffer.class).setParameter("titre", title)
+                            .setParameter("locate", location)
+                            .setParameter("niveau", expLevel)
+                            .getResultList();
+                }catch(NoResultException nre){
+                
+                }
+            return offers;    
     }
 
 

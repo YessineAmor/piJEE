@@ -8,6 +8,7 @@ package tn.esprit.overpowered.byusforus.entities.users;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.persistence.OneToOne;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Event;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.Workshop;
+import tn.esprit.overpowered.byusforus.entities.posting.Post;
 
 /**
  *
@@ -45,6 +47,9 @@ public class CompanyProfile implements Serializable {
     private String website;
     private String companySize;
     private int dateOfCreation;
+    
+    @OneToMany
+    private Set<Post> posts;
 
     @OneToOne(mappedBy = "companyProfile", fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.DETACH})

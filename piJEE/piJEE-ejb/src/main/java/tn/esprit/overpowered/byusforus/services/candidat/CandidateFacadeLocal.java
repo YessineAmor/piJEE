@@ -6,6 +6,7 @@
 package tn.esprit.overpowered.byusforus.services.candidat;
 
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 import tn.esprit.overpowered.byusforus.entities.entrepriseprofile.JobOffer;
 import tn.esprit.overpowered.byusforus.entities.users.Candidate;
@@ -91,6 +92,14 @@ public interface CandidateFacadeLocal {
     
     public List<Candidate> pendingList(Long currentId);
     
-     public String deleteFriend(Long cdtId, Long friendId);
+    public String deleteFriend(Long cdtId, Long friendId);
+    
+    public void editCandidate(Candidate cdt);
+     
+    public Set<String> getCandidateExperience(Long cdtId);
+    
+    public List<JobOffer> jobOfferByCompany(Long compId);
+    
+    public int friendRequestNumber(Long cdtId);
     
 }

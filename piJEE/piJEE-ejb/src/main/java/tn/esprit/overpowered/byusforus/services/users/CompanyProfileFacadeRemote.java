@@ -32,6 +32,9 @@ public interface CompanyProfileFacadeRemote {
     List<Professional> getSubscribersList(Long idAdmin);
 
     int count();
+    
+    public Long numberOfEmployees(Long idComp);
+    public Long numberOfProjectManagers(Long idComp);
         
 }
 

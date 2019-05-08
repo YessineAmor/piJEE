@@ -21,7 +21,7 @@ import tn.esprit.overpowered.byusforus.entities.users.Professional;
  * @author pc
  */
 @Stateless
-public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> implements CompanyProfileFacadeLocal {
+public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> implements CompanyProfileFacadeLocal,CompanyProfileFacadeRemote {
 
     @PersistenceContext(unitName = "piJEE-ejb")
     private EntityManager em;
@@ -34,7 +34,8 @@ public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> impleme
     public CompanyProfileFacade() {
         super(CompanyProfile.class);
     }
-    List<Professional> getSubscribersList(Long idAdmin){
+    @Override
+    public List<Professional> getSubscribersList(Long idAdmin){
     CompanyAdmin compAdmin = em.find(CompanyAdmin.class, idAdmin);
     Long idComp = compAdmin.getCompanyProfile().getId();
     CompanyProfile compProf = em.find(CompanyProfile.class, idComp);
@@ -46,4 +47,19 @@ public class CompanyProfileFacade extends AbstractFacade<CompanyProfile> impleme
         return subscribersList;
         
     }
+
+    @Override
+    public Long numberOfEmployees(Long idComp) {
+        return em.createQuery("select count(e) from Employee e where e.company.id= :id", Long.class)
+                .setParameter("id", idComp)
+                .getSingleResult();
+    }
+
+    @Override
+    public Long numberOfProjectManagers(Long idComp) {
+         return em.createQuery("select count(p) from CompanyProfile e join e.projectManagers p where e.id= :id", Long.class)
+                .setParameter("id", idComp)
+                .getSingleResult();
+    }
+    
 }

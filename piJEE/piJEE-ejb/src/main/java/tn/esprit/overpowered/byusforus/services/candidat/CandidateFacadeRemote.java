@@ -96,5 +96,13 @@ public interface CandidateFacadeRemote {
     public List<Candidate> pendingList(Long currentId);
     
     public String deleteFriend(Long friendId, Long fId);
+    
+    public void editCandidate(Candidate cdt);
+    
+    public Set<String> getCandidateExperience(Long cdtId);
+    
+    public List<JobOffer> jobOfferByCompany(Long compId);
+    
+    public int friendRequestNumber(Long cdtId);
 
 }

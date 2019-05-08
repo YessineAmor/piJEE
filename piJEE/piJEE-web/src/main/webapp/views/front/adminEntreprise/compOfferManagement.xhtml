@@ -72,7 +72,7 @@
                                 </f:facet> 
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;" >
                                     <p:commandLink >
-                                        <p:graphicImage value="adminPic.png" height="90px" width="100px"  />
+                                        <p:graphicImage value="user.png" height="90px" width="100px"  />
                                     </p:commandLink>
                                     <p:outputLabel value="#{adminBean.firstName} #{adminBean.lastName}"/>
                                     <!--p:outputLabel value="#{adminBean.lastName}"/-->
@@ -92,26 +92,28 @@
                         <h:form id="eventsForm" >
                             <p:panel header="Events"  toggleable="true" toggleOrientation="horizontal" style="text-align: center; height: auto;margin-bottom: auto; display: list-item">
                                 <!--p:panelGrid -->
-                                <p:dataScroller value="#{adminBean.events}" var="evt" chunkSize="2" >
+                                <p:dataScroller value="#{adminBean.userOffers}" var="off" chunkSize="2" >
                                     <f:facet  name="header">
-                                        Scroll Down to Load More Events
+                                        Scroll Down to Load More Offers
                                     </f:facet>
                                     <p:panelGrid  columns="2"  style ="width: 100%" columnClasses="logo,detail">
                                         <p:graphicImage value="byusforus.png" style="height: 20px; width: 20px;"/> 
                                         <p:outputPanel style="width: auto">
                                             <h:panelGrid columns="2" cellpadding="1">
                                                 <h:outputText value="Title:" />
-                                                <h:outputText value="#{evt.name}" style="font-weight: bold"/>
+                                                <h:outputText value="#{off.title}" style="font-weight: bold"/>
 
-                                                <h:outputText value="Start:" />
-                                                <h:outputText value="#{evt.startDate}" style="font-weight: bold"/>
+                                                <h:outputText value="Location:" />
+                                                <h:outputText value="#{off.city}" style="font-weight: bold"/>
 
-                                                <h:outputText value="End:" />
-                                                <h:outputText value="#{evt.endDate}" style="font-weight: bold"/>
+                                                <h:outputText value="Company:" />
+                                                <h:outputText value="#{off.company.name}" style="font-weight: bold"/>
                                             </h:panelGrid>
                                         </p:outputPanel>
                                         <f:facet name="footer">
-                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewEvent(evt.id)}"/>
+                                            <p:commandLink value="Preview" action="#{adminBean.doPreviewOffer()}" >
+                                                <f:setPropertyActionListener value="#{off}" target="#{adminBean.selectedOffer}"/>
+                                            </p:commandLink>
                                         </f:facet>
                                     </p:panelGrid>
 
@@ -125,23 +127,29 @@
                     </div>
                     <div class="col-md-9" style="background-color: white; margin-top: 20px;">
                         <div class="input-group mb-3">
+                            <h:form>
                             <div class="input-group-prepend">
-                                <input type="text" class="form-control" style="width: 200px; margin-right : 5px; border : 2px solid red" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1"/>
-                                <input type="text" class="form-control" style="width: 200px; margin-right : 5px;" placeholder="Location" aria-label="Username" aria-describedby="basic-addon1"/>
-                                <select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
+                                
+                                <p:inputText  value="#{adminBean.searchTitle}" class="form-control" style="width: 200px; margin-right : 5px; border : 2px solid red" placeholder="Title"/>
+                                <p:inputText value="#{adminBean.searchLocation}" class="form-control" style="width: 200px; margin-right : 5px ;border : 2px solid red;" placeholder="Location"/>
+                                <!--select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
                                     <option value="Junior" style="padding : 5px;" >Junior</option>
                                     <option value="Senior">Senior</option>
                                     <option value="Something">Something</option>
-                                </select>
+                                </select-->
 
-                                <select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
+                                <!--select class="" name="SelectExpertise" style="padding : 5px; border-radius: 5px; width: 150px; margin-right : 5px;">
                                     <option value="Junior" style="padding : 5px">Junior</option>
                                     <option value="Senior">Senior</option>
                                     <option value="Something">Something</option>
-                                </select>
-                                <button type="button" class="btn btn-primary" style="border-radius: 5px; margin-right : 5px;" aria-label="Left Align">
-                                    <span class="fa fa-search" aria-hidden="true"></span>
-                                </button>
+                                </select-->
+                                <p:selectOneMenu value="#{adminBean.searchExpertise}" style="padding : 5px; border-radius: 2px; width: 150px; margin-right : 5px;">
+                                    <!--f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" /-->
+                                    <f:selectItems value="#{signUpBean.Levels()}" />
+                                </p:selectOneMenu>
+                                <p:commandButton  action="#{adminBean.generalOfferSearch()}" value=" " class="btn btn-primary fa fa-search" style="border-radius: 5px; margin-right : 5px;" >
+
+                                </p:commandButton>
                                 <!--Implementing modal class for job offer creation-->
                                 <button type="button" class="btn btn-success" style="border-radius: 5px" aria-label="Left Align"
                                         data-toggle="modal" data-target="#exampleModalScrollable">
@@ -207,6 +215,7 @@
                                 </h:form>
                                 <!--End of Modal class implementation-->
                             </div>
+                            </h:form>
                         </div>
 
                         <div class="row" style="margin-top: 50px">
