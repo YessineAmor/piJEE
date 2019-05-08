@@ -17,8 +17,6 @@
                         <h:outputText value="#{candidateApplicationController.selected.additionalInfo}" title="#{bundle.ViewCandidateApplicationTitle_additionalInfo}"/>
                         <h:outputText value="#{bundle.ViewCandidateApplicationLabel_motivationLetter}"/>
                         <h:outputText value="#{candidateApplicationController.selected.motivationLetter}" title="#{bundle.ViewCandidateApplicationTitle_motivationLetter}"/>
-                        <h:outputText value="#{bundle.ViewCandidateApplicationLabel_resume}"/>
-                        <h:outputText value="#{candidateApplicationController.selected.resume}" title="#{bundle.ViewCandidateApplicationTitle_resume}"/>
                         <h:outputText value="#{bundle.ViewCandidateApplicationLabel_jobApplicationState}"/>
                         <h:outputText value="#{candidateApplicationController.selected.jobApplicationState}" title="#{bundle.ViewCandidateApplicationTitle_jobApplicationState}"/>
                         <h:outputText value="#{bundle.ViewCandidateApplicationLabel_jobOffer}"/>
@@ -27,6 +25,10 @@
                         <h:outputText value="#{candidateApplicationController.selected.candidate.firstName}" title="#{bundle.ViewCandidateApplicationTitle_candidate}"/>
                         <h:outputText value="RESUME" title="#{bundle.ViewCandidateApplicationTitle_candidate}"/>
                         <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View} Resume" update=":CandidateApplicationViewForm" oncomplete="PF('CandidateApplicationViewResumeDialog').show()" disabled="#{empty candidateApplicationController.selected}"/>
+                        <h:outputText value="Skills Score:"/>
+                        <h:outputText value="This candidate has #{candidateApplicationController.getSkillsFromResume(candidateApplicationController.selected).size()} out of the #{candidateApplicationController.selected.jobOffer.skills.size()} required skills" title=""/>
+                        <h:outputText value="Ranking:"/>
+                        <h:outputText value="This candidate ranks as number #{candidateApplicationController.getCandidateRanking()} out of #{candidateApplicationController.numberOfCandidacies()}" title=""/>
                     </p:panelGrid>
                     <p:commandButton value="Invite to take quiz" action="#{candidateApplicationController.inviteToTakeQuiz()}"/>
                     <p:commandButton value="Reject candidacy" action="#{candidateApplicationController.rejectCandidacy()}"/>

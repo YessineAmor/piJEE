@@ -2,3 +2,6 @@
 /piJEE/piJEE-web/target/
 /piJEE/piJEE-ear/target/
 *.xls
+piJEE/piJEE-web/nbactions.xml
+piJEE/piJEE-web/nb-configuration.xml
+piJEE/piJEE-web/nb-configuration.xml
