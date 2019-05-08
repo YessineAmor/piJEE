@@ -5,7 +5,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/template_front.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title"><title>Home</title></ui:define>
 
@@ -108,6 +109,23 @@
                                             <h:outputText value="#{job.peopleNeeded}" style="font-weight: bold"/>
                                             <h:outputText value="Status:" />
                                             <h:outputText value="#{job.offerStatus}" style="font-weight: bold"/>
+                                            <c:if test="#{candidateApplicationController.hasAlreadyApplied(job) eq true}">
+                                                <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'INVITED_FOR_QUIZ'}">
+                                                    <h:commandButton value="Take Quiz" action="#{quizController.goToQuizDetails(job)}"/>
+                                                </c:if>
+                                                <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'PENDING'}">
+                                                    <h:outputText value="Your application is pending approval."/>
+                                                </c:if>
+                                                <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'ACCEPTED_FOR_INTERVIEW'}">
+                                                    <h:commandButton value="You have been accepted for an interview" action="#{quizController.goToQuizDetails(job)}"/>
+                                                </c:if>
+                                                <c:if test="#{candidateApplicationController.selected.jobApplicationState == 'REFUSED'}">
+                                                    <h:outputText style="color:red;" value="Application refused."/>
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="#{candidateApplicationController.hasAlreadyApplied(job) eq false}">
+                                                <p:commandButton value="Apply to this job" ajax="false"  action="#{candidateApplicationController.showApplicationForm(job)}"/>
+                                            </c:if>
                                         </h:panelGrid>
                                     </p:outputPanel>
                                     <f:facet name="footer">
@@ -125,13 +143,13 @@
                         </p:panel>
                     </div>
                     <div class="col-md-9" style="background-color: white; margin-top: 20px;">
-<h:form id="postForm">
-                                <p:panel header="Search Job Offers">
-                                    <h:inputText id="search" value="#{candidateViewController.searchText}"/>
-                                    <p:watermark for="search" value="Search" id="watermark" />
-                                    <p:commandButton update=":form" title="Search" action="#{candidateViewController.jobofferList()}"/>
-                                </p:panel>
-                            </h:form>
+                        <h:form id="postForm">
+                            <p:panel header="Search Job Offers">
+                                <h:inputText id="search" value="#{candidateViewController.searchText}"/>
+                                <p:watermark for="search" value="Search" id="watermark" />
+                                <p:commandButton update=":form" title="Search" action="#{candidateViewController.jobofferList()}"/>
+                            </p:panel>
+                        </h:form>
                         <div class="row" style="margin-top: 50px">
 
                             <h:form id="form">
@@ -168,7 +186,7 @@
 
                                                     <h:outputText value="Status:" />
                                                     <h:outputText value="#{job.offerStatus}" style="font-weight: bold"/>
-                                                    
+
                                                 </h:panelGrid>
                                             </p:outputPanel>
 
