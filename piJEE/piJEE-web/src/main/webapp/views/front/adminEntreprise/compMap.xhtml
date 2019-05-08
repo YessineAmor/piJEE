@@ -14,21 +14,21 @@
         <h:head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-            <link rel="stylesheet" href="style.css" />
+            <!--link rel="stylesheet" href="style.css" /-->
             <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
             <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
-        <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
+        <h:body style=" background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
-                 
+
                     <div class="col-md-9" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
                         <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
 
                         <p:gmap center="36.890257,30.707417" zoom="13" type="HYBRID"
-                                style="width:100%;height:600px" model="#{adminBean.simpleModel}" />
+                                style="width:100%;height:700px" model="#{adminBean.simpleModel}" />
 
                     </div>
                     <div class="col-md-3"><style type="text/css">
@@ -45,14 +45,22 @@
                             <p:panel header="Company Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;">
                                     <p:commandLink >
-                                        <p:graphicImage value="byusforus.png" height="50px" width="50px"  />
+                                        <p:graphicImage value="byusforus.png" height="100px" width="100px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.company.name}"/>
-                                    <p:commandLink value="Events" action="#{adminBean.viewEvents()}"/>
-                                    <p:commandLink value="Offers" action="#{adminBean.viewOffers()}"/>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="#{adminBean.company.name}"/>
+                                    </f:facet>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="#{adminBean.compProfileView()}"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
+                                <f:facet name="options">
+                                    <p:menu >
+                                        <p:menuitem value="Home" action="/views/front/adminEntreprise/home?faces-redirect=true" icon="pi pi-clone"  />
+                                        <p:menuitem value="Profile" action="#{adminBean.compProfileView()}" icon="pi pi-clone"  />
+                                        <p:menuitem value="Events" action="#{adminBean.viewEvents()}" icon="pi pi-clone"  />
+                                        <p:menuitem value="Offers" action="#{adminBean.viewOffers()}" icon="pi pi-clone"  />
+                                    </p:menu>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
