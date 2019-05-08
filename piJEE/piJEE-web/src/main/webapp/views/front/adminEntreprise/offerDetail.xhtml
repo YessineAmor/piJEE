@@ -14,7 +14,7 @@
         <h:head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-            <link rel="stylesheet" href="style.css" />
+            <!--link rel="stylesheet" href="style.css" /-->
             <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
             <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
             <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/-->
@@ -60,7 +60,7 @@
                     border-bottom-color: var(--input-border-color, #A8A8A8);
                 }
             </style>
-            <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
+            <div class="container" style=" background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
 
 
@@ -83,8 +83,10 @@
                                 </f:facet>
                                 <f:facet name="options">
                                     <p:menu >
-                                        <p:menuitem value="New Event" url="#" icon="pi pi-clone"  />
-                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-times"  />
+                                        <p:menuitem value="Home" action="/views/front/adminEntreprise/home?faces-redirect=true" icon="pi pi-clone"  />
+                                        <p:menuitem value="Profile" action="#{adminBean.profileView()}" icon="pi pi-times"  />
+                                        <p:menuitem value="Offers" action="#{adminBean.viewOffers()}" icon="pi pi-times"  />
+                                        <p:menuitem value="Events" action="#{adminBean.viewEvents()}" icon="pi pi-times"  />
                                     </p:menu>
                                 </f:facet>
                             </p:panel>
@@ -165,7 +167,7 @@
                                 </button>
 
                                 <!-- Modal -->
-                              <h:form>
+                              <h:form id="OfferEditForm">
                                     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable" role="document">
                                             <div class="modal-content">
@@ -216,7 +218,7 @@
                                                 </div> 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <p:commandButton  class="btn btn-primary" title="Edit" action="#{adminBean.doUpdateJobOffer()}"></p:commandButton>
+                                                    <p:commandButton  update="OfferEditForm" class="btn btn-primary" title="Edit" action="#{adminBean.doUpdateJobOffer()}"></p:commandButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,13 +237,15 @@
                                     <p:outputLabel value="#{adminBean.selectedOffer.offerStatus}" />
                                     <p:row>
                                         <p:column>
-                                            <p:commandLink class="btn btn-primary" action="#{adminBean.doApproveOfferRequest()}" value="Approve" style="position: absolute; bottom: 5px; left: 5px;">
+                                            <p:commandLink  class="btn btn-primary" action="#{adminBean.doApproveOfferRequest()}" value="Approve" style="position: absolute; bottom: 5px; left: 5px;">
                                             <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
                                             </p:commandLink>
                                         </p:column>
                                          <p:column>
                                              <button  type="button" class="btn btn-secondary" style="position: absolute; bottom: 5px; right: 5px" data-toggle="modal" data-target="#myModal">Decline</button>
-                          <!-- Modal -->
+                         
+                                             <!-- Modal -->
+                                             <h:form id="offerDecline">
                                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -259,14 +263,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <p:commandButton value="Send" action="#{adminBean.doDeclineOfferRequest()}" class="btn btn-primary">
+                                                <p:commandButton update="offerDecline" value="Send" action="#{adminBean.doDeclineOfferRequest()}" class="btn btn-primary">
                                                     <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
                                                 </p:commandButton>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                        
+                                     </h:form>   
                                         </p:column>
                                     </p:row>
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
