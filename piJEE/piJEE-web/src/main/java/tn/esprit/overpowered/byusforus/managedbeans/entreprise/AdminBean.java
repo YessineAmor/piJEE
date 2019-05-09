@@ -93,6 +93,11 @@ public class AdminBean implements Serializable {
         //Basic marker
         simpleModel.addOverlay(new Marker(coord1, "ESPRIT"));
         numberNotifs = hrmFacade.retrieveUserNofifs(Authenticator.currentSession.getUser().getId()).size();
+        if(!"CANDIDATE".equals(Authenticator.currentSession.getUser().getDiscriminatorValue())){
+        numOfEMP = Long.valueOf(company.getEmployees().size());
+        numOfPM = compFacade.numberOfProjectManagers(company.getId());
+        }
+        
     }
 
     public MapModel getSimpleModel() {
@@ -582,7 +587,7 @@ public class AdminBean implements Serializable {
     }
 
     public String viewEvents() {
-        String goTo = "null";
+        String goTo = "";
         events = compAdminFacade.viewAllEvents();
         if (events != null) {
             System.out.println("------Event:--" + events.get(0).getName());
@@ -651,7 +656,7 @@ public class AdminBean implements Serializable {
     }
 
     public String doCreateEvent() {
-        String goTo = "null";
+        String goTo = "";
 
         if (userType.equals("COMPANY_ADMIN")) {
             if (compAdminFacade.findEvent(eventName) != null) {
@@ -694,7 +699,7 @@ public class AdminBean implements Serializable {
     }
 
     public String doCreateJobOffer() {
-        String goTo = "null";
+        String goTo = "";
 
         switch (userType) {
 
@@ -756,7 +761,7 @@ public class AdminBean implements Serializable {
     }
 
     public String doUpdateJobOffer() {
-        String goTo = "null";
+        String goTo = "";
 
         switch (userType) {
 
@@ -808,7 +813,7 @@ public class AdminBean implements Serializable {
     }
 
     public String doApproveOfferRequest() {
-        String goTo = "null";
+        String goTo = "";
 
         switch (userType) {
 
@@ -826,7 +831,7 @@ public class AdminBean implements Serializable {
 
     public String doDeclineOfferRequest() {
 
-        String goTo = "null";
+        String goTo = "";
 
         switch (userType) {
 
@@ -844,14 +849,14 @@ public class AdminBean implements Serializable {
     }
 
     public String doDeleteOffer() {
-        String goTo = "null";
+        String goTo = "";
         switch (userType) {
 
             case "HUMAN_RESOURCES_MANAGER":
                 hrmFacade.deleteOffer(selectedOffer.getId());
                 goTo = this.viewOffers();
                 break;
-            case "PROJECT_MANAGER":
+            case "COMPANY_ADMIN":
                 hrmFacade.archiveOffer(selectedOffer.getId());
                 goTo = this.viewOffers();
                 break;
@@ -893,7 +898,7 @@ public class AdminBean implements Serializable {
 
     public String doUpdateProfile() {
 
-        String goTo = "null";
+        String goTo = "";
         Set<Skill> sk = new HashSet<>();
         switch (userType) {
 

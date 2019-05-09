@@ -22,16 +22,7 @@
         <h:body style=" background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: 40px">
-
-                    <div class="col-md-9" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
-                        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
-
-
-                        <p:gmap center="36.890257,30.707417" zoom="13" type="HYBRID"
-                                style="width:100%;height:700px" model="#{adminBean.simpleModel}" />
-
-                    </div>
-                    <div class="col-md-3"><style type="text/css">
+<div class="col-md-3"><style type="text/css">
                             .ui-sticky {
                                 top: 70px !important;
                             }
@@ -66,6 +57,42 @@
                             <p:sticky target="otherInfoForm" />
                         </h:form>
                     </div>
+                    <div class="col-md-9" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: 1000px">
+                        <h:form id="form">
+                            <p:dataView var="cdt" value="#{adminBean.company.subscribers}" rows="6" paginator="true" rowsPerPageTemplate="2,4,6"
+                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                                    <p:dataViewListItem>
+                                        <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                                            <p:graphicImage value="elon.png" height="70px" width="50px" /> 
+
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="2" cellpadding="5">
+                                                    <h:outputText value="First name:" />
+                                                    <h:outputText value="#{cdt.firstName}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Email:" />
+                                                    <h:outputText value="#{cdt.email}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Recommendations:" />
+                                                    <h:outputText value="#{cdt.recommendations}" style="font-weight: bold"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+
+                                            <h:commandButton value="Details" action="/views/candidate/profileDetails?faces-redirect=true" >
+                                                <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                                <f:setPropertyActionListener value="#{cdt}" target="#{candidateViewController.cdt}" />
+                                                <f:actionListener binding="#{candidateViewController.incrementVisits()}" />
+                                            </h:commandButton>
+
+                                        </h:panelGrid>
+                                    </p:dataViewListItem>
+                                </p:dataView>
+
+                            </h:form>
+
+                    </div>
+                    
                 </div>
             </div>
         </h:body>

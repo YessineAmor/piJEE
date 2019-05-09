@@ -14,12 +14,12 @@
         <h:head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-            <link rel="stylesheet" href="style.css" />
+            <!--link rel="stylesheet" href="style.css" /-->
             <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
             <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
-        <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
+        <h:body style="background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <style type="text/css">
                 .ui-sticky {
                     top: 70px !important;
@@ -57,7 +57,7 @@
                     border-bottom-color:var(--input-border-color, #A8A8A8);
                 }
             </style>
-            <div class="container" style="background : url('backgroud.jpg'); background-color: #ccccff;">
+            <div class="container" style=" background-color: #ccccff;">
                 <div class="row" style="background-color: white; padding: 5px; margin-top: 60px; margin-bottom: auto">
                     
   
@@ -80,8 +80,8 @@
                                 </f:facet>
                                 <f:facet name="options">
                                     <p:menu >
-                                        <p:menuitem value="New Event" url="#" icon="pi pi-clone"  />
-                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-times"  />
+                                        <p:menuitem value="Home" action="/views/front/adminEntrepise/home?faces-redirect=true" icon="pi pi-times"  />
+                                        <p:menuitem value="Profile" action="#{adminBean.profileView()}" icon="pi pi-times"  />
                                     </p:menu>
                                 </f:facet>
                             </p:panel>
@@ -123,7 +123,7 @@
                     <div class="col-md-6" style="background-color: white; padding: 5px; margin-top: 0px; margin-bottom: auto">
 
                         <h:form id="infoForm">
-                            <p:growl id="msgs" showDetail="true" />
+                            <p:growl id="msg" showDetail="true" />
                             <p:panel header="OTHER"   style="text-align: center;" id="infoPanel">
                                 <f:facet name="header" >
                                     <p:outputLabel value="#{adminBean.eventName}"/>
@@ -149,21 +149,21 @@
                                         </h:panelGrid>
                                     </p:outputPanel>
                                     <f:facet name="footer">
-                                        <p:commandLink value="Update" action="#{adminBean.doUpdateEvent()}" style="margin-right: 10px">
+                                        <p:commandLink value="Update" update="infoForm" action="#{adminBean.doUpdateEvent()}" style="margin-right: 10px">
                                             <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
                                         </p:commandLink>
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
                                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
                                         </p:confirmDialog>
-                                        <p:commandLink value="Delete" action="#{adminBean.doDeleteEvent()}" style="margin-right: 10px">
+                                        <p:commandLink value="Delete" update="infoForm" action="#{adminBean.doDeleteEvent()}" style="margin-right: 10px">
                                             <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
                                         </p:commandLink>
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
                                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
                                         </p:confirmDialog>
-                                        <p:commandLink value="Create" action="#{adminBean.doCreateEvent()}" style="margin-right: 10px">
+                                        <p:commandLink value="Create" update="infoForm" action="#{adminBean.doCreateEvent()}" style="margin-right: 10px">
                                             <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
                                         </p:commandLink>
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -177,16 +177,25 @@
                     </div>
                     <div class="col-md-3">
                         <h:form id="otherInfoForm">
+                            <p:growl id="growlMsg" showDetail="true" />
                             <p:panel header="Company Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;">
-                                    <p:commandLink >
+                                    <p:commandLink action="/views/front/adminEntreprise/compMap?faces-redirect=true">
                                         <p:graphicImage value="byusforus.png" height="150px" width="120px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.company.name}"/>
-                                    <p:commandLink class="btn btn-primary" value="Offers"/>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="#{adminBean.company.name}"/>
+                                    </f:facet>
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="/views/front/adminEntreprise/compProfileManagement?faces-redirect=true"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
+                                <f:facet name="options">
+                                    <p:menu >
+                                        <p:menuitem update="otherInfoForm" value="Profile" action="#{adminBean.compProfileView()}" icon="pi pi-times"  />
+                                        <p:menuitem update="otherInfoForm" value="Offers" action="#{adminBean.viewOffers()}" icon="pi pi-clone"  />
+                                        
+                                    </p:menu>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />

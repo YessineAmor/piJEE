@@ -369,7 +369,7 @@ public class SignUpBean implements Serializable {
 
     public String SignUpAsCompanyStaff() throws NoSuchAlgorithmException {
 
-        String goTo = "null";
+        String goTo = "";
         String result = userFacade.checkExistence(email, username);
         if (result.equals("OK")) {
             switch (role) {
@@ -407,13 +407,13 @@ public class SignUpBean implements Serializable {
     }
 
     public String doLogin() throws NoSuchAlgorithmException {
-        String goTo = "null";
+        String goTo = "";
         System.out.println("====Login" + login + " passssss===" + pass);
         authUid = authFacade.login(login, pass);
         if (authUid != null) {
             goTo = "/views/back/signUp/twoFAConfirm?faces-redirect=true";
         } else {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Unknow Information");
+            FacesMessage msg = new FacesMessage("Error", "Unknow Information");
             FacesContext.getCurrentInstance().addMessage("Error", msg);
         }
         System.out.println("ààààààààà" + goTo);
@@ -421,7 +421,7 @@ public class SignUpBean implements Serializable {
     }
 
     public String doFinalizeCandidateSignUp() {
-        String goTo = "null";
+        String goTo = "";
         if (signUpCode.equals(signUpUserCode)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation Please Login");
             FacesContext.getCurrentInstance().addMessage("Successful", msg);
@@ -435,7 +435,7 @@ public class SignUpBean implements Serializable {
     }
 
     public String doFinalizeCompStaffSingUp() {
-        String goTo = "null";
+        String goTo = "";
         if (signUpCode.equals(signUpUserCode)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succesful", "Account Creation Please Login");
             FacesContext.getCurrentInstance().addMessage("Successful", msg);
@@ -473,7 +473,7 @@ public class SignUpBean implements Serializable {
     }
 
     public String doFinalizeLogin() {
-        String goTo = "null";
+        String goTo = "";
         Session session = authFacade.finalizeLogin(authUid, authToken);
         if (session != null) {
             Authenticator.currentSession = session;
@@ -514,7 +514,7 @@ public class SignUpBean implements Serializable {
     }
 
     public String verifyStaffInfo() {
-        String goTo = "null";
+        String goTo = "";
         Licence licence = new Licence();
         licence.setCompanyName(companyName);
         licence.setCompanyLicenceId(licenceID);

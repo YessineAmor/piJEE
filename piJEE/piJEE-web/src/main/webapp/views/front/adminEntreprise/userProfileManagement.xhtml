@@ -14,12 +14,12 @@
         <h:head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-            <link rel="stylesheet" href="style.css" />
+            <!--link rel="stylesheet" href="style.css" /-->
             <!--link rel="stylesheet" href="https://fonts.googleapis.com/css"/-->
             <link rel="canonical" href="http://localhost:8084/piJEE-web-1.0/signUp.xhtml" />
             <script src="https://www.google.com/recaptcha/api.js"></script>
         </h:head>
-        <h:body style="background : url('backgroud.jpg'); background-color: lightskyblue; font-size: 12px;" id="myBody" >
+        <h:body style=" background-color: lightskyblue; font-size: 12px;" id="myBody" >
             <style type="text/css">
                 .ui-sticky {
                     top: 70px !important;
@@ -80,8 +80,8 @@
                                 </f:facet>
                                 <f:facet name="options">
                                     <p:menu >
-                                        <p:menuitem value="New Event" url="#" icon="pi pi-clone"  />
-                                        <p:menuitem value="Edit Profile" url="#" icon="pi pi-times"  />
+                                        <p:menuitem value="Home" action="/views/front/adminEntreprise/home?faces-redirect=true" icon="pi pi-clone"  />
+                                       
                                     </p:menu>
                                 </f:facet>
                             </p:panel>
@@ -112,17 +112,17 @@
                                             <h:outputText value="Email:" />
                                             <h:inputText value="#{adminBean.email}" style="font-weight: bold"/>
                                             <p class="h4">Skills :</p>
-                                            <p:dataList  value="#{adminBean.uSkills}"
+                                            <!--p:dataList  value="#{adminBean.uSkills}"
                                                          var="sk"
                                                          type="ordered"
                                                          style="margin-bottom: 50px; margin-left: -10px ; width: 200px; border: none;">
-                                                <!--f:facet name="header">
+                                                <f:facet name="header">
                                                     Basic
-                                                </f:facet-->
+                                                </f:facet>
                                                 #{sk}
-                                            </p:dataList>
+                                            </p:dataList-->
                                             <div class="form-group">
-                                                <h:outputLabel for="multiple" value="Select Strings" />
+                                                <!--h:outputLabel for="multiple" value="Skills" /-->
                                                 <h:panelGrid columns="2" cellpadding="5">
                                                     <p:selectManyCheckbox id="multiple" value="#{adminBean.uSkills}" layout="grid" columns="1">
                                                         <f:selectItems value="#{signUpBean.Skills()}" var="theme" itemLabel="#{theme}" itemValue="#{theme}" />
@@ -151,14 +151,23 @@
                         <h:form id="otherInfoForm">
                             <p:panel header="Company Profile" toggleable="true" toggleOrientation="horizontal" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" style="font-size: 12px;text-align: center; width: inherit;">
-                                    <p:commandLink >
+                                    <p:commandLink action="/views/front/adminEntreprise/compMap?faces-redirect=true">
                                         <p:graphicImage value="byusforus.png" height="150px" width="120px"  />
                                     </p:commandLink>
-                                    <p:outputLabel value="#{adminBean.company.name}"/>
-                                    <p:commandLink class="btn btn-primary" value="Offers"/>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="#{adminBean.company.name}"/>
+                                    </f:facet>
+                                    
                                 </p:panelGrid>
                                 <f:facet name="actions">
                                     <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" action="#{adminBean.compProfileView()}"><h:outputText value="?" styleClass="ui-icon pi pi-star" /></h:commandLink>
+                                </f:facet>
+                                <f:facet name="options">
+                                    <p:menu >
+                                        <p:menuitem value="Profile" action="#{adminBean.compProfileView()}" icon="pi pi-clone"  />
+                                        <p:menuitem value="Events" action="#{adminBean.viewEvents()}" icon="pi pi-clone"  />
+                                        <p:menuitem value="Offers" action="#{adminBean.viewEvents()}" icon="pi pi-clone"  />
+                                    </p:menu>
                                 </f:facet>
                             </p:panel>
                             <p:sticky target="otherInfoForm" />
