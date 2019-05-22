@@ -21,6 +21,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.FilenameUtils;
 import org.jboss.logging.Logger;
+import org.omg.PortableInterceptor.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import tn.esprit.overpowered.byusforus.entities.posting.Post;
@@ -65,8 +67,9 @@ public class PostingModel {
     public void upload(FileUploadEvent event) throws IOException, TikaException {
         uploadedFile = event.getFile();
         filePath = saveFile(uploadedFile);
-        if (filePath == null)
+        if (filePath == null) {
             uploadedFile = null;
+        }
     }
 
     public void createPost() {
@@ -74,26 +77,30 @@ public class PostingModel {
             post.setFilePath(filePath);
             post.setFileType(uploadedFile.getContentType());
         }
-      
+
+        org.owasp.html.PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        String safeHTML = policy.sanitize(this.post.getText());
+
+        this.post.setText(safeHTML);
         this.postsEJB.createPost(post, Authenticator.currentSession.getUser().getId());
         this.post = new Post();
-        
+
         FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "newsFeed.xhtml");
     }
-    
-    
+
     public ArrayList<Post> getPosts() {
         ArrayList<Post> result = this.postsEJB.getPosts(Authenticator.currentSession.getUser().getId());
         logger.info("Posts number: " + result.size());
         return result;
     }
+
     private String saveFile(UploadedFile uF) throws IOException, TikaException {
         boolean fail = checkUploadedFile(uF);
         String filename;
 
         if (!fail) {
             // save file
-            
+
             filename = System.getenv("UPLOAD_LOCATION")
                     + "/" + UUID.randomUUID()
                     + uF.getFileName();
@@ -139,13 +146,14 @@ public class PostingModel {
         testFile.delete();
         return false;
     }
-    
+
     public void checkAuth() throws IOException {
-        if (Authenticator.currentSession == null)
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/webapp/signUp.xhtml");
+        if (Authenticator.currentSession == null) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/webapp/signUp.xhtml");
+        }
     }
-    
-      public String comeBaby() {
+
+    public String comeBaby() {
         return "/views/posts/newsFeed?faces-redirect=true";
     }
 
