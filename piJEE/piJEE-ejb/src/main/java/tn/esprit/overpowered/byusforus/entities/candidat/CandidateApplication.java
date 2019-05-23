@@ -34,7 +34,8 @@ public class CandidateApplication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Candidate candidate;
     private String motivationLetter;
     private String resume;

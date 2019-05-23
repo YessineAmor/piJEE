@@ -26,6 +26,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.mail.MessagingException;
+import tn.esprit.overpowered.byusforus.entities.candidat.CandidateApplication;
 import tn.esprit.overpowered.byusforus.entities.quiz.Answer;
 import tn.esprit.overpowered.byusforus.entities.quiz.Choice;
 import tn.esprit.overpowered.byusforus.entities.quiz.Quiz;
@@ -33,6 +35,8 @@ import tn.esprit.overpowered.byusforus.entities.users.Candidate;
 import tn.esprit.overpowered.byusforus.services.quiz.AnswerFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.ChoiceFacadeLocal;
 import tn.esprit.overpowered.byusforus.services.quiz.QuizTryFacadeLocal;
+import tn.esprit.overpowered.byusforus.util.JobApplicationState;
+import tn.esprit.overpowered.byusforus.util.MailSender;
 import util.authentication.Authenticator;
 
 @ManagedBean
@@ -162,12 +166,20 @@ public class QuizTryController implements Serializable {
         qt.setRecording(recordingName);
         qt.setFinishDate(new Date());
         qt.setQuiz(quiz);
-        // Un-comment this when I connect with candidate
         qt.setCandidate((Candidate) Authenticator.currentSession.getUser());
+        CandidateApplicationController cAppCtrlr = new CandidateApplicationController();
+        Long jobOfferId = quiz.getJobOffer().getId();
+        Long candidateId = qt.getCandidate().getId();
+//        CandidateApplication cApp = cAppCtrlr.getCandidateAppById(candidateId, jobOfferId);
         ArrayList<Answer> answerList = new ArrayList<>();
         if (!this.breachType.equals("NO_BREACH")) {
             // breach happened
             // get candidate application and set status to breach type
+//            cApp.setJobApplicationState(JobApplicationState.REFUSED);
+//            cApp.setAdditionalInfo("Breach detected");
+//            cAppCtrlr.setSelected(cApp);
+//            cAppCtrlr.update();
+
         } else {
 
 //        // Get choice by id
@@ -193,6 +205,16 @@ public class QuizTryController implements Serializable {
             }
             qt.setAnswers(answerListToPersist);
             qt.setPercentage(100 * score);
+            if (qt.getPercentage() >= quiz.getPercentageToPass()) {
+//                cApp.setJobApplicationState(JobApplicationState.ACCEPTED_FOR_INTERVIEW);
+//                cApp.setAdditionalInfo("Passed quiz with " + qt.getPercentage() + "% score.");
+            } else {
+//                cApp.setJobApplicationState(JobApplicationState.REFUSED);
+//                cApp.setAdditionalInfo("Score " + qt.getPercentage() + "% was not high enough.");
+            }
+//            cAppCtrlr.setSelected(cApp);
+//            cAppCtrlr.update();
+
         }
         this.selected = qt;
         ejbFacade.create(qt);

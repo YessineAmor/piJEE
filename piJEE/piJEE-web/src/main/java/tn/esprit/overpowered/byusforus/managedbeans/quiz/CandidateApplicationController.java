@@ -61,6 +61,14 @@ public class CandidateApplicationController implements Serializable {
     private Part file;
     private float userScore;
 
+    public CandidateApplicationFacadeLocal getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(CandidateApplicationFacadeLocal ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
     public CandidateApplicationController() {
     }
 
@@ -108,6 +116,10 @@ public class CandidateApplicationController implements Serializable {
         selected = new CandidateApplication();
         selected.setJobOffer(jobOffer);
         return "/views/front/JobApplication/apply_to_job_form?faces-redirect=true";
+    }
+
+    public CandidateApplication getCandidateAppById(Long candidateIdDD, Long candidateId) {
+        return ejbFacade.getApplicationByCandidateId(candidateIdDD, candidateId);
     }
 
     public void saveResumeFile() throws IOException {
